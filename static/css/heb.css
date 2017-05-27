@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "SBLHebrew";
+  src: url("../fonts/SBLHbrw.woff") format("woff"); /* Modern Browsers */
+  font-weight: normal;
+  font-style: normal;
+}
+
+.verse_heb {
+  font-family: 'SBLHebrew';
+  font-size: 25px;
+  direction: rtl;
+}
