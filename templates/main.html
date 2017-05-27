@@ -25,10 +25,9 @@
         <a href="/Genesis/{{ next_chapter }}">Next Chapter</a><br><br>
 
         <div class = verse_heb>
-            {% for k, v in view_text_line(book, chapter).items() %}
-                {{ k }}
-                {{ v }}
-            {% endfor %}
+            {% autoescape false %}
+            {{ view_text(book, chapter) }}
+            {% endautoescape %}
         </div>
 
     </div>
