@@ -1,17 +1,4 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>View Text</title>
-
-  <!-- 부트스트랩  및 css -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/css/heb.css" rel="stylesheet">
-  </head>
-  <body>
-    <div class = container>
+{% include 'header.html' %}
 
         {% set next_chapter = chapter + 1 %}
         {% set prev_chapter = chapter - 1 %}
@@ -19,21 +6,15 @@
         <h1>{{ book }} {{ chapter }}</h1>
 
         {% if chapter > 1 %}
-            <a href="/Genesis/{{ prev_chapter }}">Previous Chapter</a><br><br>
+            <a href="/{{ book }}/{{ prev_chapter }}">Previous Chapter</a><br><br>
         {% endif %}
 
-        <a href="/Genesis/{{ next_chapter }}">Next Chapter</a><br><br>
+        <a href="/{{ book }}/{{ next_chapter }}">Next Chapter</a><br><br>
 
         <div class = verse_heb>
             {% autoescape false %}
-            {{ view_text(book, chapter) }}
+            {{ verse }}
             {% endautoescape %}
         </div>
 
-    </div>
-    <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  </body>
-</html>
+{% include 'footer.html' %}

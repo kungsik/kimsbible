@@ -18,31 +18,25 @@ api = TF.load('''
 ''')
 api.makeAvailableIn(globals())
 
-@app.context_processor
-def utility_processor():
-    def view_text(book, chapter):
-        chpNode = T.nodeFromSection((book, chapter))
-        verseNode = L.d(chpNode, otype='verse')
-        verse = ""
-        for v in verseNode:
-            verse += '<span class=verse_num>'
-            verse += str(T.sectionFromNode(v)[2])
-            verse += '</span>'
-            wordsNode = L.d(v, otype='word')
-            for w in wordsNode:
-                verse += '<span class=word_elm>'
-                verse += F.g_word_utf8.v(w)
-                verse += '</span>'
-                if F.trailer_utf8.v(w):
-                    verse += '<span class=trailer>'
-                    verse += F.trailer_utf8.v(w)
-                    verse += '</span>'
-        return verse
-    return dict(view_text=view_text)
-
-
 @app.route('/')
 @app.route('/<book>/')
 @app.route('/<book>/<int:chapter>')
 def main_page(book='Genesis', chapter=1):
-    return render_template('main.html', book=book, chapter=chapter)
+    chpNode = T.nodeFromSection((book, chapter))
+    verseNode = L.d(chpNode, otype='verse')
+    verse = ""
+    for v in verseNode:
+        verse += '<span class=verse_num>'
+        verse += str(T.sectionFromNode(v)[2])
+        verse += '</span>'
+        wordsNode = L.d(v, otype='word')
+        for w in wordsNode:
+            verse += '<span class=word_elm>'
+            verse += F.g_word_utf8.v(w)
+            verse += '</span>'
+            if F.trailer_utf8.v(w):
+                verse += '<span class=trailer>'
+                verse += F.trailer_utf8.v(w)
+                verse += '</span>'
+    return render_template('main.html', verse=verse, book=book, chapter=chapter)
+
