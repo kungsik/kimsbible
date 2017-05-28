@@ -10,3 +10,17 @@
   font-size: 25px;
   direction: rtl;
 }
+
+.word_api {
+  font-family: 'SBLHebrew';
+  font-size: 20px;
+}
+
+.verse_num {
+  font-size: 15px;
+  color: #ff33af
+}
+
+.word_elm:hover {
+    color: #ff6d00;
+}
