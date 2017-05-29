@@ -4,7 +4,7 @@ from tf.fabric import Fabric
 
 ### Load up TF ###
 ETCBC = 'hebrew/etcbc4c'
-TF = Fabric(modules=ETCBC)
+TF = Fabric(locations='text-fabric-data', modules=ETCBC)
 api = TF.load('''
     book chapter verse
     sp nu gn ps vt vs st
