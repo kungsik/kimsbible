@@ -26,7 +26,7 @@ def main_page(book='Genesis', chapter=1):
     verseNode = L.d(chpNode, otype='verse')
     verse = ""
     for v in verseNode:
-        verse += '<span class=verse_num>'
+        verse += '<span class=verse_num verse_node='+str(v)+'>'
         verse += str(T.sectionFromNode(v)[2])
         verse += '</span>'
         wordsNode = L.d(v, otype='word')
@@ -67,3 +67,19 @@ def show_word_function(node):
         "lex_utf8": F.lex_utf8.v(node),
     }
     return render_template('word_api.html', word_function=word_function)
+
+@app.route('/api/verse/<int:node>')
+def show_verse_function(node):
+    wordsNode = L.d(node, otype='word')
+    wordsNode.reverse()
+    verse_api = "<table class=table><tr>"
+    for w in wordsNode:
+        verse_api += "<td>"+F.g_word_utf8.v(w)+"</td>"
+    verse_api += "</tr>"
+    for w in wordsNode:
+        verse_api += "<td>" + F.sp.v(w) + "</td>"
+    verse_api += "</tr>"
+    for w in wordsNode:
+        verse_api += "<td>" + F.gloss.v(L.u(w, otype='lex')[0]) + "</td>"
+    verse_api += "</tr></table>"
+    return render_template('verse_api.html', verse_api=verse_api)

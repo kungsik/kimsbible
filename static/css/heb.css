@@ -14,13 +14,32 @@
 .word_api {
   font-family: 'SBLHebrew';
   font-size: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.verse_api {
+  font-family: 'SBLHebrew';
+  font-size: 20px;
 }
 
 .verse_num {
-  font-size: 15px;
+  font-size: 22px;
   color: #ff33af
 }
 
+.verse_num:hover {
+  color: #3420ff;
+  font-weight: bold;
+}
+
 .word_elm:hover {
-    color: #ff6d00;
+  color: #ff6d00;
+}
+
+.modal.modal-wide .modal-dialog {
+  width: 90%;
+}
+.modal-wide .modal-body {
+  overflow-y: auto;
 }
