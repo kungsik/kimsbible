@@ -5,17 +5,26 @@
   font-style: normal;
 }
 
+a.word_elm {
+  font-family: 'SBLHebrew';
+  font-size: 25px;
+  direction: rtl;
+  color: black;
+}
+
 .verse_heb {
   font-family: 'SBLHebrew';
   font-size: 25px;
   direction: rtl;
+  margin-top: 20px;
 }
 
 .word_api {
   font-family: 'SBLHebrew';
-  font-size: 20px;
+  font-size: 15px;
   padding-left: 50px;
   padding-right: 50px;
+  direction: ltr;
 }
 
 .verse_api {
@@ -35,11 +44,40 @@
 
 .word_elm:hover {
   color: #ff6d00;
+  text-decoration: none;
 }
 
 .modal.modal-wide .modal-dialog {
   width: 90%;
 }
+
 .modal-wide .modal-body {
   overflow-y: auto;
+}
+
+select {
+  font-size: 20px;
+  width: 200px; /* 원하는 너비설정 */
+  padding: .8em .5em; /* 여백으로 높이 설정 */
+  font-family: inherit; /* 폰트 상속 */
+  background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%; /* 네이티브 화살표 대체 */
+  border: 1px solid #999; border-radius: 0px; /* iOS 둥근모서리 제거 */
+  -webkit-appearance: none; /* 네이티브 외형 감추기 */
+  -moz-appearance: none; appearance: none;
+}
+
+.right {
+  font-size: 15px;
+  float: right;
+  padding: 10px;
+}
+
+.left {
+  font-size: 15px;
+  float: left;
+  padding: 10px;
+}
+
+.center {
+  margin-top: 20px;
 }

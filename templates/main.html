@@ -3,26 +3,34 @@
         {% set next_chapter = chapter + 1 %}
         {% set prev_chapter = chapter - 1 %}
 
-        <h1>{{ book }} {{ chapter }}</h1>
-
+    <div class="left">
         {% if chapter > 1 %}
-            <a href="/{{ book }}/{{ prev_chapter }}">Previous Chapter</a><br><br>
+            <a href="/{{ book }}/{{ prev_chapter }}">이전 장</a><br><br>
         {% endif %}
+    </div>
 
-        <a href="/{{ book }}/{{ next_chapter }}">Next Chapter</a><br><br>
+    <div class="right">
+        {% if chapter < last_chp %}
+            <a href="/{{ book }}/{{ next_chapter }}">다음 장</a><br><br>
+        {% endif %}
+    </div>
 
-        <div class = verse_heb>
-            {% autoescape false %}
-            {{ verse }}
-            {% endautoescape %}
+    <div class="center" align="center">
+        {% include 'bible_selector.html' %}
+    </div>
+
+    <div class = "verse_heb">
+        {% autoescape false %}
+        {{ verse }}
+        {% endautoescape %}
+    </div>
+
+    <div class="modal modal-wide fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+        <!-- modal ajax 호출되는  곳-->
         </div>
-
-        <div class="modal modal-wide fade">
-          <div class="modal-dialog">
-            <div class="modal-content">
-            <!-- modal ajax 호출되는  곳-->
-            </div>
-          </div>
-        </div>
+      </div>
+    </div>
 
 {% include 'footer.html' %}
