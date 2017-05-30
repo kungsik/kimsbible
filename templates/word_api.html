@@ -1,17 +1,7 @@
 <div class="word_api">
-    <li>원형: {{ word_function['lex_utf8'] }}</li>
-    <li>품사: {{ word_function['sp'] }}</li>
-    <li>동사형: {{ word_function['vs'] }}</li>
-    <li>시제: {{ word_function['vt'] }}</li>
-    <li>인칭: {{ word_function['ps'] }}</li>
-    <li>성: {{ word_function['gn'] }}</li>
-    <li>수: {{ word_function['nu'] }}</li>
-    <li>상태: {{ word_function['st'] }}</li>
-    <li>접미어: {{ word_function['g_prs_utf8'] }}</li>
-    <li>부가접미: {{ word_function['g_uvf_utf8'] }}</li>
-    <li>접미어 인칭: {{ word_function['prs_ps'] }}</li>
-    <li>접미어 성: {{ word_function['prs_gn'] }}</li>
-    <li>접미어 수: {{ word_function['prs_nu'] }}</li>
-    <li>의미: {{ word_function['gloss'] }}</li>
+    {% for key, value in w_f.items() %}
+        {% if value|e != "NA" and value|e != "" and value|e != "unknown" %}
+            <li>{{ key|e }}: {{ value|e }}</li>
+        {% endif %}
+    {% endfor %}
 </div>
-

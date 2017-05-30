@@ -3,7 +3,7 @@ $(function(){
         var verse_node = $(this).attr("verse_node");
         $('div.modal').modal({remote : '/api/verse/'+verse_node});
     })
-})
+});
 
 $(function(){
     $('*[data-poload]').click(function() {
@@ -20,8 +20,8 @@ $(function(){
                 ]
             }).popover('show');
         })
-    })
+    });
     $('.popover-dismiss').popover({
         trigger: 'focus'
     })
-})
+});
