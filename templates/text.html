@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block body %}
+
+        {% set next_chapter = chapter + 1 %}
+        {% set prev_chapter = chapter - 1 %}
+
+    <div class="left">
+        {% if chapter > 1 %}
+            <a href="/text/{{ book }}/{{ prev_chapter }}">이전 장</a><br><br>
+        {% else %}
+            <font color="white">이전 장</font>
+        {% endif %}
+    </div>
+
+    <div class="right">
+        {% if chapter < last_chp %}
+            <a href="/text/{{ book }}/{{ next_chapter }}">다음 장</a><br><br>
+        {% else %}
+            <font color="white">다음 장</font>
+        {% endif %}
+    </div>
+
+    <div class="center" align="center">
+        {% include 'bible_selector.html' %}
+    </div>
+
+    <div class = "verse_heb">
+        {% autoescape false %}
+        {{ verse }}
+        {% endautoescape %}
+    </div>
+
+    <div class="modal modal-wide fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+        <!-- modal ajax 호출되는  곳-->
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

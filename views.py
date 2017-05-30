@@ -19,9 +19,21 @@ api = TF.load('''
 api.makeAvailableIn(globals())
 
 @app.route('/')
-@app.route('/<book>/')
-@app.route('/<book>/<int:chapter>')
-def main_page(book='Genesis', chapter=1):
+def main_page():
+    return render_template('main.html')
+
+@app.route('/developer/')
+def developer_page():
+    return render_template('developer.html')
+
+@app.route('/license/')
+def license_page():
+    return render_template('license.html')
+
+@app.route('/text/')
+@app.route('/text/<book>')
+@app.route('/text/<book>/<int:chapter>')
+def text_page(book='Genesis', chapter=1):
     chpNode = T.nodeFromSection((book, chapter))
     verseNode = L.d(chpNode, otype='verse')
     whole_chpNode = T.nodeFromSection((book,))
@@ -40,7 +52,7 @@ def main_page(book='Genesis', chapter=1):
                 verse += '<span class=trailer>'
                 verse += F.trailer_utf8.v(w)
                 verse += '</span>'
-    return render_template('main.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp[1])
+    return render_template('text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp[1])
 
 
 @app.route('/api/word/<int:node>')

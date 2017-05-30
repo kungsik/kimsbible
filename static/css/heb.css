@@ -7,7 +7,7 @@
 
 a.word_elm {
   font-family: 'SBLHebrew';
-  font-size: 25px;
+  font-size: 30px;
   direction: rtl;
   color: black;
 }
@@ -22,8 +22,8 @@ a.word_elm {
 .word_api {
   font-family: 'SBLHebrew';
   font-size: 15px;
-  padding-left: 50px;
-  padding-right: 50px;
+  padding-left: 1px;
+  padding-right: 1px;
   direction: ltr;
 }
 

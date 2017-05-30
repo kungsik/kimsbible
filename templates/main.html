@@ -1,36 +1,17 @@
-{% include 'header.html' %}
-
-        {% set next_chapter = chapter + 1 %}
-        {% set prev_chapter = chapter - 1 %}
-
-    <div class="left">
-        {% if chapter > 1 %}
-            <a href="/{{ book }}/{{ prev_chapter }}">이전 장</a><br><br>
-        {% endif %}
+{% extends "layout.html" %}
+{% block body %}
+    <div class="jumbotron">
+        <img src="../static/img/logo.png" height="100" width="100">
+        <h2>Kim's Bible에 방문하신 것을 환영합니다.</h2>
+        <h4>본 사이트는 원어 성경을 보다 쉽고 편리하게 접근하기 위한 목적으로 만들어졌습니다.</h4>
+        <h4>이 사이트를 통해 아래와 같은 기능을 활용하실 수 있습니다.</h4>
     </div>
+    <h4>
+        - 성서 원문 열람(현재는 구약 히브리어만 지원)<br><br>
+        - 히브리어 문장분석<br><br>
+        - 히브리어 단어분석<br><br>
+        - 다양한 번역본 비교(추후 업데이트)<br><br>
+        - 각종 검색기능(추후 업데이트)<br>
+    </h4>
 
-    <div class="right">
-        {% if chapter < last_chp %}
-            <a href="/{{ book }}/{{ next_chapter }}">다음 장</a><br><br>
-        {% endif %}
-    </div>
-
-    <div class="center" align="center">
-        {% include 'bible_selector.html' %}
-    </div>
-
-    <div class = "verse_heb">
-        {% autoescape false %}
-        {{ verse }}
-        {% endautoescape %}
-    </div>
-
-    <div class="modal modal-wide fade">
-      <div class="modal-dialog">
-        <div class="modal-content">
-        <!-- modal ajax 호출되는  곳-->
-        </div>
-      </div>
-    </div>
-
-{% include 'footer.html' %}
+{% endblock %}
