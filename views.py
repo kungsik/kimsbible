@@ -1,6 +1,7 @@
 import json
 import codecs
 import os
+import re
 #import urllib.request
 from collections import OrderedDict
 
@@ -85,7 +86,17 @@ def json_to_verse(book, chp, verse, ver):
         verse_str = d[book_code[book]]['chapters'][json_chp][chp][verse]
         return verse_str
 
-
+def heb_vrs_to_eng(book, chp, verse):
+    vrs_str = chp + ":" + verse
+    path = os.path.dirname(os.path.abspath(__file__))
+    location = path + "/static/json/heb_eng_vrs.json"
+    with open(location) as json_data:
+        d = json.load(json_data)
+        if vrs_str in d[book].keys():
+            eng_chp_vrs = re.split(':', d[book][vrs_str])
+            return eng_chp_vrs
+        else:
+            return False
 
 translate = {
     "art": {"full": "관사", "abbr": "관"},
@@ -292,8 +303,16 @@ def show_verse_function(node):
         else:
             verse_api['suff'].append('')
     section = T.sectionFromNode(wordsNode[0])
+    eng_chp_vrs = heb_vrs_to_eng(section[0], str(section[1]), str(section[2]))
+    if eng_chp_vrs:
+        eng_chp = eng_chp_vrs[0]
+        eng_vrs = eng_chp_vrs[1]
+    else:
+        eng_chp = section[1]
+        eng_vrs = section[2]
+
     verse_str = {
-        "kjv": json_to_verse(section[0], str(section[1]), str(section[2]), 'kjv'),
-        "kor": json_to_verse(section[0], str(section[1]), str(section[2]), 'kor'),
+        "kjv": json_to_verse(section[0], str(eng_chp), str(eng_vrs), 'kjv'),
+        "kor": json_to_verse(section[0], str(eng_chp), str(eng_vrs), 'kor'),
     }
-    return render_template('verse_api.html', verse_api=verse_api, section=section, verse_str=verse_str)
+    return render_template('verse_api.html', verse_api=verse_api, section=section, verse_str=verse_str, eng_chp=eng_chp, eng_vrs=eng_vrs)
