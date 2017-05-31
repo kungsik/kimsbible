@@ -1,5 +1,7 @@
 import json
-import urllib.request
+import codecs
+import os
+#import urllib.request
 from collections import OrderedDict
 
 from flask import render_template
@@ -23,7 +25,7 @@ api = TF.load('''
 ''')
 api.makeAvailableIn(globals())
 
-
+'''
 def json_to_verse(book, chp, verse, ver):
     url = "https://getbible.net/json?passage=" + book + "_" + chp + ":" + verse + "&version=" + ver
     with urllib.request.urlopen(url) as u:
@@ -31,6 +33,58 @@ def json_to_verse(book, chp, verse, ver):
         verse_json = json.loads(data)
         verse_str = verse_json['book'][0]['chapter'][verse]['verse']
         return verse_str
+'''
+
+def json_to_verse(book, chp, verse, ver):
+    path = os.path.dirname(os.path.abspath(__file__))
+    location = path + "/static/json/" + ver + ".json"
+    book_code = {
+        "Genesis": 0,
+        "Exodus": 1,
+        "Leviticus": 2,
+        "Numbers": 3,
+        "Deuteronomy": 4,
+        "Joshua": 5,
+        "Judges": 6,
+        "Ruth": 7,
+        "1_Samuel": 8,
+        "2_Samuel": 9,
+        "1_Kings": 10,
+        "2_Kings": 11,
+        "1_Chronicles": 12,
+        "2_Chronicles": 13,
+        "Ezra": 14,
+        "Nehemiah": 15,
+        "Esther": 16,
+        "Job": 17,
+        "Psalms": 18,
+        "Proverbs": 19,
+        "Ecclesiastes": 20,
+        "Song_of_songs": 21,
+        "Isaiah": 22,
+        "Jeremiah": 23,
+        "Lamentations": 24,
+        "Ezekiel": 25,
+        "Daniel": 26,
+        "Hosea": 27,
+        "Joel": 28,
+        "Amos": 29,
+        "Obadiah": 30,
+        "Jonah": 31,
+        "Micah": 32,
+        "Nahum": 33,
+        "Habakkuk": 34,
+        "Zephaniah": 35,
+        "Haggai": 36,
+        "Zechariah": 37,
+        "Malachi": 38,
+    }
+    with codecs.open(location, 'r', 'utf-8-sig') as json_data:
+        d = json.load(json_data)
+        json_chp = int(chp) - 1
+        verse_str = d[book_code[book]]['chapters'][json_chp][chp][verse]
+        return verse_str
+
 
 
 translate = {
@@ -239,7 +293,7 @@ def show_verse_function(node):
             verse_api['suff'].append('')
     section = T.sectionFromNode(wordsNode[0])
     verse_str = {
-        "asv": json_to_verse(section[0], str(section[1]), str(section[2]), 'asv'),
-        "kor": json_to_verse(section[0], str(section[1]), str(section[2]), 'korean'),
+        "kjv": json_to_verse(section[0], str(section[1]), str(section[2]), 'kjv'),
+        "kor": json_to_verse(section[0], str(section[1]), str(section[2]), 'kor'),
     }
     return render_template('verse_api.html', verse_api=verse_api, section=section, verse_str=verse_str)
