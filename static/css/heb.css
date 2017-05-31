@@ -48,11 +48,14 @@ a.word_elm {
 }
 
 .modal.modal-wide .modal-dialog {
-  width: 90%;
+  width: 95%;
+  height: 80%;
 }
 
-.modal-wide .modal-body {
+.modal-wide .modal-content {
   overflow-y: auto;
+  height: auto;
+  width: auto;
 }
 
 select {

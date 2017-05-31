@@ -4,12 +4,43 @@
         <!-- 닫기(x) 버튼 -->
       <button type="button" class="close" data-dismiss="modal">×</button>
       <!-- header title -->
-      <h4 class="modal-title">문장분석</h4>
+      <h4 class="modal-title">문장분석({{ section[0] }} {{ section[1] }}:{{ section[2] }})</h4>
     </div>
     <!-- body -->
-    <div class="modal-body">
+    <div class="modal-wide modal-body">
         {% autoescape false %}
-        {{ verse_api }}
+
+        <table class="table">
+            <tr>
+                {% for str in verse_api['words'] %}
+                <td>{{ str }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for str in verse_api['gloss'] %}
+                <td>{{ str }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for str in verse_api['sp'] %}
+                <td>{{ str }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for str in verse_api['parse'] %}
+                <td>{{ str }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for str in verse_api['suff'] %}
+                <td>{{ str }}</td>
+                {% endfor %}
+            </tr>
+        </table>
+
+        <div><span class="label label-primary">ASV</span><div class="alert alert-warning"> {{ verse_str['asv'] }}</div></div>
+        <div><span class="label label-primary">KOR</span><div class="alert alert-warning"> {{ verse_str['kor'] }}</div></div>
+
         {% endautoescape %}
     </div>
     <!-- Footer -->

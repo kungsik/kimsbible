@@ -1,7 +1,11 @@
-from flask import Flask, render_template
-from kimsbible import app
-from tf.fabric import Fabric
+import json
+import urllib.request
 from collections import OrderedDict
+
+from flask import render_template
+from tf.fabric import Fabric
+
+from kimsbible import app
 
 ### Load up TF ###
 ETCBC = 'hebrew/etcbc4c'
@@ -15,9 +19,19 @@ api = TF.load('''
     lex_utf8 lex voc_utf8
     g_prs_utf8 g_uvf_utf8
     prs_gn prs_nu prs_ps g_cons_utf8
-    gloss g_lex_utf8
+    gloss g_lex_utf8 phono
 ''')
 api.makeAvailableIn(globals())
+
+
+def json_to_verse(book, chp, verse, ver):
+    url = "https://getbible.net/json?passage=" + book + "_" + chp + ":" + verse + "&version=" + ver
+    with urllib.request.urlopen(url) as u:
+        data = u.read().decode().replace('(', '').replace(');', '')
+        verse_json = json.loads(data)
+        verse_str = verse_json['book'][0]['chapter'][verse]['verse']
+        return verse_str
+
 
 translate = {
     "art": {"full": "관사", "abbr": "관"},
@@ -135,7 +149,8 @@ def eng_to_kor(term, option):
 def word_function(node):
     w_f = OrderedDict()
     w_f["원형"] = F.voc_utf8.v(L.u(node, otype='lex')[0])
-    w_f["어근"] = F.lex_utf8.v(node).replace('=', '').replace('/', '').replace('[', '')
+    #w_f["어근"] = F.lex_utf8.v(node).replace('=', '').replace('/', '').replace('[', '')
+    w_f["음역"] = F.phono.v(node)
     w_f["품사"] = F.sp.v(node)  # part of speech (verb, subs ..)
     w_f["시제"] = F.vt.v(node)  # vt = verbal tense
     w_f["동사형"] = F.vs.v(node)  # vs = verbal stem
@@ -200,33 +215,31 @@ def show_word_function(node):
 def show_verse_function(node):
     wordsNode = L.d(node, otype='word')
     wordsNode.reverse()
-    verse_api = "<table class=table><tr>"
+    verse_api = {'words': [], 'gloss': [], 'sp': [], 'parse': [], 'suff': []}
     for w in wordsNode:
-        verse_api += "<td>"+F.g_word_utf8.v(w)+"</td>"
-    verse_api += "</tr>"
-    for w in wordsNode:
+        verse_api['words'].append(F.g_word_utf8.v(w))
+        verse_api['gloss'].append(F.gloss.v(L.u(w, otype='lex')[0]))
         sp = eng_to_kor(F.sp.v(w), 'abbr')
         if sp == '동':
-            verse_api += "<td>" + sp + "(" + eng_to_kor(F.vs.v(w), 'abbr') + ")" + "</td>"
-        else:
-            verse_api += "<td>" + sp + "</td>"
-    verse_api += "</tr>"
-    for w in wordsNode:
-        sp = eng_to_kor(F.sp.v(w), 'abbr')
-        if sp == '동':
-            verse_api += "<td>" + eng_to_kor(F.vt.v(w), 'abbr') + "." + eng_to_kor(F.ps.v(w), 'abbr') + eng_to_kor(F.gn.v(w), 'abbr') + eng_to_kor(F.nu.v(w), 'abbr') + "</td>"
+            sp_str = sp + "(" + eng_to_kor(F.vs.v(w), 'abbr') + ")"
+            verse_api['sp'].append(sp_str)
+            parse_str = eng_to_kor(F.vt.v(w), 'abbr') + "." + eng_to_kor(F.ps.v(w), 'abbr') + eng_to_kor(F.gn.v(w), 'abbr') + eng_to_kor(F.nu.v(w), 'abbr')
+            verse_api['parse'].append(parse_str)
         elif sp == '명':
-            verse_api += "<td>" + eng_to_kor(F.gn.v(w), 'abbr') + eng_to_kor(F.nu.v(w), 'abbr') + "</td>"
+            verse_api['sp'].append(sp)
+            parse_str = eng_to_kor(F.gn.v(w), 'abbr') + eng_to_kor(F.nu.v(w), 'abbr')
+            verse_api['parse'].append(parse_str)
         else:
-            verse_api += "<td></td>"
-    verse_api += "</tr>"
-    for w in wordsNode:
+            verse_api['sp'].append(sp)
+            verse_api['parse'].append('')
         if F.g_prs_utf8.v(w) != "":
-            verse_api += "<td>접미." + eng_to_kor(F.prs_ps.v(w), 'abbr') + eng_to_kor(F.prs_gn.v(w), 'abbr') + eng_to_kor(F.prs_nu.v(w), 'abbr') + "</td>"
+            suff_str = "접미." + eng_to_kor(F.prs_ps.v(w), 'abbr') + eng_to_kor(F.prs_gn.v(w), 'abbr') + eng_to_kor(F.prs_nu.v(w), 'abbr')
+            verse_api['suff'].append(suff_str)
         else:
-            verse_api += "<td></td>"
-    verse_api += "</tr>"
-    for w in wordsNode:
-        verse_api += "<td>" + F.gloss.v(L.u(w, otype='lex')[0]) + "</td>"
-    verse_api += "</tr></table>"
-    return render_template('verse_api.html', verse_api=verse_api)
+            verse_api['suff'].append('')
+    section = T.sectionFromNode(wordsNode[0])
+    verse_str = {
+        "asv": json_to_verse(section[0], str(section[1]), str(section[2]), 'asv'),
+        "kor": json_to_verse(section[0], str(section[1]), str(section[2]), 'korean'),
+    }
+    return render_template('verse_api.html', verse_api=verse_api, section=section, verse_str=verse_str)
