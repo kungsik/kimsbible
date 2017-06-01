@@ -2,7 +2,7 @@ import json
 import codecs
 import os
 import re
-#import urllib.request
+import urllib.request
 from collections import OrderedDict
 
 from flask import render_template
@@ -26,16 +26,17 @@ api = TF.load('''
 ''')
 api.makeAvailableIn(globals())
 
+#외부 API를 이용한 번역본 인용.
 '''
 def json_to_verse(book, chp, verse, ver):
     url = "https://getbible.net/json?passage=" + book + "_" + chp + ":" + verse + "&version=" + ver
     with urllib.request.urlopen(url) as u:
         data = u.read().decode().replace('(', '').replace(');', '')
         verse_json = json.loads(data)
-        verse_str = verse_json['book'][0]['chapter'][verse]['verse']
+        verse_str = chp + ":" + verse + " " + verse_json['book'][0]['chapter'][verse]['verse']
         return verse_str
 '''
-
+#자체 json 파일로 번역본 인용
 def json_to_verse(book, chp, verse, ver):
     path = os.path.dirname(os.path.abspath(__file__))
     location = path + "/static/json/" + ver + ".json"
@@ -83,7 +84,7 @@ def json_to_verse(book, chp, verse, ver):
     with codecs.open(location, 'r', 'utf-8-sig') as json_data:
         d = json.load(json_data)
         json_chp = int(chp) - 1
-        verse_str = d[book_code[book]]['chapters'][json_chp][chp][verse]
+        verse_str = chp + ":" + verse + " " + d[book_code[book]]['chapters'][json_chp][chp][verse]
         return verse_str
 
 def heb_vrs_to_eng(book, chp, verse):
@@ -92,11 +93,20 @@ def heb_vrs_to_eng(book, chp, verse):
     location = path + "/static/json/heb_eng_vrs.json"
     with open(location) as json_data:
         d = json.load(json_data)
-        if vrs_str in d[book].keys():
-            eng_chp_vrs = re.split(':', d[book][vrs_str])
-            return eng_chp_vrs
+        if book in d.keys():
+            if vrs_str in d[book].keys():
+                if isinstance(d[book][vrs_str], list):
+                    eng_chp_vrs = d[book][vrs_str]
+                    return eng_chp_vrs
+                else:
+                    eng_chp_vrs = [d[book][vrs_str]]
+                    return eng_chp_vrs
+            else:
+                eng_chp_vrs = [chp+":"+verse]
+                return eng_chp_vrs
         else:
-            return False
+            eng_chp_vrs = [chp + ":" + verse]
+            return eng_chp_vrs
 
 translate = {
     "art": {"full": "관사", "abbr": "관"},
@@ -304,15 +314,10 @@ def show_verse_function(node):
             verse_api['suff'].append('')
     section = T.sectionFromNode(wordsNode[0])
     eng_chp_vrs = heb_vrs_to_eng(section[0], str(section[1]), str(section[2]))
-    if eng_chp_vrs:
-        eng_chp = eng_chp_vrs[0]
-        eng_vrs = eng_chp_vrs[1]
-    else:
-        eng_chp = section[1]
-        eng_vrs = section[2]
+    verse_str = {"kjv": [], "kor": []}
+    for c_v in eng_chp_vrs:
+        chp_vrs = re.split(":", c_v)
+        verse_str['kjv'].append(json_to_verse(section[0], chp_vrs[0], chp_vrs[1], 'kjv'))
+        verse_str['kor'].append(json_to_verse(section[0], chp_vrs[0], chp_vrs[1], 'korean'))
 
-    verse_str = {
-        "kjv": json_to_verse(section[0], str(eng_chp), str(eng_vrs), 'kjv'),
-        "kor": json_to_verse(section[0], str(eng_chp), str(eng_vrs), 'kor'),
-    }
-    return render_template('verse_api.html', verse_api=verse_api, section=section, verse_str=verse_str, eng_chp=eng_chp, eng_vrs=eng_vrs)
+    return render_template('verse_api.html', verse_api=verse_api, section=section, verse_str=verse_str)
