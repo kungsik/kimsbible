@@ -45,18 +45,5 @@
     </select>
 </form>
 
-<script>
-$(function(){
-    var chp = $("#bible_selector option:selected").attr("chp");
-    for(var i=1; i <= chp; i++){
-        if(i == {{ chapter }}) {
-            $("#chp_selector").append("<option value='/text/{{ book }}/"+i+"' selected>"+i+"</option>");
-        }
-        else {
-            $("#chp_selector").append("<option value='/text/{{ book }}/"+i+"'>"+i+"</option>");
-        }
-    }
-})
 
-$("#bible_selector option[value='/text/{{ book }}']").prop("selected", true);
-</script>
+<script type=text/javascript src="{{ url_for('static', filename='js/bible_selector.js') }}"></script>
