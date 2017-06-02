@@ -1,5 +1,7 @@
 import re
 
+from collections import OrderedDict
+
 from flask import render_template
 from tf.fabric import Fabric
 
@@ -22,6 +24,28 @@ api = TF.load('''
     gloss g_lex_utf8 phono
 ''')
 api.makeAvailableIn(globals())
+
+
+def word_function(node):
+    w_f = OrderedDict()
+    w_f["원형"] = F.voc_utf8.v(L.u(node, otype='lex')[0])
+    # w_f["어근"] = F.lex_utf8.v(node).replace('=', '').replace('/', '').replace('[', '')
+    w_f["음역"] = F.phono.v(node)
+    w_f["품사"] = F.sp.v(node)  # part of speech (verb, subs ..)
+    w_f["시제"] = F.vt.v(node)  # vt = verbal tense
+    w_f["동사형"] = F.vs.v(node)  # vs = verbal stem
+    w_f["인칭"] = F.ps.v(node)  # person (p1, p2, p3)
+    w_f["성"] = F.gn.v(node)  # gender
+    w_f["수"] = F.nu.v(node)  # number (sg, pl, du)
+    w_f["어형"] = F.st.v(node)  # construct/absolute/emphatic
+    # w_f["접미어유무"] = "Yes" if F.g_prs_utf8.v(node) != "" else "No"
+    w_f["인칭접미어"] = F.g_prs_utf8.v(node)  # pronominal suffix in Heb
+    w_f["부가접미어"] = F.g_uvf_utf8.v(node)  # univalent final in Heb
+    w_f["인칭(접미)"] = F.prs_ps.v(node)  # pronominal suffix person
+    w_f["성(접미)"] = F.prs_gn.v(node)  # pronominal suffix gender
+    w_f["수(접미)"] = F.prs_nu.v(node)  # pronominal suffix number
+    w_f["의미"] = F.gloss.v(L.u(node, otype='lex')[0])
+    return w_f
 
 @app.route('/')
 def main_page():
@@ -62,7 +86,7 @@ def text_page(book='Genesis', chapter=1):
 
 @app.route('/api/word/<int:node>')
 def show_word_function(node):
-    w_f = kb.word_function(node)
+    w_f = word_function(node)
     for k, v in w_f.items():
         w_f[k] = kb.eng_to_kor(v, 'full')
     return render_template('word_api.html', w_f=w_f)
