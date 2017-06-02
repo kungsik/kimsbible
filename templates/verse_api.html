@@ -18,7 +18,7 @@
             </tr>
             <tr>
                 {% for str in verse_api['gloss'] %}
-                <td>{{ str }}</td>
+                <td>{{ str | replace (">", "") | replace ("<", "") }}</td>
                 {% endfor %}
             </tr>
             <tr>
@@ -38,17 +38,21 @@
             </tr>
         </table>
 
-        <div><span class="label label-primary">KJV</span><div class="alert alert-warning">
-            {% for kjv_vrs in verse_str['kjv'] %}
-            {{ kjv_vrs }}
-            {% endfor %}
-        </div></div>
+        <div><span class="label label-primary">KJV</span>
+            <div class="alert alert-warning">
+                {% for kjv_vrs in verse_str['kjv'] %}
+                {{ kjv_vrs }}
+                {% endfor %}
+            </div>
+        </div>
 
-        <div><span class="label label-primary">KOR</span><div class="alert alert-warning">
-            {% for kor_vrs in verse_str['kor'] %}
-            {{ kor_vrs }}
-            {% endfor %}
-        </div></div>
+        <div><span class="label label-primary">KOR</span>
+            <div class="alert alert-warning">
+                {% for kor_vrs in verse_str['kor'] %}
+                {{ kor_vrs }}
+                {% endfor %}
+            </div>
+        </div>
 
         {% endautoescape %}
     </div>

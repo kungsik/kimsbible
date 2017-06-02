@@ -8,9 +8,9 @@
 
   <!-- 부트스트랩  및 css -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
     <link href="/static/css/heb.css" rel="stylesheet">
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <link href="/static/css/nav_style.css" rel="stylesheet">
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="/static/js/modal_word_api.js"></script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -24,51 +24,53 @@
   </head>
   <body>
     <div class = container>
-        <nav class="navbar navbar-default">
-          <div class="container-fluid">
+        <section class="navigation">
+          <div class="nav-container">
             <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#kimsbible-navbar-collapse-1">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="/">KIM'S BIBLE</a>
+            <div class="brand">
+              <a href="/">KIM'S BIBLE</a>
             </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="kimsbible-navbar-collapse-1">
-              <ul class="nav navbar-nav">
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">소개<span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="/">KIM'S Bible이란?</a></li>
-                    <li><a href="/developer">AlphAlef</a></li>
-                    <li class="divider"></li>
-                    <li><a href="/license">저작권 안내</a></li>
-                  </ul>
-                </li>
-                <li><a href="/text/Genesis/1">성서본문</a></li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">도구<span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="http://kimsbible.com/teamim/teamim.php" target="_blank">테아밈 분석기</a></li>
-                    <li><a href="http://kimsbible.com/Hebrew_Parsing_Quiz/" target="_blank">히브리어 동사 퀴즈</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div><!-- /.navbar-collapse -->
+            <nav>
+                <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+                <ul class="nav-list">
+                    <li>
+                        <a href="#!">소개</a>
+                        <ul class="nav-dropdown">
+                            <li><a href="/">KIM'S Bible이란?</a></li>
+                            <li><a href="/developer">AlphAlef</a></li>
+                            <li><a href="/license">저작권 안내</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/text/Genesis/1">성서본문</a></li>
+                    <li>
+                        <a href="#!">도구</a>
+                        <ul class="nav-dropdown">
+                            <li><a href="http://kimsbible.com/teamim/teamim.php" target="_blank">테아밈 분석기</a></li>
+                            <li><a href="http://kimsbible.com/Hebrew_Parsing_Quiz/" target="_blank">히브리어 동사 퀴즈</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
           </div><!-- /.container-fluid -->
-        </nav>
+        </section>
 
         {% block body %}
         {% endblock %}
+
+        <div class="modal modal-wide fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+            <!-- modal ajax 호출되는  곳-->
+            </div>
+          </div>
+        </div>
 
     </div>
     <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/static/js/nav.js"></script>
+
   </body>
 </html>

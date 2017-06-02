@@ -1,11 +1,11 @@
-$(function(){
+$(document).ready(function(){
     $(".verse_num").click(function(){
         var verse_node = $(this).attr("verse_node");
         $('div.modal').modal({remote : '/api/verse/'+verse_node});
     })
 });
 
-$(function(){
+$(document).ready(function(){
     $('*[data-poload]').click(function() {
         var e = $(this);
         $.get(e.data('poload'), function(d) {
@@ -17,7 +17,8 @@ $(function(){
                     {
                         to: '.container', pin: true
                     }
-                ]
+                ],
+                placement: 'auto right'
             }).popover('show');
         })
     });
