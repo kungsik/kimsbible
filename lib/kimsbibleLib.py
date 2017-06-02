@@ -2,8 +2,26 @@ import json
 import codecs
 import os
 from collections import OrderedDict
+from tf.fabric import Fabric
+
 
 class Kimsbible():
+    ### Load up TF ###
+    ETCBC = 'hebrew/etcbc4c'
+    TF = Fabric(locations='text-fabric-data', modules=ETCBC)
+    api = TF.load('''
+        book chapter verse
+        sp nu gn ps vt vs st
+        otype
+        det
+        g_word_utf8 trailer_utf8
+        lex_utf8 lex voc_utf8
+        g_prs_utf8 g_uvf_utf8
+        prs_gn prs_nu prs_ps g_cons_utf8
+        gloss g_lex_utf8 phono
+    ''')
+    api.makeAvailableIn(globals())
+
     translate = {
         "art": {"full": "관사", "abbr": "관"},
         "verb": {"full": "동사", "abbr": "동"},
