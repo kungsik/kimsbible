@@ -1,6 +1,8 @@
 import os
 import json
 import codecs
+from flask import request
+
 
 #외부 API를 이용한 번역본 인용.
 '''

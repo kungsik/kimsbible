@@ -1,7 +1,7 @@
 import re
 from collections import OrderedDict
 
-from flask import render_template
+from flask import render_template, request, url_for
 from tf.fabric import Fabric
 
 from kimsbible import app
@@ -123,3 +123,19 @@ def show_verse_function(node):
         verse_str['kor'].append(kb.json_to_verse(section[0], chp_vrs[0], chp_vrs[1], 'korean'))
 
     return render_template('verse_api.html', verse_api=verse_api, section=section, verse_str=verse_str)
+
+
+@app.route('/api/search/', methods=['GET', 'POST'])
+def bible_search():
+    if request.method == 'POST':
+        query = request.form['query']
+        result = ''
+        S.search(query)
+        for r in S.fetch(limit=10):
+            result += S.glean(r)+"<br>"
+        if result == '':
+            return False
+        else:
+            return result
+    else:
+        return render_template('search.html')

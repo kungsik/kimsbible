@@ -20,6 +20,14 @@ a.word_elm {
   text-align: right;
 }
 
+.search_heb {
+  font-family: 'SBLHebrew';
+  font-size: 18px;
+  direction: ltr;
+  margin-top: 20px;
+  text-align: left;
+}
+
 .word_api {
   font-family: 'SBLHebrew';
   font-size: 15px;
@@ -85,3 +93,11 @@ select {
 .center {
   margin-top: 20px;
 }
+
+#search_result_ok,
+#query_input_ok {
+    border-radius: 5px;
+    border: 1px dotted;
+    padding: 10px;
+}
+
