@@ -1,4 +1,4 @@
-    $(document).delegate('#text_query', 'keydown', function(e) {
+    $(document).delegate('#query_text', 'keydown', function(e) {
       var keyCode = e.keyCode || e.which;
 
       if (keyCode == 9) {
