@@ -17,6 +17,7 @@ a.word_elm {
   font-size: 25px;
   direction: rtl;
   margin-top: 20px;
+  text-align: right;
 }
 
 .word_api {

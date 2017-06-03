@@ -10,7 +10,7 @@ $(document).ready(function(){
         var e = $(this);
         $.get(e.data('poload'), function(d) {
             e.popover({
-                content: d,
+                content: d, //+ e.position().left,
                 title: '단어분석',
                 html: true,
                 constraints: [
@@ -18,7 +18,18 @@ $(document).ready(function(){
                         to: '.container', pin: true
                     }
                 ],
-                placement: 'auto right'
+                placement: function(){
+                  var position = e.position();
+                  if (position.left < 100) {
+                    return 'right';
+                  }
+                  if (position.left > 100 && position.left < 200 ) {
+                    return 'top';
+                  }
+                  if (position.left > 200) {
+                    return "left";
+                  }
+                }
             }).popover('show');
         })
     });
