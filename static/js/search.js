@@ -11,9 +11,16 @@ $(function () {
                 $("#query_input").attr("id", "query_input_ok");
                 $("#search_result").attr("id", "search_result_ok");
 
-                $("#search_result_ok").html('검색결과:<br>' + data);
+                var num = data.match(/<tr>/g).length;
+
+                $("#search_result_ok").html('검색결과: 총' + num +'개 결과값<br>' + data);
                 $("#query_input_ok").html('입력한 쿼리:<br>' + input);
                 $("#query_post").find('textarea').val('');
+
+                $.ajax({
+                    url: "/static/js/table_pagination.js",
+                    dataType: "script"
+                });
             })
             .error(function () {
                 var input = $("#query_post").find("[id=query_text]").val();

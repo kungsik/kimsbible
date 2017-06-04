@@ -129,11 +129,15 @@ def show_verse_function(node):
 def bible_search():
     if request.method == 'POST':
         query = request.form['query']
-        result = ''
         S.search(query)
-        for r in S.fetch(limit=10):
-            result += S.glean(r)+"<br>"
-        if result == '':
+        result = "<table class='paginated'><tbody>"
+        i = 0
+        for r in S.fetch(limit=100):
+            i = int(i)
+            i = i + 1
+            result += "<tr><td>" + str(i) + ":  </td><td>"+S.glean(r)+"</td></tr>"
+        result += "</tbody></table>"
+        if i == 0:
             return False
         else:
             return result
