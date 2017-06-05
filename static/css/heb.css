@@ -121,3 +121,10 @@ div.pager span {
 div.pager span.active {
     background: #cc6962;
 }
+
+.search_helper,
+.search_selector,
+.search_selector2,
+.submit {
+  padding-bottom: 5px;
+}
