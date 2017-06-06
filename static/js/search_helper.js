@@ -8,7 +8,7 @@ var loadJsonToSelector = function (k, s, c, t) {
               var option_value = "";
             }
             else {
-              option_value = " book=";
+              option_value = "book=";
             }
             new_selector += "<option value='" + option_value  + key + "' category=" + c + ">" + value +"</option>";
         });
