@@ -92,6 +92,21 @@ $('#add_search').on('click', function () {
     var init_selector = $("#search_helper option:selected").val();
     var sec_selector = $("#search_selector option:selected").val();
     var new_selector = $("#new_selector option:selected").val();
+    var indent = $("#indent_count").val();
+
+    if(!indent){
+      var indent_add = '';
+    }
+    else {
+      var str = "  ";
+      var indent_add = str.repeat(indent);
+    }
+
+    if($("#search_helper option:selected").val() == '') {
+        init_selector = "";
+        new_selector = "";
+        sec_selector = "";
+    }
 
     if(init_selector == 'book') {
         new_selector = "";
@@ -138,6 +153,50 @@ $('#add_search').on('click', function () {
         var newLine = "";
     }
 
-    var txt = newLine + init_selector + ' ' + sec_selector + new_selector + ' ';
-    $("#query_text").val($("#query_text").val() + txt);
+    var txt = newLine + indent_add + init_selector + ' ' + sec_selector + new_selector + ' ';
+
+    if($('#check2').is(":checked")) {
+      var el = $("#query_text").get(0);
+      var pos = 0;
+      if ('selectionStart' in el) {
+          pos = el.selectionStart;
+      }
+      else if ('selection' in document) {
+          el.focus();
+          var Sel = document.selection.createRange();
+          var SelLength = document.selection.createRange().text.length;
+          Sel.moveStart('character', -el.value.length);
+          pos = Sel.text.length - SelLength;
+      }
+      var content = $('#query_text').val();
+      var newContent = content.substr(0, pos) + txt + content.substr(pos);
+      $('#query_text').val(newContent);
+    }
+
+    else {
+      $("#query_text").val($("#query_text").val() + txt);
+    }
+});
+
+
+$('#indent_plus, #indent_minus').on('click', function(){
+    var type = $(this).attr('count_range');
+    if($('#indent_count').val()) {
+        var count_val = $('#indent_count').val();
+    }
+    else {
+        var count_val = $('#indent_count').attr('num');
+    }
+    if(type=='m'){
+      if(count_val<1){
+        return;
+      }
+      $('#indent_count').val(parseInt(count_val)-1);
+    }
+    else if(type=='p'){
+      if(count_val>10){
+        return;
+      }
+      $('#indent_count').val(parseInt(count_val)+1);
+    }
 });

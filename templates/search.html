@@ -14,7 +14,7 @@
             <h4>검색 쿼리 입력</h4>
             <form method="post" id="query_post">
                 <textarea class="form-control" rows="10" name="query" id="query_text"></textarea>
-                <br><button type="submit" class="btn btn-default" id="query_submit">쿼리실행</button>
+                <br><button type="submit" class="btn btn-success" id="query_submit">쿼리실행</button>
             </form>
           <div class="search_helper" id="search_helper">
             <br><h5>검색 쿼리 입력 도우미</h5>
@@ -31,10 +31,24 @@
           </div>
           <div class="search_selector" id="search_selector"></div>
           <div class="search_selector2" id="search_selector2"></div>
-          <div class="submit">
-              <div class="checkbox"><label><input type="checkbox" id="check" checked>새로운 줄에 추가</label></div>
-              <input type="button" name="add_search" id="add_search" class="btn btn-default" value="검색옵션추가">
+          <label for="check"> 새로운 줄에 추가</label>
+          <input type="checkbox" id="check" checked>
+          <label for="check2"> 커서위치 다음에 추가</label>
+          <input type="checkbox" id="check2"><br><br>
+          <div class="input-group">
+            <span class="input-group-btn">
+              <button type="button" count_range="m" class="btn btn-default btn-number" id="indent_minus">
+                <span class="glyphicon glyphicon-minus"></span>
+              </button>
+            </span>
+            <input num=0 class="form-control" id="indent_count" style="text-align:center" placeholder="들여쓰기 레벨">
+            <span class="input-group-btn">
+              <button type="button" count_range="p" class="btn btn-default btn-number" id="indent_plus">
+                <span class="glyphicon glyphicon-plus"></span>
+              </button>
+            </span>
           </div>
+          <br><input type="button" name="add_search" id="add_search" class="btn btn-default" value="검색옵션추가">
         </div>
         <script src="/static/js/search_helper.js"></script>
         <div class="col-md-8">
