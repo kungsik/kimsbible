@@ -93,6 +93,7 @@ $('#add_search').on('click', function () {
     var sec_selector = $("#search_selector option:selected").val();
     var new_selector = $("#new_selector option:selected").val();
     var indent = $("#indent_count").val();
+    var space = ' ';
 
     if(!indent){
       var indent_add = '';
@@ -106,12 +107,14 @@ $('#add_search').on('click', function () {
         init_selector = "";
         new_selector = "";
         sec_selector = "";
+        space = "";
     }
 
     if(init_selector == 'book') {
         new_selector = "";
         if(!$("#search_selector option:selected").val()){
           sec_selector = "";
+          space = "";
         }
     }
 
@@ -122,18 +125,21 @@ $('#add_search').on('click', function () {
         }
         else {
           sec_selector = "";
+          space = "";
         }
     }
 
     if(init_selector == 'sentence') {
         sec_selector = "";
         new_selector = "";
+        space = "";
     }
 
     if(init_selector == 'clause' || init_selector == 'phrase' || init_selector == 'word') {
         if(!$("#search_selector option:selected").val()){
           sec_selector = "";
           new_selector = "";
+          space = "";
         }
         if(!$("#new_selector option:selected").val()){
           new_selector = "";
@@ -153,7 +159,7 @@ $('#add_search').on('click', function () {
         var newLine = "";
     }
 
-    var txt = newLine + indent_add + init_selector + ' ' + sec_selector + new_selector + ' ';
+    var txt = newLine + indent_add + init_selector + space + sec_selector + new_selector + ' ';
 
     if($('#check2').is(":checked")) {
       var el = $("#query_text").get(0);
