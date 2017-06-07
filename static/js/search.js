@@ -9,9 +9,9 @@ $(function () {
                 input = input.replace("verse ","verse&#32;");
                 input = input.replace("sentence ","sentence&#32;");
                 input = input.replace("verse ","verse&#32;");
-                input = input.replace("clause ","verse&#32;");
-                input = input.replace("phrase ","verse&#32;");
-                input = input.replace("word ","verse&#32;");
+                input = input.replace("clause ","clause&#32;");
+                input = input.replace("phrase ","phrase&#32;");
+                input = input.replace("word ","word&#32;");
                 input = input.replace(/ /g, "&nbsp");
                 input = input.replace(/\t/g, "&emsp;");
                 input = input.replace("ש1", "שׁ");
@@ -45,9 +45,9 @@ $(function () {
                 input = input.replace("verse ","verse&#32;");
                 input = input.replace("sentence ","sentence&#32;");
                 input = input.replace("verse ","verse&#32;");
-                input = input.replace("clause ","verse&#32;");
-                input = input.replace("phrase ","verse&#32;");
-                input = input.replace("word ","verse&#32;");
+                input = input.replace("clause ","clause&#32;");
+                input = input.replace("phrase ","phrase&#32;");
+                input = input.replace("word ","word&#32;");
                 input = input.replace(/ /g, "&nbsp");
                 input = input.replace(/\t/g, "&emsp;");
                 input = input.replace("ש1", "שׁ");
