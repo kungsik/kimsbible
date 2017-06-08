@@ -37,6 +37,10 @@ $(function () {
                     url: "/static/js/copy_query.js",
                     dataType: "script"
                 });
+                $.ajax({
+                    url: "/static/js/modal_word_api.js",
+                    dataType: "script"
+                });
             })
             .error(function () {
                 var input = $("#query_post").find("[id=query_text]").val();

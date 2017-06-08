@@ -20,6 +20,13 @@ a.word_elm {
   text-align: right;
 }
 
+.result_verse {
+  direction: rtl;
+  text-align: right;
+  font-size: 25px;
+  width
+}
+
 .search_heb {
   font-family: 'SBLHebrew';
   font-size: 18px;
@@ -94,7 +101,12 @@ select {
   margin-top: 20px;
 }
 
-#search_result_ok,
+#search_result_ok {
+    border-radius: 5px;
+    border: 1px dotted;
+    padding: 10px;
+}
+
 #query_input_ok {
     border-radius: 5px;
     border: 1px dotted;

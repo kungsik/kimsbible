@@ -131,12 +131,23 @@ def bible_search():
         query = request.form['query']
         query = query.replace('ש1', 'שׁ').replace('ש2', 'שׂ')
         S.search(query)
-        result = "<table class='paginated'><tbody>"
+        result = "<table class='table' id='paginated'><tbody>"
         i = 0
-        for r in S.fetch(limit=100):
-            i = int(i)
+        for t in S.fetch(limit=500):
+            i = int(1)
             i = i + 1
-            result += "<tr><td>" + str(i) + ":  </td><td>"+S.glean(r)+"</td></tr>"
+
+            word = F.g_word_utf8.v(t[-1])
+            if(word):
+                coloredNode = word
+            else:
+                coloredNode = T.text(L.d(t[-1], otype='word'))
+
+            section = T.sectionFromNode(t[-1], lang='ko')
+            verseNode = T.nodeFromSection((section[0], section[1], section[2]), lang='ko')
+            verse = T.text(L.d(verseNode, otype='word'))
+            verse = verse.replace(coloredNode, '<font color=blue>' + coloredNode + '</font>')
+            result += "<tr><td width=180px><span class=verse_num verse_node=" + str(verseNode) + ">" + section[0] + " " + str(section[1]) + ":" + str(section[2]) + "</span></td><td class=result_verse>" + verse + "</td></tr>"
         result += "</tbody></table>"
         if i == 0:
             return False

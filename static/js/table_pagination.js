@@ -1,4 +1,4 @@
-$('table.paginated').each(function() {
+$('table#paginated').each(function() {
     var currentPage = 0;
     var numPerPage = 15;
     var $table = $(this);
