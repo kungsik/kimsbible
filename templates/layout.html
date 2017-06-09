@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="/static/css/heb.css" rel="stylesheet">
     <link href="/static/css/nav_style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+    <link href="/static/css/mk.css" rel="stylesheet">
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="/static/js/modal_word_api.js"></script>
     <script>
@@ -43,7 +45,14 @@
                         </ul>
                     </li>
                     <li><a href="/text/Genesis/1">성서본문</a></li>
-                    <li><a href="/api/search">검색</a></li>
+                    <li>
+                      <a href="#!">검색</a>
+                      <ul class="nav-dropdown">
+                        <li><a href="/api/search">쿼리검색</a></li>
+                        <li><a href="/search_tutorial">튜토리얼</a></li>
+                        <li><a href="/search_sample">검색예문</a></li>
+                      </ul>
+                    </li>
                     <li>
                         <a href="#!">도구</a>
                         <ul class="nav-dropdown">

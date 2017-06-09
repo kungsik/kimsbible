@@ -25,7 +25,7 @@ $(function () {
 
                 var num = data.match(/<tr>/g).length;
 
-                $("#search_result_ok").html('검색결과: 총' + num +'개 결과값<br>' + data);
+                $("#search_result_ok").html('검색결과: 총' + num +'개 결과값 <span class=clause style="padding:2px; font-size:15px">구절(clause)</span> <span class=phrase style="padding:2px; font-size:15px">구(phrase)</span> <span class=word style="font-size:15px">단어(word)</span><br>' + data);
                 $("#query_input_ok").html('입력한 쿼리:<button type="button" class="btn btn-default btn btn-sm" id="copy_query">입력창에 복사</button><div id=used_query>' + input + '</div>');
                 $("#query_post").find('textarea').val('');
 

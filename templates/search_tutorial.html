@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="markdown-preview-enhanced   ">
+
+  <h1 id="&#xAC80;&#xC0C9;&#xAE30;&#xB2A5;-&#xD29C;&#xD1A0;&#xB9AC;&#xC5BC;">검색기능 튜토리얼</h1>
+<p><br><br>
+<font color="red">이 문서는 현재 계속 업데이트 중입니다. 문서상으로 불충분한 내용은 동영상으로도 업데이트할 계획입니다.</font><br>
+<br></p>
+<blockquote>
+<p><strong>개요</strong></p>
+<ul>
+<li>알파알렙 성경은 Text-Fabric의 원어 성서 데이터를 기반으로 만들어졌기 때문에 기본적인 검색 방식은 Text-Fabric 쿼리 엔진을 따릅니다.</li>
+<li>Text-Fabric 데이터베이스는 단어 파싱 정보 뿐만 아니라 구문 정보까지 포함하고 있어서 매우 입체적인 검색을 실행할 수 있습니다.</li>
+<li>쿼리입력 방식의 검색 방식은 처음에는 낯설고 까다롭지만 바이블웤스나 어콜던스에서 구현하기 어려운 검색을 보다 간편히 실행할 수 있습니다.</li>
+<li>앞으로 더 간단하고 쉬운 방식의 검색 기능도 추가할 예정입니다.</li>
+</ul>
+</blockquote>
+<p><br></p>
+<h3 id="1-&#xB370;&#xC774;&#xD130;-&#xBCA0;&#xC774;&#xC2A4;-&#xAD6C;&#xC870;">1. 데이터 베이스 구조</h3>
+<p>Text-Fabric의 데이터베이스는 아래와 같이 &quot;계층화&quot;가 되어 있습니다.<br>
+<img src="https://github.com/ETCBC/text-fabric/wiki/DataModel/DataModel.003.jpeg" alt="db"><br>
+출처: <a href="https://github.com/ETCBC/text-fabric/wiki/DataModel/">https://github.com/ETCBC/text-fabric/wiki/DataModel/</a></p>
+<ul>
+<li>데이터베이스의 가장 높은 층에는 책(book)이 있고, 그 아래에 문법적인 단위들(구절, 구문, 단어)이 종속적으로 연결되어 있습니다.</li>
+<li>위와 같은 구조로 데이터베이스가 형성이 되어 있기 때문에 검색 쿼리를 입력할 때에는 위로부터 아래로 차근차근히 범위를 좁혀서 검색을 해 나가면 됩니다.</li>
+<li>예를 들면, 창세기의 명사문장들 가운데 주어역할을 하는 אלהים이라는 단어를 찾기 원한다면 아래와 같은 구조로 검색을 하게 됩니다.</li>
+</ul>
+<blockquote>
+<p><strong>책단위 = 창세기</strong> =&gt; <strong>절단위 = 명사절</strong> =&gt; <strong>구 = 주어</strong> =&gt; <strong>단어 = אלהים</strong></p>
+</blockquote>
+<p><br></p>
+<h3 id="2-&#xAC80;&#xC0C9;-&#xCFFC;&#xB9AC;-&#xC791;&#xC131;-&#xBC29;&#xBC95;">2. 검색 쿼리 작성 방법</h3>
+<p>기본적으로 검색 쿼리를 작성할 때 아래의 기본 원칙을 숙지해야 합니다.</p>
+<ul>
+<li>각 문법 요소의 계층 구조를 고려하여 작성(예를 들면 단어는 구에 종속. 절은 문장에 종속 등)</li>
+<li>종속되는 문법 요소는 <strong>들여쓰기</strong> 로 표현됩니다.</li>
+</ul>
+<p>일단 위에서 든 예를 가지고 실제로 쿼리를 작성해 보겠습니다.</p>
+<pre class="editor-colors lang-text"><div class="line"><span class="mpe-syntax--text mpe-syntax--plain"><span class="mpe-syntax--meta mpe-syntax--paragraph mpe-syntax--text"><span>-&nbsp;창세기와&nbsp;출애굽기의&nbsp;명사절들&nbsp;가운데&nbsp;אלהים이&nbsp;주어로&nbsp;등장하는&nbsp;경우는?</span></span></span></div></pre>
+<pre class="editor-colors lang-text"><div class="line"><span class="mpe-syntax--text mpe-syntax--plain"><span class="mpe-syntax--meta mpe-syntax--paragraph mpe-syntax--text"><span>book&nbsp;book=Genesis|Exodus&nbsp;&nbsp;</span></span></span></div><div class="line"><span class="mpe-syntax--text mpe-syntax--plain"><span>&nbsp;&nbsp;</span><span class="mpe-syntax--meta mpe-syntax--paragraph mpe-syntax--text"><span>chapter&nbsp;&nbsp;</span></span></span></div><div class="line"><span class="mpe-syntax--text mpe-syntax--plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="mpe-syntax--meta mpe-syntax--paragraph mpe-syntax--text"><span>verse</span></span></span></div><div class="line"><span class="mpe-syntax--text mpe-syntax--plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="mpe-syntax--meta mpe-syntax--paragraph mpe-syntax--text"><span>sentence&nbsp;&nbsp;</span></span></span></div><div class="line"><span class="mpe-syntax--text mpe-syntax--plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="mpe-syntax--meta mpe-syntax--paragraph mpe-syntax--text"><span>clause&nbsp;typ=NmCl&nbsp;&nbsp;</span></span></span></div><div class="line"><span class="mpe-syntax--text mpe-syntax--plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="mpe-syntax--meta mpe-syntax--paragraph mpe-syntax--text"><span>phrase&nbsp;function=Subj&nbsp;&nbsp;</span></span></span></div><div class="line"><span class="mpe-syntax--text mpe-syntax--plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="mpe-syntax--meta mpe-syntax--paragraph mpe-syntax--text"><span>word&nbsp;lex_utf8=אלהימ</span></span></span></div></pre>
+<ul>
+<li>위의 쿼리 코드를 살펴보면 가장 상위 요소인 책(book)으로부터 가장 하위 요소인 단어(word)에 이르기까지 모든 요소가 차례대로 입력되어 있는 것을 보실 수 있습니다.</li>
+<li>첫 번째 줄의 <strong>book book=Genesis|Exodus</strong> 는 성서의 책들 가운데 창세기와 출애굽기에서만 찾겠다는 것을 의미합니다. 이 코드에서 book이 두번 반복되어 있는 것을 볼 수 있습니다. 앞의 book은 book이라는 요소를 이용해서 검색한다는 선언입니다. 그리고 각 요소에는 부가적인 옵션들이 있습니다. book 요소에는 책을 지칭하는 옵션 book 하나뿐입니다. 이와 마찬가지로 chapter, verse 등도 옵션이 하나밖에 없습니다. 아무튼 book 옵션을 정의할 때에는 = 기호를 사용하는데 <strong>중요한 것은 = 양 옆에 공백이 있으면 오류가 생깁니다.</strong></li>
+<li>만약 창세기나 출애굽기에 한정하지 않고 전체 성서의 책들 범위에서 검색하기 원한다면 뒤에 옵션을 삭제하거나 book 요소 자체를 삭제하면 됩니다. <strong>단 옵션에 따라 책을 선택하지 않으면 결과값이 나오는 경우가 있으니 검색 결과가 나오지 않는다면 책 범위를 한정해서 시도해 보시는 것이 좋습니다.</strong></li>
+<li>복수의 책을 선택할 때에는 책과 책 사이에 | 기호를 삽입하면 됩니다. 여기서도 | 사이에 공백이 있으면 오류가 생깁니다.</li>
+<li>성서의 책 이름은 <strong>라틴어</strong> 표기로 작성해 주어야 합니다. 성서 라틴어 표기는 아래를 참조해 주시면 되고, 검색 쿼리 입력 도우미를 이용하시면 손쉽게 책을 선택할 수 있습니다.</li>
+<li>book 요소 바로 아래에 하위 요소인 chapter(장) 요소가 있습니다. 특별히 장 번호로 검색 범위를 한정하지 않을 것이기 때문에 별다른 옵션을 추가하지 않았습니다. 그리고 이 경우 chapter 요소 자체를 선언하지 않아도 됩니다. verse, sentence도 마찬가지입니다. <strong>만약 옵션 없이 작성할 경우에는 마지막에 공백을 한칸 주어야 합니다.</strong> 즉, chapter를 작성하고 난 다음에 스페이스바를 한번 눌러서 공백을 주어야 합니다. 검색 쿼리 입력 도우미를 이용하면 자동으로 공백이 추가됩니다.</li>
+<li>하위 요소를 선언할 때에는 종속 관계를 잘 표시해 주어야 합니다. 이는 <strong>들여쓰기</strong> 로 표시됩니다. chapter는 book의 하위 요소이기 때문에 들여쓰기를 했습니다. verse는 또한 chapter의 하위 요소이기 때문에 또 한번 들여쓰기를 했습니다. 이런 식으로 상위/하위 요소를 구분해서 작성해 주어야 합니다. 들여쓰기 옵션 또한 검색 쿼리 입력 도우미를 통해 쉽게 추가할 수 있습니다.</li>
+<li>clause(구절)는 sentence의 하위 요소가 되겠습니다. 앞서 명사절이라는 범위를 한정했는데, clause typ=NmCl이라는 표기는 명사절을 선택하겠다는 것을 의미합니다. 이런 각 요소들은 검색 쿼리 입력 도우미를 통해 쉽게 선택할 수 있습니다.</li>
+<li>phrase(구) 요소 내에는 각 단어구의 기능을 정의할 수 있습니다. 이 경우 &quot;주어&quot;를 선택했습니다.</li>
+<li>마지막으로 가장 하위 요소인 word를 선언했습니다. 히브리어 자판을 사용할 수 있는 경우 lex_utf8 옵션으로 찾으면 되고, 그렇지 못한 경우는 lex 옵션을 사용합니다. 히브리어 자판 대신 사용할 수 있는 코드는 아래를 참조해 주시면 됩니다. 단, 히브리어로 검색할 경우 <strong>&quot;종결형&quot;(ם, ף, ץ)은 사용하지 않습니다.</strong></li>
+</ul>
+<p>위의 검색 쿼리를 입력하고 &quot;쿼리실행&quot; 버튼을 누르면 아래와 같이 결과값이 출력됩니다.</p>
+<p><center><img src="../static/img/instruction1.png" alt="inst1"></center></p>
+<ul>
+<li>위의 검색결과에서 쿼리를 통해 입력한 요소들이 표시되어 있음을 볼 수 있습니다(clause, phrase, word 요소가 표시됨). 초록색 칸으로 표시된 부분은 명사절을 의미하는 것이고, 보라색 칸으로 표시된 부분은 주어(구), 그리고 파란색으로 표시된 단어가 אלהים입니다.</li>
+</ul>
+<p><br></p>
+<h3 id="3-&#xAC80;&#xC0C9;-&#xCFFC;&#xB9AC;-&#xC785;&#xB825;-&#xB3C4;&#xC6B0;&#xBBF8;">3. 검색 쿼리 입력 도우미</h3>
+<p>Text-Fabric 데이터베이스는 상당히 방대한 양의 문법 요소와 옵션들을 제공하고 있기 때문에 모든 데이터 요소에 익숙해 지는 것이 쉬운 일이 아닙니다. 따라서 알파알렙 성경앱에서는 보다 쉽게 문법 요소와 옵션들을 입력할 수 있는 인터페이스를 마련하였습니다.</p>
+<ul>
+<li><strong>선택자:</strong> 선택자 메뉴는 계층으로 구분된 문법요소들과 옵션들을 손쉽게 입력하게 하기 위한 메뉴입니다. 각 메뉴를 선택하면 옵션들을 추가로 입력할 수 있는 옵션이 자동으로 뜹니다. 그런데 이 가운데에는 자동으로 옵션값이 입력되는 메뉴가 있고, 그렇지 않은 경우가 있습니다. 대표적으로 &quot;단어선택&quot;의 옵션인 단어원형(코드/히브리어)과 단어텍스트형(코드/히브리어)의 경우 옵션을 선택한 이후 직접 그 값을 입력해야 합니다. 입력 요령은 위의 예제를 참고하시면 됩니다.</li>
+<li><strong>새로운 줄에 추가:</strong> 이 메뉴가 클릭 상태가 되면 검색 쿼리 입력 도우미를 통해 입력되는 새로운 코드가 자동으로 마지막 줄에 추가됩니다. 이 메뉴를 해제하면 새로운 줄이 아니라 마지막 줄 오른편에 추가됩니다. 예를 들면 &quot;단어선택&quot; 항목의 다양한 옵션들(원형, 품사, 시제 등등)을 한꺼번에 적용시키기 위해서는 이 메뉴를 해제하고 코드를 입력해야 합니다.</li>
+<li><strong>커서위치 다음에 추가:</strong> 이 메뉴가 클릭 상태가 되면 검색 쿼리 입력 도우미를 통해 입력되는 코드가 커서 위치 다음에 입력됩니다. 코드 입력시 중간에 코드를 삽입하고 싶거나 수정이 필요한 경우 사용합니다.</li>
+<li><strong>들여쓰기 레벨:</strong> 위의 예제에서 보듯이 코드는 종속 관계를 유지하면서 작성해야 합니다. 이를 위해 들여쓰기를 해야 하는데 숫자가 올라가면 올라갈수록 들여쓰기가 더 추가됩니다.</li>
+</ul>
+<blockquote>
+<p>쿼리를 반드시 도우미 기능을 통해 입력해야 하는 것은 아닙니다. 도우미 기능을 통해 입력하다가도 임의로 수정이 가능하고, 처음부터 직접 작성하셔도 상관 없습니다.</p>
+</blockquote>
+
+
+  </div>
+  {% endblock %}

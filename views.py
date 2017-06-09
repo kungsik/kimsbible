@@ -56,6 +56,15 @@ def developer_page():
 def license_page():
     return render_template('license.html')
 
+@app.route('/search_tutorial/')
+def tutorial_page():
+    return render_template('search_tutorial.html')
+
+@app.route('/search_sample/')
+def sample_page():
+    return render_template('search_sample.html')
+
+
 @app.route('/text/')
 @app.route('/text/<book>')
 @app.route('/text/<book>/<int:chapter>')
