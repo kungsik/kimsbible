@@ -133,21 +133,32 @@ def bible_search():
         S.search(query)
         result = "<table class='table' id='paginated'><tbody>"
         i = 0
-        for t in S.fetch(limit=500):
+
+        fetch_data = list(S.fetch(limit=500))
+        fetch_data.sort(key=lambda x: x[-1])
+
+        for t in fetch_data:
             i = int(1)
             i = i + 1
-
-            word = F.g_word_utf8.v(t[-1])
-            if(word):
-                coloredNode = word
-            else:
-                coloredNode = T.text(L.d(t[-1], otype='word'))
 
             section = T.sectionFromNode(t[-1], lang='ko')
             verseNode = T.nodeFromSection((section[0], section[1], section[2]), lang='ko')
             verse = T.text(L.d(verseNode, otype='word'))
-            verse = verse.replace(coloredNode, '<font color=blue>' + coloredNode + '</font>')
+
+            for each_node in t:
+                node_type = F.otype.v(each_node)
+                if(node_type == 'book' or node_type == 'chapter' or node_type == 'verse'): continue
+                elif(node_type == 'clause'):
+                    coloredNode = T.text(L.d(each_node, otype='word'))
+                    verse = verse.replace(coloredNode, '<span class=clause>' + coloredNode + '</span>')
+                elif (node_type == 'phrase'):
+                    coloredNode = T.text(L.d(each_node, otype='word'))
+                    verse = verse.replace(coloredNode, '<span class=phrase>' + coloredNode + '</span>')
+                elif(node_type == 'word'):
+                    coloredNode = F.g_word_utf8.v(each_node)
+                    verse = verse.replace(coloredNode, '<span class=word>' + coloredNode + '</span>')
             result += "<tr><td width=180px><span class=verse_num verse_node=" + str(verseNode) + ">" + section[0] + " " + str(section[1]) + ":" + str(section[2]) + "</span></td><td class=result_verse>" + verse + "</td></tr>"
+
         result += "</tbody></table>"
         if i == 0:
             return False
