@@ -140,3 +140,21 @@ div.pager span.active {
 .submit {
   padding-bottom: 5px;
 }
+
+.clause {
+    border-width: 2px;
+    border-style: solid;
+    border-color: #009926;
+    padding: 5px;
+}
+
+.phrase {
+    border-width: 2px;
+    border-color: rebeccapurple;
+    padding: 1px;
+    border-style: solid;
+}
+
+.word {
+    color: blue;
+}
