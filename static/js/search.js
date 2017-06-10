@@ -1,5 +1,8 @@
 $(function () {
     $("#query_post").submit(function () {
+        $("#load_image").show();
+        $("#query_submit").hide();
+
         var query_send = $.post('./', $('#query_post').serialize())
             .success(function () {
                 var data = query_send.responseText;
@@ -41,6 +44,9 @@ $(function () {
                     url: "/static/js/modal_word_api.js",
                     dataType: "script"
                 });
+
+                $("#load_image").hide();
+                $("#query_submit").show();
             })
             .error(function () {
                 var input = $("#query_post").find("[id=query_text]").val();
@@ -73,6 +79,9 @@ $(function () {
                     url: "/static/js/copy_query.js",
                     dataType: "script"
                 });
+
+                $("#load_image").hide();
+                $("#query_submit").show();
             });
         return false;
     });
