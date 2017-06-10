@@ -7,8 +7,7 @@
 
 
     <div class="alert alert-danger" role="alert" style="text-align: center">현재 검색 페이지는 아직 테스트 중입니다. 검색결과는 500개로 제한합니다.
-      검색하시기 전에 검색 튜토리얼(계속 업데이트 중)을 참고하시기 바랍니다. 쿼리실행을 누르시고 결과값이 나올 때까지 기다려 주시고,
-      쿼리실행 버튼을 여러번 누르면 결과값이 뜨지 않을 수도 있습니다.</div>
+      검색하시기 전에 검색 튜토리얼(계속 업데이트 중)을 참고하시기 바랍니다. 결과값이 많거나 쿼리 로직이 복잡할 경우는 로딩 시간이 좀 걸릴 수 있습니다.</div>
 
     <div class="row">
         <div class="col-md-4" style="text-align: center">
@@ -17,6 +16,7 @@
                 <textarea class="form-control" rows="10" name="query" id="query_text"></textarea>
                 <br><button type="submit" class="btn btn-success" id="query_submit">쿼리실행</button>
             </form>
+          <div id="load_image" style="display:none"><img src="/static/img/loader.gif" align="center"></div>
           <div class="search_helper" id="search_helper">
             <br><h5>검색 쿼리 입력 도우미</h5>
             <select name="init" id="init" class="form-control">
@@ -49,10 +49,9 @@
               </button>
             </span>
           </div>
-          <br><input type="button" name="add_search" id="add_search" class="btn btn-default" value="검색옵션추가"><br>
+          <div style="padding:20px"><input type="button" name="add_search" id="add_search" class="btn btn-default" value="검색옵션추가"></div>
         </div>
         <div class="col-md-8">
-            <div id="load_image" style="display:none"><img src="http://cfile2.uf.tistory.com/image/233DDC505786DA890B3A83"></div>
             <div id="query_input"></div>
             <div id="pager" class="pager"></div>
             <div id="search_result" class="search_heb"></div><br>
