@@ -22,3 +22,22 @@ verse
 - word sp=verb 품사=동사
 - vt=infa 시제=절대부정사
 - word ... <: word ... 앞에 나온 단어와 뒤에 나온 단어가 바로 붙어서 나옴.
+
+#### כה אמר יהוה (여호와께서 말씀하시기를) 구문 찾기
+
+```
+verse  
+  word  lex_utf8=כה
+  <: word  sp=verb   lex_utf8=אמר
+  <: word  lex_utf8=יהוה
+```
+
+#### נתן ... ביד 구문 찾기(항상 적들에 대한 적대적인 의미?)
+
+```
+verse
+  sentence
+    [[ word lex_utf8=נתנ
+    word lex_utf8=ב
+    <: word lex_utf8=יד  
+```

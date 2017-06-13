@@ -83,7 +83,7 @@ book book=Genesis|Exodus
 
 위의 검색 쿼리를 입력하고 "쿼리실행" 버튼을 누르면 아래와 같이 결과값이 출력됩니다.
 
-<center>![inst1](../static/img/instruction1.png)</center>
+<center>![inst1](http://app.alphalef.com/static/img/instruction1.png)</center>
 
 - 위의 검색결과에서 쿼리를 통해 입력한 요소들이 표시되어 있음을 볼 수 있습니다(clause, phrase, word 요소가 표시됨). 초록색 칸으로 표시된 부분은 명사절을 의미하는 것이고, 보라색 칸으로 표시된 부분은 주어(구), 그리고 파란색으로 표시된 단어가 검색 쿼리 마지막 줄에 추가한 אלהים입니다.
 
