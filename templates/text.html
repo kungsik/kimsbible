@@ -1,6 +1,9 @@
 {% extends "layout.html" %}
 {% block body %}
 
+    <script src="/static/js/syntax_viewer.js"></script>
+
+
         {% set next_chapter = chapter + 1 %}
         {% set prev_chapter = chapter - 1 %}
 
@@ -24,10 +27,15 @@
         {% include 'bible_selector.html' %}
     </div>
 
+    <div style="text-align: right">
+        <button class="btn btn-default" id="syntax_enact">구절/구문단위표시</button>
+    </div>
+
     <div class = "verse_heb">
         {% autoescape false %}
         {{ verse }}
         {% endautoescape %}
     </div>
+
 
 {% endblock %}

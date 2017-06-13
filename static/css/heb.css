@@ -24,7 +24,6 @@ a.word_elm {
   direction: rtl;
   text-align: right;
   font-size: 25px;
-  width
 }
 
 .search_heb {
@@ -145,12 +144,18 @@ div.pager span.active {
     border-width: 2px;
     border-style: solid;
     border-color: #009926;
-    padding: 5px;
+    padding: 7px;
+    margin: 15px;
+}
+
+.clause.text {
+    display: inline-block;
 }
 
 .phrase {
     border-width: 2px;
     border-color: rebeccapurple;
+    margin: 15px;
     padding: 1px;
     border-style: solid;
 }

@@ -75,18 +75,26 @@ def text_page(book='Genesis', chapter=1):
     last_chp = T.sectionFromNode(whole_chpNode, lastSlot=True)
     verse = ""
     for v in verseNode:
-        verse += '<span class=verse_num verse_node='+str(v)+'>'
+        verse += '<span class=verse_num id=verse_num verse_node='+str(v)+'>'
         verse += str(T.sectionFromNode(v)[2])
         verse += ' </span>'
-        wordsNode = L.d(v, otype='word')
-        for w in wordsNode:
-            verse += '<a tabindex=0 class=word_elm data-poload=/api/word/'+str(w)+' data-toggle=popover data-trigger=focus>'
-            verse += F.g_word_utf8.v(w)
-            verse += '</a>'
-            if F.trailer_utf8.v(w):
-                verse += '<span class=trailer>'
-                verse += F.trailer_utf8.v(w)
+        clauseNode = L.d(v, otype='clause')
+        for c in clauseNode:
+            verse += '<span class=clauseNode id=clauseNode clause_node='+str(c)+'>'
+            phraseNode = L.d(c, otype='phrase')
+            for p in phraseNode:
+                verse += '<span class=phraseNode id=phraseNode phrase_node='+str(p)+'>'
+                wordsNode = L.d(p, otype='word')
+                for w in wordsNode:
+                    verse += '<span class=wordNode><a tabindex=0 class=word_elm data-poload=/api/word/'+str(w)+' data-toggle=popover data-trigger=focus>'
+                    verse += F.g_word_utf8.v(w)
+                    verse += '</a></span>'
+                    if F.trailer_utf8.v(w):
+                        verse += '<span class=trailerNode>'
+                        verse += F.trailer_utf8.v(w)
+                        verse += '</span>'
                 verse += '</span>'
+            verse += '</span>'
     return render_template('text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp[1])
 
 
