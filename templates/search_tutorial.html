@@ -39,7 +39,7 @@
  <img src="https://github.com/ETCBC/text-fabric/wiki/DataModel/DataModel.003.jpeg" alt="db"><br>
  출처: <a href="https://github.com/ETCBC/text-fabric/wiki/DataModel/">https://github.com/ETCBC/text-fabric/wiki/DataModel/</a></p>
  <ul>
- <li>데이터베이스의 가장 높은 층에는 책(book)이 있고, 그 아래에 문법적인 단위들(구절, 구문, 단어)이 종속적으로 연결되어 있습니다.</li>
+ <li>데이터베이스의 가장 높은 층에는 책(book)이 있고, 그 아래에 문법적인 단위들(절, 구문, 단어)이 종속적으로 연결되어 있습니다.</li>
  <li>위와 같은 구조로 데이터베이스가 형성이 되어 있기 때문에 검색 쿼리를 입력할 때에는 위로부터 아래로 차근차근히 범위를 좁혀서 검색을 해 나가면 됩니다.</li>
  <li>예를 들면, 창세기의 명사문장들 가운데 주어역할을 하는 אלהים이라는 단어를 찾기 원한다면 아래와 같은 구조로 검색을 하게 됩니다.</li>
  </ul>
@@ -99,7 +99,7 @@
  <li>하위 요소를 선언할 때에는 종속 관계를 잘 표시해 주어야 합니다. 이는 <strong>들여쓰기</strong> 로 표시됩니다. chapter는 book의 하위 요소이기 때문에 들여쓰기를 했습니다. verse는 또한 chapter의 하위 요소이기 때문에 또 한번 들여쓰기를 했습니다. 이런 식으로 상위/하위 요소를 구분해서 작성해 주어야 합니다. 들여쓰기 옵션 또한 검색 쿼리 입력 도우미를 통해 쉽게 추가할 수 있습니다.</li>
  </ul>
  <ul>
- <li>clause(구절)는 sentence의 하위 요소가 되겠습니다. 앞서 명사절이라는 범위를 한정했는데, clause typ=NmCl이라는 표기는 명사절을 선택하겠다는 것을 의미합니다. 이런 각 요소들은 검색 쿼리 입력 도우미를 통해 쉽게 선택할 수 있습니다.</li>
+ <li>clause(절)는 sentence의 하위 요소가 되겠습니다. 앞서 명사절이라는 범위를 한정했는데, clause typ=NmCl이라는 표기는 명사절을 선택하겠다는 것을 의미합니다. 이런 각 요소들은 검색 쿼리 입력 도우미를 통해 쉽게 선택할 수 있습니다.</li>
  </ul>
  <ul>
  <li>phrase(구) 요소 내에는 각 단어구의 기능을 정의할 수 있습니다. 이 경우 &quot;주어&quot;를 선택했습니다.</li>
@@ -263,10 +263,10 @@
  </ul>
  <pre class="editor-colors lang-text"><div class="line"><span class="mpe-syntax--text mpe-syntax--plain"><span class="mpe-syntax--meta mpe-syntax--paragraph mpe-syntax--text"><span>book&nbsp;book=Deuteronomium&nbsp;&nbsp;</span></span></span></div><div class="line"><span class="mpe-syntax--text mpe-syntax--plain"><span>&nbsp;&nbsp;</span><span class="mpe-syntax--meta mpe-syntax--paragraph mpe-syntax--text"><span>verse&nbsp;&nbsp;&nbsp;</span></span></span></div><div class="line"><span class="mpe-syntax--text mpe-syntax--plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="mpe-syntax--meta mpe-syntax--paragraph mpe-syntax--text"><span>word&nbsp;lex_utf8=יהוה</span></span></span></div><div class="line"><span class="mpe-syntax--text mpe-syntax--plain"><span>&nbsp;&nbsp;</span><span class="mpe-syntax--meta mpe-syntax--paragraph mpe-syntax--text"><span>=&nbsp;verse&nbsp;&nbsp;</span></span></span></div><div class="line"><span class="mpe-syntax--text mpe-syntax--plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="mpe-syntax--meta mpe-syntax--paragraph mpe-syntax--text"><span>word&nbsp;lex_utf8=אלהימ</span></span></span></div></pre>
  <ul>
- <li>위의 예제에서 볼 수 있듯이 두 단어를 각각 다른 verse에 종속시켜 놓았습니다. 만약 verse를 표시해 주지 않는다면 검색 쿼리 결과는 יהוה 혹은 אלהים 단어가 한번이라도 나타나는 구절을 모두 찾아줄 것입니다.</li>
+ <li>위의 예제에서 볼 수 있듯이 두 단어를 각각 다른 verse에 종속시켜 놓았습니다. 만약 verse를 표시해 주지 않는다면 검색 쿼리 결과는 יהוה 혹은 אלהים 단어가 한번이라도 나타나는 절(clause)을 모두 찾아줄 것입니다.</li>
  </ul>
  <ul>
- <li>각기 다른 verse 아래에 word를 종속시켜 놓은 다음에 verse 앞에다가 = 를 추가해 주었습니다(<b>연산자를 사용할 때에는 연산자 사이에 스페이스가 있어야 합니다.</b>). 이는 앞의 verse와 뒤의 verse 요소가 동일하다는 의미입니다. 즉 같은 절이라고 하는 의미입니다. 따라서 위 쿼리를 실행하면 한 절에 두 단어가 모두 나타나는 구절을 찾아줍니다.</li>
+ <li>각기 다른 verse 아래에 word를 종속시켜 놓은 다음에 verse 앞에다가 = 를 추가해 주었습니다(<b>연산자를 사용할 때에는 연산자 사이에 스페이스가 있어야 합니다.</b>). 이는 앞의 verse와 뒤의 verse 요소가 동일하다는 의미입니다. 즉 같은 절이라고 하는 의미입니다. 따라서 위 쿼리를 실행하면 한 절에 두 단어가 모두 나타나는 절(clause)을 찾아줍니다.</li>
  </ul>
  <ul>
  <li>위 쿼리는 또한 아래와 같이 표시해 줄 수 있습니다.</li>
@@ -276,7 +276,7 @@
  <li>각 verse 앞에 별명(변수)을 붙여 주었습니다. 그러고 난 다음에 코드 맨 아래 쪽에 연산자를 이용해서 비교할 수 있게 코드를 작성할 수 있습니다. 간단한 쿼리는 문제 없지만 쿼리가 굉장히 길어질 경우 매우 유용합니다.</li>
  </ul>
  <ul>
- <li>위와 같은 변수를 이용해서 검색에 변화를 줘 보겠습니다. 위의 검색 쿼리를 실행하면 יהוה와 אלהים이 위치에 관계없이 한 절에 등장하는 구절들을 결과로 보여줍니다. 하지만 יהוה אלהינו 구문과 같이 두 단어가 나란히 오는 경우를 검색해 보도록 하겠습니다.</li>
+ <li>위와 같은 변수를 이용해서 검색에 변화를 줘 보겠습니다. 위의 검색 쿼리를 실행하면 יהוה와 אלהים이 위치에 관계없이 한 절(verse)에 등장하는 절(clause)들을 결과로 보여줍니다. 하지만 יהוה אלהינו 구문과 같이 두 단어가 나란히 오는 경우를 검색해 보도록 하겠습니다.</li>
  </ul>
  <pre class="editor-colors lang-text"><div class="line"><span class="mpe-syntax--text mpe-syntax--plain"><span class="mpe-syntax--meta mpe-syntax--paragraph mpe-syntax--text"><span>book&nbsp;book=Deuteronomium&nbsp;&nbsp;</span></span></span></div><div class="line"><span class="mpe-syntax--text mpe-syntax--plain"><span>&nbsp;&nbsp;</span><span class="mpe-syntax--meta mpe-syntax--paragraph mpe-syntax--text"><span>v1:verse&nbsp;&nbsp;&nbsp;</span></span></span></div><div class="line"><span class="mpe-syntax--text mpe-syntax--plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="mpe-syntax--meta mpe-syntax--paragraph mpe-syntax--text"><span>w1:word&nbsp;lex_utf8=יהוה</span></span></span></div><div class="line"><span class="mpe-syntax--text mpe-syntax--plain"><span>&nbsp;&nbsp;</span><span class="mpe-syntax--meta mpe-syntax--paragraph mpe-syntax--text"><span>v2:verse&nbsp;&nbsp;</span></span></span></div><div class="line"><span class="mpe-syntax--text mpe-syntax--plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="mpe-syntax--meta mpe-syntax--paragraph mpe-syntax--text"><span>w2:word&nbsp;lex_utf8=אלהימ</span></span></span></div><div class="line"><span class="mpe-syntax--text mpe-syntax--plain"><span>&nbsp;</span></span></div><div class="line"><span class="mpe-syntax--text mpe-syntax--plain"><span class="mpe-syntax--meta mpe-syntax--paragraph mpe-syntax--text"><span>v1&nbsp;=&nbsp;v2</span></span></span></div><div class="line"><span class="mpe-syntax--text mpe-syntax--plain"><span class="mpe-syntax--meta mpe-syntax--paragraph mpe-syntax--text"><span>w1&nbsp;&lt;:&nbsp;w2</span></span></span></div></pre>
  <ul>
