@@ -13,7 +13,7 @@ TF = Fabric(locations='text-fabric-data', modules=ETCBC)
 api = TF.load('''
     book chapter verse
     sp nu gn ps vt vs st
-    otype
+    otype typ function
     det
     g_word_utf8 trailer_utf8
     lex_utf8 lex voc_utf8
@@ -75,15 +75,17 @@ def text_page(book='Genesis', chapter=1):
     last_chp = T.sectionFromNode(whole_chpNode, lastSlot=True)
     verse = ""
     for v in verseNode:
-        verse += '<span class=verse_num id=verse_num verse_node='+str(v)+'>'
+        verse += '<span class=verseNode><a class=verse_num id=verse_num verse_node='+str(v)+'>'
         verse += str(T.sectionFromNode(v)[2])
-        verse += ' </span>'
+        verse += ' </a>'
         clauseNode = L.d(v, otype='clause')
         for c in clauseNode:
             verse += '<span class=clauseNode id=clauseNode clause_node='+str(c)+'>'
+            verse += "<span class='syntax clause1 hidden' id=syntax>구절:"+ kb.eng_to_kor(F.typ.v(c), 'abbr') +"</span>"
             phraseNode = L.d(c, otype='phrase')
             for p in phraseNode:
                 verse += '<span class=phraseNode id=phraseNode phrase_node='+str(p)+'>'
+                verse += "<span class='syntax phrase1 hidden' id=syntax>구:"+ kb.eng_to_kor(F.typ.v(p), 'abbr') + "," + kb.eng_to_kor(F.function.v(p), 'abbr') + "</span>"
                 wordsNode = L.d(p, otype='word')
                 for w in wordsNode:
                     verse += '<span class=wordNode><a tabindex=0 class=word_elm data-poload=/api/word/'+str(w)+' data-toggle=popover data-trigger=focus>'
@@ -95,6 +97,7 @@ def text_page(book='Genesis', chapter=1):
                         verse += '</span>'
                 verse += '</span>'
             verse += '</span>'
+        verse += '</span>'
     return render_template('text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp[1])
 
 

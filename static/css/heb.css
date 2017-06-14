@@ -144,11 +144,8 @@ div.pager span.active {
     border-width: 2px;
     border-style: solid;
     border-color: #009926;
-    padding: 7px;
-    margin: 15px;
-}
-
-.clause.text {
+    padding: 2px;
+    margin: 10px;
     display: inline-block;
 }
 
@@ -156,10 +153,38 @@ div.pager span.active {
     border-width: 2px;
     border-color: rebeccapurple;
     margin: 15px;
-    padding: 1px;
+    padding: 5px;
     border-style: solid;
+    display: inline-block;
 }
 
 .word {
     color: blue;
+}
+
+.syntax {
+    direction: ltr;
+    font-size: 10pt;
+    margin-left: 2px;
+    margin-right: 2px;
+    position: relative;
+    padding-left: 2px;
+    padding-right: 2px;
+    background-color: #fff;
+    text-indent: 0;
+    display: inline-block;
+}
+
+.syntax.clause1 {
+  top: -50px;
+}
+
+.syntax.phrase1 {
+  top: -30px;
+}
+
+.syntax.clause1.hidden,
+.syntax.phrase1.hidden
+ {
+  display: none;
 }
