@@ -42,7 +42,7 @@
     "Chronica_II":"역대하"
   },
   "verse": {
-    "title":"절단위"
+    "title":"절(verse)단위"
   },
   "word": {
     "title":"단어단위",
@@ -143,7 +143,7 @@
     "title":"문장단위"
   },
   "clause": {
-    "title":"구절(clause)단위",
+    "title":"절(clause)단위",
     "typ":[{
       "title":"절 세부 유형",
       "AjCl":"형용사절",

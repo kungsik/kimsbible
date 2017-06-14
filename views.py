@@ -81,11 +81,11 @@ def text_page(book='Genesis', chapter=1):
         clauseNode = L.d(v, otype='clause')
         for c in clauseNode:
             verse += '<span class=clauseNode id=clauseNode clause_node='+str(c)+'>'
-            verse += "<span class='syntax clause1 hidden' id=syntax>구절:"+ kb.eng_to_kor(F.typ.v(c), 'abbr') +"</span>"
+            verse += "<span class='syntax clause1 hidden' id=syntax>C:"+ kb.eng_to_kor(F.typ.v(c), 'abbr') +"</span>"
             phraseNode = L.d(c, otype='phrase')
             for p in phraseNode:
                 verse += '<span class=phraseNode id=phraseNode phrase_node='+str(p)+'>'
-                verse += "<span class='syntax phrase1 hidden' id=syntax>구:"+ kb.eng_to_kor(F.typ.v(p), 'abbr') + "," + kb.eng_to_kor(F.function.v(p), 'abbr') + "</span>"
+                verse += "<span class='syntax phrase1 hidden' id=syntax>P:"+ kb.eng_to_kor(F.typ.v(p), 'abbr') + "," + kb.eng_to_kor(F.function.v(p), 'abbr') + "</span>"
                 wordsNode = L.d(p, otype='word')
                 for w in wordsNode:
                     verse += '<span class=wordNode><a tabindex=0 class=word_elm data-poload=/api/word/'+str(w)+' data-toggle=popover data-trigger=focus>'
