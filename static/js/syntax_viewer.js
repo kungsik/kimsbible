@@ -21,3 +21,22 @@
          });
      });
  });
+
+
+ $(function () {
+     $(document.body).on('click', '#verse_block', function () {
+         $(this).html('절(verse)구분해제');
+         $(this).attr('id', 'verse_inline');
+         $('.verseNode').each(function () {
+             $('.verseNode').css('display', 'block');
+         });
+
+         $(document.body).on('click', '#verse_inline', function () {
+             $(this).html('절(verse)구분');
+             $(this).attr('id', 'verse_block');
+             $('.verseNode').each(function () {
+                 $('.verseNode').css('display', 'inline');
+             });
+         });
+     });
+ });
