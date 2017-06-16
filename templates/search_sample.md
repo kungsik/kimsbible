@@ -15,7 +15,7 @@ book book=Genesis
 #### 절대형 부정사 + 일반동사 조합 (강조의 의미)
 
 ```
-verse
+verse  
   word sp=verb   vt=infa
   <: word sp=verb  
 ```
@@ -35,8 +35,8 @@ verse
 #### נתן ... ביד 구문 찾기(항상 적들에 대한 적대적인 의미?)
 
 ```
-verse
-  sentence
+verse  
+  clause  
     [[ word lex_utf8=נתנ
     word lex_utf8=ב
     <: word lex_utf8=יד  

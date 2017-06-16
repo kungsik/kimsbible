@@ -162,22 +162,38 @@ def bible_search():
             i = i + 1
 
             section = T.sectionFromNode(t[-1], lang='ko')
-            verseNode = T.nodeFromSection((section[0], section[1], section[2]), lang='ko')
-            verse = T.text(L.d(verseNode, otype='word'))
+            v = T.nodeFromSection((section[0], section[1], section[2]), lang='ko')
+            verse = ''
+
+            clauseNode = L.d(v, otype='clause')
+            for c in clauseNode:
+                verse += '<span class=clauseNode_'+str(c)+'>'
+                phraseNode = L.d(c, otype='phrase')
+                for p in phraseNode:
+                    verse += '<span class=phraseNode_'+str(p)+'>'
+                    wordsNode = L.d(p, otype='word')
+                    for w in wordsNode:
+                        verse += '<span class=wordNode_'+str(w)+'>'
+                        verse += F.g_word_utf8.v(w)
+                        verse += '</a></span>'
+                        if F.trailer_utf8.v(w):
+                            verse += '<span class=trailerNode>'
+                            verse += F.trailer_utf8.v(w)
+                            verse += '</span>'
+                    verse += '</span>'
+                verse += '</span>'
+            verse += '</span>'
 
             for each_node in t:
                 node_type = F.otype.v(each_node)
                 if(node_type == 'book' or node_type == 'chapter' or node_type == 'verse'): continue
                 elif(node_type == 'clause'):
-                    coloredNode = T.text(L.d(each_node, otype='word'))
-                    verse = verse.replace(coloredNode, '<span class=clause>' + coloredNode + '</span>')
+                    verse = verse.replace('clauseNode_'+str(each_node), 'clause')
                 elif (node_type == 'phrase'):
-                    coloredNode = T.text(L.d(each_node, otype='word'))
-                    verse = verse.replace(coloredNode, '<span class=phrase>' + coloredNode + '</span>')
+                    verse = verse.replace('phraseNode_'+str(each_node), 'phrase')
                 elif(node_type == 'word'):
-                    coloredNode = F.g_word_utf8.v(each_node)
-                    verse = verse.replace(coloredNode, '<span class=word>' + coloredNode + '</span>')
-            result += "<tr><td width=180px><span class=verse_num verse_node=" + str(verseNode) + ">" + section[0] + " " + str(section[1]) + ":" + str(section[2]) + "</span></td><td class=result_verse>" + verse + "</td></tr>"
+                    verse = verse.replace('wordNode_'+str(each_node), 'word')
+            result += "<tr><td width=180px><span class=verse_num verse_node=" + str(v) + ">" + section[0] + " " + str(section[1]) + ":" + str(section[2]) + "</span></td><td class=result_verse>" + verse + "</td></tr>"
 
         result += "</tbody></table>"
         if i == 0:
