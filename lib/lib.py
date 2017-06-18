@@ -11,8 +11,11 @@ def json_to_verse(book, chp, verse, ver):
     with urllib.request.urlopen(url) as u:
         data = u.read().decode().replace('(', '').replace(');', '')
         verse_json = json.loads(data)
-        verse_str = chp + ":" + verse + " " + verse_json['book'][0]['chapter'][verse]['verse']
-        return verse_str
+        try:
+            verse_str = chp + ":" + verse + " " + verse_json['book'][0]['chapter'][verse]['verse']
+            return verse_str
+        except KeyError:
+            return 'DB 오류로 번역지원되지 않음'
 '''
 #자체 json 파일로 번역본 인용
 def json_to_verse(book, chp, verse, ver):
@@ -62,8 +65,11 @@ def json_to_verse(book, chp, verse, ver):
     with codecs.open(location, 'r', 'utf-8-sig') as json_data:
         d = json.load(json_data)
         json_chp = int(chp) - 1
-        verse_str = chp + ":" + verse + " " + d[book_code[book]]['chapters'][json_chp][chp][verse]
-        return verse_str
+        try:
+            verse_str = chp + ":" + verse + " " + d[book_code[book]]['chapters'][json_chp][chp][verse]
+            return verse_str
+        except KeyError:
+            return 'DB 오류로 번역지원되지 않음.'
 
 def heb_vrs_to_eng(book, chp, verse):
     vrs_str = chp + ":" + verse
