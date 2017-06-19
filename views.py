@@ -74,30 +74,42 @@ def text_page(book='Genesis', chapter=1):
     whole_chpNode = T.nodeFromSection((book,))
     last_chp = T.sectionFromNode(whole_chpNode, lastSlot=True)
     verse = ""
+
     for v in verseNode:
         verse += '<span class=verseNode><a class=verse_num id=verse_num verse_node='+str(v)+'>'
         verse += str(T.sectionFromNode(v)[2])
         verse += ' </a>'
-        clauseNode = L.d(v, otype='clause')
-        for c in clauseNode:
-            verse += '<span class=clauseNode id=clauseNode clause_node='+str(c)+'>'
-            verse += "<span class='syntax clause1 hidden' id=syntax>C:"+ kb.eng_to_kor(F.typ.v(c), 'abbr') +"</span>"
-            phraseNode = L.d(c, otype='phrase')
-            for p in phraseNode:
-                verse += '<span class=phraseNode id=phraseNode phrase_node='+str(p)+'>'
-                verse += "<span class='syntax phrase1 hidden' id=syntax>P:"+ kb.eng_to_kor(F.typ.v(p), 'abbr') + "," + kb.eng_to_kor(F.function.v(p), 'abbr') + "</span>"
-                wordsNode = L.d(p, otype='word')
-                for w in wordsNode:
-                    verse += '<span class=wordNode><a tabindex=0 class=word_elm data-poload=/api/word/'+str(w)+' data-toggle=popover data-trigger=focus>'
-                    verse += F.g_word_utf8.v(w)
-                    verse += '</a></span>'
-                    if F.trailer_utf8.v(w):
-                        verse += '<span class=trailerNode>'
-                        verse += F.trailer_utf8.v(w)
-                        verse += '</span>'
+        wordsNode = L.d(v, otype='word')
+        for w in wordsNode:
+            clauseNode = L.u(w, otype='clause')
+            phraseNode = L.u(w, otype='phrase')
+            firstClauseWordNode = L.d(clauseNode[0], otype='word')[0]
+            firstPhraseWordNode = L.d(phraseNode[0], otype='word')[0]
+            lastClauseWordNode = L.d(clauseNode[0], otype='word')[-1]
+            lastPhraseWordNode = L.d(phraseNode[0], otype='word')[-1]
+
+            if w == firstClauseWordNode:
+                verse += '<span class=clauseNode id=clauseNode clause_node='+str(clauseNode[0])+'>'
+                verse += "<span class='syntax clause1 hidden' id=syntax>C:"+ kb.eng_to_kor(F.typ.v(clauseNode[0]), 'abbr') +"</span>"
+
+            if w == firstPhraseWordNode:
+                verse += '<span class=phraseNode id=phraseNode phrase_node='+str(phraseNode[0])+'>'
+                verse += "<span class='syntax phrase1 hidden' id=syntax>P:"+ kb.eng_to_kor(F.typ.v(phraseNode[0]), 'abbr') + "," + kb.eng_to_kor(F.function.v(phraseNode[0]), 'abbr') + "</span>"
+
+            verse += '<span class=wordNode><a tabindex=0 class=word_elm data-poload=/api/word/'+str(w)+' data-toggle=popover data-trigger=focus>'
+            verse += F.g_word_utf8.v(w)
+            verse += '</a></span>'
+
+            if F.trailer_utf8.v(w):
+                verse += '<span class=trailerNode>'
+                verse += F.trailer_utf8.v(w)
                 verse += '</span>'
-            verse += '</span>'
+
+            if w == lastClauseWordNode: verse += '</span>'
+            if w == lastPhraseWordNode: verse += '</span>'
+
         verse += '</span>'
+
     return render_template('text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp[1])
 
 
