@@ -188,3 +188,13 @@ div.pager span.active {
  {
   display: none;
 }
+
+.footer {
+  width: 100%;
+  background: #e1e4ea;
+  margin: 10px;
+  border-radius: 5px;
+  padding: 20px;
+  float: left;
+  font-size: 1.2em;
+}
