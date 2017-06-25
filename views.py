@@ -52,6 +52,9 @@ def featureStat(node, synType, feat, num):
         statNode = L.d(verseNode, otype = synType)
         for n in statNode:
             total_num = total_num + 1
+
+            if total_num > 40000: return False
+
             if feat == 'lex_utf8': sType = F.lex_utf8.v(L.u(n, otype='lex')[0])
             elif feat == 'pdp': sType = F.pdp.v(n)
             elif feat == 'psgnnu':
