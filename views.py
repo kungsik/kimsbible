@@ -12,7 +12,7 @@ ETCBC = 'hebrew/etcbc4c'
 TF = Fabric(locations='text-fabric-data', modules=ETCBC)
 api = TF.load('''
     book chapter verse
-    sp nu gn ps vt vs st
+    nu gn ps vt vs st
     otype typ function
     det pdp
     g_word_utf8 trailer_utf8
@@ -28,7 +28,7 @@ def word_function(node):
     w_f["원형"] = F.voc_utf8.v(L.u(node, otype='lex')[0])
     #w_f["어근"] = F.lex_utf8.v(node).replace('=', '').replace('/', '').replace('[', '')
     w_f["음역"] = F.phono.v(node)
-    w_f["품사"] = F.sp.v(node)  # part of speech (verb, subs ..)
+    w_f["품사"] = F.pdp.v(node)  # part of speech (verb, subs ..)
     w_f["시제"] = F.vt.v(node)  # vt = verbal tense
     w_f["동사형"] = F.vs.v(node)  # vs = verbal stem
     w_f["인칭"] = F.ps.v(node)  # person (p1, p2, p3)
@@ -215,22 +215,22 @@ def show_word_function(node):
 def show_verse_function(node):
     wordsNode = L.d(node, otype='word')
     wordsNode.reverse()
-    verse_api = {'words': [], 'gloss': [], 'sp': [], 'parse': [], 'suff': []}
+    verse_api = {'words': [], 'gloss': [], 'pdp': [], 'parse': [], 'suff': []}
     for w in wordsNode:
         verse_api['words'].append(F.g_word_utf8.v(w))
         verse_api['gloss'].append(F.gloss.v(L.u(w, otype='lex')[0]))
-        sp = kb.eng_to_kor(F.sp.v(w), 'abbr')
-        if sp == '동':
-            sp_str = sp + "(" + kb.eng_to_kor(F.vs.v(w), 'abbr') + ")"
-            verse_api['sp'].append(sp_str)
+        pdp = kb.eng_to_kor(F.pdp.v(w), 'abbr')
+        if pdp == '동':
+            pdp_str = pdp + "(" + kb.eng_to_kor(F.vs.v(w), 'abbr') + ")"
+            verse_api['pdp'].append(pdp_str)
             parse_str = kb.eng_to_kor(F.vt.v(w), 'abbr') + "." + kb.eng_to_kor(F.ps.v(w), 'abbr') + kb.eng_to_kor(F.gn.v(w), 'abbr') + kb.eng_to_kor(F.nu.v(w), 'abbr')
             verse_api['parse'].append(parse_str)
-        elif sp == '명':
-            verse_api['sp'].append(sp)
+        elif pdp == '명':
+            verse_api['pdp'].append(pdp)
             parse_str = kb.eng_to_kor(F.gn.v(w), 'abbr') + kb.eng_to_kor(F.nu.v(w), 'abbr')
             verse_api['parse'].append(parse_str)
         else:
-            verse_api['sp'].append(sp)
+            verse_api['pdp'].append(pdp)
             verse_api['parse'].append('')
         if F.g_prs_utf8.v(w) != "":
             suff_str = "접미." + kb.eng_to_kor(F.prs_ps.v(w), 'abbr') + kb.eng_to_kor(F.prs_gn.v(w), 'abbr') + kb.eng_to_kor(F.prs_nu.v(w), 'abbr')
