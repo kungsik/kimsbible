@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% autoescape false %}
+
+
+    <div class="markdown-preview-enhanced">
+      <h1 id="&#xAC80;&#xC0C9;-&#xC608;&#xBB38;">검색 예문</h1>
+      <div style="text-align:right; display:block;"><p><a href="write/"><i class="fa fa-file-text-o" aria-hidden="true"></i></a></p></div>
+
+      {% for n in range(0, num) %}
+
+      <div style="float: right"><a href="edit/"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="delete/"><i class="fa fa-window-close-o" aria-hidden="true"></i></a></div>
+      <h4 id="&#xCC3D;&#xC138;&#xAE30;-1-2&#xC7A5;&#xC5D0;&#xC11C;-&#x5D0;&#x5DC;&#x5D4;&#x5D9;&#x5DD;-&#xB2E8;&#xC5B4;-&#xAC80;&#xC0C9;">{{ querylist[n]['title'] }}</h4>
+      <pre class="editor-colors lang-text">{{ querylist[n]['query'] }}</pre>
+      {{ querylist[n]['text'] }}<br><br>
+
+      {% endfor %}
+
+    </div>
+    {% endautoescape %}
+{% endblock %}
