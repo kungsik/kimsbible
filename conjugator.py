@@ -64,12 +64,7 @@ def verbaldata(verb):
         else:
             prs_nu = F.prs_nu.v(node)
 
-        if F.vbe.v(node) == "unknown":
-            vbe = ''
-        else:
-            vbe = F.vbe.v(node)
-
-        checkvalue = F.vs.v(node) + F.vt.v(node) + ps + gn + nu + prs_ps + prs_gn + prs_nu + vbe
+        checkvalue = F.vs.v(node) + F.vt.v(node) + ps + gn + nu + prs_ps + prs_gn + prs_nu
         if F.pdp.v(node) != "verb" or checkvalue in checklist:
             continue
         else:
@@ -82,11 +77,10 @@ def verbaldata(verb):
                 "nu":nu,
                 "prs_ps":prs_ps,
                 "prs_gn":prs_gn,
-                "prs_nu":prs_nu,
-                "vbe":vbe
+                "prs_nu":prs_nu
             }
             wholelist.append(wordlist)
-            checklist.append(F.vs.v(node) + F.vt.v(node) + ps + gn + nu + prs_ps + prs_gn + prs_nu + vbe)
+            checklist.append(F.vs.v(node) + F.vt.v(node) + ps + gn + nu + prs_ps + prs_gn + prs_nu)
             i = i + 1
 
     if i == 0: return False
