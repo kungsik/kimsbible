@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<h3 align=center>동사형태 출력</h3>
+<br>
+
+<form class="form-inline" method=post action="/conjugator/">
+  <h4 align=center>
+    동사원형: <input type="text" class="form-control" name="verb" id="verb" size=20>
+    <input type=submit class="btn btn-primary" value=출력>
+  </h4>
+  <p align=center>*שׁ(쉰)은  ש1으로 שׂ(신)은 ש2로 입력하세요.</p>
+</form>
+
+<div class="verse_heb" style="direction:ltr; text-align:left">
+  {% if result %}
+  <table class="table">
+    {% for v in result %}
+      <tr>
+        <td align=right width=50%>
+          {{ v['verb'] }}
+        </td>
+        <td>
+          {{ v['stem'] }} {{ v['tense'] }} {{ v['ps'] }} {{ v['gn'] }} {{ v['nu'] }}
+          {% if v['prs_ps'] %}
+            + {{ v['prs_ps'] }} {{ v['prs_gn'] }} {{ v['prs_nu'] }}
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  {% endif %}
+</div>
+
+{% endblock %}
