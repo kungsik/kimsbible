@@ -2,6 +2,7 @@ from tf.fabric import Fabric
 from flask import render_template, request, url_for
 from kimsbible import app
 from kimsbible.views import api
+import json
 
 api.makeAvailableIn(globals())
 
@@ -95,6 +96,6 @@ def conjugator():
     if request.method == 'POST':
         verb = request.form['verb']
         result = verbaldata(verb)
-        return render_template('conjugator.html', result=result)
+        return json.dumps(result)
     else:
         return render_template('conjugator.html')
