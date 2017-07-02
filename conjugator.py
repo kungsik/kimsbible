@@ -69,7 +69,15 @@ def verbaldata(verb):
         if F.pdp.v(node) != "verb" or checkvalue in checklist:
             continue
         else:
+            if F.vs.v(node) == 'hif' or F.vs.v(node) == 'hit' or F.vs.v(node) == 'htpo' or F.vs.v(node) == 'hof' or F.vs.v(node) == 'nif':
+                lang= "Heb"
+            elif F.vs.v(node) == 'piel' or F.vs.v(node) == 'poal' or F.vs.v(node) == 'poel' or F.vs.v(node) == 'pual' or F.vs.v(node) == 'qal':
+                lang = "Heb"
+            else:
+                lang = "Arm"
+
             wordlist = {
+                "lang": lang,
                 "verb":F.g_word_utf8.v(node),
                 "stem":F.vs.v(node),
                 "tense":F.vt.v(node),
@@ -86,7 +94,7 @@ def verbaldata(verb):
 
     if i == 0: return False
 
-    sortedlist = sorted(wholelist, key=sortkeypicker(['stem', 'tense', 'ps', 'gn', 'nu', 'prs_ps', 'prs_gn', 'prs_nu']))
+    sortedlist = sorted(wholelist, key=sortkeypicker(['lang', 'stem', 'tense', 'ps', 'gn', 'nu', 'prs_ps', 'prs_gn', 'prs_nu']))
 
     return sortedlist
 

@@ -13,9 +13,9 @@ $(function () {
                   var output = "<table class=table>"
                   for (var i in data){
                     output += "<tr><td align=right width=40%>" + data[i].verb + "</td>";
-                    output += "<td>" + data[i].stem + " " + data[i].tense + " " + data[i].ps + data[i].gn + " " + data[i].nu;
+                    output += "<td>" + data[i].lang + " " + data[i].stem + " " + data[i].tense + " " + data[i].ps + data[i].gn + " " + data[i].nu;
                     if(data[i]['prs_ps']) {
-                      output += data[i]['prs_ps'] + " " + data[i]['prs_gn'] + " " + data[i]['prs_nu'];
+                      output += " + " + data[i]['prs_ps'] + " " + data[i]['prs_gn'] + " " + data[i]['prs_nu'];
                     }
                     output += "</td></tr>"
                   }
