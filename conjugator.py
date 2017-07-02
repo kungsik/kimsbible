@@ -81,6 +81,15 @@ def verbaldata(verb):
             else:
                 verb = F.g_word_utf8.v(node)
 
+            query = "<a href=/api/search/?cons=" + F.g_cons_utf8.v(node) + "&tense=" + F.vt.v(node) + "&stem=" + F.vs.v(node)
+            query += "&ps=" + F.ps.v(node)
+            query += "&gn=" + F.gn.v(node)
+            query += "&nu=" + F.nu.v(node)
+            query += "&prs_ps=" + F.prs_ps.v(node)
+            query += "&prs_gn=" + F.prs_gn.v(node)
+            query += "&prs_nu=" + F.prs_nu.v(node)
+            query += " target=_blank>검색</a>"
+
             wordlist = {
                 "lang": lang,
                 "verb": verb,
@@ -91,7 +100,8 @@ def verbaldata(verb):
                 "nu":nu,
                 "prs_ps":prs_ps,
                 "prs_gn":prs_gn,
-                "prs_nu":prs_nu
+                "prs_nu":prs_nu,
+                "query": query
             }
             wholelist.append(wordlist)
             checklist.append(F.vs.v(node) + F.vt.v(node) + ps + gn + nu + prs_ps + prs_gn + prs_nu)

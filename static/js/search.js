@@ -1,4 +1,31 @@
 $(function () {
+  $.urlParam = function(name){
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    return results[1] || 0;
+  }
+  var cons = $.urlParam('cons');
+  var tense = $.urlParam('tense');
+  var stem = $.urlParam('stem');
+  var ps = $.urlParam('ps');
+  var gn = $.urlParam('gn');
+  var nu = $.urlParam('nu');
+  var prs_ps = $.urlParam('prs_ps');
+  var prs_gn = $.urlParam('prs_gn');
+  var prs_nu = $.urlParam('prs_nu');
+
+  var que = "word g_cons_utf8=" + cons + " sp=verb vt=" + tense + " vs=" + stem;
+  que += " ps=" + ps;
+  que += " gn=" + gn;
+  que += " nu=" + nu;
+  que += " prs_ps=" + prs_ps;
+  que += " prs_gn=" + prs_gn;
+  que += " prs_nu=" + prs_nu;
+
+  $('#query_text').val(decodeURIComponent(que));
+});
+
+
+$(function () {
     $("#query_post").submit(function () {
         $("#load_image").show();
         $("#query_submit").hide();

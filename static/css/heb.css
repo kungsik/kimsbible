@@ -110,6 +110,7 @@ select {
     border-radius: 5px;
     border: 1px dotted;
     padding: 10px;
+    word-wrap: break-word;
 }
 
 div.pager {
