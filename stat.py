@@ -6,14 +6,42 @@ from collections import OrderedDict
 
 api.makeAvailableIn(globals())
 
+bookList = ["null", "Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges",
+        "1_Samuel", "2_Samuel", "1_Kings", "2_Kings", "Isaiah", "Jeremiah", "Ezekiel",
+        "Hosea", "Joel", "Amos", "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk", "Zephaniah",
+        "Haggai", "Zechariah", "Malachi", "Psalms", "Job", "Proverbs", "Ruth", "Song_of_songs",
+        "Ecclesiastes", "Lamentations", "Esther", "Daniel", "Ezra", "Nehemiah", "1_Chronicles",
+        "2_Chronicles"]
+
+def codetostr(code):
+    code = code.replace(" ", "")
+    codeSplit1 = code.split(';')
+    strvrs = ""
+    i = 0
+    for c1 in codeSplit1:
+        codeSplit2 = c1.split('-')
+        if i > 0:
+            strvrs += "; "
+            i = 0
+
+        for c2 in codeSplit2:
+            if len(c2) != 7 and len(c2) != 8:
+                return False
+
+            if i == 1:
+                strvrs += "~"
+
+            if len(c2) == 7:
+                strvrs += bookList[int(c2[0])] + " " + str(int(c2[-6] +  c2[-5] +  c2[-4])) + ":" + str(int(c2[-3] +  c2[-2] +  c2[-1]))
+            elif len(c2) == 8:
+                strvrs += bookList[int(c2[0] + c2[1])] + " " + str(int(c2[-6] +  c2[-5] +  c2[-4])) + ":" + str(int(c2[-3] +  c2[-2] +  c2[-1]))
+            i = i + 1
+
+    return strvrs
+
+
 #1001001-1002001; 2001001-2002001 ==> Genesis, 1, 1 ~ Genesis, 2, 1; + Exodus ...
 def codetorange(code):
-    bookList = ["null", "Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges",
-            "1_Samuel", "2_Samuel", "1_Kings", "2_Kings", "Isaiah", "Jeremiah", "Ezekiel",
-            "Hosea", "Joel", "Amos", "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk", "Zephaniah",
-            "Haggai", "Zechariah", "Malachi", "Psalms", "Job", "Proverbs", "Ruth", "Song_of_songs",
-            "Ecclesiastes", "Lamentations", "Esther", "Daniel", "Ezra", "Nehemiah", "1_Chronicles",
-            "2_Chronicles"]
     code = code.replace(" ", "")
     codeSplit1 = code.split(';')
     nodeList = []
@@ -100,16 +128,22 @@ def featureStat(node, synType, feat, num):
 
     return result
 
+@app.route('/api/stat/tutorial/')
+def stat_tutorial():
+    return render_template('stat_tutorial.html')
+
 
 @app.route('/api/stat/', methods=['GET', 'POST'])
 def statistics():
-    result = '<table class=table>'
     i = 0
     if request.method == 'POST':
         rangeCode = request.form['statCode']
         nodeList = codetorange(rangeCode)
+        rangestr = codetostr(rangeCode)
         if nodeList == False: return False
 
+        result = "<h4>" + rangestr + "</h4>"
+        result += '<br><table class=table>'
         result += "<tr><td>"
 
         ClauseFeat = featureStat(nodeList, "clause", "typ", 10)
@@ -134,13 +168,13 @@ def statistics():
 
         LexFeat = featureStat(nodeList, "word", "lex_utf8", 10)
         totalLex = LexFeat['total_num']
-        result += "<h4>Word Frequency</h4><br>"
+        result += "<h4>Word Frequency</h4><br><div style='direction:rtl; text-align:left'>"
         for k, v in LexFeat.items():
             if k == "total_num": break
             propLex =round(int(v) / totalLex * 100, 2)
             result += k + ": " + str(v) + "(" + str(propLex) + "%)" + "<br>"
 
-        result += "</td></tr><tr><td>"
+        result += "</div></td></tr><tr><td>"
 
         PdpFeat = featureStat(nodeList, "word", "pdp", 10)
         totalPdp = PdpFeat['total_num']

@@ -76,9 +76,14 @@ def verbaldata(verb):
             else:
                 lang = "Arm"
 
+            if F.vt.v(node) == 'wayq':
+                verb = F.g_word_utf8.v(node-1) + F.g_word_utf8.v(node)
+            else:
+                verb = F.g_word_utf8.v(node)
+
             wordlist = {
                 "lang": lang,
-                "verb":F.g_word_utf8.v(node),
+                "verb": verb,
                 "stem":F.vs.v(node),
                 "tense":F.vt.v(node),
                 "ps":ps,

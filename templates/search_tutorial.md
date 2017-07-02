@@ -1,6 +1,6 @@
 검색기능 튜토리얼
 ================
-<font color=red>이 문서는 현재 계속 업데이트 중입니다. 문서상으로 불충분한 내용은 동영상으로도 업데이트할 계획입니다.</font>
+<font color=red>이 문서는 현재 계속 업데이트 중입니다. <a href="https://www.youtube.com/playlist?list=PLe20Ld-Xa6NjkFVBFhXrRMhwqyowipHbv" target="_blank">동영상 안내</a>를 참고해 주세요.</font>
 
 
 [TOC]
