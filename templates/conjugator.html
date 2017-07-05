@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
 <script src="/static/js/conjugator.js"></script>
-{% include "hebrew_key/hebrew_function.htm" %}
 
 <h3 align=center>동사형태 출력</h3>
 <br>
@@ -11,11 +10,14 @@
     동사원형(히브리어입력): <input type="text" class="form-control" name="verb" id="verb" size=20>
     <input type=submit class="btn btn-primary" id="conj_submit" value=출력><span id="load_image" style="display:none"><img src="/static/img/loader.gif" align="center"></span>
     <A class="btn btn-default" href="javascript:keyb_change()" onclick="javascript:blur()" id="switch">히브리어입력</A>
-    <DIV id="keyboard"></div>
   </h4>
-  <p align=center>*שׁ(쉰)은  ש1으로 שׂ(신)은 ש2로 입력하세요.</p>
-  <p align=center>*자음의 경우 종결어미형이 아니라 일반형을 입력하세요. הלך (X) הלכ (O)</p>
 </form>
+
+<div id="hebrewkey" style="text-align:center"></div>
+<script src="/static/js/hebrewkey.js"></script>
+<br>
+<p align=center>*שׁ(쉰)은  ש1으로 שׂ(신)은 ש2로 입력하세요.</p>
+<p align=center>*자음의 경우 종결어미형이 아니라 일반형을 입력하세요. הלך (X) הלכ (O)</p>
 
 <div class="verse_heb" id="verballist" style="direction:ltr; text-align:left"></div>
 
