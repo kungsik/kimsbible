@@ -34,24 +34,32 @@ def bible_search():
             v = T.nodeFromSection((section[0], section[1], section[2]), lang='ko')
             verse = ''
 
-            clauseNode = L.d(v, otype='clause')
-            for c in clauseNode:
-                verse += '<span class=clauseNode_'+str(c)+'>'
-                phraseNode = L.d(c, otype='phrase')
-                for p in phraseNode:
-                    verse += '<span class=phraseNode_'+str(p)+'>'
-                    wordsNode = L.d(p, otype='word')
-                    for w in wordsNode:
-                        verse += '<span class=wordNode_'+str(w)+'>'
-                        verse += F.g_word_utf8.v(w)
-                        verse += '</a></span>'
-                        if F.trailer_utf8.v(w):
-                            verse += '<span class=trailerNode>'
-                            verse += F.trailer_utf8.v(w)
-                            verse += '</span>'
+            wordsNode = L.d(v, otype='word')
+            for w in wordsNode:
+                clauseNode = L.u(w, otype='clause')
+                phraseNode = L.u(w, otype='phrase')
+                firstClauseWordNode = L.d(clauseNode[0], otype='word')[0]
+                firstPhraseWordNode = L.d(phraseNode[0], otype='word')[0]
+                lastClauseWordNode = L.d(clauseNode[0], otype='word')[-1]
+                lastPhraseWordNode = L.d(phraseNode[0], otype='word')[-1]
+
+                if w == firstClauseWordNode:
+                    verse += '<span class=clauseNode_'+str(clauseNode[0])+'>'
+
+                if w == firstPhraseWordNode:
+                    verse += '<span class=phraseNode_'+str(phraseNode[0])+'>'
+
+                verse += '<span class=wordNod_'+str(w)+'>'
+                verse += F.g_word_utf8.v(w)
+                verse += '</a></span>'
+
+                if F.trailer_utf8.v(w):
+                    verse += '<span class=trailerNode>'
+                    verse += F.trailer_utf8.v(w)
                     verse += '</span>'
-                verse += '</span>'
-            verse += '</span>'
+
+                if w == lastClauseWordNode: verse += '</span>'
+                if w == lastPhraseWordNode: verse += '</span>'
 
             for each_node in t:
                 node_type = F.otype.v(each_node)
@@ -62,7 +70,8 @@ def bible_search():
                     verse = verse.replace('phraseNode_'+str(each_node), 'phrase')
                 elif(node_type == 'word'):
                     verse = verse.replace('wordNode_'+str(each_node), 'word')
-            result += "<tr><td width=180px><span class=verse_num verse_node=" + str(v) + ">" + section[0] + " " + str(section[1]) + ":" + str(section[2]) + "</span></td><td class=result_verse>" + verse + "</td></tr>"
+            result += "<tr><td width=180px><span class=verse_num verse_node=" + str(v) + ">"
+            result += section[0] + " " + str(section[1]) + ":" + str(section[2]) + "</span></td><td class=result_verse>" + verse + "</td></tr>"
 
         result += "</tbody></table>"
         if i == 0:
