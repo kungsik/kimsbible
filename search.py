@@ -49,7 +49,7 @@ def bible_search():
                 if w == firstPhraseWordNode:
                     verse += '<span class=phraseNode_'+str(phraseNode[0])+'>'
 
-                verse += '<span class=wordNod_'+str(w)+'>'
+                verse += '<span class=wordNode_'+str(w)+'>'
                 verse += F.g_word_utf8.v(w)
                 verse += '</a></span>'
 
