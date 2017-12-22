@@ -1,8 +1,18 @@
+// $(document).ready(function(){
+//     $(".verse_num").click(function(){
+//         var verse_node = $(this).attr("verse_node");
+//         $('div.modal').modal({remote : '/api/verse/'+verse_node});
+//     })
+// });
+
 $(document).ready(function(){
     $(".verse_num").click(function(){
         var verse_node = $(this).attr("verse_node");
-        $('div.modal').modal({remote : '/api/verse/'+verse_node});
-    })
+        var url = '/api/verse/'+verse_node;
+        $('.modal-container').load(url, function(result){
+            $('#verse_api').modal({show:true});
+        });
+    });
 });
 
 $(document).ready(function(){

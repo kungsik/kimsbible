@@ -24,6 +24,11 @@ a.word_elm {
   text-align: right;
 }
 
+.analysis_heb {
+  font-family: 'SBLHebrew';
+  font-size: 18px;
+}
+
 .result_verse {
   direction: rtl;
   text-align: right;
