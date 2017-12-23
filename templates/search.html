@@ -7,7 +7,7 @@
 
 
     <div class="alert alert-danger" role="alert">현재 검색 페이지는 아직 테스트 중입니다. 검색결과는 500개로 제한합니다.
-      검색하시기 전에 검색 <a href="http://127.0.0.1:5000/search_tutorial" target="_blank">튜토리얼</a>과 
+      검색하시기 전에 검색 <a href="http://127.0.0.1:5000/search_tutorial" target="_blank">튜토리얼</a>과
       <a href="https://www.youtube.com/playlist?list=PLe20Ld-Xa6NjkFVBFhXrRMhwqyowipHbv" target="_blank">동영상 안내</a>를 참고하시기 바랍니다.
       결과값이 많거나 쿼리 로직이 복잡할 경우는 로딩 시간이 좀 걸릴 수 있습니다.</div>
 
@@ -17,6 +17,7 @@
             <form method="post" id="query_post">
                 <textarea class="form-control" rows="10" name="query" id="query_text"></textarea>
                 *שׁ(쉰)은  ש1으로 שׂ(신)은 ש2로 입력하세요.<br>
+                *마지막 자음의 경우 종결어미형(ך,ם,ף)이 아니라<br>일반형(כ,מ,פ)을 입력하세요.<br>
                 <br><button type="submit" class="btn btn-success" id="query_submit">쿼리실행</button>
             </form>
           <div id="load_image" style="display:none"><img src="/static/img/loader.gif" align="center"></div>
