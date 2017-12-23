@@ -14,7 +14,7 @@ api = TF.load('''
     book chapter verse
     nu gn ps vt vs st
     otype typ function
-    det pdp
+    det pdp qere_utf8 qere_trailer_utf8
     g_word_utf8 trailer_utf8
     lex_utf8 lex voc_utf8
     g_prs_utf8 g_uvf_utf8
@@ -43,7 +43,6 @@ def word_function(node):
     w_f["수(접미)"] = F.prs_nu.v(node)  # pronominal suffix number
     w_f["의미"] = F.gloss.v(L.u(node, otype='lex')[0])
     return w_f
-
 
 @app.route('/')
 def main_page():
@@ -88,14 +87,29 @@ def text_page(book='Genesis', chapter=1):
                 verse += '<span class=phraseNode id=phraseNode phrase_node='+str(phraseNode[0])+'>'
                 verse += "<span class='syntax phrase1 hidden' id=syntax>P:"+ kb.eng_to_kor(F.typ.v(phraseNode[0]), 'abbr') + "," + kb.eng_to_kor(F.function.v(phraseNode[0]), 'abbr') + "</span>"
 
-            verse += '<span class=wordNode><a tabindex=0 class=word_elm data-poload=/api/word/'+str(w)+' data-toggle=popover data-trigger=focus>'
-            verse += F.g_word_utf8.v(w)
-            verse += '</a></span>'
+            if F.qere_utf8.v(w):
+                verse += '<span class=wordNode>'
+                verse += F.g_word_utf8.v(w) + ' '
+                verse += '</a></span>'
 
-            if F.trailer_utf8.v(w):
-                verse += '<span class=trailerNode>'
-                verse += F.trailer_utf8.v(w)
-                verse += '</span>'
+                verse += '<span class=wordNode><a tabindex=0 class=word_elm data-poload=/api/word/'+str(w)+' data-toggle=popover data-trigger=focus>'
+                verse += F.qere_utf8.v(w)
+                verse += '</a></span>'
+
+                if F.qere_trailer_utf8.v(w):
+                    verse += '<span class=trailerNode>'
+                    verse += F.qere_trailer_utf8.v(w)
+                    verse += '</span>'
+
+            else:
+                verse += '<span class=wordNode><a tabindex=0 class=word_elm data-poload=/api/word/'+str(w)+' data-toggle=popover data-trigger=focus>'
+                verse += F.g_word_utf8.v(w)
+                verse += '</a></span>'
+
+                if F.trailer_utf8.v(w):
+                    verse += '<span class=trailerNode>'
+                    verse += F.trailer_utf8.v(w)
+                    verse += '</span>'
 
             if w == lastClauseWordNode: verse += '</span>'
             if w == lastPhraseWordNode: verse += '</span>'
