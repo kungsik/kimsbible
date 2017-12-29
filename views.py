@@ -1,4 +1,5 @@
 import re
+import os
 from collections import OrderedDict
 
 from flask import render_template, request, url_for
@@ -22,6 +23,48 @@ api = TF.load('''
     gloss g_lex_utf8 phono
 ''')
 api.makeAvailableIn(globals())
+
+book_abb = {
+    "Genesis": "gen",
+    "Exodus": "exod",
+    "Leviticus": "lev",
+    "Numbers": "num",
+    "Deuteronomy": "deut",
+    "Joshua": "josh",
+    "Judges": "judg",
+    "1_Samuel": "1sam",
+    "2_Samuel": "2sam",
+    "1_Kings": "1kgs",
+    "2_Kings": "2kgs",
+    "Isaiah": "isa",
+    "Jeremiah": "jer",
+    "Ezekiel": "ezek",
+    "Hosea": "hos",
+    "Joel": "joel",
+    "Amos": "amos",
+    "Obadiah": "obad",
+    "Jonah": "jonah",
+    "Micah": "mic",
+    "Nahum": "nah",
+    "Habakkuk": "hab",
+    "Zephaniah": "zeph",
+    "Haggai": "hag",
+    "Zechariah": "zech",
+    "Malachi": "mal",
+    "Psalms": "ps",
+    "Job": "job",
+    "Proverbs": "none",
+    "Ruth": "ruth",
+    "Song_of_songs": "song",
+    "Ecclesiastes": "eccl",
+    "Lamentations": "lam",
+    "Esther": "esth",
+    "Daniel": "dan",
+    "Ezra": "ezra",
+    "Nehemiah": "neh",
+    "1_Chronicles": "1chr",
+    "2_Chronicles": "2chr"    
+}
 
 def word_function(node):
     w_f = OrderedDict()
@@ -116,7 +159,9 @@ def text_page(book='Genesis', chapter=1):
 
         verse += '</span>'
 
-    return render_template('text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp[1])
+        kml_file = "http://alphalef.com/apps/kml/" + book_abb[book] + '.' + str(chapter) + '.' + "kml"
+
+    return render_template('text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp[1], kml_file=kml_file)
 
 
 @app.route('/api/word/<int:node>')

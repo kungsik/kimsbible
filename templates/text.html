@@ -1,8 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
-
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqntw5b-vl4XdM1I2lTwUvE1yxpund5pM"></script>
     <script src="/static/js/syntax_viewer.js"></script>
-
 
         {% set next_chapter = chapter + 1 %}
         {% set prev_chapter = chapter - 1 %}
@@ -28,14 +27,37 @@
     </div>
 
     <div style="text-align: right">
-        <br><button class="btn btn-default" id="verse_block">절(verse)구분</button> <button class="btn btn-default" id="syntax_enact">절(C)/구(P)단위표시</button>
+        <br><button class="btn btn-default" id="verse_block">절(verse)구분</button>
+        <button class="btn btn-default" id="syntax_enact">절(C)/구(P)단위표시</button>
+        <button class="btn btn-default" id="geoinfo">지도표시</button>
     </div>
+
+    <div id="map-canvas" style="width:100%; height:400px; display:none"></div>
+    <div id="map-comment" style="display:none">
+      *위 지도에 표시된 빨간 점들은 본 장에 기록되어 있는 지역을 표시한 것입니다.
+      위 점을 클릭하시면 지명과 인용된 성경구절을 보실 수 있습니다. (번역본 장절 기준)<br>
+      *본 장에 별도로 기록된 지명이 없다면 아무런 지역 표시가 되지 않습니다.<br>
+      *Copyright ©2017 by www.openbible.info/geo/
+    </div>
+  	<script>
+  		function initialize() {
+  			var map = new google.maps.Map(document.getElementById("map-canvas"), {
+          center: {lat: 31.7833, lng: 35.2167},
+          zoom: 8,
+          mapTypeId: google.maps.MapTypeId.SATELLITE
+        });
+  			var layer = new google.maps.KmlLayer({
+          url: "{{kml_file}}",
+          preserveViewport:false
+        });
+  			layer.setMap(map);
+  		}
+  	</script>
 
     <div class = "verse_heb">
         {% autoescape false %}
         {{ verse }}
         {% endautoescape %}
     </div>
-
 
 {% endblock %}

@@ -40,3 +40,24 @@
          });
      });
  });
+
+ $(function () {
+     $(document.body).on('click', '#geoinfo', function () {
+         $(this).html('지도숨기기');
+         $(this).attr('id', 'geoinfo_hide');
+         $('#map-canvas').toggle({
+           complete: function() {
+             initialize();
+           },
+           duration: 'slow'
+         });
+         $('#map-comment').css('display', 'block');
+
+         $(document.body).on('click', '#geoinfo_hide', function () {
+             $(this).html('지도표시');
+             $(this).attr('id', 'geoinfo');
+             $('#map-canvas').css('display', 'none');
+             $('#map-comment').css('display', 'none');
+         });
+     });
+ });
