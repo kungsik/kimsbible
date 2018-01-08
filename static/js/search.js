@@ -112,7 +112,7 @@ $(function () {
 
   if(cons || tense || stem || ps || gn || nu || prs_ps || prs_gn || prs_nu) {
 
-    var que = "word g_cons_utf8=" + cons + " sp=verb vt=" + tense + " vs=" + stem;
+    var que = "word lex_utf8=" + cons + " sp=verb vt=" + tense + " vs=" + stem;
     que += " ps=" + ps;
     que += " gn=" + gn;
     que += " nu=" + nu;
