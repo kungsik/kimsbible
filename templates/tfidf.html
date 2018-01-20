@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block body %}
+<script src="/static/js/tfidf.js"></script>
+
+<h3 align=center>단어 빈도 TF-IDF 분석(<a href='/api/stat/tutorial/' target="_blank">범위입력 방법</a>)</h3>
+<br>
+
+<form class="form-inline" method=post id="tfidf" align="center">
+  <input type=submit class="btn btn-primary" id="tfidf_submit" value=출력>
+  <span id="load_image" style="display:none"><img src="/static/img/loader.gif" align="center"></span>
+  <div align="center">
+      <div class="col-md-6" align="center">
+      <h4 align="center">첫 번째 텍스트 범위 입력</h4><br>
+      <textarea class="form-control" rows="5" cols="50%" name="tfidf_1" id="tfidf_1"></textarea>
+    </div>
+    <div class="col-md-6" align="center">
+      <h4 align="center">두 번째 텍스트 범위 입력</h4><br>
+      <textarea class="form-control" rows="5" cols="50%" name="tfidf_2" id="tfidf_2"></textarea>
+    </div>
+  </div>
+</form>
+
+<div class="verse_heb" id="tf_idf_result" style="direction:rtl"></div>
+
+{% endblock %}

@@ -8,3 +8,4 @@ import kimsbible.views
 import kimsbible.conjugator
 import kimsbible.stat
 import kimsbible.search
+import kimsbible.tfidf
