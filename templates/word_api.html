@@ -1,7 +1,7 @@
 <div class="word_api">
     {% for key, value in w_f.items() %}
         {% if value|e != "NA" and value|e != "" and value|e != "unknown" %}
-            <li>{{ key|e }}: {{ value|e }}</li>
+            <li>{{ key|e }}: {{ value|safe }}</li>
         {% endif %}
     {% endfor %}
 </div>
