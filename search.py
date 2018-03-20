@@ -18,6 +18,7 @@ def sample_page():
 def bible_search():
     if request.method == 'POST':
         query = request.form['query']
+        query = query.replace('שׁ', 'שׁ').replace('שׂ', 'שׂ')
         query = query.replace('ש1', 'שׁ').replace('ש2', 'שׂ')
         S.search(query)
         result = "<table class='table' id='paginated'><tbody>"
