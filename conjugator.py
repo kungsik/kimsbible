@@ -22,6 +22,7 @@ def sortkeypicker(keynames):
 
 def verbaldata(verb):
     verb = verb.replace('שׁ', 'שׁ').replace('שׂ', 'שׂ')
+    verb = verb.replace('ם','מ').replace('ך','כ').replace('ן','נ').replace('ף','פ').replace('ץ','צ')
     verb = verb.replace('ש1', 'שׁ').replace('ש2', 'שׂ')
     query = "word lex_utf8="+verb
     S.search(query)
