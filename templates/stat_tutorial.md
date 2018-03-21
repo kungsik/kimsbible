@@ -35,11 +35,11 @@
 
 통계항목 | 의미 | 약어설명링크
 --------|------|------------
-Clause Type|절(문장) 유형|<a href="https://shebanq.ancient-data.org/shebanq/static/docs/featuredoc/features/comments/typ.html" target="_blank">바로가기</a>
-phrase Type|구 유형|<a href="https://shebanq.ancient-data.org/shebanq/static/docs/featuredoc/features/comments/typ.html" target="_blank">바로가기</a>
+Clause Type|절(문장) 유형|<a href="https://etcbc.github.io/bhsa/features/hebrew/c/typ" target="_blank">바로가기</a>
+phrase Type|구 유형|<a href="https://etcbc.github.io/bhsa/features/hebrew/c/typ" target="_blank">바로가기</a>
 Word Frequency|단어빈도수||
-Part of Speech|품사|<a href="https://shebanq.ancient-data.org/shebanq/static/docs/featuredoc/features/comments/sp.html" target="_blank">바로가기</a>
-Phrase function|구 기능|<a href="https://shebanq.ancient-data.org/shebanq/static/docs/featuredoc/features/comments/function.html" target="_blank">바로가기</a>
+Part of Speech|품사|<a href="https://etcbc.github.io/bhsa/features/hebrew/c/sp" target="_blank">바로가기</a>
+Phrase function|구 기능|<a href="https://etcbc.github.io/bhsa/features/hebrew/c/function" target="_blank">바로가기</a>
 Person|인칭|인칭,성,수 표시|
 
 <br>

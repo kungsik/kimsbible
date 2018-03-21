@@ -1,109 +1,254 @@
-{% extends "layout.html" %}
-{% block body %}
+{% extends "layout.html" %} {% block body %}
 
 <div class="markdown-preview-enhanced">
 
-<h1 id="&#xD1B5;&#xACC4;&#xAE30;&#xB2A5;-&#xD29C;&#xD1A0;&#xB9AC;&#xC5BC;">통계기능 튜토리얼</h1>
-<ul>
-<li>알파알렙 성경에서는 정해진 범위의 텍스트 안에서 사용된 구문들의 상황을 한 눈에 볼 수 있는 통계 기능을 제공합니다.</li>
-<li>이러한 구문통계는 성서 텍스트의 문체 연구나 연대기 구분을 위해 중요한 데이터로 사용될 수 있습니다.</li>
-<li>어떤 통계값이 유의미한지는 계속해서 자료들을 테스트하고 관련 연구 논문들을 참고하면서 연구하고 있는 중이고, 계속해서 기능을 업데이트해 나갈 예정입니다.</li>
-</ul>
-<p><br></p>
-<h3 id="1-&#xAC80;&#xC0C9;-&#xBC94;&#xC704;-&#xCF54;&#xB4DC;-&#xC791;&#xC131;-&#xC694;&#xB839;">1. 검색 범위 코드 작성 요령</h3>
-<ul>
-<li>검색코드는 7자리 혹은 8자리 숫자 코드로 이루어져 있습니다.</li>
-<li>검색코드의 각 숫자는 책 - 장 - 절을 의미합니다.</li>
-<li>책 코드는 1자리 숫자 혹은 2자리 숫자로 표현되고(아래 책 코드표 참조), 장과 절 코드는 무조건 3자리 숫자로 표현됩니다. 아래의 예를 참고해 주세요.<br></li>
-</ul>
-<blockquote>
-<p>창세기 1:1 =&gt; 1001001(1 + 001 + 001)<br>
-역대하 20:10 =&gt; 39020010(39 + 020 +010)</p>
-</blockquote>
-<ul>
-<li>절 단위로 일정 범위를 입력할 수 있습니다. 범위 사이에는 - 표시를 넣어줍니다. 아래의 예를 참고해 주세요.</li>
-</ul>
-<blockquote>
-<p>창세기 1:1~창세기 3:10 =&gt; 1001001-1003010<br>
-출애굽기 2:1-민수기 10:1 =&gt; 2002001-4010001</p>
-</blockquote>
-<ul>
-<li>여러개의 범위를 한꺼번에 입력할 수 있습니다. 각 범위 사이는 ; 으로 구분해 줍니다. 아래의 예를 참고해 주세요.</li>
-</ul>
-<blockquote>
-<p>신명기 1:1-2:10과 역대하 10:1-12:5 =&gt; 5001001-5002010; 39010001-39012005</p>
-</blockquote>
-<p><br></p>
-<h3 id="2-&#xAC80;&#xC0C9;-&#xACB0;&#xACFC;">2. 검색 결과</h3>
-<ul>
-<li>현재 통계 출력 서비스는 아래와 같은 항목의 통계를 제공하고 있습니다. 약어 설명링크는 현재 영어로 된 페이지로 연결되어 있으나 조만간 한글로 번역해서 제공할 예정입니다.</li>
-<li>각 통계항목은 가장 높은 비율을 차지하는 10개 항목이 출력됩니다. 예를 들면 단어 빈도수(Word Frequency)의 경우, 입력된 성서 본문의 범위에서 가장 빈번하게 등장하는 10개의 단어들을 보여줍니다.</li>
-</ul>
-<table>
-<thead>
-<tr><th>통계항목</th><th>의미</th><th>약어설명링크</th></tr>
-</thead>
-<tbody>
-<tr><td>Clause Type</td><td>절(문장) 유형</td><td><a href="https://shebanq.ancient-data.org/shebanq/static/docs/featuredoc/features/comments/typ.html" target="_blank">바로가기</a></td></tr>
-<tr><td>phrase Type</td><td>구 유형</td><td><a href="https://shebanq.ancient-data.org/shebanq/static/docs/featuredoc/features/comments/typ.html" target="_blank">바로가기</a></td></tr>
-<tr><td>Word Frequency</td><td>단어빈도수</td><td></td></tr>
-<tr><td>Part of Speech</td><td>품사</td><td><a href="https://shebanq.ancient-data.org/shebanq/static/docs/featuredoc/features/comments/sp.html" target="_blank">바로가기</a></td></tr>
-<tr><td>Phrase function</td><td>구 기능</td><td><a href="https://shebanq.ancient-data.org/shebanq/static/docs/featuredoc/features/comments/function.html" target="_blank">바로가기</a></td></tr>
-<tr><td>Person</td><td>인칭</td><td>인칭,성,수 표시</td></tr>
-</tbody>
-</table>
-<p><br></p>
-<h3 id="3-&#xC131;&#xC11C;-&#xCC45;-&#xCF54;&#xB4DC;&#xD45C;">3. 성서 책 코드표</h3>
-<ul>
-<li>아래의 성서 책 순서는 마소라 텍스트에 따른 순서입니다.</li>
-</ul>
-<table>
-<thead>
-<tr><th>한글책명</th><th>코드</th></tr>
-</thead>
-<tbody>
-<tr><td>창세기</td><td>1</td></tr>
-<tr><td>출애굽기</td><td>2</td></tr>
-<tr><td>레위기</td><td>3</td></tr>
-<tr><td>민수기</td><td>4</td></tr>
-<tr><td>신명기</td><td>5</td></tr>
-<tr><td>여호수아</td><td>6</td></tr>
-<tr><td>사사기</td><td>7</td></tr>
-<tr><td>사무엘상</td><td>8</td></tr>
-<tr><td>사무엘하</td><td>9</td></tr>
-<tr><td>열왕기상</td><td>10</td></tr>
-<tr><td>열왕기하</td><td>11</td></tr>
-<tr><td>이사야</td><td>12</td></tr>
-<tr><td>예레미야</td><td>13</td></tr>
-<tr><td>에스겔</td><td>14</td></tr>
-<tr><td>호세아</td><td>15</td></tr>
-<tr><td>요엘</td><td>16</td></tr>
-<tr><td>아모스</td><td>17</td></tr>
-<tr><td>오바댜</td><td>18</td></tr>
-<tr><td>요나</td><td>19</td></tr>
-<tr><td>미가</td><td>20</td></tr>
-<tr><td>나훔</td><td>21</td></tr>
-<tr><td>하박국</td><td>22</td></tr>
-<tr><td>스바냐</td><td>23</td></tr>
-<tr><td>학개</td><td>24</td></tr>
-<tr><td>스가랴</td><td>25</td></tr>
-<tr><td>말라기</td><td>26</td></tr>
-<tr><td>시편</td><td>27</td></tr>
-<tr><td>욥기</td><td>28</td></tr>
-<tr><td>잠언</td><td>29</td></tr>
-<tr><td>룻기</td><td>30</td></tr>
-<tr><td>아가서</td><td>31</td></tr>
-<tr><td>전도서</td><td>32</td></tr>
-<tr><td>예레미야 애가</td><td>33</td></tr>
-<tr><td>에스더</td><td>34</td></tr>
-<tr><td>다니엘</td><td>35</td></tr>
-<tr><td>에스라</td><td>36</td></tr>
-<tr><td>느헤미야</td><td>37</td></tr>
-<tr><td>역대상</td><td>38</td></tr>
-<tr><td>역대하</td><td>39</td></tr>
-</tbody>
-</table>
-<p><br></p>
+  <h1 id="&#xD1B5;&#xACC4;&#xAE30;&#xB2A5;-&#xD29C;&#xD1A0;&#xB9AC;&#xC5BC;">통계기능 튜토리얼</h1>
+  <ul>
+    <li>알파알렙 성경에서는 정해진 범위의 텍스트 안에서 사용된 구문들의 상황을 한 눈에 볼 수 있는 통계 기능을 제공합니다.</li>
+    <li>이러한 구문통계는 성서 텍스트의 문체 연구나 연대기 구분을 위해 중요한 데이터로 사용될 수 있습니다.</li>
+    <li>어떤 통계값이 유의미한지는 계속해서 자료들을 테스트하고 관련 연구 논문들을 참고하면서 연구하고 있는 중이고, 계속해서 기능을 업데이트해 나갈 예정입니다.</li>
+  </ul>
+  <p><br></p>
+  <h3 id="1-&#xAC80;&#xC0C9;-&#xBC94;&#xC704;-&#xCF54;&#xB4DC;-&#xC791;&#xC131;-&#xC694;&#xB839;">1. 검색 범위 코드 작성 요령</h3>
+  <ul>
+    <li>검색코드는 7자리 혹은 8자리 숫자 코드로 이루어져 있습니다.</li>
+    <li>검색코드의 각 숫자는 책 - 장 - 절을 의미합니다.</li>
+    <li>책 코드는 1자리 숫자 혹은 2자리 숫자로 표현되고(아래 책 코드표 참조), 장과 절 코드는 무조건 3자리 숫자로 표현됩니다. 아래의 예를 참고해 주세요.<br></li>
+  </ul>
+  <blockquote>
+    <p>창세기 1:1 =&gt; 1001001(1 + 001 + 001)<br> 역대하 20:10 =&gt; 39020010(39 + 020 +010)</p>
+  </blockquote>
+  <ul>
+    <li>절 단위로 일정 범위를 입력할 수 있습니다. 범위 사이에는 - 표시를 넣어줍니다. 아래의 예를 참고해 주세요.</li>
+  </ul>
+  <blockquote>
+    <p>창세기 1:1~창세기 3:10 =&gt; 1001001-1003010<br> 출애굽기 2:1-민수기 10:1 =&gt; 2002001-4010001</p>
+  </blockquote>
+  <ul>
+    <li>여러개의 범위를 한꺼번에 입력할 수 있습니다. 각 범위 사이는 ; 으로 구분해 줍니다. 아래의 예를 참고해 주세요.</li>
+  </ul>
+  <blockquote>
+    <p>신명기 1:1-2:10과 역대하 10:1-12:5 =&gt; 5001001-5002010; 39010001-39012005</p>
+  </blockquote>
+  <p><br></p>
+  <h3 id="2-&#xAC80;&#xC0C9;-&#xACB0;&#xACFC;">2. 검색 결과</h3>
+  <ul>
+    <li>현재 통계 출력 서비스는 아래와 같은 항목의 통계를 제공하고 있습니다. 약어 설명링크는 현재 영어로 된 페이지로 연결되어 있으나 조만간 한글로 번역해서 제공할 예정입니다.</li>
+    <li>각 통계항목은 가장 높은 비율을 차지하는 10개 항목이 출력됩니다. 예를 들면 단어 빈도수(Word Frequency)의 경우, 입력된 성서 본문의 범위에서 가장 빈번하게 등장하는 10개의 단어들을 보여줍니다.</li>
+  </ul>
+  <table>
+    <thead>
+      <tr>
+        <th>통계항목</th>
+        <th>의미</th>
+        <th>약어설명링크</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Clause Type</td>
+        <td>절(문장) 유형</td>
+        <td><a href="https://etcbc.github.io/bhsa/features/hebrew/c/typ" target="_blank">바로가기</a></td>
+      </tr>
+      <tr>
+        <td>phrase Type</td>
+        <td>구 유형</td>
+        <td><a href="https://etcbc.github.io/bhsa/features/hebrew/c/typ" target="_blank">바로가기</a></td>
+      </tr>
+      <tr>
+        <td>Word Frequency</td>
+        <td>단어빈도수</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Part of Speech</td>
+        <td>품사</td>
+        <td><a href="https://etcbc.github.io/bhsa/features/hebrew/c/sp" target="_blank">바로가기</a></td>
+      </tr>
+      <tr>
+        <td>Phrase function</td>
+        <td>구 기능</td>
+        <td><a href="https://etcbc.github.io/bhsa/features/hebrew/c/function" target="_blank">바로가기</a></td>
+      </tr>
+      <tr>
+        <td>Person</td>
+        <td>인칭</td>
+        <td>인칭,성,수 표시</td>
+      </tr>
+    </tbody>
+  </table>
+  <p><br></p>
+  <h3 id="3-&#xC131;&#xC11C;-&#xCC45;-&#xCF54;&#xB4DC;&#xD45C;">3. 성서 책 코드표</h3>
+  <ul>
+    <li>아래의 성서 책 순서는 마소라 텍스트에 따른 순서입니다.</li>
+  </ul>
+  <table>
+    <thead>
+      <tr>
+        <th>한글책명</th>
+        <th>코드</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>창세기</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>출애굽기</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>레위기</td>
+        <td>3</td>
+      </tr>
+      <tr>
+        <td>민수기</td>
+        <td>4</td>
+      </tr>
+      <tr>
+        <td>신명기</td>
+        <td>5</td>
+      </tr>
+      <tr>
+        <td>여호수아</td>
+        <td>6</td>
+      </tr>
+      <tr>
+        <td>사사기</td>
+        <td>7</td>
+      </tr>
+      <tr>
+        <td>사무엘상</td>
+        <td>8</td>
+      </tr>
+      <tr>
+        <td>사무엘하</td>
+        <td>9</td>
+      </tr>
+      <tr>
+        <td>열왕기상</td>
+        <td>10</td>
+      </tr>
+      <tr>
+        <td>열왕기하</td>
+        <td>11</td>
+      </tr>
+      <tr>
+        <td>이사야</td>
+        <td>12</td>
+      </tr>
+      <tr>
+        <td>예레미야</td>
+        <td>13</td>
+      </tr>
+      <tr>
+        <td>에스겔</td>
+        <td>14</td>
+      </tr>
+      <tr>
+        <td>호세아</td>
+        <td>15</td>
+      </tr>
+      <tr>
+        <td>요엘</td>
+        <td>16</td>
+      </tr>
+      <tr>
+        <td>아모스</td>
+        <td>17</td>
+      </tr>
+      <tr>
+        <td>오바댜</td>
+        <td>18</td>
+      </tr>
+      <tr>
+        <td>요나</td>
+        <td>19</td>
+      </tr>
+      <tr>
+        <td>미가</td>
+        <td>20</td>
+      </tr>
+      <tr>
+        <td>나훔</td>
+        <td>21</td>
+      </tr>
+      <tr>
+        <td>하박국</td>
+        <td>22</td>
+      </tr>
+      <tr>
+        <td>스바냐</td>
+        <td>23</td>
+      </tr>
+      <tr>
+        <td>학개</td>
+        <td>24</td>
+      </tr>
+      <tr>
+        <td>스가랴</td>
+        <td>25</td>
+      </tr>
+      <tr>
+        <td>말라기</td>
+        <td>26</td>
+      </tr>
+      <tr>
+        <td>시편</td>
+        <td>27</td>
+      </tr>
+      <tr>
+        <td>욥기</td>
+        <td>28</td>
+      </tr>
+      <tr>
+        <td>잠언</td>
+        <td>29</td>
+      </tr>
+      <tr>
+        <td>룻기</td>
+        <td>30</td>
+      </tr>
+      <tr>
+        <td>아가서</td>
+        <td>31</td>
+      </tr>
+      <tr>
+        <td>전도서</td>
+        <td>32</td>
+      </tr>
+      <tr>
+        <td>예레미야 애가</td>
+        <td>33</td>
+      </tr>
+      <tr>
+        <td>에스더</td>
+        <td>34</td>
+      </tr>
+      <tr>
+        <td>다니엘</td>
+        <td>35</td>
+      </tr>
+      <tr>
+        <td>에스라</td>
+        <td>36</td>
+      </tr>
+      <tr>
+        <td>느헤미야</td>
+        <td>37</td>
+      </tr>
+      <tr>
+        <td>역대상</td>
+        <td>38</td>
+      </tr>
+      <tr>
+        <td>역대하</td>
+        <td>39</td>
+      </tr>
+    </tbody>
+  </table>
+  <p><br></p>
 
 
 </div>
