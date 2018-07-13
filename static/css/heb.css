@@ -49,6 +49,7 @@ a.word_elm {
   padding-left: 1px;
   padding-right: 1px;
   direction: ltr;
+  text-indent: 0em;
 }
 
 .verse_api {
@@ -208,6 +209,10 @@ div.pager span.active {
   padding: 20px;
   float: left;
   font-size: 1.2em;
+}
+
+.poptitle {
+  text-align: left;
 }
 
 /*.map-canvas {

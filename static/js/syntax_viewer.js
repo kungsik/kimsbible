@@ -36,7 +36,8 @@
        $(this).html('절(verse)구분');
        $(this).attr('id', 'verse_block');
        $('.verseNode').each(function() {
-         $('.verseNode').css('display', 'inline');
+        $('.verseNode').css('text-indent', '0em');
+        $('.verseNode').css('display', 'inline');
        });
      });
    });

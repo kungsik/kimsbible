@@ -85,6 +85,7 @@ def word_function(node):
     w_f["성(접미)"] = F.prs_gn.v(node)  # pronominal suffix gender
     w_f["수(접미)"] = F.prs_nu.v(node)  # pronominal suffix number
     w_f["의미"] = F.gloss.v(L.u(node, otype='lex')[0])
+    w_f["의미"] = w_f["의미"].replace('<', '[').replace('>', ']')
 
     if w_f["동사형"] != "NA" and w_f["동사형"] != "" and w_f["동사형"] != "unknown":
         w_f["동사형태"] = "<a href='/conjugator/?cons=" + w_f["원형"] + "' target=_blank>검색</a>"

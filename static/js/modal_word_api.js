@@ -21,7 +21,7 @@ $(document).ready(function(){
         $.get(e.data('poload'), function(d) {
             e.popover({
                 content: d, //+ e.position().left,
-                title: '단어분석',
+                title: '<div class=poptitle>단어분석</div>',
                 html: true,
                 constraints: [
                     {
