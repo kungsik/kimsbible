@@ -187,11 +187,13 @@ div.pager span.active {
 }
 
 .syntax.clause1 {
-  top: -50px;
+    top: -50px;
+    text-indent: 0;
 }
 
 .syntax.phrase1 {
-  top: -30px;
+    top: -30px;
+    text-indent: 0;
 }
 
 .syntax.clause1.hidden,
