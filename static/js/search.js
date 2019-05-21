@@ -109,9 +109,12 @@ $(function () {
   var prs_ps = $.urlParam('prs_ps');
   var prs_gn = $.urlParam('prs_gn');
   var prs_nu = $.urlParam('prs_nu');
+  // 동사 형태 출력이 아닌 용례 분석을 클릭해서 들어올 경우
+  var sp = $.urlParam('sp');
 
-  if(cons || tense || stem || ps || gn || nu || prs_ps || prs_gn || prs_nu) {
-
+  // 동사 형태 출력 페이지에서 url을 가지고 올 경우
+  // if(cons || tense || stem || ps || gn || nu || prs_ps || prs_gn || prs_nu) {
+  if(!sp && tense) {
     var que = "word lex_utf8=" + cons + " sp=verb vt=" + tense + " vs=" + stem;
     que += " ps=" + ps;
     que += " gn=" + gn;
@@ -120,6 +123,11 @@ $(function () {
     que += " prs_gn=" + prs_gn;
     que += " prs_nu=" + prs_nu;
 
+    $('#query_text').val(decodeURIComponent(que));
+  }
+
+  else if(sp) {
+    var que = "word lex_utf8=" + cons + " sp=" + sp;
     $('#query_text').val(decodeURIComponent(que));
   }
 
