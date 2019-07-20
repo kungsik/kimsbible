@@ -3,6 +3,7 @@ from flask import render_template, request, url_for
 from kimsbible import app
 from kimsbible.views import api
 from collections import OrderedDict
+from kimsbible.lib import lib as kb
 
 api.makeAvailableIn(globals())
 
@@ -13,7 +14,23 @@ bookList = ["null", "Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", 
         "Ecclesiastes", "Lamentations", "Esther", "Daniel", "Ezra", "Nehemiah", "1_Chronicles",
         "2_Chronicles"]
 
-def codetostr(code):
+bookListKor = ["null", "창세기", "출애굽기", "레위기", "민수기", "신명기", "여호수아", "사사기", 
+        "사무엘상", "사무엘하", "열왕기상", "열왕기하", "이사야", "예레미야", "에스겔", 
+        "호세아", "요엘", "아모스", "오바댜", "요나", "미가", "나훔", "하박국", "스바냐", 
+        "학개", "스가랴", "말라기", "시편", "욥기", "잠언", "룻기", "아가",
+        "전도서", "예레미야애가", "에스더", "다니엘", "에스라", "느헤미야", "역대상", 
+        "역대하"]
+
+bookListKorAbbr = ["null", "창", "출", "레", "민", "신", "수", "삿", "삼상", "삼하", "왕상", "왕하",
+        "사", "렘", "겔", "호", "욜", "암", "옵", "욘", "미", "나", "합", "습", "학", "슥", "말",
+        "시", "욥", "잠", "룻", "아", "전", "애", "에", "단", "스", "느", "대상", "대하"]
+
+
+def booknameconv(v, book1, book2):
+    num = book1.index(v)
+    return book2[num] 
+
+def codetostr(code, bookList):
     code = code.replace(" ", "")
     codeSplit1 = code.split(';')
     strvrs = ""
@@ -27,16 +44,13 @@ def codetostr(code):
         for c2 in codeSplit2:
             if len(c2) != 7 and len(c2) != 8:
                 return False
-
             if i == 1:
                 strvrs += "~"
-
             if len(c2) == 7:
                 strvrs += bookList[int(c2[0])] + " " + str(int(c2[-6] +  c2[-5] +  c2[-4])) + ":" + str(int(c2[-3] +  c2[-2] +  c2[-1]))
             elif len(c2) == 8:
                 strvrs += bookList[int(c2[0] + c2[1])] + " " + str(int(c2[-6] +  c2[-5] +  c2[-4])) + ":" + str(int(c2[-3] +  c2[-2] +  c2[-1]))
             i = i + 1
-
     return strvrs
 
 
@@ -139,7 +153,7 @@ def statistics():
     if request.method == 'POST':
         rangeCode = request.form['statCode']
         nodeList = codetorange(rangeCode)
-        rangestr = codetostr(rangeCode)
+        rangestr = codetostr(rangeCode, bookListKor)
         if nodeList == False: return False
 
         result = "<h4>" + rangestr + "</h4>"
@@ -209,3 +223,43 @@ def statistics():
         return result
     else:
         return render_template('stat.html')
+
+
+@app.route('/api/parsing/', methods=['GET', 'POST'])
+def parsing():
+    if request.method == 'POST':
+        rangeCode = request.form['parsingCode']
+        nodeList = codetorange(rangeCode)
+        rangeStr = codetostr(rangeCode, bookListKor)
+        
+        if nodeList == False: return False
+        result = "<h4>" + rangeStr + "</h4>"
+
+        result += "<div>"
+        result += T.text(nodeList)
+        result += "</div>"
+
+        result += "<div>"
+        for verseNode in nodeList:
+            result += booknameconv(str(T.sectionFromNode(verseNode)[0]), bookList, bookListKorAbbr) + str(T.sectionFromNode(verseNode)[1]) + ":" + str(T.sectionFromNode(verseNode)[2]) + " "
+            wordNode = L.d(verseNode, otype = 'word')
+            for n in wordNode:
+                result += "<span>"
+                result += "[" + F.g_word_utf8.v(n) + "] "
+                result += F.gloss.v(L.u(n, otype='lex')[0]).replace("<", "").replace(">", "") + " "
+                if F.pdp.v(n) == "verb":
+                    result += "(" + F.voc_utf8.v(L.u(n, otype='lex')[0]) + ") "
+                    result += kb.eng_to_kor(F.vs.v(n), 'abbr') + "." + kb.eng_to_kor(F.vt.v(n), 'abbr') + "." + kb.eng_to_kor(F.ps.v(n), 'abbr') + kb.eng_to_kor(F.gn.v(n), 'abbr') + kb.eng_to_kor(F.nu.v(n), 'abbr') + " "
+                    if F.prs_ps.v(n) != 'unknown':
+                        result += "접미."
+                        result += kb.eng_to_kor(F.prs_ps.v(n), 'abbr') + kb.eng_to_kor(F.prs_gn.v(n), 'abbr') + kb.eng_to_kor(F.prs_nu.v(n), 'abbr') + " "
+
+                result += "</span>"
+            result += "<br>"
+        result += "</div>"
+        return result
+
+    else:
+        return render_template('parsing.html')
+
+ 

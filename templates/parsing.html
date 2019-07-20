@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% autoescape false %}
+
+    <script src="/static/js/parsing.js"></script>
+
+    <div class="row">
+        <div class="col-md-4" style="text-align: center">
+            <h4>검색 범위 코드 입력</h4>
+            <form method="post" id="parsing_post">
+                <textarea class="form-control" rows="10" name="parsingCode" id="parsingCode"></textarea>
+                <br><button type="submit" class="btn btn-success" id="parsing_submit">실행</button>
+            </form>
+          <div id="load_image" style="display:none"><img src="/static/img/loader.gif" align="center"></div>
+        </div>
+        <div class="col-md-8">
+	    <h4>파싱결과:</h4>
+            <div id="search_result" class="search_heb"></div>
+        </div>
+    </div>
+    {% endautoescape %}
+{% endblock %}
