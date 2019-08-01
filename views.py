@@ -165,6 +165,14 @@ def text_page(book='Genesis', chapter=1):
             if w == lastPhraseWordNode: verse += '</span>'
 
         verse += '</span>'
+        
+        section = T.sectionFromNode(v)
+        eng_chp_vrs = kb.heb_vrs_to_eng(section[0], str(section[1]), str(section[2]))
+        for c_v in eng_chp_vrs:
+            chp_vrs = re.split(":", c_v)
+            kor_vrs = kb.json_to_verse(section[0], chp_vrs[0], chp_vrs[1], 'korean')
+
+        verse += '<p class=korean dir=ltr align=left>' + kor_vrs + '</p>'
 
         kml_file = "http://alphalef.com/apps/kml/" + book_abb[book] + '.' + str(chapter) + '.' + "kml"
 

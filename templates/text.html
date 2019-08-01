@@ -2,6 +2,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqntw5b-vl4XdM1I2lTwUvE1yxpund5pM"></script>
 <script src="/static/js/syntax_viewer.js"></script>
 
+
 {% set next_chapter = chapter + 1 %} {% set prev_chapter = chapter - 1 %}
 
 <div class="left">
@@ -21,9 +22,12 @@
 </div>
 
 <div style="text-align: right">
-  <br><button class="btn btn-default" id="verse_block">절(verse)구분</button>
+  <br>
+  <button class="btn btn-default" id="verse_block">절(verse)구분</button>
   <button class="btn btn-default" id="syntax_enact">절(C)/구(P)단위표시</button>
   <button class="btn btn-default" id="geoinfo">지도표시</button>
+  <br><br>
+  <input type="checkbox" id="korean" value="korean" onclick="showKor();">개역한글 대역
 </div>
 
 <div id="map-canvas" style="width:100%; height:400px; display:none"></div>
@@ -46,6 +50,21 @@
     });
     layer.setMap(map);
   }
+ 
+ function showKor() {
+	 let myelements = document.querySelectorAll(".korean");
+	 if (document.getElementById("korean").checked == true) {
+		for (var i = 0; i < myelements.length; i++) {
+			myelements[i].style.display = "block";
+		}
+	 }
+	 else {
+		for (var i = 0; i < myelements.length; i++) {
+			myelements[i].style.display = "none";
+		}
+	 }
+ }
+
 </script>
 
 <div class="verse_heb">

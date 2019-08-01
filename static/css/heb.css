@@ -24,6 +24,11 @@ a.word_elm {
   text-align: right;
 }
 
+.korean {
+  font-size: 17px;
+  display: none;
+}
+
 .analysis_heb {
   font-family: 'SBLHebrew';
   font-size: 18px;
