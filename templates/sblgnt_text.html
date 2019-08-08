@@ -1,0 +1,45 @@
+{% extends "layout.html" %} {% block body %}
+
+<script>
+let book = '{{ book }}';
+let chapter = '{{ chapter }}';
+$(document).ready(function() {
+        $.ajax({
+                url: 'http://kungsik1.pythonanywhere.com/api/text/gnt/' + book + '/' +chapter,
+                datatype: 'json',
+                success: function(data) {
+			$('#text').html(data['verse']);
+                }
+        });
+});
+</script>
+
+{% set next_chapter = chapter + 1 %} 
+{% set prev_chapter = chapter - 1 %}
+{% set last_chp = 50 %}
+
+<div class="left">
+  {% if chapter > 1 %}
+  <a href="/sblgnt/{{ book }}/{{ prev_chapter }}">이전 장</a><br><br> {% else %}
+  <font color="white">이전 장</font><br><br> {% endif %}
+</div>
+
+<div class="right">
+  {% if chapter
+  < last_chp %} <a href="/sblgnt/{{ book }}/{{ next_chapter }}">다음 장</a><br><br> {% else %}
+    <font color="white">다음 장</font><br><br> {% endif %}
+</div>
+
+<br><br>
+
+<div class="center" align="center">
+  {% include 'sblgnt_selector.html' %}
+</div>
+
+<br><br>
+{% autoescape false %}
+<div class="sblgnt" id="text">
+</div>
+{% endautoescape %}
+
+{% endblock %}

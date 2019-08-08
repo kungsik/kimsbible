@@ -9,3 +9,4 @@ import kimsbible.conjugator
 import kimsbible.stat
 import kimsbible.search
 import kimsbible.tfidf
+import kimsbible.sblgnt

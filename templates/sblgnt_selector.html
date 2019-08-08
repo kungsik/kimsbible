@@ -1,0 +1,37 @@
+<form class="form-inline">
+    <select name="bible_selector" id="bible_selector" onchange="location.href=this.value">
+        <option value="/sblgnt/Matthew" chp="28">마태복음</option>
+        <option value="/sblgnt/Mark" chp="16">마가복음</option>
+        <option value="/sblgnt/Luke" chp="24">누가복음</option>
+        <option value="/sblgnt/John" chp="21">요한복음</option>
+        <option value="/sblgnt/Acts" chp="28">사도행전</option>
+        <option value="/sblgnt/Romans" chp="16">로마서</option>
+        <option value="/sblgnt/1_Corinthians" chp="13">고린도전서</option>
+        <option value="/sblgnt/2_Corinthians" chp="13">고린도후서</option>
+        <option value="/sblgnt/Galatians" chp="6">갈라디아서</option>
+        <option value="/sblgnt/Ephesians" chp="6">에베소서</option>
+        <option value="/sblgnt/Philippians" chp="4">빌립보서</option>
+	<option value="/sblgnt/Colossians" chp="4">골로새서</option>
+        <option value="/sblgnt/1_Thessalonians" chp="5">데살로니가전서</option>
+        <option value="/sblgnt/2_Thessalonians" chp="3">데살로니가후서</option>
+        <option value="/sblgnt/1_Timothy" chp="6">디모데전서</option>
+        <option value="/sblgnt/2_Timothy" chp="4">디모데후서</option>
+        <option value="/sblgnt/Titus" chp="3">디도서</option>
+        <option value="/sblgnt/Philemon" chp="1">빌레몬서</option>
+        <option value="/sblgnt/Hebrews" chp="13">히브리서</option>
+        <option value="/sblgnt/James" chp="5">야고보서</option>
+        <option value="/sblgnt/1_Peter" chp="5">베드로전서</option>
+        <option value="/sblgnt/2_Peter" chp="3">베드로후서</option>
+        <option value="/sblgnt/1_John" chp="5">요한1서</option>
+        <option value="/sblgnt/2_John" chp="1">요한2서</option>
+	<option value="/sblgnt/3_John" chp="1">요한3서</option>
+        <option value="/sblgnt/Jude" chp="1">유다서</option>
+        <option value="/sblgnt/Revelation" chp="22">요한계시록</option>
+    </select>
+
+    <select name="chp_selector" id="chp_selector" onchange="location.href=this.value">
+    </select>
+</form>
+
+
+<script type=text/javascript src="{{ url_for('static', filename='js/sblgnt_selector.js') }}"></script>

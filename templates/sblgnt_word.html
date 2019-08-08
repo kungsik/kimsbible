@@ -1,0 +1,18 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+let node = '{{ node }}';
+$(document).ready(function() {
+        $.ajax({
+                url: 'http://kungsik1.pythonanywhere.com/api/word/gnt/' + node,
+                datatype: 'json',
+                success: function(data) {
+			$('#sblgnt_word').html(
+				data['gntwordinfo'][0] + '<br>' + data['gntwordinfo'][1] +'<br>' + data['gntwordinfo'][2] + '<br>' + data['gntwordinfo'][3] + '<br>' + data['gntwordinfo'][4] + '<br>' + data['gntwordinfo'][5]
+			);
+                }
+        });
+});
+</script>
+
+<div class="sblgnt_word" id="sblgnt_word">
+</div>

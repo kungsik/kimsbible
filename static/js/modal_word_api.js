@@ -15,7 +15,7 @@ $(document).ready(function(){
     });
 });
 
-$(document).ready(function(){
+$(document).ajaxStop(function(){
     $('*[data-poload]').click(function() {
         var e = $(this);
         $.get(e.data('poload'), function(d) {

@@ -11,6 +11,8 @@ from kimsbible.lib import lib as kb
 ### Load up TF ###
 ETCBC = 'hebrew/etcbc4c'
 TF = Fabric(locations='text-fabric-data', modules=ETCBC)
+#api = TF.load('book')
+
 api = TF.load('''
     book chapter verse
     nu gn ps vt vs st
@@ -22,6 +24,7 @@ api = TF.load('''
     prs_gn prs_nu prs_ps g_cons_utf8
     gloss g_lex_utf8 phono
 ''')
+
 api.makeAvailableIn(globals())
 
 book_abb = {
