@@ -8,7 +8,8 @@ $(document).ready(function() {
                 url: 'http://kungsik1.pythonanywhere.com/api/text/gnt/' + book + '/' +chapter,
                 datatype: 'json',
                 success: function(data) {
-			$('#text').html(data['verse']);
+                  $('#text').html(data['verse']);
+                  $.getScript('/static/js/modal_word_api.js')
                 }
         });
 });
