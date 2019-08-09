@@ -11,3 +11,4 @@ def sblgnt_page(book='Matthew', chapter=1):
 def show_sblgnt_word_function(node):
     return render_template('sblgnt_word.html', node=node)
 
+
