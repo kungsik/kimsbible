@@ -109,6 +109,10 @@ def developer_page():
 def license_page():
     return render_template('license.html')
 
+@app.route('/community/')
+def community_page():
+    return render_template('community.html')
+
 @app.route('/text/')
 @app.route('/text/<book>')
 @app.route('/text/<book>/<int:chapter>')
