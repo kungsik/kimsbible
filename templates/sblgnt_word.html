@@ -2,7 +2,7 @@
 let node = '{{ node }}';
 $(document).ready(function() {
         $.ajax({
-                url: 'http://kungsik1.pythonanywhere.com/api/word/gnt/' + node,
+                url: 'https://kungsik1.pythonanywhere.com/api/word/gnt/' + node,
                 datatype: 'json',
                 success: function(data) {
 			$('#sblgnt_word').html(

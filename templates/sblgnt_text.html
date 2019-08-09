@@ -5,7 +5,7 @@ let book = '{{ book }}';
 let chapter = '{{ chapter }}';
 $(document).ready(function() {
         $.ajax({
-                url: 'http://kungsik1.pythonanywhere.com/api/text/gnt/' + book + '/' +chapter,
+                url: 'https://kungsik1.pythonanywhere.com/api/text/gnt/' + book + '/' +chapter,
                 datatype: 'json',
                 success: function(data) {
                   $('#text').html(data['verse']);
@@ -15,7 +15,7 @@ $(document).ready(function() {
 });
 </script>
 
-{% set next_chapter = chapter + 1 %} 
+{% set next_chapter = chapter + 1 %}
 {% set prev_chapter = chapter - 1 %}
 {% set last_chp = 50 %}
 
