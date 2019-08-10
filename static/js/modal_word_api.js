@@ -19,8 +19,6 @@ $(document).ready(function(){
     $('*[data-poload]').click(function() {
         var e = $(this);
         $.get(e.data('poload'), function(d) {
-            console.log(d);
-            console.log(e);
             e.popover({
                 content: d, //+ e.position().left,
                 title: '<div class=poptitle>단어분석</div>',
