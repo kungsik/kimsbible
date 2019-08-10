@@ -41,12 +41,15 @@ $(document).ready(function(){
                   }
                 }
             }).popover('show');
+			$('body')
+			  .on('mousedown', '.word_api', function(e) {
+			    e.preventDefault();
+			});
         })
     });
-    $('.popover-dismiss').popover({
-        trigger: 'focus'
-    })
     $('.close').click(function() {
         e.popover('hide');
     })
 });
+
+
