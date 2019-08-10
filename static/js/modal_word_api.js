@@ -21,7 +21,7 @@ $(document).ready(function(){
         $.get(e.data('poload'), function(d) {
             e.popover({
                 content: d, //+ e.position().left,
-                title: '<div class=poptitle>단어분석</div>',
+                title: '<div class=poptitle>단어분석 <a href=# class=close> X</a></div>',
                 html: true,
                 constraints: [
                     {
@@ -45,5 +45,8 @@ $(document).ready(function(){
     });
     $('.popover-dismiss').popover({
         trigger: 'focus'
+    })
+    $('.close').click(function() {
+        e.popover('hide');
     })
 });
