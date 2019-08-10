@@ -9,12 +9,27 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "SBLGreek";
+  src: url("../fonts/SBLGreek.woff") format("woff"); /* Modern Browsers */
+  font-weight: normal;
+  font-style: normal;
+}
+
 a.word_elm {
   font-family: 'SBLHebrew';
   font-size: 30px;
   direction: rtl;
   color: black;
 }
+
+a.sblgnt_word_elm {
+  font-family: 'SBLGreek';
+  font-size: 25px;
+  direction: rtl;
+  color: black;
+}
+
 
 .verse_heb {
   font-family: 'SBLHebrew';
@@ -76,6 +91,12 @@ a.word_elm {
   color: #ff6d00;
   text-decoration: none;
 }
+
+.sblgnt_word_elm:hover {
+  color: #ff6d00;
+  text-decoration: none;
+}
+
 
 .modal.modal-wide .modal-dialog {
   width: 95%;
