@@ -72,6 +72,10 @@ a.sblgnt_word_elm {
   text-indent: 0em;
 }
 
+.sblgnt_word_api {
+  font-family: 'SBLGreek';
+}
+
 .verse_api {
   font-family: 'SBLHebrew';
   font-size: 15px;
