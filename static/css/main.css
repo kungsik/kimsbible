@@ -96,8 +96,15 @@ a.sblgnt_word_elm {
   text-decoration: none;
 }
 
-.korean {
+.heb_korean {
   font-size: 18px;
+  padding-top: 14px;
+}
+
+.sblgnt_korean {
+  font-size: 18px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .modal.modal-wide .modal-dialog {

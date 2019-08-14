@@ -181,7 +181,7 @@ def text_page(book='Genesis', chapter=1):
             kor_vrs = kb.json_to_verse(section[0], chp_vrs[0], chp_vrs[1], 'korean')
 
         #verse += "<p class='alert alert-warning korean' dir=ltr align=left>" + kor_vrs + "</p>"
-        verse += "<p class='korean' dir=ltr align=left>" + kor_vrs + "</p>"
+        verse += "<p class='heb_korean' id='heb_korean' dir=ltr align=left>" + kor_vrs + "</p>"
 
         kml_file = "http://alphalef.com/apps/kml/" + book_abb[book] + '.' + str(chapter) + '.' + "kml"
 
