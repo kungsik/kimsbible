@@ -39,11 +39,6 @@ a.sblgnt_word_elm {
   text-align: right;
 }
 
-.korean {
-  font-size: 17px;
-  display: none;
-}
-
 .analysis_heb {
   font-family: 'SBLHebrew';
   font-size: 18px;
@@ -101,6 +96,9 @@ a.sblgnt_word_elm {
   text-decoration: none;
 }
 
+.korean {
+  font-size: 18px;
+}
 
 .modal.modal-wide .modal-dialog {
   width: 95%;
