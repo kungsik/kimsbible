@@ -1,11 +1,14 @@
 {% extends "layout.html" %} {% block body %}
 
+<script src="/static/js/syntax_viewer.js"></script>
+
 <script>
 let book = '{{ book }}';
 let chapter = '{{ chapter }}';
 $(document).ready(function() {
         $.ajax({
-                url: 'https://kungsik1.pythonanywhere.com/api/text/gnt/' + book + '/' +chapter,
+                //url: 'https://kungsik1.pythonanywhere.com/api/text/gnt/' + book + '/' +chapter,
+                url: 'http://127.0.0.1:5000/api/text/gnt/' + book + '/' +chapter,
                 datatype: 'json',
                 success: function(data) {
                   $('#text').html(data['verse']);
@@ -37,7 +40,33 @@ $(document).ready(function() {
   {% include 'sblgnt_selector.html' %}
 </div>
 
+<div style="text-align: right">
+  <br>
+  <!--  <button class="btn btn-default" id="verse_block">절(verse)구분</button> -->
+  <button class="btn btn-default" id="syntax_enact">절(C)/구(P)단위표시</button> 
+  <!-- <button class="btn btn-default" id="geoinfo">지도표시</button> -->
+  <br><br>
+  <input type="checkbox" id="showkorean" value="korean" checked onclick="showKor();">개역한글 대역
+</div>
+
 <br><br>
+
+<script>
+ function showKor() {
+	 let myelements = document.querySelectorAll(".sblgnt_korean");
+	 if (document.getElementById("showkorean").checked == true) {
+		for (var i = 0; i < myelements.length; i++) {
+			myelements[i].style.display = "block";
+		}
+	 }
+	 else {
+		for (var i = 0; i < myelements.length; i++) {
+			myelements[i].style.display = "none";
+		}
+	 }
+ }
+</script>
+
 {% autoescape false %}
 <div class="sblgnt" id="text">
 </div>
