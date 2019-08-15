@@ -235,7 +235,9 @@ div.pager span.active {
 }
 
 .syntax.clause1.hidden,
-.syntax.phrase1.hidden
+.syntax.phrase1.hidden,
+.gntclause,
+.gntclauseatom
  {
   display: none;
 }

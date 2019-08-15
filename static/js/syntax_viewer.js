@@ -8,6 +8,8 @@
        $('.phraseNode').attr('class', 'phrase');
        $('.syntax.clause1.hidden').attr('class', 'syntax clause1');
        $('.syntax.phrase1.hidden').attr('class', 'syntax phrase1');
+       $('.gntclause').css('display', 'block');
+       $('.gntclauseatom').css('display', 'block');
      });
 
      $(document.body).on('click', '#syntax_disable', function() {
@@ -19,6 +21,8 @@
          $('.phrase').attr('class', 'phraseNode');
          $('.syntax.clause1').attr('class', 'syntax clause1 hidden');
          $('.syntax.phrase1').attr('class', 'syntax phrase1 hidden');
+         $('.gntclause').css('display', 'none');
+         $('.gntclauseatom').css('display', 'none');
        });
      });
    });
