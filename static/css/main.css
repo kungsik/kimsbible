@@ -234,12 +234,12 @@ div.pager span.active {
     text-indent: 0;
 }
 
-.syntax.clause1.hidden,
-.syntax.phrase1.hidden,
-.gntclause,
-.gntclauseatom
+.clause1,
+.phrase1,
+.clauseatom
  {
   display: none;
+  font-size: 13px;
 }
 
 .footer {

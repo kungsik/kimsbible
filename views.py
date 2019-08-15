@@ -138,12 +138,12 @@ def text_page(book='Genesis', chapter=1):
             lastPhraseWordNode = L.d(phraseNode[0], otype='word')[-1]
 
             if w == firstClauseWordNode:
-                verse += '<span class=clauseNode id=clauseNode clause_node='+str(clauseNode[0])+'>'
-                verse += "<span class='syntax clause1 hidden' id=syntax>C:"+ kb.eng_to_kor(F.typ.v(clauseNode[0]), 'full') +"</span>"
+                verse += '<span class=clauseNode clause_node='+str(clauseNode[0])+'>'
+                verse += "<span class=clause1>C:"+ kb.eng_to_kor(F.typ.v(clauseNode[0]), 'full') +"</span>"
 
             if w == firstPhraseWordNode:
-                verse += '<span class=phraseNode id=phraseNode phrase_node='+str(phraseNode[0])+'>'
-                verse += "<span class='syntax phrase1 hidden' id=syntax>P:"+ kb.eng_to_kor(F.typ.v(phraseNode[0]), 'full') + "," + kb.eng_to_kor(F.function.v(phraseNode[0]), 'full') + "</span>"
+                verse += '<span class=phraseNode phrase_node='+str(phraseNode[0])+'>'
+                verse += "<span class=phrase1>P:"+ kb.eng_to_kor(F.typ.v(phraseNode[0]), 'full') + "," + kb.eng_to_kor(F.function.v(phraseNode[0]), 'full') + "</span>"
 
             if F.qere_utf8.v(w):
                 verse += '<span class=wordNode>'
