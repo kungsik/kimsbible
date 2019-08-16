@@ -1,7 +1,7 @@
 from tf.fabric import Fabric
 from flask import render_template, request, url_for
 from kimsbible import app
-from kimsbible.views import api
+from kimsbible.bhsheb import api
 from collections import OrderedDict
 from kimsbible.lib import lib as kb
 
@@ -142,12 +142,12 @@ def featureStat(node, synType, feat, num):
 
     return result
 
-@app.route('/api/stat/tutorial/')
+@app.route('/bhsheb/stat/tutorial/')
 def stat_tutorial():
-    return render_template('stat_tutorial.html')
+    return render_template('bhsheb_stat_tutorial.html')
 
 
-@app.route('/api/stat/', methods=['GET', 'POST'])
+@app.route('/bhsheb/stat/', methods=['GET', 'POST'])
 def statistics():
     i = 0
     if request.method == 'POST':
@@ -222,10 +222,11 @@ def statistics():
 
         return result
     else:
-        return render_template('stat.html')
+        return render_template('bhsheb_stat.html')
 
 
 @app.route('/api/parsing/', methods=['GET', 'POST'])
+@app.route('/bhsheb/parsing/', methods=['GET', 'POST'])
 def parsing():
     if request.method == 'POST':
         rangeCode = request.form['parsingCode']
@@ -260,6 +261,6 @@ def parsing():
         return result
 
     else:
-        return render_template('parsing.html')
+        return render_template('bhsheb_parsing.html')
 
  

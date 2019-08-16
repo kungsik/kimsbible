@@ -139,9 +139,6 @@
     "vbe":"동사접미어(코드)",
     "vbs":"동사어근형(코드)"
   },
-  "sentence": {
-    "title":"문장단위"
-  },
   "clause": {
     "title":"절(clause)단위",
     "typ":[{

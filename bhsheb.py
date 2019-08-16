@@ -2,7 +2,6 @@ import re
 import os
 from collections import OrderedDict
 
-
 from flask import render_template, request, url_for
 from tf.fabric import Fabric
 
@@ -70,7 +69,7 @@ book_abb = {
     "2_Chronicles": "2chr"
 }
 
-def word_function(node):
+def show_bhsheb_word_function(node):
     w_f = OrderedDict()
     w_f["원형"] = F.voc_utf8.v(L.u(node, otype='lex')[0])
     #w_f["어근"] = F.lex_utf8.v(node).replace('=', '').replace('/', '').replace('[', '')
@@ -91,10 +90,10 @@ def word_function(node):
     w_f["의미"] = F.gloss.v(L.u(node, otype='lex')[0])
     w_f["의미"] = w_f["의미"].replace('<', '[').replace('>', ']')
     w_f["사전"] = "<a href='http://dict.naver.com/hbokodict/ancienthebrew/#/search?query=" + w_f["원형"] + "' target=_blank>보기</a>"
-    w_f["용례"] = "<a href='/api/search/?cons=" + F.lex_utf8.v(node) + "&sp=" + w_f["품사"] + "' target=_blank>검색</a>"
+    w_f["용례"] = "<a href='/bhsheb/search/?cons=" + F.lex_utf8.v(node) + "&sp=" + w_f["품사"] + "' target=_blank>검색</a>"
 
     if w_f["동사형"] != "NA" and w_f["동사형"] != "" and w_f["동사형"] != "unknown":
-        w_f["동사형태"] = "<a href='/conjugator/?cons=" + w_f["원형"] + "' target=_blank>검색</a>"
+        w_f["동사형태"] = "<a href='/bhsheb/conjugator/?cons=" + w_f["원형"] + "' target=_blank>검색</a>"
 
     return w_f
 
@@ -114,8 +113,11 @@ def license_page():
 def community_page():
     return render_template('community.html')
 
+@app.route('/bhsheb/')
 @app.route('/text/')
+@app.route('/bhsheb/<book>')
 @app.route('/text/<book>')
+@app.route('/bhsheb/<book>/<int:chapter>')
 @app.route('/text/<book>/<int:chapter>')
 def text_page(book='Genesis', chapter=1):
     chpNode = T.nodeFromSection((book, chapter))
@@ -150,7 +152,7 @@ def text_page(book='Genesis', chapter=1):
                 verse += F.g_word_utf8.v(w) + ' '
                 verse += '</a></span>'
 
-                verse += '<span class=wordNode><a tabindex=0 class=word_elm data-poload=/api/word/'+str(w)+' data-toggle=popover data-trigger=focus>'
+                verse += '<span class=wordNode><a tabindex=0 class=word_elm data-poload=/bhsheb/word/'+str(w)+' data-toggle=popover data-trigger=focus>'
                 verse += F.qere_utf8.v(w)
                 verse += '</a></span>'
 
@@ -160,7 +162,7 @@ def text_page(book='Genesis', chapter=1):
                     verse += '</span>'
 
             else:
-                verse += '<span class=wordNode><a tabindex=0 class=word_elm data-poload=/api/word/'+str(w)+' data-toggle=popover data-trigger=focus>'
+                verse += '<span class=wordNode><a tabindex=0 class=word_elm data-poload=/bhsheb/word/'+str(w)+' data-toggle=popover data-trigger=focus>'
                 verse += F.g_word_utf8.v(w)
                 verse += '</a></span>'
 
@@ -185,17 +187,17 @@ def text_page(book='Genesis', chapter=1):
 
         kml_file = "http://alphalef.com/apps/kml/" + book_abb[book] + '.' + str(chapter) + '.' + "kml"
 
-    return render_template('text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp[1], kml_file=kml_file)
+    return render_template('bhsheb_text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp[1], kml_file=kml_file)
 
 
-@app.route('/api/word/<int:node>')
+@app.route('/bhsheb/word/<int:node>')
 def show_word_function(node):
-    w_f = word_function(node)
+    w_f = show_bhsheb_word_function(node)
     for k, v in w_f.items():
         w_f[k] = kb.eng_to_kor(v, 'full')
-    return render_template('word_api.html', w_f=w_f)
+    return render_template('bhsheb_word.html', w_f=w_f)
 
-@app.route('/api/verse/<int:node>')
+@app.route('/bhsheb/verse/<int:node>')
 def show_verse_function(node):
     wordsNode = L.d(node, otype='word')
     wordsNode.reverse()
@@ -229,4 +231,4 @@ def show_verse_function(node):
         verse_str['kjv'].append(kb.json_to_verse(section[0], chp_vrs[0], chp_vrs[1], 'kjv'))
         verse_str['kor'].append(kb.json_to_verse(section[0], chp_vrs[0], chp_vrs[1], 'korean'))
 
-    return render_template('verse_api.html', verse_api=verse_api, section=section, verse_str=verse_str)
+    return render_template('bhsheb_verse.html', verse_api=verse_api, section=section, verse_str=verse_str)

@@ -7,18 +7,18 @@
 
 <div class="left">
   {% if chapter > 1 %}
-  <a href="/text/{{ book }}/{{ prev_chapter }}">이전 장</a><br><br> {% else %}
+  <a href="/bhsheb/{{ book }}/{{ prev_chapter }}">이전 장</a><br><br> {% else %}
   <font color="white">이전 장</font><br><br> {% endif %}
 </div>
 
 <div class="right">
   {% if chapter
-  < last_chp %} <a href="/text/{{ book }}/{{ next_chapter }}">다음 장</a><br><br> {% else %}
+  < last_chp %} <a href="/bhsheb/{{ book }}/{{ next_chapter }}">다음 장</a><br><br> {% else %}
     <font color="white">다음 장</font><br><br> {% endif %}
 </div>
 
 <div class="center" align="center">
-  {% include 'bible_selector.html' %}
+  {% include 'bhsheb_selector.html' %}
 </div>
 
 <div style="text-align: right">

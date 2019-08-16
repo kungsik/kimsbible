@@ -1,9 +1,9 @@
 from tf.fabric import Fabric
 from flask import render_template, request, url_for
 from kimsbible import app
-from kimsbible.views import api
-from kimsbible.stat import codetorange
-from kimsbible.stat import bookList
+from kimsbible.bhsheb import api
+from kimsbible.bhsheb_stat import codetorange
+from kimsbible.bhsheb_stat import bookList
 import math
 import json
 
@@ -57,10 +57,7 @@ def loadIdf(wordCount):
     sortedData = sorted(idfData.items(), key = lambda x:x[1], reverse=True)
     return sortedData
 
-
-
-
-@app.route('/tfidf/', methods=['POST','GET'])
+@app.route('/bhsheb/tfidf/', methods=['POST','GET'])
 def tfidf():
     if request.method == 'POST':
         result = []
@@ -80,4 +77,4 @@ def tfidf():
         return json.dumps(result)
 
     else:
-        return render_template('tfidf.html')
+        return render_template('bhsheb_tfidf.html')

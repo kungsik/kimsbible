@@ -1,6 +1,6 @@
 from flask import render_template, request, url_for
 from tf.fabric import Fabric
-from kimsbible.views import api
+from kimsbible.bhsheb import api
 from kimsbible import app
 
 api.makeAvailableIn(globals())
@@ -14,7 +14,7 @@ def sample_page():
     return render_template('search_sample.html')
 
 
-@app.route('/api/search/', methods=['GET', 'POST'])
+@app.route('/bhsheb/search/', methods=['GET', 'POST'])
 def bible_search():
     if request.method == 'POST':
         query = request.form['query']
@@ -81,4 +81,4 @@ def bible_search():
         else:
             return result
     else:
-        return render_template('search.html')
+        return render_template('bhsheb_search.html')

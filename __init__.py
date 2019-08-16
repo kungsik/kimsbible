@@ -4,9 +4,9 @@ import os
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
-import kimsbible.views
-import kimsbible.conjugator
-import kimsbible.stat
-import kimsbible.search
-import kimsbible.tfidf
+import kimsbible.bhsheb
+import kimsbible.bhsheb_conjugator
+import kimsbible.bhsheb_stat
+import kimsbible.bhsheb_search
+#import kimsbible.bhsheb_tfidf
 import kimsbible.sblgnt

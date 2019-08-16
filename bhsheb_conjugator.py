@@ -1,7 +1,7 @@
 from tf.fabric import Fabric
 from flask import render_template, request, url_for
 from kimsbible import app
-from kimsbible.views import api
+from kimsbible.bhsheb import api
 import json
 
 api.makeAvailableIn(globals())
@@ -116,11 +116,11 @@ def verbaldata(verb):
     return sortedlist
 
 
-@app.route('/conjugator/', methods=['GET', 'POST'])
+@app.route('/bhsheb/conjugator/', methods=['GET', 'POST'])
 def conjugator():
     if request.method == 'POST':
         verb = request.form['verb']
         result = verbaldata(verb)
         return json.dumps(result)
     else:
-        return render_template('conjugator.html')
+        return render_template('bhsheb_conjugator.html')
