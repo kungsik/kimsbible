@@ -76,9 +76,9 @@ a.sblgnt_word_elm {
   font-size: 15px;
 }
 
-.verse_num {
-  font-size: 22px;
-  color: #ff33af
+.verse_analysis {
+  font-size: 11px;
+  color: #336fff;
 }
 
 .verse_num:hover {

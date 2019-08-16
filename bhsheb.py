@@ -124,12 +124,14 @@ def text_page(book='Genesis', chapter=1):
     verseNode = L.d(chpNode, otype='verse')
     whole_chpNode = T.nodeFromSection((book,))
     last_chp = T.sectionFromNode(whole_chpNode, lastSlot=True)
-    verse = ""
+    verse = "<ol>"
 
     for v in verseNode:
-        verse += '<span class=verseNode><a class=verse_num id=verse_num verse_node='+str(v)+'>'
-        verse += str(T.sectionFromNode(v)[2])
-        verse += ' </a>'
+        verse += '<li>'
+        verse += '<span class=verseNode>'
+        #verse += '<a class=verse_num id=verse_num verse_node='+str(v)+'>'
+        #verse += str(T.sectionFromNode(v)[2])
+        #verse += ' </a>'
         wordsNode = L.d(v, otype='word')
         for w in wordsNode:
             clauseNode = L.u(w, otype='clause')
@@ -174,21 +176,24 @@ def text_page(book='Genesis', chapter=1):
             if w == lastClauseWordNode: verse += '</span>'
             if w == lastPhraseWordNode: verse += '</span>'
 
+        #절분석 버튼
+        verse += '<button type="button" class="btn btn-default btn-xs bhsheb_verse_analysis" verse_node='+str(v)+'>절분석</button>'
         verse += '</span>'
 
+        #한글 번역본
         section = T.sectionFromNode(v)
         eng_chp_vrs = kb.heb_vrs_to_eng(section[0], str(section[1]), str(section[2]))
         for c_v in eng_chp_vrs:
             chp_vrs = re.split(":", c_v)
             kor_vrs = kb.json_to_verse(section[0], chp_vrs[0], chp_vrs[1], 'korean')
 
-        #verse += "<p class='alert alert-warning korean' dir=ltr align=left>" + kor_vrs + "</p>"
         verse += "<p class='heb_korean' id='heb_korean' dir=ltr align=left>" + kor_vrs + "</p>"
+        verse += '</li>'
 
-        kml_file = "http://alphalef.com/apps/kml/" + book_abb[book] + '.' + str(chapter) + '.' + "kml"
+    verse += '</ol>'
+    kml_file = "http://alphalef.com/apps/kml/" + book_abb[book] + '.' + str(chapter) + '.' + "kml"
 
     return render_template('bhsheb_text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp[1], kml_file=kml_file)
-
 
 @app.route('/bhsheb/word/<int:node>')
 def show_word_function(node):

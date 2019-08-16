@@ -6,7 +6,7 @@
 // });
 
 $(document).ready(function(){
-    $(".verse_num").click(function(){
+    $(".bhsheb_verse_analysis").click(function(){
         var verse_node = $(this).attr("verse_node");
         var url = '/bhsheb/verse/'+verse_node;
         $('.modal-container').load(url, function(result){
