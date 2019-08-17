@@ -83,7 +83,7 @@ def verbaldata(verb):
             else:
                 verb = F.g_word_utf8.v(node)
 
-            query = "<a href=/api/search/?cons=" + F.lex_utf8.v(node) + "&tense=" + F.vt.v(node) + "&stem=" + F.vs.v(node)
+            query = "<a href=/bhsheb/search/?cons=" + F.lex_utf8.v(node) + "&tense=" + F.vt.v(node) + "&stem=" + F.vs.v(node)
             query += "&ps=" + F.ps.v(node)
             query += "&gn=" + F.gn.v(node)
             query += "&nu=" + F.nu.v(node)
