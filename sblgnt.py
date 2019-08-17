@@ -43,4 +43,6 @@ def sblgnt_page(book='Matthew', chapter=1):
 def show_sblgnt_word_function(node):
     return render_template('sblgnt_word.html', node=node)
 
-
+@app.route('/sblgnt/verse/<int:node>')
+def show_sblgnt_verse_function(node):
+    return render_template('sblgnt_verse.html', node=node)

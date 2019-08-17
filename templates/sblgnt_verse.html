@@ -1,0 +1,87 @@
+<script>
+    let node = '{{ node }}';
+    $(document).ready(function() {
+            $.ajax({
+                    //url: 'https://kungsik1.pythonanywhere.com/api/verse/gnt/' + node,
+                    url: 'http://127.0.0.1:5000/api/verse/gnt/' + node,
+                    datatype: 'json',
+                    success: function(data) {
+                        $('.modal-title').html(data['gntverseinfo']['scripture']);
+
+                        result = '';
+
+                        result += '<tr>';
+                        data['gntverseinfo']['parsing']['words'].forEach(function(word) {
+                            result += '<td class=analysis_gnt>' + word + '</td>';
+                            })
+                        result += '</tr>';
+                        
+                        result += '<tr>';
+                        data['gntverseinfo']['parsing']['gloss'].forEach(function(gloss) {
+                            result += '<td>' + gloss + '</td>';
+                            })
+                        result += '</tr>';
+                    
+                        result += '<tr>';
+                        data['gntverseinfo']['parsing']['pdp'].forEach(function(pdp) {
+                            result += '<td>' + pdp + '</td>';
+                            })
+                        result += '</tr>';
+
+                        result += '<tr>';
+                        data['gntverseinfo']['parsing']['parse'].forEach(function(parse) {
+                            result += '<td>' + parse + '</td>';
+                            })
+                        result += '</tr>';
+
+                        result += '<tr>';
+                        data['gntverseinfo']['parsing']['parse2'].forEach(function(parse2) {
+                            result += '<td>' + parse2 + '</td>';
+                            })
+                        result += '</tr>';
+
+                        $('.table').html(result);
+                        $('#kjv').html(data['gntverseinfo']['translation']['kjv'][0]);
+                        $('#kor').html(data['gntverseinfo']['translation']['kor'][0]);
+                    }                  
+            });
+    });
+    </script>
+
+<div class="modal modal-wide" id="verse_api">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- header -->
+            <div class="modal-header">
+                <!-- 닫기(x) 버튼 -->
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <!-- header title -->
+                <h4 class="modal-title"></h4>
+            </div>
+            <!-- body -->
+            {% autoescape false %}
+            <div class="modal-body">
+                      
+                <table class="table">                  
+                </table>
+        
+                <div><span class="label label-primary">KJV</span>
+                    <div class="alert alert-warning" id="kjv">
+                    </div>
+                </div>
+        
+                <div><span class="label label-primary">KOR</span>
+                    <div class="alert alert-warning" id="kor">
+                    </div>
+                </div>
+        
+            </div>
+            {% endautoescape %}
+            <!-- Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+  </div>
+  

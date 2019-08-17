@@ -16,6 +16,16 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
+    $(".sblgnt_verse_analysis").click(function(){
+        var verse_node = $(this).attr("verse_node");
+        var url = '/sblgnt/verse/'+verse_node;
+        $('.modal-container').load(url, function(result){
+            $('#verse_api').modal({show:true});
+        });
+    });
+});
+
+$(document).ready(function(){
     $('*[data-poload]').click(function() {
         var e = $(this);
         $.get(e.data('poload'), function(d) {
