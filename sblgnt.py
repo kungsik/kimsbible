@@ -28,7 +28,7 @@ book_abb = {
     "2_John": "none",
     "3_John": "none",
     "Jude": "jude",
-    "Revealation": "rev" 
+    "Revelation": "rev" 
 }
 
 
