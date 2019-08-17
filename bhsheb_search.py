@@ -72,8 +72,10 @@ def bible_search():
                     verse = verse.replace('phraseNode_'+str(each_node), 'phrase')
                 elif(node_type == 'word'):
                     verse = verse.replace('wordNode_'+str(each_node), 'word')
-            result += '<tr><td width=180px><span class="verse_num bhsheb_verse_analysis" verse_node=' + str(v) + '>'
-            result += section[0] + " " + str(section[1]) + ":" + str(section[2]) + "</span></td><td class=result_verse>" + verse + "</td></tr>"
+            result += '<tr><td width=180px><span verse_node=' + str(v) + '>'
+            result += section[0] + " " + str(section[1]) + ":" + str(section[2]) + "</span>"
+            result += '<p><button type="button" class="btn btn-default btn-xs bhsheb_verse_analysis" verse_node='+str(v)+'>절분석</button></p></td>'
+            result += "<td class=result_verse>" + verse + "</td></tr>"
 
         result += "</tbody></table>"
         if i == 0:
