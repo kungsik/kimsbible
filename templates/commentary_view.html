@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% autoescape false %}
+
+    <div id="commentary_view">
+        <h1>구절노트</h1>
+        <h2>{{ view[3] }}</h2>
+        {{ view[4] }}
+    </div>
+
+    {% endautoescape %}
+{% endblock %}
