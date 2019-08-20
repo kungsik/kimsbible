@@ -22,13 +22,14 @@ def commentary_add():
 
 @app.route('/commentary/list/')
 def commentary_list():
-    name = oauth.getAuthorizedName()
+    auth_info = oauth.getAuthorizedInfo()
     commentary_db = db.Table()
     clist = commentary_db.clist()
-    return render_template('commentary_list.html', lists=clist, name=name)
+    return render_template('commentary_list.html', lists=clist, auth_info=auth_info)
 
 @app.route('/commentary/view/<int:no>')
 def commentary_view(no):
+    auth_info = oauth.getAuthorizedInfo()
     commentary_db = db.Table()
     cview = commentary_db.cview(no)
-    return render_template('commentary_view.html', view=cview)
+    return render_template('commentary_view.html', view=cview, auth_info=auth_info)

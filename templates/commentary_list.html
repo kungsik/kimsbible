@@ -4,17 +4,21 @@
 
     <h1>구절노트</h1>
     <div id="commentary_list">
-        {{ name }}
+
+       {{ auth_info }}
+
+        <br>
         <table class="table">
 
             <tr>
-                <td>글번호</td><td>날짜<td>제목</td><td>작성자</td>
+                <td>글번호</td><td>구절코드</td><td>제목<td>작성자</td><td>작성일</td>
             </tr>
 
         {% for list in lists %}
 
             <tr>
                 <td>{{ list[0] }}</td>
+                <td>{{ list[7] }} </td>
                 <td><a href="/commentary/view/{{ list[0] }}">{{ list[3] }}</a></td>
                 <td>{{ list[2] }}</td>
                 <td>{{ list[1] }}</td>
@@ -24,7 +28,7 @@
 
         </table>
 
-        {% if name %}
+        {% if session['username'] %}
 
             <button class="btn btn-default" onclick="location.href = '/commentary/add/';">글 작성하기</button>
 
