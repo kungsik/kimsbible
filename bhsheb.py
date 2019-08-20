@@ -22,7 +22,7 @@ api = TF.load('''
     lex_utf8 lex voc_utf8
     g_prs_utf8 g_uvf_utf8
     prs_gn prs_nu prs_ps g_cons_utf8
-    gloss phono
+    gloss phono strong
 ''')
 
 api.makeAvailableIn(globals())
@@ -89,7 +89,8 @@ def show_bhsheb_word_function(node):
     w_f["수(접미)"] = F.prs_nu.v(node)  # pronominal suffix number
     w_f["의미"] = F.gloss.v(L.u(node, otype='lex')[0])
     w_f["의미"] = w_f["의미"].replace('<', '[').replace('>', ']')
-    w_f["사전"] = "<a href='http://dict.naver.com/hbokodict/ancienthebrew/#/search?query=" + w_f["원형"] + "' target=_blank>보기</a>"
+    strong = F.strong.v(node).replace('H', '')
+    w_f["사전"] = "<a href='http://dict.naver.com/hbokodict/ancienthebrew/#/search?query=" + strong + "' target=_blank>보기</a>"
     w_f["용례"] = "<a href='/bhsheb/search/?cons=" + F.lex_utf8.v(node) + "&sp=" + w_f["품사"] + "' target=_blank>검색</a>"
 
     if w_f["동사형"] != "NA" and w_f["동사형"] != "" and w_f["동사형"] != "unknown":
