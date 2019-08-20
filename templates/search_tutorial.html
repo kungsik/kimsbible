@@ -138,55 +138,6 @@
  <li><strong>원형:</strong> 원형은 단어의 사전형태를 의미합니다. 원형을 입력하기 위한 속성은 <font color="red">lex(코드), lex_utf8(히브리어)</font>입니다. 이 조건으로 검색을 했을 경우, 즉 lex_utf8=אלהימ으로 검색할 경우 אלהים 뿐만 아니라 그 변화형들인 אלהינו, אלהיך 등이 모두 검색됩니다.</li>
  </ul>
  <ul>
- <li><strong>텍스트형:</strong>  텍스트형은 성서 텍스트에 나와 있는 그대로의 형태를 의미합니다. 텍스트형을 입력하기 위한 속성은 <font color="red">g_cons(코드), g_cons_utf8(히브리어)</font>입니다. 이 조건으로 검색 했을 경우, 즉 g_cons_utf8=אלהיך로 검색할 경우 אלהיך로 쓰여진 형태들만 검색됩니다.</li>
- </ul>
- </blockquote>
- <p>히브리어와 대응되는 영문 알파벳 코드는 아래와 같습니다.</p>
- <table>
- <thead>
- <tr><th>히브리어</th><th>코드</th><th>글자명</th></tr>
- </thead>
- <tbody>
- <tr><td>א</td><td>&gt;</td><td>알렙</td></tr>
- <tr><td>ב</td><td>B</td><td>베트</td></tr>
- <tr><td>ג</td><td>G</td><td>김멜</td></tr>
- <tr><td>ד</td><td>D</td><td>달렡</td></tr>
- <tr><td>ה</td><td>H</td><td>헤</td></tr>
- <tr><td>ו</td><td>W</td><td>봐브</td></tr>
- <tr><td>ז</td><td>Z</td><td>자인</td></tr>
- <tr><td>ח</td><td>X</td><td>헤트</td></tr>
- <tr><td>ט</td><td>V</td><td>테트</td></tr>
- <tr><td>י</td><td>J</td><td>요드</td></tr>
- <tr><td>כ</td><td>K</td><td>카프</td></tr>
- <tr><td>ל</td><td>L</td><td>라메드</td></tr>
- <tr><td>מ</td><td>M</td><td>멤</td></tr>
- <tr><td>נ</td><td>N</td><td>눈</td></tr>
- <tr><td>ס</td><td>S</td><td>사멕</td></tr>
- <tr><td>ע</td><td>&lt;</td><td>아인</td></tr>
- <tr><td>פ</td><td>P</td><td>페</td></tr>
- <tr><td>צ</td><td>Y</td><td>짜디</td></tr>
- <tr><td>ק</td><td>Q</td><td>코프</td></tr>
- <tr><td>ר</td><td>R</td><td>레쉬</td></tr>
- <tr><td>שׁ</td><td>C</td><td>쉰</td></tr>
- <tr><td>שׂ</td><td>F</td><td>신</td></tr>
- <tr><td>ת</td><td>T</td><td>타브</td></tr>
- </tbody>
- </table>
- <hr>
- <p>위의 표를 기준으로 코드를 입력하면 됩니다. 그런데 히브리어가 아닌 영문 코드로 입력할 때에는 단어를 입력하고 마지막에 아래와 같은 동사, 명사 식별 코드를 하나 더 추가 해 주어야 합니다.</p>
- <p><b>명사: /<br>
- 동사: [ </b></p>
- <p>예를 들면 아래와 같습니다.</p>
- <ul>
- <li>word lex_utf8=אלהימ</li>
- <li>word lex=&gt;LHJM<font color="red">/</font></li>
- </ul>
- <ul>
- <li>word lex_utf8=נתנ</li>
- <li>word lex=NTN<font color="red">[</font></li>
- </ul>
- <hr>
- <p><br></p>
  <h3 id="6-&#xC131;&#xC11C;-&#xCC45;-&#xC774;&#xB984;-&#xB77C;&#xD2F4;&#xC5B4;-&#xBB38;&#xC790;&#xD45C;">6. 성서 책 이름 라틴어 문자표</h3>
  <table>
  <thead>
