@@ -7,7 +7,7 @@ class Table:
         self.db = pymysql.connect(
           "localhost",
           "root",
-          "alphalef1351",
+          "",
           "alphalef"
         )
         self.cursor = self.db.cursor()
