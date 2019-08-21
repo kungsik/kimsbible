@@ -7,6 +7,7 @@ from tf.fabric import Fabric
 
 from kimsbible import app
 from kimsbible.lib import lib as kb
+from kimsbible.lib import vcodeparser as vp
 
 ### Load up TF ###
 ETCBC = 'hebrew/etcbc4c'
@@ -129,11 +130,11 @@ def text_page(book='Genesis', chapter=1):
     verse = "<ol>"
 
     for v in verseNode:
+        section = T.sectionFromNode(v)
+        vcode = vp.nodetocode(section, vp.bookList)
+        
         verse += '<li>'
         verse += '<span class=verseNode>'
-        #verse += '<a class=verse_num id=verse_num verse_node='+str(v)+'>'
-        #verse += str(T.sectionFromNode(v)[2])
-        #verse += ' </a>'
         wordsNode = L.d(v, otype='word')
         for w in wordsNode:
             clauseNode = L.u(w, otype='clause')
@@ -180,10 +181,14 @@ def text_page(book='Genesis', chapter=1):
 
         #절분석 버튼
         verse += '<button type="button" class="btn btn-default btn-xs bhsheb_verse_analysis" verse_node='+str(v)+'>절분석</button>'
+        verse += '</span> '
+
+        #절노트 버튼
+        verse += '<button type="button" class="btn btn-default btn-xs verse_note" onclick="location.href=commentary/vcode/' + vcode + >절노트</button>'
+        onclick="location.href = '/comme
         verse += '</span>'
 
         #한글 번역본
-        section = T.sectionFromNode(v)
         eng_chp_vrs = kb.heb_vrs_to_eng(section[0], str(section[1]), str(section[2]))
         for c_v in eng_chp_vrs:
             chp_vrs = re.split(":", c_v)

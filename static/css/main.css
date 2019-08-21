@@ -257,6 +257,23 @@ div.pager span.active {
   text-align: left;
 }
 
+#authorized {
+  float: right;
+}
+
+@media(min-width:992px) {
+  .panel-body {
+    width: 80%;
+    text-align: left;
+    display: inline-block;
+  }
+
+  #commentary_container {
+    text-align: center;
+  }
+}
+
+
 /*.map-canvas {
   height: 400 px;
   display: block;

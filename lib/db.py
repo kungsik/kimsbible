@@ -7,7 +7,7 @@ class Table:
         self.db = pymysql.connect(
           "localhost",
           "root",
-          "",
+          "alphalef1351",
           "alphalef"
         )
         self.cursor = self.db.cursor()
@@ -36,4 +36,11 @@ class Table:
         self.cursor.execute(sql)
         result = self.cursor.fetchone()
         return result
+
+    def vcode(self, no):
+        sql = "SELECT * FROM commentary WHERE vcode='" + str(no) + "' ORDER BY no DESC"
+        self.cursor.execute(sql)
+        result = self.cursor.fetchall()
+        return result
+        
 

@@ -4,50 +4,58 @@
 
 {% set next_chapter = chapter + 1 %} {% set prev_chapter = chapter - 1 %}
 
-<div class="left">
-  {% if chapter > 1 %}
-  <a href="/bhsheb/{{ book }}/{{ prev_chapter }}">이전 장</a><br><br> {% else %}
-  <font color="white">이전 장</font><br><br> {% endif %}
-</div>
-
-<div class="right">
-  {% if chapter
-  < last_chp %} <a href="/bhsheb/{{ book }}/{{ next_chapter }}">다음 장</a><br><br> {% else %}
-    <font color="white">다음 장</font><br><br> {% endif %}
-</div>
-
-<div class="center" align="center">
-  {% include 'bhsheb_selector.html' %}
-</div>
-
-<div style="text-align: right">
-  <br>
-  <div class="btn-group">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      도구모음<span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu">
-      <li><a href="/bhsheb/search/">구약원문검색</a></li>
-      <li><a href="/search_tutorial/">원문검색방법</a></li>
-      <li><a href="/search_sample/">원문검색예문</a></li>
-      <li role="separator" class="divider"></li>
-      <li><a href="http://alphalef.com/apps/teamim/" target="_blank">테아밈분석기</a></li>
-      <li><a href="http://alphalef.com/apps/Hebrew_Parsing_Quiz/" target="_blank">히브리어동사퀴즈</a></li>
-      <li><a href="/bhsheb/stat/">구약텍스트통계</a></li>
-      <li><a href="/bhsheb/conjugator/">히브리어동사형</a></li>
-    </ul>
+<div class="panel panel-default" style="padding: 10px;">
+  <div class="left">
+    {% if chapter > 1 %}
+    <a href="/bhsheb/{{ book }}/{{ prev_chapter }}">이전 장</a><br><br> {% else %}
+    <font color="white">이전 장</font><br><br> {% endif %}
   </div>
-  <!--  <button class="btn btn-default" id="verse_block">절(verse)구분</button> -->
-  <button class="btn btn-default" id="syntax_enact">절(C)/구(P)단위표시</button>
-  <button class="btn btn-default" id="geoinfo">지도표시</button>
-  <br><br>
-  <input type="checkbox" id="showkorean" value="korean" checked onclick="showKor();">개역한글 대역
+
+  <div class="right">
+    {% if chapter < last_chp %} 
+      <a href="/bhsheb/{{ book }}/{{ next_chapter }}">다음 장</a><br><br> {% else %}
+      <font color="white">다음 장</font><br><br> 
+    {% endif %}
+  </div>
+
+  <div class="center" align="center">
+    {% include 'bhsheb_selector.html' %}
+  </div>
+
+  <div style="text-align: right">
+    <br>
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        도구모음<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="/bhsheb/search/">구약원문검색</a></li>
+        <li><a href="/search_tutorial/">원문검색방법</a></li>
+        <li><a href="/search_sample/">원문검색예문</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="http://alphalef.com/apps/teamim/" target="_blank">테아밈분석기</a></li>
+        <li><a href="http://alphalef.com/apps/Hebrew_Parsing_Quiz/" target="_blank">히브리어동사퀴즈</a></li>
+        <li><a href="/bhsheb/stat/">구약텍스트통계</a></li>
+        <li><a href="/bhsheb/conjugator/">히브리어동사형</a></li>
+      </ul>
+    </div>
+    <!--  <button class="btn btn-default" id="verse_block">절(verse)구분</button> -->
+    <button class="btn btn-default" id="syntax_enact">절(C)/구(P)단위표시</button>
+    <button class="btn btn-default" id="geoinfo">지도표시</button>
+    <br><br>
+    <input type="checkbox" id="showkorean" value="korean" checked onclick="showKor();">개역한글 대역
+  </div>
+
+  <div id="map-canvas" style="width:100%; height:400px; display:none"></div>
+  <div id="map-comment" style="display:none">
+    *위 지도에 표시된 빨간 점들은 본 장에 기록되어 있는 지역을 표시한 것입니다. 위 점을 클릭하시면 지명과 인용된 성경구절을 보실 수 있습니다. (번역본 장절 기준)<br> *본 장에 별도로 기록된 지명이 없다면 아무런 지역 표시가 되지 않습니다.<br> *Copyright ©2017 by <a href="http://www.openbible.info/geo/" target="_blank">Bible Geocoding</a>
+  </div>
+
+  <div class="verse_heb">
+      {% autoescape false %} {{ verse }} {% endautoescape %}
+  </div>
 </div>
 
-<div id="map-canvas" style="width:100%; height:400px; display:none"></div>
-<div id="map-comment" style="display:none">
-  *위 지도에 표시된 빨간 점들은 본 장에 기록되어 있는 지역을 표시한 것입니다. 위 점을 클릭하시면 지명과 인용된 성경구절을 보실 수 있습니다. (번역본 장절 기준)<br> *본 장에 별도로 기록된 지명이 없다면 아무런 지역 표시가 되지 않습니다.<br> *Copyright ©2017 by <a href="http://www.openbible.info/geo/" target="_blank">Bible Geocoding</a>
-</div>
 <script>
   function initialize() {
     var map = new google.maps.Map(document.getElementById("map-canvas"), {
@@ -80,9 +88,5 @@
  }
 
 </script>
-
-<div class="verse_heb">
-  {% autoescape false %} {{ verse }} {% endautoescape %}
-</div>
 
 {% endblock %}

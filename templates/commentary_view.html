@@ -2,12 +2,28 @@
 {% block body %}
     {% autoescape false %}
 
-    <div id="commentary_view">
-        <h1>구절노트</h1>
-        {{ auth_info }}
-        <br>
-        <h2>{{ view[3] }}</h2>
-        {{ view[4] }}
+    <div id="commentary_container" class="panel panel-default">
+        <div class="panel-body">
+            {{ auth_info }}
+            <div class="page-header">
+                <h1>구절노트</h1>
+            </div>
+            <div class="commentary_title">
+                <h2>{{ view[3] }}</h2>
+            </div>
+            <br>
+            작   성: {{ view[2] }}
+            <br>
+            작성일: {{ view[1] }}
+            <br><br>
+            <div class="commentary_contents">
+                {{ view[4] }}
+            </div>
+        
+        <br><br>
+        <button class="btn btn-default" onclick="location.href = '/commentary/list/';">목록보기</button>
+        <br><br>
+        </div>
     </div>
 
     {% endautoescape %}
