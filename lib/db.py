@@ -7,12 +7,13 @@ class Table:
         self.db = pymysql.connect(
           "localhost",
           "root",
-          "alphalef1351",
-          "alphalef"
+          "",
+          ""
         )
         self.cursor = self.db.cursor()
 # vcode, ip 추가해야 함
     def add(self, title, content, author, vcode):
+        print("add hi")
         now = datetime.now().isoformat(' ', 'seconds')
         ip = request.remote_addr
         sql = "INSERT INTO commentary (date, title, content, author, vcode, ip) VALUES ('" + str(now) + "', '"  + title + "', '" + content + "', '" + author + "', '" + vcode + "', '" + ip +"')"

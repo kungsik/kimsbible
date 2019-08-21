@@ -2,12 +2,21 @@
 {% block body %}
     {% autoescape false %}
 
+    <h1>구절 노트 추가하기</h1>
+
     <script type="text/javascript" src="/static/editor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
     
-    <form name = "commentary_add" method="POST" action="/commentary/add">
-        <h1>구절 노트 추가하기</h1>
-        구절코드: <input type="text" name="commentary_vcode" class="form-control"><br>
-        제목: <input type="text" name="commentary_title" class="form-control"><br>
+    <form name = "commentary_add" method="POST" action="/commentary/add/">
+        <input type="text" name="commentary_title" class="form-control" placeholder="제목"><br>
+        <div class="row">
+            <div class="col-lg-6">
+                <input type="text" name="commentary_vcode" class="form-control" placeholder="구절코드">
+            </div>
+            <div class="col-lg-6">
+                <input type="text" name="email" class="form-control" placeholder="이메일">
+            </div>
+        </div>      
+        <br>
         <textarea name="commentary_text" id="commentary_text" rows="20" style="width:100%;"></textarea>
         <input type="submit" class="btn btn-default" value="작성" onclick="updatetext()"></button>
     </form>

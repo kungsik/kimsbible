@@ -3,9 +3,9 @@ import os
 from flask import Flask, redirect, url_for, session
 from flask_dance.contrib.facebook import make_facebook_blueprint, facebook
 
-app.config["FACEBOOK_OAUTH_CLIENT_ID"] = "544836946259549"
-app.config["FACEBOOK_OAUTH_CLIENT_SECRET"] = "dc1d92bdd461c630d0d9ee948dd48c64"
-os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+app.config["FACEBOOK_OAUTH_CLIENT_ID"] = 
+app.config["FACEBOOK_OAUTH_CLIENT_SECRET"] = 
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 
 
 facebook_bp = make_facebook_blueprint(
     redirect_url="/oauth/facebook/"

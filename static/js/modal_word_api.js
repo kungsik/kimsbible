@@ -16,16 +16,6 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-    $(".verse_note").click(function(){
-        var vcode = $(this).attr("vcode");
-        var url = '/commentary/list/';
-        $('.modal-container').load(url, function(result){
-            $('#commentary').modal({show:true});
-        });
-    });
-});
-
-$(document).ready(function(){
     $(".sblgnt_verse_analysis").click(function(){
         var verse_node = $(this).attr("verse_node");
         var url = '/sblgnt/verse/'+verse_node;

@@ -38,5 +38,5 @@ def commentary_view(no):
 def commentary_select_vcode(no):
     auth_info = oauth.getAuthorizedInfo()
     commentary_db = db.Table()
-    vcview = commentary_db.vcode(no)
-    return render_template('commentary_view.html', view=vcview, auth_info=auth_info)
+    vclist = commentary_db.vcode(no)
+    return render_template('commentary_list.html', lists=vclist, auth_info=auth_info)
