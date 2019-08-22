@@ -10,5 +10,5 @@ import kimsbible.bhsheb_stat
 import kimsbible.bhsheb_search
 #import kimsbible.bhsheb_tfidf
 import kimsbible.sblgnt
-import kimsbible.commentary
-import kimsbible.oauth
+#import kimsbible.commentary
+#import kimsbible.oauth

@@ -1,5 +1,6 @@
 import re
 import os
+import csv
 from collections import OrderedDict
 
 from flask import render_template, request, url_for
@@ -90,15 +91,23 @@ def show_bhsheb_word_function(node):
     w_f["수(접미)"] = F.prs_nu.v(node)  # pronominal suffix number
     w_f["의미"] = F.gloss.v(L.u(node, otype='lex')[0])
     w_f["의미"] = w_f["의미"].replace('<', '[').replace('>', ']')
-    #strong = F.strong.v(node).replace('H', '')
-    #w_f["사전"] = "<a href='http://dict.naver.com/hbokodict/ancienthebrew/#/search?query=" + strong + "' target=_blank>보기</a>"
-    w_f["사전"] = "<a href='http://dict.naver.com/hbokodict/ancienthebrew/#/search?query=" + w_f["원형"] + "' target=_blank>보기</a>"
+    strong = get_strong(node)
+    w_f["사전1"] = "<a href='https://dict.naver.com/hbokodict/ancienthebrew/#/search?query=" + strong + "' target=_blank>네이버사전</a>"
+    w_f["사전2"] = "<a href='https://biblehub.com/hebrew/" + strong + ".htm' target=_blank>바이블허브</a>"
+    #w_f["사전"] = "<a href='http://dict.naver.com/hbokodict/ancienthebrew/#/search?query=" + w_f["원형"] + "' target=_blank>보기</a>"
     w_f["용례"] = "<a href='/bhsheb/search/?cons=" + F.lex_utf8.v(node) + "&sp=" + w_f["품사"] + "' target=_blank>검색</a>"
 
     if w_f["동사형"] != "NA" and w_f["동사형"] != "" and w_f["동사형"] != "unknown":
         w_f["동사형태"] = "<a href='/bhsheb/conjugator/?cons=" + w_f["원형"] + "' target=_blank>검색</a>"
 
     return w_f
+
+def get_strong(node):
+    f = open('kimsbible/static/csv/strong.csv', 'r', encoding='utf-8')
+    strong = list(csv.reader(f))
+    result = strong[node]
+    f.close()
+    return result[0]
 
 @app.route('/')
 def main_page():
