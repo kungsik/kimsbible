@@ -89,9 +89,10 @@ def show_bhsheb_word_function(node):
     w_f["인칭(접미)"] = F.prs_ps.v(node)  # pronominal suffix person
     w_f["성(접미)"] = F.prs_gn.v(node)  # pronominal suffix gender
     w_f["수(접미)"] = F.prs_nu.v(node)  # pronominal suffix number
-    w_f["의미"] = F.gloss.v(L.u(node, otype='lex')[0])
-    w_f["의미"] = w_f["의미"].replace('<', '[').replace('>', ']')
+    #w_f["의미"] = F.gloss.v(L.u(node, otype='lex')[0])
+    #w_f["의미"] = w_f["의미"].replace('<', '[').replace('>', ']')
     strong = get_strong(node)
+    w_f["의미"] = get_kor_hgloss(strong, node)
     w_f["사전1"] = "<a href='https://dict.naver.com/hbokodict/ancienthebrew/#/search?query=" + strong + "' target=_blank>네이버사전</a>"
     w_f["사전2"] = "<a href='https://biblehub.com/hebrew/" + strong + ".htm' target=_blank>바이블허브</a>"
     #w_f["사전"] = "<a href='http://dict.naver.com/hbokodict/ancienthebrew/#/search?query=" + w_f["원형"] + "' target=_blank>보기</a>"
@@ -108,6 +109,19 @@ def get_strong(node):
     result = strong[node]
     f.close()
     return result[0]
+
+def get_kor_hgloss(strongnum, w):
+    f = open('kimsbible/static/csv/hstrong.csv', 'r', encoding='utf-8')
+    hstrong = list(csv.reader(f))
+    try:
+        gloss = hstrong[int(strongnum)]
+        f.close()
+        result = gloss[1].split(';')
+        return result[0]
+    except:
+        f.close()
+        return F.gloss.v(L.u(w, otype='lex')[0])
+
 
 @app.route('/')
 def main_page():
