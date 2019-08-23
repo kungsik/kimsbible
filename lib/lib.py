@@ -238,7 +238,9 @@ translate = {
     "Rela": {"full": "관계사", "abbr": "관계"},
     "Subj": {"full": "주어", "abbr": "주"},
     "Supp": {"full": "보충어", "abbr": "보충"},
-    "Time": {"full": "시간표시", "abbr": "시간"}
+    "Time": {"full": "시간표시", "abbr": "시간"},
+    "Heb": {"full": "히브리어", "abbr": "히브리"},
+    "Arm": {"full": "아람어", "abbr": "아람"}
 }
 
 def eng_to_kor(term, option):

@@ -2,6 +2,7 @@ from tf.fabric import Fabric
 from flask import render_template, request, url_for
 from kimsbible import app
 from kimsbible.bhsheb import api
+from kimsbible.lib import lib as tr
 import json
 
 api.makeAvailableIn(globals())
@@ -93,16 +94,16 @@ def verbaldata(verb):
             query += " target=_blank>검색</a>"
 
             wordlist = {
-                "lang": lang,
-                "verb": verb,
-                "stem":F.vs.v(node),
-                "tense":F.vt.v(node),
-                "ps":ps,
-                "gn":gn,
-                "nu":nu,
-                "prs_ps":prs_ps,
-                "prs_gn":prs_gn,
-                "prs_nu":prs_nu,
+                "lang": tr.eng_to_kor(lang, "abbr"),
+                "verb": tr.eng_to_kor(verb, "abbr"),
+                "stem": tr.eng_to_kor(F.vs.v(node), "abbr"),
+                "tense": tr.eng_to_kor(F.vt.v(node), "abbr"),
+                "ps": tr.eng_to_kor(ps, "abbr"),
+                "gn": tr.eng_to_kor(gn, "abbr"),
+                "nu": tr.eng_to_kor(nu, "abbr"),
+                "prs_ps": tr.eng_to_kor(prs_ps, "abbr"),
+                "prs_gn": tr.eng_to_kor(prs_gn, "abbr"),
+                "prs_nu": tr.eng_to_kor(prs_nu, "abbr"),
                 "query": query
             }
             wholelist.append(wordlist)
