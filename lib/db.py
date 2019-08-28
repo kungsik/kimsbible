@@ -27,9 +27,9 @@ class Table:
         else:
           vcode2 = vcode1
 
-        sql = "INSERT INTO commentary (date, title, content, author, vcode1, vcode2, ip, email, verse) VALUES ('" + str(now) + "', '"  + title + "', '" + content + "', '" + author + "', '" + vcode1 + "', '"  + vcode2 + "', '" + ip +"', '" + email + "', '" + verse + "')"
+        sql = "INSERT INTO commentary (date, title, content, author, vcode1, vcode2, ip, email, verse) VALUES ('" + str(now) + "', %s, %s, '" + author + "', '" + vcode1 + "', '"  + vcode2 + "', '" + ip +"', '" + email + "', '" + verse + "')"
         try: 
-          self.cursor.execute(sql)
+          self.cursor.execute(sql, (title, content))
           self.db.commit()
           return "insertion is done"
         except pymysql.InternalError as error:
@@ -47,9 +47,9 @@ class Table:
         else:
           vcode2 = vcode1 
 
-        sql = "UPDATE commentary SET title='" + title + "', content='" + content + "', vcode1='" + str(vcode1) + "', vcode2='" + str(vcode2) + "', verse='" + verse + "' WHERE no=" + str(no)
+        sql = "UPDATE commentary SET title=%s, content=%s, vcode1='" + str(vcode1) + "', vcode2='" + str(vcode2) + "', verse='" + verse + "' WHERE no=" + str(no)
         try: 
-          self.cursor.execute(sql)
+          self.cursor.execute(sql, (title, content))
           self.db.commit()
           return "edit is done"
         except pymysql.InternalError as error:
