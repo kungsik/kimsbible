@@ -4,22 +4,27 @@
 <!-- <div class="modal modal-wide" id="commentary">     -->
     <div id="commentary_container" class="panel panel-default">
         <div class="panel-body">
-            {{ user.name }}님으로 로그인 됨
+            {% if current_user.name %}
+            <div style="text-align: right">
+            {{ current_user.name }}님으로 로그인 됨
+            </div>
+            {% endif %}
+
             <div>
-                <h1>구절노트</h1>
+                <h1>오픈주석</h1>
             </div>
             <br>
             <table class="table">
 
                 <tr>
-                    <td>글번호</td><td>구절코드</td><td width="50%">제목<td>작성자</td><td>작성일</td>
+                    <td>No</td><td>본문</td><td width="50%">제목<td>작성</td><td>작성일</td>
                 </tr>
 
             {% for list in lists %}
 
                 <tr>
                     <td>{{ list[0] }}</td>
-                    <td>{{ list[7] }} </td>
+                    <td>{{ list[8] }} </td>
                     <td><a href="/commentary/view/{{ list[0] }}">{{ list[3] }}</a></td>
                     <td>{{ list[2] }}</td>
                     {% set date = list[1].split(' ') %}
@@ -30,10 +35,8 @@
 
             </table>
 
-            {% if session['username'] %}
-
-                <button class="btn btn-default" onclick="location.href = '/commentary/add/';">글 작성하기</button>
-
+            {% if current_user.name %}
+                <button class="btn btn-default" onclick="location.href = '/commentary/add/{{ vcode }}';">글 작성하기</button>
             {% endif %}
         </div>
     </div>

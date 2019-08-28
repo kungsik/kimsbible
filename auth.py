@@ -14,9 +14,9 @@ class User:
     
     def __repr__(self):
         r = {
-            'user_id': self.email,
+            'user_id': self.user_id,
             'name': self.name,
-            'authenticated': self.authenticated
+            'authenticated': True
         }
         return str(r)
 
@@ -46,12 +46,16 @@ def signup():
         email = request.form['email']
         name = request.form['name']
         password = request.form['password']
+        password2 = request.form['password2']
+
+        if password != password2:
+            return render_template('signup.html', error=2)
 
         user_db = db.Table()
         result = user_db.adduser(email, name, password)
 
         if not result:
-            return redirect('/auth/signup/?existing=1')
+            return render_template('signup.html', error=1)
         
         return redirect("/")
 
@@ -69,13 +73,13 @@ def signin():
         result = user_db.signin_user(email, password)
        
         if not result:
-            return redirect('/auth/signin/?fail=1')
+            return render_template('signin.html', error=1)
         
         else: 
             passed_user = User(result[1], result[3], True)
             login_user(passed_user, remember=True)
 
-            return render_template("signin.html", user=current_user)
+            return redirect("/")
 
     else:
         return render_template('signin.html') 

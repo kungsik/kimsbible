@@ -1,34 +1,42 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<div class="column is-4 is-offset-4">
-    <h3 class="title">Sign Up</h3>
-    {% if request.args.get('existing') %}
-    <div>이미 등록된 이메일입니다.</div>
-    {% endif %}
-    <div class="box">
-        <form method="POST" action="/auth/signup/">
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">
-                </div>
+<div style="text-align: center">
+    <div class="panel panel-default">
+        <h3 class="title">회원 가입 하기</h3>
+        <div class="panel-body">
+            <div class="alert alert-info">
+                <ol>
+                    <li>본 사이트에 회원가입을 하시면 오픈주석에 기여하실 수 있습니다.</li>
+                    <li>본 사이트는 회원가입시 최소한의 정보만을 받고 다른 용도로는 사용하지 않습니다.</li>
+                    <li>이메일 주소는 이 사이트에 올리시는 글에 대한 소유권 확인을 위해 필요합니다.</li>
+                </ol>
             </div>
-
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="text" name="name" placeholder="Name" autofocus="">
+            {% if error == 1 %}
+            <div class="alert alert-danger">이미 등록된 이메일입니다.</div>
+            {% elif error == 2 %}  
+            <div class="alert alert-danger">서로 다른 패스워드를 입력하셨습니다.</div>
+            {% endif %}
+            <form method="POST" action="/auth/signup/">
+                <div class="form-group">
+                    <input class="form-control" type="email" name="email" placeholder="이메일주소">
                 </div>
-            </div>
 
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="password" name="password" placeholder="Password">
+                <div class="form-group">
+                    <input class="form-control" type="text" name="name" placeholder="닉네임(이름)">
                 </div>
-            </div>
 
-            <button class="button is-block is-info is-large is-fullwidth">Sign Up</button>
-        </form>
+                <div class="form-group">
+                    <input class="form-control" type="password" name="password" placeholder="비밀번호">
+                </div>
+
+                <div class="form-group">
+                    <input class="form-control" type="password" name="password2" placeholder="비밀번호확인">
+                </div>
+
+                <button type="submit" class="btn btn-default">회원가입하기</button>
+            </form>
+        </div>
     </div>
 </div>
-
 {% endblock %}

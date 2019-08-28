@@ -1,31 +1,27 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<div class="column is-4 is-offset-4">
-    <h3 class="title">Sign In</h3>
-    {% if request.args.get('fail') %}
-    <div>로그인 정보가 잘못되었습니다.</div>
-    {% endif %}
-    {% if user %}
-    <div>{{ user.name }}님 환영합니다! (<a href="/auth/signout/">로그아웃</a>)</div>
-    {% endif %}
-    <div class="box">
-        <form method="POST" action="/auth/signin/">
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">
+<div style="text-align: center">
+    <div class="panel panel-default">
+        <h3 class="title">로그인하기</h3>
+        <div class="panel-body">
+            {% if error == 1 %}
+            <div class="alert alert-danger">로그인 정보가 잘못되었습니다.</div>
+            {% endif %}
+            <form method="POST" action="/auth/signin/">
+                <div class="form-group">
+                    <input class="form-control" type="email" name="email" placeholder="이메일주소">
                 </div>
-            </div>
 
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="password" name="password" placeholder="Password">
+                <div class="form-group">
+                    <input class="form-control" type="password" name="password" placeholder="비밀번호">
                 </div>
-            </div>
 
-            <button class="button is-block is-info is-large is-fullwidth">Sign In</button>
-        </form>
+                <button type="submit" class="btn btn-default">로그인하기</button>
+            </form>
+        </div>
     </div>
 </div>
+
 
 {% endblock %}

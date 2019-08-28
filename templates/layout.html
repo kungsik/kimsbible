@@ -70,7 +70,7 @@
                       </ul>
                     </li> -->
                     <li>
-                      <a href="/commentary/list/">노트</a>
+                      <a href="/commentary/list/">오픈주석</a>
                     </li>
                     <!-- <li>
                         <a href="#!">도구</a>
@@ -85,20 +85,18 @@
                     <li>
                       <a href="/community">커뮤니티</a>
                     </li>
-<!--
                     <li>
                         <a href="#!">회원메뉴</a>
                         <ul class="nav-dropdown">
-                            {% if session['logged_in'] == True %}
-                              <li><a href="#">{{ session['username'] }}님</a></li>
-                              <li><a href="/logout">로그아웃</a></li>
+                            {% if current_user.name %}
+                              <li><a href="#">{{ current_user.name }}님</a></li>
+                              <li><a href="/auth/signout/">로그아웃</a></li>
                             {% else %}
-                              <li><a href="/register">회원가입</a></li>
-                              <li><a href="/login">로그인</a></li>
+                              <li><a href="/auth/signup/">회원가입</a></li>
+                              <li><a href="/auth/signin/">로그인</a></li>
                             {% endif %}
                         </ul>
                     </li>
--->
                 </ul>
             </nav>
           </div><!-- /.container-fluid -->
