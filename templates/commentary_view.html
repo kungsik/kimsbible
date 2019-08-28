@@ -16,7 +16,8 @@
             <br>
             작성: {{ view[2] }} ({{ view[3] }})
             <br>
-            작성일: {{ view[1] }}
+            {% set date = view[1].split(' ') %}
+            작성일: {{ date[0] }}
             <br><br><br>
             <div class="commentary_contents">
                 {{ view[5] }}

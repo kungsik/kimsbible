@@ -17,7 +17,7 @@ class Table:
     
     def add_commentary(self, title, content, author, vcode, email):
         verse = vp.codetostr(vcode, vp.bookListKorAbbr)
-        now = datetime.now().isoformat(' ', 'seconds')
+        now = datetime.now().isoformat(' ')
         ip = request.remote_addr
 
         vcode_list = vcode.split('-')
