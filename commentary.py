@@ -1,8 +1,9 @@
 from flask import render_template, request, url_for, redirect, session
 from kimsbible import app
 from kimsbible.lib import db
-from kimsbible import oauth
+# from kimsbible import oauth
 import json
+from flask_login import login_user, current_user
 
 @app.route('/commentary/add/', methods=['POST','GET'])
 def commentary_add():
@@ -22,21 +23,21 @@ def commentary_add():
 
 @app.route('/commentary/list/')
 def commentary_list():
-    auth_info = oauth.getAuthorizedInfo()
+    # auth_info = oauth.getAuthorizedInfo()
     commentary_db = db.Table()
     clist = commentary_db.clist()
-    return render_template('commentary_list.html', lists=clist, auth_info=auth_info)
+    return render_template('commentary_list.html', lists=clist, user=current_user)
 
 @app.route('/commentary/view/<int:no>')
 def commentary_view(no):
-    auth_info = oauth.getAuthorizedInfo()
+    # auth_info = oauth.getAuthorizedInfo()
     commentary_db = db.Table()
     cview = commentary_db.cview(no)
-    return render_template('commentary_view.html', view=cview, auth_info=auth_info)
+    return render_template('commentary_view.html', view=cview)
 
 @app.route('/commentary/vcode/<int:no>')
 def commentary_select_vcode(no):
-    auth_info = oauth.getAuthorizedInfo()
+    # auth_info = oauth.getAuthorizedInfo()
     commentary_db = db.Table()
     vclist = commentary_db.vcode(no)
-    return render_template('commentary_list.html', lists=vclist, auth_info=auth_info)
+    return render_template('commentary_list.html', lists=vclist)

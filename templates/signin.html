@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="column is-4 is-offset-4">
+    <h3 class="title">Sign In</h3>
+    {% if request.args.get('fail') %}
+    <div>로그인 정보가 잘못되었습니다.</div>
+    {% endif %}
+    {% if user %}
+    <div>{{ user.name }}님 환영합니다! (<a href="/auth/signout/">로그아웃</a>)</div>
+    {% endif %}
+    <div class="box">
+        <form method="POST" action="/auth/signin/">
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="password" name="password" placeholder="Password">
+                </div>
+            </div>
+
+            <button class="button is-block is-info is-large is-fullwidth">Sign In</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

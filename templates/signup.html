@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="column is-4 is-offset-4">
+    <h3 class="title">Sign Up</h3>
+    {% if request.args.get('existing') %}
+    <div>이미 등록된 이메일입니다.</div>
+    {% endif %}
+    <div class="box">
+        <form method="POST" action="/auth/signup/">
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="name" placeholder="Name" autofocus="">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="password" name="password" placeholder="Password">
+                </div>
+            </div>
+
+            <button class="button is-block is-info is-large is-fullwidth">Sign Up</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
