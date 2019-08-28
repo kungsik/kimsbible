@@ -35,8 +35,8 @@
             {% endif %}
 
             <hr />
-
-            <script type="text/javascript" src="/static/editor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+            <script src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
+            <!-- <script type="text/javascript" src="/static/editor/js/service/HuskyEZCreator.js" charset="utf-8"></script> -->
             
             <form name = "commentary_add" method="POST" action="{{ url }}" onsubmit="return validate()">
                 <input type="text" name="commentary_title" class="form-control" placeholder="제목" id="commentary_title" value="{{ title }}"><br>
@@ -50,26 +50,36 @@
                 </div>      
                 <br>
                 <textarea name="commentary_text" id="commentary_text" rows="20" style="width:100%;" id="commentary_text">{{ text }}</textarea>
+                <br>
                 <input type="submit" class="btn btn-default" value="{{ button_name }}" onclick="updatetext()"></button>
             </form>
         </div>
     </div>
     
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#commentary_text' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+
+
     <script type="text/javascript">
-        var oEditors = [];
-        nhn.husky.EZCreator.createInIFrame({
-         oAppRef: oEditors,
-         elPlaceHolder: "commentary_text",
-         sSkinURI: "/static/editor/SmartEditor2Skin.html",
-         fCreator: "createSEditor2",
-         bSkipXssFilter: true,
-         htParams: { fOnBeforeUnload : function(){}} 
-        });
+        // var oEditors = [];
+        // nhn.husky.EZCreator.createInIFrame({
+        //  oAppRef: oEditors,
+        //  elPlaceHolder: "commentary_text",
+        //  sSkinURI: "/static/editor/SmartEditor2Skin.html",
+        //  fCreator: "createSEditor2",
+        //  bSkipXssFilter: true,
+        //  htParams: { fOnBeforeUnload : function(){}} 
+        // });
         
-        // 에디터 내용을 textarea로 옮김
-        function updatetext() {
-            oEditors[0].exec("UPDATE_CONTENTS_FIELD");
-        }
+        // // 에디터 내용을 textarea로 옮김
+        // function updatetext() {
+        //     oEditors[0].exec("UPDATE_CONTENTS_FIELD");
+        // }
 
         // 폼에 입력값이 없을 경우 경고
         function validate() {

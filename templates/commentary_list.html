@@ -10,16 +10,10 @@
             <br>
             <table class="table">
 
-                <tr>
-                    <td>No</td><td>본문</td><td width="50%">제목<td>작성</td><td>작성일</td>
-                </tr>
-
             {% for list in lists %}
 
                 <tr>
-                    <td>{{ list[0] }}</td>
-                    <td>{{ list[8] }} </td>
-                    <td><a href="/commentary/view/{{ list[0] }}">{{ list[4] }}</a></td>
+                    <td>{{ list[8] }} · <a href="/commentary/view/{{ list[0] }}">{{ list[4] }}</a></td>
                     <td>{{ list[2] }}</td>
                     {% set date = list[1].split(' ') %}
                     <td>{{ date[0] }}</td>
