@@ -11,10 +11,16 @@
 
             {% if cview %}
             <h1>오픈주석 수정하기</h1>
-                {% set title = cview[3] %}
-                {% set vcode = cview[6] %}
-                {% set text = cview[4] %}
+                {% set title = cview[4] %}
+                {% set text = cview[5] %}
                 {% set url = '/commentary/edit/' + cview[0]|string %}
+
+                {% if cview[6] == cview[7] %}
+                    {% set vcode = cview[6] %}
+                {% else %}
+                    {% set vcode = cview[6]|string + '-' + cview[7]|string %}
+                {% endif %}
+
                 {% set button_name = '수정하기' %}
             {% else %}
             <h1>오픈주석 추가하기</h1>
@@ -37,6 +43,9 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <input type="text" name="commentary_vcode" class="form-control" placeholder="구절코드" id="commentary_vcode" value="{{ vcode }}">
+                    </div>
+                    <div class="col-lg-6">
+                        <a href="/commentary/vcode/" target="_blank">구절코드 입력 방법</a>
                     </div>
                 </div>      
                 <br>

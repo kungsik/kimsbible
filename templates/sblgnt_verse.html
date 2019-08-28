@@ -2,8 +2,8 @@
     let node = '{{ node }}';
     $(document).ready(function() {
             $.ajax({
-                    //url: 'https://kungsik1.pythonanywhere.com/api/verse/gnt/' + node,
-                    url: 'http://127.0.0.1:5000/api/verse/gnt/' + node,
+                    url: 'https://kungsik1.pythonanywhere.com/api/verse/gnt/' + node,
+                    // url: 'http://127.0.0.1:5000/api/verse/gnt/' + node,
                     datatype: 'json',
                     success: function(data) {
                         $('.modal-title').html(data['gntverseinfo']['scripture']);

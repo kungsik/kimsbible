@@ -62,15 +62,21 @@ def commentary_list():
 def commentary_view(no):
     commentary_db = db.Table()
     cview = commentary_db.cview(no)
-    verse = vp.codetostr(cview[6], vp.bookListKor)
-    return render_template('commentary_view.html', view=cview, verse=verse)
+    # verse = vp.codetostr(cview[6], vp.bookListKor)
+    return render_template('commentary_view.html', view=cview)
 
 
 @app.route('/commentary/vcode/<int:no>')
 def commentary_select_vcode(no):
     commentary_db = db.Table()
-    vclist = commentary_db.vcode(no)
+    vclist = commentary_db.vcode_list(no)
     return render_template('commentary_list.html', lists=vclist, vcode=no)
+
+
+@app.route('/commentary/remove/confirm/<int:no>')
+@login_required
+def confirm_remove(no):
+    return render_template('commentary_confirm_remove.html', no=no)
 
 
 @app.route('/commentary/remove/<int:no>')
@@ -82,3 +88,8 @@ def commentary_del(no):
         return redirect("/commentary/list/")
     else:
         return redirect("/commentary/list/")
+
+@app.route('/commentary/vcode/')
+def vcode_tutorial():
+    return render_template('commentary_vcode_tutorial.html')
+

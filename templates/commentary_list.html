@@ -4,12 +4,6 @@
 <!-- <div class="modal modal-wide" id="commentary">     -->
     <div id="commentary_container" class="panel panel-default">
         <div class="panel-body">
-            {% if current_user.name %}
-            <div style="text-align: right">
-            {{ current_user.name }}님으로 로그인 됨
-            </div>
-            {% endif %}
-
             <div>
                 <h1>오픈주석</h1>
             </div>
@@ -25,7 +19,7 @@
                 <tr>
                     <td>{{ list[0] }}</td>
                     <td>{{ list[8] }} </td>
-                    <td><a href="/commentary/view/{{ list[0] }}">{{ list[3] }}</a></td>
+                    <td><a href="/commentary/view/{{ list[0] }}">{{ list[4] }}</a></td>
                     <td>{{ list[2] }}</td>
                     {% set date = list[1].split(' ') %}
                     <td>{{ date[0] }}</td>

@@ -14,12 +14,20 @@ class Table:
           "alphalef"
         )
         self.cursor = self.db.cursor()
-
+    
     def add_commentary(self, title, content, author, vcode, email):
         verse = vp.codetostr(vcode, vp.bookListKorAbbr)
         now = datetime.now().isoformat(' ', 'seconds')
         ip = request.remote_addr
-        sql = "INSERT INTO commentary (date, title, content, author, vcode, ip, email, verse) VALUES ('" + str(now) + "', '"  + title + "', '" + content + "', '" + author + "', '" + vcode + "', '" + ip +"', '" + email + "', '" + verse + "')"
+
+        vcode_list = vcode.split('-')
+        vcode1 = vcode_list[0]
+        if len(vcode_list) > 1:
+          vcode2 = vcode_list[1]
+        else:
+          vcode2 = vcode1
+
+        sql = "INSERT INTO commentary (date, title, content, author, vcode1, vcode2, ip, email, verse) VALUES ('" + str(now) + "', '"  + title + "', '" + content + "', '" + author + "', '" + vcode1 + "', '"  + vcode2 + "', '" + ip +"', '" + email + "', '" + verse + "')"
         try: 
           self.cursor.execute(sql)
           self.db.commit()
@@ -31,7 +39,15 @@ class Table:
     
     def edit_commentary(self, no, title, content, vcode):
         verse = vp.codetostr(vcode, vp.bookListKorAbbr)
-        sql = "UPDATE commentary SET title='" + title + "', content='" + content + "', vcode='" + str(vcode) + "', verse='" + verse + "', WHERE no=" + str(no)
+
+        vcode_list = vcode.split('-')
+        vcode1 = vcode_list[0]
+        if len(vcode_list) > 1:
+          vcode2 = vcode_list[1]
+        else:
+          vcode2 = vcode1 
+
+        sql = "UPDATE commentary SET title='" + title + "', content='" + content + "', vcode1='" + str(vcode1) + "', vcode2='" + str(vcode2) + "', verse='" + verse + "' WHERE no=" + str(no)
         try: 
           self.cursor.execute(sql)
           self.db.commit()
@@ -53,8 +69,8 @@ class Table:
         result = self.cursor.fetchone()
         return result
 
-    def vcode(self, no):
-        sql = "SELECT * FROM commentary WHERE vcode='" + str(no) + "' ORDER BY no DESC"
+    def vcode_list(self, no):
+        sql = "SELECT * FROM commentary WHERE vcode1 <= '" + str(no) + "' and vcode2 >= '" + str(no) + "' ORDER BY no DESC"
         self.cursor.execute(sql)
         result = self.cursor.fetchall()
         return result

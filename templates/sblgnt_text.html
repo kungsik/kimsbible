@@ -7,8 +7,8 @@ let book = '{{ book }}';
 let chapter = '{{ chapter }}';
 $(document).ready(function() {
         $.ajax({
-                //url: 'https://kungsik1.pythonanywhere.com/api/text/gnt/' + book + '/' +chapter,
-                url: 'http://127.0.0.1:5000/api/text/gnt/' + book + '/' +chapter,
+                url: 'https://kungsik1.pythonanywhere.com/api/text/gnt/' + book + '/' +chapter,
+                // url: 'http://127.0.0.1:5000/api/text/gnt/' + book + '/' +chapter,
                 datatype: 'json',
                 success: function(data) {
                   $('#text').html(data['verse']);
