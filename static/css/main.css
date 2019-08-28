@@ -261,6 +261,10 @@ div.pager span.active {
   float: right;
 }
 
+.commentary_contents {
+  line-height: 190%;
+}
+
 @media(min-width:992px) {
   .panel-body {
     width: 80%;
