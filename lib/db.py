@@ -1,6 +1,6 @@
 import pymysql
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import request, redirect
 from flask_login import login_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -15,10 +15,11 @@ class Table:
           "alphalef"
         )
         self.cursor = self.db.cursor()
+        self.current_time = datetime.now() + timedelta(hours=9)
     
     def add_commentary(self, title, content, author, vcode, email):
         verse = vp.codetostr(vcode, vp.bookListKorAbbr)
-        now = datetime.now().isoformat(' ')
+        now = self.current_time.isoformat(' ')
         ip = request.remote_addr
 
         vcode_list = vcode.split('-')
@@ -68,11 +69,36 @@ class Table:
         result = self.cursor.fetchall()
         return result
     
-    def cview(self, no):
-        sql = "SELECT * FROM commentary WHERE no='" + str(no) + "'"
-        self.cursor.execute(sql)
-        result = self.cursor.fetchone()
-        return result
+    def cview(self, no):    
+        # 조회수 관련 처리
+        now = self.current_time.isoformat(' ')
+        ip = request.remote_addr
+
+        ipcheck_sql = "SELECT no FROM ipcheck WHERE ip='" + ip + "' AND id='" + str(no) + "' AND tablename='commentary'"
+        self.cursor.execute(ipcheck_sql)
+        check_result = self.cursor.fetchone()
+       
+        if check_result:
+          sql = "SELECT * FROM commentary WHERE no='" + str(no) + "'"
+          self.cursor.execute(sql)
+          result = self.cursor.fetchone()
+        
+          return result
+       
+        else:
+          ipcheck_add_sql = "INSERT INTO ipcheck (date, ip, tablename, id) VALUES ('" + str(now) + "', '" + ip + "', 'commentary', '" + str(no) + "')"
+          self.cursor.execute(ipcheck_add_sql)
+          self.db.commit()
+
+          add_vcount_sql = "UPDATE commentary SET vcount=vcount+1 WHERE no='" + str(no) + "'"
+          self.cursor.execute(add_vcount_sql)
+          self.db.commit()
+
+          sql = "SELECT * FROM commentary WHERE no='" + str(no) + "'"
+          self.cursor.execute(sql)
+          result = self.cursor.fetchone()
+          
+          return result
 
     def vcode_list(self, no):
         sql = "SELECT * FROM commentary WHERE vcode1 <= '" + str(no) + "' and vcode2 >= '" + str(no) + "' ORDER BY no DESC"

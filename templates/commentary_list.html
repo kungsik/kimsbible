@@ -11,6 +11,13 @@
                 <br>
                 <div class="list_table" style="font-size: 16px">
 
+                    <span class="list_header">
+                        <span class="cell col1">본문과 제목</span>
+                        <span class="cell col2">작성</span>
+                        <span class="cell col3">작성일</span>
+                        <span class="cell col4">조회</span>
+                    </span>
+
                 {% for list in lists %}
 
                     <span class="list_row">
@@ -18,6 +25,8 @@
                         <span class="cell col2">{{ list[2] }}</span>
                         {% set date = list[1].split(' ') %}
                         <span class="cell col3">{{ date[0] }}</span>
+                        <span class="vcount_title">조회수 | </span>
+                        <span class="cell col4">{{ list[11] }}</span>
                     </span>
 
                 {% endfor %}

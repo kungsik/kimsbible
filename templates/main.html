@@ -12,10 +12,12 @@
                 주요 기능
             </div>
             <div class="panel-body">
-		    <li>성서 원문 열람 (헬라어/그리스어, 히브리어)</li>
-		    <li>단어분석, 절분석, 구문분석, 원어검색 (원어검색은 현재 구약만 지원)</li>
-		    <li>성서 지도 열람</li>
-		    <li>오픈주석(베타) - 자유롭게 주석을 추가/열람하실 수 있습니다.</li>
+            <ul>
+		        <li>성서 원문 열람 (헬라어/그리스어, 히브리어)</li>
+		        <li>단어분석, 절분석, 구문분석, 원어검색 (원어검색은 현재 구약만 지원)</li>
+		        <li>성서 지도 열람</li>
+                <li>오픈주석(베타) - 자유롭게 주석을 추가/열람하실 수 있습니다.</li>
+            </ul>
             </div>
         </div>
         <div class="panel panel-success">
@@ -23,9 +25,11 @@
                 공지
             </div>
             <div class="panel-body">
-		    <li>오픈주석을 열었습니다. 현재는 서비스 점검중이고 곧 자세한 운영방향을 공유하도록 하겠습니다.</li>
-		    <li>현재 신약 헬라어 본문 추가와 전면적인 리뉴얼 작업 중에 있습니다. 신약 본문은 단어 분석을 사용하실 수 있습니다. 그 외의 히브리어 구약 본문에서 지원하는 기능들을 신약 본문에도 적용시키기 위한 업데이트 중에 있습니다.</li>
-		    <li><a href="/community">커뮤니티 게시판</a>이 신설되었습니다. 좋은 의견 남겨 주시면 감사하겠습니다.</li>
+            <ul>
+		        <li>오픈주석을 열었습니다. 현재는 서비스 점검중이고 곧 자세한 운영방향을 공유하도록 하겠습니다.</li>
+		        <li>현재 신약 헬라어 본문 추가와 전면적인 리뉴얼 작업 중에 있습니다. 신약 본문은 단어 분석을 사용하실 수 있습니다. 그 외의 히브리어 구약 본문에서 지원하는 기능들을 신약 본문에도 적용시키기 위한 업데이트 중에 있습니다.</li>
+                <li><a href="/community">커뮤니티 게시판</a>이 신설되었습니다. 좋은 의견 남겨 주시면 감사하겠습니다.</li>
+            </ul>
             </div>
         </div>
         <div class="panel panel-danger">
@@ -33,9 +37,11 @@
                 최근주석
             </div>
             <div class="panel-body">
+                <ul>
                 {% for post in recent_posts %}
                     <li>{{ post[8] }} · <a href="/commentary/view/{{ post[0] }}/{{ post[10] }}/">{{ post[4] }}</a> ({{ post[2] }})</li>
                 {% endfor %}
+                </ul>
             </div>
         </div>
         <div class="panel panel-warning">
@@ -60,10 +66,12 @@
               관련 사이트
             </div>
             <div class="panel-body" style="background-color: #fafafa">
+            <ul>
               <li style="margin: 20px"><a href="http://kimsbible.com" target="_blank">KIM'S BIBLE</a>: 성서학과 성서언어에 관한 다양한 정보를 올리는 블로그</li>
-	      <li style="margin: 20px"><a href="http://alphalef.com" target="_blank">알파알렙 커뮤니티</a>: 알파알렙 성경을 비롯한 원어, 고전어에 관한 커뮤니티 사이트 (정비중)</li>
+	          <li style="margin: 20px"><a href="http://alphalef.com" target="_blank">알파알렙 커뮤니티</a>: 알파알렙 성경을 비롯한 원어, 고전어에 관한 커뮤니티 사이트 (정비중)</li>
               <li style="margin: 20px"><a href="https://www.youtube.com/channel/UCgSRYohubxOTB8G7RUb1Szg" target="_blank">유투브 채널</a>: 알파알렙 성경 사용법과 성서 히브리어 강좌</li>
               <li style="margin: 20px"><a href="https://www.notion.so/alphalef/746b027386b44614b79b6686864c95f2?v=a2c14506071444a0b308528241a6ff9f" target="_blank">알파알렙 업데이트</a>: 알파알렙 성경 최근 업데이트 내역 및 향후 업데이트 계획</li>
+            </ul>
             </div>
         </div>
 
