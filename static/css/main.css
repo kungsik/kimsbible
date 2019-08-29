@@ -277,6 +277,20 @@ div.pager span.active {
   }
 }
 
+@media(max-width:500px) {
+  #cke_32,
+  #cke_37,
+  #cke_70,
+  #cke_74,
+  #cke_17,
+  #cke_24,
+  #cke_47,
+  #cke_84,
+  #cke_87,
+  #cke_90 {
+    display: none;
+  }
+}
 
 /*.map-canvas {
   height: 400 px;
