@@ -35,8 +35,7 @@
             {% endif %}
 
             <hr />
-            <script src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
-            <!-- <script type="text/javascript" src="/static/editor/js/service/HuskyEZCreator.js" charset="utf-8"></script> -->
+            <script src="https://cdn.ckeditor.com/4.12.1/full/ckeditor.js"></script>
             
             <form name = "commentary_add" method="POST" action="{{ url }}" onsubmit="return validate()">
                 <input type="text" name="commentary_title" class="form-control" placeholder="제목" id="commentary_title" value="{{ title }}"><br>
@@ -55,33 +54,15 @@
             </form>
         </div>
     </div>
-    
+
     <script>
-        ClassicEditor
-            .create( document.querySelector( '#commentary_text' ) )
-            .catch( error => {
-                console.error( error );
-            } );
-    </script>
+        CKEDITOR.replace('commentary_text', {
+            height: 500
+        });
+    </script>    
 
 
     <script type="text/javascript">
-        // var oEditors = [];
-        // nhn.husky.EZCreator.createInIFrame({
-        //  oAppRef: oEditors,
-        //  elPlaceHolder: "commentary_text",
-        //  sSkinURI: "/static/editor/SmartEditor2Skin.html",
-        //  fCreator: "createSEditor2",
-        //  bSkipXssFilter: true,
-        //  htParams: { fOnBeforeUnload : function(){}} 
-        // });
-        
-        // // 에디터 내용을 textarea로 옮김
-        // function updatetext() {
-        //     oEditors[0].exec("UPDATE_CONTENTS_FIELD");
-        // }
-
-        // 폼에 입력값이 없을 경우 경고
         function validate() {
             if( document.getElementById('commentary_title').value == "" ) {
                 alert( "제목을 입력해 주세요!" );
