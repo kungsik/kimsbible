@@ -9,6 +9,7 @@ from tf.fabric import Fabric
 from kimsbible import app
 from kimsbible.lib import lib as kb
 from kimsbible.lib import vcodeparser as vp
+from kimsbible.lib import db
 
 ### Load up TF ###
 ETCBC = 'hebrew/etcbc4c'
@@ -125,7 +126,9 @@ def get_kor_hgloss(strongnum, w):
 
 @app.route('/')
 def main_page():
-    return render_template('main.html')
+    commentary_db = db.Table()
+    recent_posts = commentary_db.get_recent('commentary', 5)
+    return render_template('main.html', recent_posts=recent_posts)
 
 @app.route('/developer/')
 def developer_page():

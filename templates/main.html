@@ -28,6 +28,16 @@
 		    <li><a href="/community">커뮤니티 게시판</a>이 신설되었습니다. 좋은 의견 남겨 주시면 감사하겠습니다.</li>
             </div>
         </div>
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                최근주석
+            </div>
+            <div class="panel-body">
+                {% for post in recent_posts %}
+                    <li>{{ post[8] }} · <a href="/commentary/view/{{ post[0] }}/{{ post[10] }}/">{{ post[4] }}</a> ({{ post[2] }})</li>
+                {% endfor %}
+            </div>
+        </div>
         <div class="panel panel-warning">
             <div class="panel-heading">
                 알파알렙과 함께하는 분들

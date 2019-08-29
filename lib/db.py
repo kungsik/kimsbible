@@ -1,4 +1,5 @@
 import pymysql
+import re
 from datetime import datetime
 from flask import request, redirect
 from flask_login import login_user, login_required, current_user
@@ -26,8 +27,10 @@ class Table:
           vcode2 = vcode_list[1]
         else:
           vcode2 = vcode1
+        
+        urltitle = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', title).replace(" ", "-")
 
-        sql = "INSERT INTO commentary (date, title, content, author, vcode1, vcode2, ip, email, verse) VALUES ('" + str(now) + "', %s, %s, '" + author + "', '" + vcode1 + "', '"  + vcode2 + "', '" + ip +"', '" + email + "', '" + verse + "')"
+        sql = "INSERT INTO commentary (date, title, content, author, vcode1, vcode2, ip, email, verse, urltitle) VALUES ('" + str(now) + "', %s, %s, '" + author + "', '" + vcode1 + "', '"  + vcode2 + "', '" + ip +"', '" + email + "', '" + verse + "', '" + urltitle + "')"
         try: 
           self.cursor.execute(sql, (title, content))
           self.db.commit()
@@ -47,7 +50,9 @@ class Table:
         else:
           vcode2 = vcode1 
 
-        sql = "UPDATE commentary SET title=%s, content=%s, vcode1='" + str(vcode1) + "', vcode2='" + str(vcode2) + "', verse='" + verse + "' WHERE no=" + str(no)
+        urltitle = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', title).replace(" ", "-")
+
+        sql = "UPDATE commentary SET title=%s, content=%s, vcode1='" + str(vcode1) + "', vcode2='" + str(vcode2) + "', verse='" + verse + "', urltitle='" + urltitle + "' WHERE no=" + str(no)
         try: 
           self.cursor.execute(sql, (title, content))
           self.db.commit()
@@ -90,6 +95,11 @@ class Table:
         else:
           return False
 
+    def get_recent(self, table, num):
+        sql = "SELECT * FROM " + table + " ORDER BY no DESC LIMIT " + str(num)
+        self.cursor.execute(sql)
+        result = self.cursor.fetchall()
+        return result
 
     # 회원 인증 관련
     def adduser(self, email, name, password):

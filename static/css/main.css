@@ -267,7 +267,7 @@ div.pager span.active {
 
 @media(min-width:992px) {
   .panel-body {
-    width: 80%;
+    width: 100%;
     text-align: left;
     display: inline-block;
   }

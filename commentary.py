@@ -58,11 +58,11 @@ def commentary_list():
     return render_template('commentary_list.html', lists=clist, user=current_user)
 
 
-@app.route('/commentary/view/<int:no>')
-def commentary_view(no):
+@app.route('/commentary/view/<int:no>/<title>/')
+@app.route('/commentary/view/<int:no>/')
+def commentary_view(no, title=''):
     commentary_db = db.Table()
     cview = commentary_db.cview(no)
-    # verse = vp.codetostr(cview[6], vp.bookListKor)
     return render_template('commentary_view.html', view=cview)
 
 

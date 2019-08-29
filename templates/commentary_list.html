@@ -13,7 +13,7 @@
             {% for list in lists %}
 
                 <tr>
-                    <td>{{ list[8] }} · <a href="/commentary/view/{{ list[0] }}">{{ list[4] }}</a></td>
+                    <td>{{ list[8] }} · <a href="/commentary/view/{{ list[0] }}/{{ list[10] }}/">{{ list[4] }}</a></td>
                     <td>{{ list[2] }}</td>
                     {% set date = list[1].split(' ') %}
                     <td>{{ date[0] }}</td>
