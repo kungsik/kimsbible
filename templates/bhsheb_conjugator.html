@@ -1,7 +1,7 @@
 {% extends "layout.html" %} {% block body %}
 <script src="/static/js/bhsheb_conjugator.js"></script>
 
-<h3 align=center>동사형태 출력</h3>
+<h3 align=center>히브리어 동사형태 출력</h3>
 <br>
 
 <form class="form-inline" method=post id="conjugator">
@@ -18,5 +18,9 @@
 <p align=center>*마지막 자음의 경우 종결어미형, 일반형 모두 사용가능합니다. הלך (O) הלכ (O)</p>
 
 <div class="verse_heb" id="verballist" style="direction:ltr; text-align:left"></div>
+
+<script>
+  document.title = "히브리어 동사형태 출력";
+</script>
 
 {% endblock %}
