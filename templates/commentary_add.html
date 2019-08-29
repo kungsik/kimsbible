@@ -3,55 +3,57 @@
     {% autoescape false %}
     <div id="commentary_container" class="panel panel-default">
         <div class="panel-body">
-            {% if current_user.name %}
-            <div style="text-align: right">
-            {{ current_user.name }}님으로 로그인 됨
-            </div>
-            {% endif %}
-
-            {% if cview %}
-            <h1>오픈주석 수정하기</h1>
-                {% set title = cview[4] %}
-                {% set text = cview[5] %}
-                {% set url = '/commentary/edit/' + cview[0]|string %}
-
-                {% if cview[6] == cview[7] %}
-                    {% set vcode = cview[6] %}
-                {% else %}
-                    {% set vcode = cview[6]|string + '-' + cview[7]|string %}
+            <div class="panel-container">
+                {% if current_user.name %}
+                <div style="text-align: right">
+                {{ current_user.name }}님으로 로그인 됨
+                </div>
                 {% endif %}
 
-                {% set button_name = '수정하기' %}
-            {% else %}
-            <h1>오픈주석 추가하기</h1>
-                {% set title = '' %}
-                {% set text = '' %}
-                {% set url = '/commentary/add/' %}
-                {% set button_name = '작성' %}
-            {% endif %}
+                {% if cview %}
+                <h1>오픈주석 수정하기</h1>
+                    {% set title = cview[4] %}
+                    {% set text = cview[5] %}
+                    {% set url = '/commentary/edit/' + cview[0]|string %}
 
-            {% if vcode == 1 %}
-                {% set vcode = '' %}
-            {% endif %}
+                    {% if cview[6] == cview[7] %}
+                        {% set vcode = cview[6] %}
+                    {% else %}
+                        {% set vcode = cview[6]|string + '-' + cview[7]|string %}
+                    {% endif %}
 
-            <hr />
-            <script src="https://cdn.ckeditor.com/4.12.1/full/ckeditor.js"></script>
-            
-            <form name = "commentary_add" method="POST" action="{{ url }}" onsubmit="return validate()">
-                <input type="text" name="commentary_title" class="form-control" placeholder="제목" id="commentary_title" value="{{ title }}"><br>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <input type="text" name="commentary_vcode" class="form-control" placeholder="구절코드" id="commentary_vcode" value="{{ vcode }}">
-                    </div>
-                    <div class="col-lg-6">
-                        <a href="/commentary/vcode/" target="_blank">구절코드 입력 방법</a>
-                    </div>
-                </div>      
-                <br>
-                <textarea name="commentary_text" id="commentary_text" rows="20" style="width:100%;" id="commentary_text">{{ text }}</textarea>
-                <br>
-                <input type="submit" class="btn btn-default" value="{{ button_name }}" onclick="updatetext()"></button>
-            </form>
+                    {% set button_name = '수정하기' %}
+                {% else %}
+                <h1>오픈주석 추가하기</h1>
+                    {% set title = '' %}
+                    {% set text = '' %}
+                    {% set url = '/commentary/add/' %}
+                    {% set button_name = '작성' %}
+                {% endif %}
+
+                {% if vcode == 1 %}
+                    {% set vcode = '' %}
+                {% endif %}
+
+                <hr />
+                <script src="https://cdn.ckeditor.com/4.12.1/full/ckeditor.js"></script>
+                
+                <form name = "commentary_add" method="POST" action="{{ url }}" onsubmit="return validate()">
+                    <input type="text" name="commentary_title" class="form-control" placeholder="제목" id="commentary_title" value="{{ title }}"><br>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <input type="text" name="commentary_vcode" class="form-control" placeholder="구절코드" id="commentary_vcode" value="{{ vcode }}">
+                        </div>
+                        <div class="col-lg-6">
+                            <a href="/commentary/vcode/" target="_blank">구절코드 입력 방법</a>
+                        </div>
+                    </div>      
+                    <br>
+                    <textarea name="commentary_text" id="commentary_text" rows="20" style="width:100%;" id="commentary_text">{{ text }}</textarea>
+                    <br>
+                    <input type="submit" class="btn btn-default" value="{{ button_name }}" onclick="updatetext()"></button>
+                </form>
+            </div>
         </div>
     </div>
 

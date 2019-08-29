@@ -4,32 +4,33 @@
 
     <div id="commentary_container" class="panel panel-default">
         <div class="panel-body">
-            <div class="page-header">
-                <h1>오픈주석</h1>
+            <div class="panel-container">
+                <div class="page-header">
+                    <h1>오픈주석</h1>
+                </div>
+                <div class="commentary_title">
+                    <h2>{{ view[4] }}</h2>
+                </div>
+                <div class="vcode" style="font-size:18px;">
+                    본문: {{ view[8] }}
+                </div>
+                <br>
+                작성: {{ view[2] }} ({{ view[3] }})
+                <br>
+                {% set date = view[1].split(' ') %}
+                작성일: {{ date[0] }}
+                <br><br><br>
+                <div class="commentary_contents">
+                    {{ view[5] }}
+                </div>
+            
+                <br><br>
+                <button class="btn btn-default" onclick="location.href = '/commentary/list/';">목록보기</button>
+                {% if current_user.user_id == view[3] %}
+                &nbsp <button class="btn btn-default" onclick="location.href = '/commentary/edit/{{ view[0] }}';">글 수정하기</button>
+                &nbsp <button class="btn btn-default" onclick="location.href = '/commentary/remove/confirm/{{ view[0] }}';">글 삭제하기</button>
+                {% endif %}
             </div>
-            <div class="commentary_title">
-                <h2>{{ view[4] }}</h2>
-            </div>
-            <div class="vcode" style="font-size:18px;">
-                본문: {{ view[8] }}
-            </div>
-            <br>
-            작성: {{ view[2] }} ({{ view[3] }})
-            <br>
-            {% set date = view[1].split(' ') %}
-            작성일: {{ date[0] }}
-            <br><br><br>
-            <div class="commentary_contents">
-                {{ view[5] }}
-            </div>
-        
-        <br><br>
-        <button class="btn btn-default" onclick="location.href = '/commentary/list/';">목록보기</button>
-        {% if current_user.user_id == view[3] %}
-        &nbsp <button class="btn btn-default" onclick="location.href = '/commentary/edit/{{ view[0] }}';">글 수정하기</button>
-        &nbsp <button class="btn btn-default" onclick="location.href = '/commentary/remove/confirm/{{ view[0] }}';">글 삭제하기</button>
-        {% endif %}
-
         <br><br>
         </div>
     </div>
