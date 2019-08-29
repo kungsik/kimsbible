@@ -9,20 +9,20 @@
                     <h1>오픈주석</h1>
                 </div>
                 <br>
-                <table class="table" style="font-size: 16px">
+                <div class="list_table" style="font-size: 16px">
 
                 {% for list in lists %}
 
-                    <tr>
-                        <td>{{ list[8] }} · <a href="/commentary/view/{{ list[0] }}/{{ list[10] }}/">{{ list[4] }}</a></td>
-                        <td>{{ list[2] }}</td>
+                    <span class="list_row">
+                        <span class="cell col1">{{ list[8] }} · <a href="/commentary/view/{{ list[0] }}/{{ list[10] }}/">{{ list[4] }}</a></span>
+                        <span class="cell col2">{{ list[2] }}</span>
                         {% set date = list[1].split(' ') %}
-                        <td>{{ date[0] }}</td>
-                    </tr>
+                        <span class="cell col3">{{ date[0] }}</span>
+                    </span>
 
                 {% endfor %}
 
-                </table>
+                </div>
 
                 {% if current_user.name %}
                     <button class="btn btn-default" onclick="location.href = '/commentary/add/{{ vcode }}';">글 작성하기</button>

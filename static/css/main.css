@@ -265,6 +265,11 @@ div.pager span.active {
   line-height: 190%;
 }
 
+img, iframe {
+  max-width: 100%;
+  height: auto;
+}
+
 @media(min-width:992px) {
   .panel-container {
     width: 80%;
@@ -290,9 +295,66 @@ div.pager span.active {
   #cke_90 {
     display: none;
   }
+  .list_table {
+    display: block;
+  }
+  .list_row{
+    display: block;
+  }
+  .col1 {
+    display: block;
+    width: 100%;
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-top: 1px solid #DDD;
+  } 
+  .col2 {
+    float: left;
+    width: 50%;
+    padding-left: 15px;
+    padding-bottom: 15px;
+    padding-top: 7px;
+  }
+  .col3 {
+    display: inline-block;
+    text-align: right;
+    width: 50%;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-top: 7px;
+  }
 }
 
 /*.map-canvas {
   height: 400 px;
   display: block;
 }*/
+
+@media(min-width:501px) {
+  .list_table {
+    display: table; 
+    width: 100%;
+  }
+  .list_row {
+    display: table-row;
+  }
+  .cell {
+    padding: 15px; 
+    border-top: 1px solid #DDD;
+  }
+  .col1 { 
+    display: table-cell;
+    width: 60%;
+  }
+  .col2 {
+    display: table-cell;
+    width: 20%;
+    text-align: center;
+  }
+  .col3 {
+    display: table-cell;
+    width: 20%;
+    text-align: right;
+  }
+}
