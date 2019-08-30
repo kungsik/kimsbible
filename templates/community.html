@@ -1,32 +1,45 @@
-{% extends "layout.html" %} {% block body %}
+{% extends "layout.html" %}
+{% block body %}
+    {% autoescape false %}
+    <div id="commentary_container" class="panel panel-default">
+        <div class="panel-body">
+            <div class="panel-container">
+                <div>
+                    <h1>커뮤니티</h1>
+                    <hr />
+                    <p>알파알렙 성경 임시 커뮤니티를 오픈했습니다. 앞으로 더 보완된 모습의 커뮤니티를 마련할 예정인데 일단 이렇게 임시로나마 소통의 창구를 만들었습니다. 혹시 알파알렙 성경을 이용하시면서 좋은 의견이나 의문 있으시면 여기에 말씀해 주시면 감사하겠습니다. ^^;;</p>
+                </div>
 
-<div class="markdown-preview-enhanced" style="width:100%"> 
-  <h1 id="&#xAC80;&#xC0C9;&#xAE30;&#xB2A5;-&#xD29C;&#xD1A0;&#xB9AC;&#xC5BC;">커뮤니티</h1>
-  <p>알파알렙 성경 임시 커뮤니티를 오픈했습니다. 앞으로 더 보완된 모습의 커뮤니티를 마련할 예정인데 일단 이렇게 임시로나마 소통의 창구를 만들었습니다. 혹시 알파알렙 성경을 이용하시면서 좋은 의견이나 의문 있으시면 여기에 말씀해 주시면 감사하겠습니다. ^^;;</p>
-</div>
+                <div id="disqus_thread"></div>
+                  <script>
+                  /**
+                  *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                  *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
-<!-- 라이브리 시티 설치 코드 -->
-<div id="lv-container" data-id="city" data-uid="MTAyMC80NTk0Mi8yMjQ1Mw==">
-	<script type="text/javascript">
-   (function(d, s) {
-       var j, e = d.getElementsByTagName(s)[0];
+                  var disqus_config = function () {
+                    this.page.url = "https://app.alphalef.com/community/";  // Replace PAGE_URL with your page's canonical URL variable
+                    this.page.identifier = "커뮤니티"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                  };
 
-       if (typeof LivereTower === 'function') { return; }
+                  (function() { // DON'T EDIT BELOW THIS LINE
+                  var d = document, s = d.createElement('script');
+                  s.src = 'https://alpaalrebseonggyeong.disqus.com/embed.js';
+                  s.setAttribute('data-timestamp', +new Date());
+                  (d.head || d.body).appendChild(s);
+                  })();
+                  </script>
+                  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-       j = d.createElement(s);
-       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-       j.async = true;
-
-       e.parentNode.insertBefore(j, e);
-   })(document, 'script');
-	</script>
-<noscript> 라이브리 댓글 작성을 위해 JavaScript를 활성화 해주세요</noscript>
-</div>
-<!-- 시티 설치 코드 끝 -->
-
-<script>
-  document.title = "알파알렙 커뮤니티";
-</script>
-
-
+                <br>
+            </div>
+        </div>
+    </div>
+    <script id="dsq-count-scr" src="//alpaalrebseonggyeong.disqus.com/count.js" async></script>             
+    <script>
+        document.title = "알파알렙 커뮤니티";
+    </script>
+<!-- </div> -->
+    {% endautoescape %}
 {% endblock %}
+
+
