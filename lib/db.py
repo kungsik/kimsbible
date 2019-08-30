@@ -20,7 +20,8 @@ class Table:
     def add_commentary(self, title, content, author, vcode, email):
         verse = vp.codetostr(vcode, vp.bookListKorAbbr)
         now = self.current_time.isoformat(' ')
-        ip = request.remote_addr
+        headers_list = request.headers.getlist("X-Forwarded-For")
+        ip = headers_list[0] if headers_list else request.remote_addr
 
         vcode_list = vcode.split('-')
         vcode1 = vcode_list[0]
@@ -72,7 +73,8 @@ class Table:
     def cview(self, no):    
         # 조회수 관련 처리
         now = self.current_time.isoformat(' ')
-        ip = request.remote_addr
+        headers_list = request.headers.getlist("X-Forwarded-For")
+        ip = headers_list[0] if headers_list else request.remote_addr
 
         ipcheck_sql = "SELECT no FROM ipcheck WHERE ip='" + ip + "' AND id='" + str(no) + "' AND tablename='commentary'"
         self.cursor.execute(ipcheck_sql)
