@@ -51,6 +51,10 @@ def commentary_edit(no):
         return render_template('commentary_add.html', cview=cview)
 
 
+@app.route('/commentary/intro/')
+def commentary_intro():
+    return render_template('commentary_intro.html')
+
 @app.route('/commentary/list/')
 def commentary_list():
     commentary_db = db.Table()
