@@ -25,19 +25,40 @@
                         <span class="cell col4">조회</span>
                     </span>
 
-                {% for list in lists %}
+                {% if vcode %}
+                    {% for list in lists['classic'] %}
+                        <span class="list_row">
+                            <span class="cell col1">{{ list[8] }} · <a href="/classic/view/{{ list[0] }}/{{ list[10] }}/">{{ list[4] }}</a></span>
+                            <span class="cell col2">{{ list[2] }}</span>
+                            {% set date = list[1].split(' ') %}
+                            <span class="cell col3">{{ date[0] }}</span>
+                            <span class="vcount_title">조회수 | </span>
+                            <span class="cell col4">{{ list[11] }}</span>
+                        </span>
+                    {% endfor %}    
+                    {% for list in lists['commentary'] %}
+                        <span class="list_row">
+                            <span class="cell col1">{{ list[8] }} · <a href="/commentary/view/{{ list[0] }}/{{ list[10] }}/">{{ list[4] }}</a></span>
+                            <span class="cell col2">{{ list[2] }}</span>
+                            {% set date = list[1].split(' ') %}
+                            <span class="cell col3">{{ date[0] }}</span>
+                            <span class="vcount_title">조회수 | </span>
+                            <span class="cell col4">{{ list[11] }}</span>
+                        </span>
+                    {% endfor %}
 
-                    <span class="list_row">
-                        <span class="cell col1">{{ list[8] }} · <a href="/{{ table }}/view/{{ list[0] }}/{{ list[10] }}/">{{ list[4] }}</a></span>
-                        <span class="cell col2">{{ list[2] }}</span>
-                        {% set date = list[1].split(' ') %}
-                        <span class="cell col3">{{ date[0] }}</span>
-                        <span class="vcount_title">조회수 | </span>
-                        <span class="cell col4">{{ list[11] }}</span>
-                    </span>
-
-                {% endfor %}
-
+                {% else %}
+                    {% for list in lists %}
+                        <span class="list_row">
+                            <span class="cell col1">{{ list[8] }} · <a href="/{{ table }}/view/{{ list[0] }}/{{ list[10] }}/">{{ list[4] }}</a></span>
+                            <span class="cell col2">{{ list[2] }}</span>
+                            {% set date = list[1].split(' ') %}
+                            <span class="cell col3">{{ date[0] }}</span>
+                            <span class="vcount_title">조회수 | </span>
+                            <span class="cell col4">{{ list[11] }}</span>
+                        </span>
+                    {% endfor %}
+                {% endif %}
                 </div>
                 <br><br>
                 {% if current_user.name %}

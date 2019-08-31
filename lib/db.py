@@ -103,9 +103,18 @@ class Table:
           return result
 
     def vcode_list(self, no):
-        sql = "(SELECT * FROM commentary WHERE vcode1 <= '" + str(no) + "' and vcode2 >= '" + str(no) + "') UNION (SELECT * FROM classic WHERE vcode1 <= '" + str(no) + "' and vcode2 >= '" + str(no) + "') ORDER BY no DESC"
-        self.cursor.execute(sql)
-        result = self.cursor.fetchall()
+        sql_commentary = "SELECT * FROM commentary WHERE vcode1 <= '" + str(no) + "' and vcode2 >= '" + str(no) + "' ORDER BY no DESC"
+        self.cursor.execute(sql_commentary)
+        commentary_list = self.cursor.fetchall()
+        
+        sql_classic = "SELECT * FROM classic WHERE vcode1 <= '" + str(no) + "' and vcode2 >= '" + str(no) + "' ORDER BY no DESC"
+        self.cursor.execute(sql_classic)
+        classic_list = self.cursor.fetchall()
+
+        result = {}
+        result['commentary'] = commentary_list
+        result['classic'] = classic_list
+        
         return result
 
     def remove_commentary(self, table, no):
