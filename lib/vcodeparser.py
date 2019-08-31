@@ -65,7 +65,7 @@ def nodetocode(section, bookList):
 
     if len(versecode) == 1:
         result = result + '00' + versecode
-    elif len(chpcode) == 2:
+    elif len(versecode) == 2:
         result = result + '0' + versecode
     else:
         result = result + versecode
