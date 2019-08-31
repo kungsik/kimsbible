@@ -17,7 +17,7 @@ class Table:
         self.cursor = self.db.cursor()
         self.current_time = datetime.now() + timedelta(hours=9)
     
-    def add_commentary(self, title, content, author, vcode, email):
+    def add_commentary(self, table, title, content, author, vcode, email):
         verse = vp.codetostr(vcode, vp.bookListKorAbbr)
         now = self.current_time.isoformat(' ')
         headers_list = request.headers.getlist("X-Forwarded-For")
@@ -32,7 +32,7 @@ class Table:
         
         urltitle = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', title).replace(" ", "-")
 
-        sql = "INSERT INTO commentary (date, title, content, author, vcode1, vcode2, ip, email, verse, urltitle) VALUES ('" + str(now) + "', %s, %s, '" + author + "', '" + vcode1 + "', '"  + vcode2 + "', '" + ip +"', '" + email + "', '" + verse + "', '" + urltitle + "')"
+        sql = "INSERT INTO " + table + " (date, title, content, author, vcode1, vcode2, ip, email, verse, urltitle) VALUES ('" + str(now) + "', %s, %s, '" + author + "', '" + vcode1 + "', '"  + vcode2 + "', '" + ip +"', '" + email + "', '" + verse + "', '" + urltitle + "')"
         try: 
           self.cursor.execute(sql, (title, content))
           self.db.commit()
@@ -42,7 +42,7 @@ class Table:
           print(">>>>>>>>>>>>>", code, message)
           return "insertion failed"
     
-    def edit_commentary(self, no, title, content, vcode):
+    def edit_commentary(self, table, no, title, content, vcode):
         verse = vp.codetostr(vcode, vp.bookListKorAbbr)
 
         vcode_list = vcode.split('-')
@@ -54,7 +54,7 @@ class Table:
 
         urltitle = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', title).replace(" ", "-")
 
-        sql = "UPDATE commentary SET title=%s, content=%s, vcode1='" + str(vcode1) + "', vcode2='" + str(vcode2) + "', verse='" + verse + "', urltitle='" + urltitle + "' WHERE no=" + str(no)
+        sql = "UPDATE " + table + " SET title=%s, content=%s, vcode1='" + str(vcode1) + "', vcode2='" + str(vcode2) + "', verse='" + verse + "', urltitle='" + urltitle + "' WHERE no=" + str(no)
         try: 
           self.cursor.execute(sql, (title, content))
           self.db.commit()
@@ -64,58 +64,58 @@ class Table:
           print(">>>>>>>>>>>>>", code, message)
           return "edit failed" 
     
-    def clist(self):
-        sql = "SELECT * FROM commentary ORDER BY no DESC"
+    def clist(self, table):
+        sql = "SELECT * FROM " + table + " ORDER BY no DESC"
         self.cursor.execute(sql)
         result = self.cursor.fetchall()
         return result
     
-    def cview(self, no):    
+    def cview(self, table, no):    
         # 조회수 관련 처리
         now = self.current_time.isoformat(' ')
         headers_list = request.headers.getlist("X-Forwarded-For")
         ip = headers_list[0] if headers_list else request.remote_addr
 
-        ipcheck_sql = "SELECT no FROM ipcheck WHERE ip='" + ip + "' AND id='" + str(no) + "' AND tablename='commentary'"
+        ipcheck_sql = "SELECT no FROM ipcheck WHERE ip='" + ip + "' AND id='" + str(no) + "' AND tablename='" + table + "'"
         self.cursor.execute(ipcheck_sql)
         check_result = self.cursor.fetchone()
        
         if check_result:
-          sql = "SELECT * FROM commentary WHERE no='" + str(no) + "'"
+          sql = "SELECT * FROM " + table + " WHERE no='" + str(no) + "'"
           self.cursor.execute(sql)
           result = self.cursor.fetchone()
         
           return result
        
         else:
-          ipcheck_add_sql = "INSERT INTO ipcheck (date, ip, tablename, id) VALUES ('" + str(now) + "', '" + ip + "', 'commentary', '" + str(no) + "')"
+          ipcheck_add_sql = "INSERT INTO ipcheck (date, ip, tablename, id) VALUES ('" + str(now) + "', '" + ip + "', '" + table + "', '" + str(no) + "')"
           self.cursor.execute(ipcheck_add_sql)
           self.db.commit()
 
-          add_vcount_sql = "UPDATE commentary SET vcount=vcount+1 WHERE no='" + str(no) + "'"
+          add_vcount_sql = "UPDATE " + table + " SET vcount=vcount+1 WHERE no='" + str(no) + "'"
           self.cursor.execute(add_vcount_sql)
           self.db.commit()
 
-          sql = "SELECT * FROM commentary WHERE no='" + str(no) + "'"
+          sql = "SELECT * FROM " + table + " WHERE no='" + str(no) + "'"
           self.cursor.execute(sql)
           result = self.cursor.fetchone()
           
           return result
 
     def vcode_list(self, no):
-        sql = "SELECT * FROM commentary WHERE vcode1 <= '" + str(no) + "' and vcode2 >= '" + str(no) + "' ORDER BY no DESC"
+        sql = "(SELECT * FROM commentary WHERE vcode1 <= '" + str(no) + "' and vcode2 >= '" + str(no) + "') UNION (SELECT * FROM classic WHERE vcode1 <= '" + str(no) + "' and vcode2 >= '" + str(no) + "') ORDER BY no DESC"
         self.cursor.execute(sql)
         result = self.cursor.fetchall()
         return result
 
-    def remove_commentary(self, no):
-        sql = "DELETE FROM commentary WHERE no='" + str(no) + "'"
+    def remove_commentary(self, table, no):
+        sql = "DELETE FROM " + table + " WHERE no='" + str(no) + "'"
         self.cursor.execute(sql)
         self.db.commit()
         return "delete is done"
 
-    def is_author(self, no, current_user):
-        sql = "SELECT email FROM commentary WHERE no='" + str(no) + "'"
+    def is_author(self, table, no, current_user):
+        sql = "SELECT email FROM " + table + " WHERE no='" + str(no) + "'"
         self.cursor.execute(sql)
         result = self.cursor.fetchone()
         if result[0] == current_user.user_id:

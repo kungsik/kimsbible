@@ -2,11 +2,17 @@
 {% block body %}
     {% autoescape false %}
 
+    {% if table == 'commentary' %}
+        {% set main = '오픈주석' %}
+    {% elif table == 'classic' %}
+        {% set main = '클래식 주석' %}
+    {% endif %}
+
     <div id="commentary_container" class="panel panel-default">
         <div class="panel-body">
             <div class="panel-container">
                 <div class="page-header">
-                    <h1>오픈주석</h1>
+                    <h1>{{ main }}</h1>
                 </div>
                 <div class="commentary_title">
                     <h2>{{ view[4] }}</h2>
@@ -27,10 +33,10 @@
                 </div>
             
                 <br><br>
-                <button class="btn btn-default" onclick="location.href = '/commentary/list/';">목록보기</button>
+                <button class="btn btn-default" onclick="location.href = '/{{ table }}/list/';">목록보기</button>
                 {% if current_user.user_id == view[3] %}
-                &nbsp <button class="btn btn-default" onclick="location.href = '/commentary/edit/{{ view[0] }}';">글 수정하기</button>
-                &nbsp <button class="btn btn-default" onclick="location.href = '/commentary/remove/confirm/{{ view[0] }}';">글 삭제하기</button>
+                &nbsp <button class="btn btn-default" onclick="location.href = '/{{ table }}/edit/{{ view[0] }}';">글 수정하기</button>
+                &nbsp <button class="btn btn-default" onclick="location.href = '/{{ table }}/remove/confirm/{{ view[0] }}';">글 삭제하기</button>
                 {% endif %}
 
                 <br><br>
@@ -42,8 +48,8 @@
                 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
                 
                 var disqus_config = function () {
-                  this.page.url = "https://app.alphalef.com/commentary/view/{{ view[0] }}/{{ view[10] }}/";  // Replace PAGE_URL with your page's canonical URL variable
-                  this.page.identifier = "commentary - {{ view[0] }} - {{ view[4] }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                  this.page.url = "https://app.alphalef.com/{{ table }}/view/{{ view[0] }}/{{ view[10] }}/";  // Replace PAGE_URL with your page's canonical URL variable
+                  this.page.identifier = "{{ table }}-{{ view[0] }}-{{ view[10] }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
                 };
                 
                 (function() { // DON'T EDIT BELOW THIS LINE
@@ -59,7 +65,7 @@
         <br><br>
         </div>
     </div>
-
+    <script id="dsq-count-scr" src="//alpaalrebseonggyeong.disqus.com/count.js" async></script>             
     <script>
         document.title = "{{ view[4] }}";
     </script>

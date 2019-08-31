@@ -37,11 +37,22 @@
                 최근주석
             </div>
             <div class="panel-body">
-                <ul>
-                {% for post in recent_posts %}
-                    <li>{{ post[8] }} · <a href="/commentary/view/{{ post[0] }}/{{ post[10] }}/">{{ post[4] }}</a></li>
-                {% endfor %}
-                </ul>
+            <div class="row">
+                <div class="col-sm-6">
+                    <ul>
+                    {% for post1 in recent_posts_commentary %}
+                        <li>{{ post1[8] }} · <a href="/commentary/view/{{ post1[0] }}/{{ post1[10] }}/">{{ post1[4] }}</a></li>
+                    {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-sm-6">
+                    <ul>
+                    {% for post2 in recent_posts_classic %}
+                        <li>{{ post2[8] }} · <a href="/classic/view/{{ post2[0] }}/{{ post2[10] }}/">{{ post2[4] }}</a></li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
             </div>
         </div>
         <div class="panel panel-warning">

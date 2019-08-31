@@ -127,8 +127,9 @@ def get_kor_hgloss(strongnum, w):
 @app.route('/')
 def main_page():
     commentary_db = db.Table()
-    recent_posts = commentary_db.get_recent('commentary', 5)
-    return render_template('main.html', recent_posts=recent_posts)
+    recent_posts_commentary = commentary_db.get_recent('commentary', 5)
+    recent_posts_classic = commentary_db.get_recent('classic', 5)
+    return render_template('main.html', recent_posts_commentary=recent_posts_commentary, recent_posts_classic=recent_posts_classic)
 
 @app.route('/developer/')
 def developer_page():

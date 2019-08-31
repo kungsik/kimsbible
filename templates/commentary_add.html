@@ -10,11 +10,17 @@
                 </div>
                 {% endif %}
 
+                {% if table == 'commentary' %}
+                    {% set main = '오픈주석' %}
+                {% elif table == 'classic' %}
+                    {% set main = '클래식 주석' %}
+                {% endif %}
+
                 {% if cview %}
-                <h1>오픈주석 수정하기</h1>
+                <h1>{{ main }} 수정하기</h1>
                     {% set title = cview[4] %}
                     {% set text = cview[5] %}
-                    {% set url = '/commentary/edit/' + cview[0]|string %}
+                    {% set url = '/' + table + '/edit/' + cview[0]|string %}
 
                     {% if cview[6] == cview[7] %}
                         {% set vcode = cview[6] %}
@@ -24,10 +30,10 @@
 
                     {% set button_name = '수정하기' %}
                 {% else %}
-                <h1>오픈주석 추가하기</h1>
+                <h1>{{ main }} 추가하기</h1>
                     {% set title = '' %}
                     {% set text = '' %}
-                    {% set url = '/commentary/add/' %}
+                    {% set url = '/' + table + '/add/' %}
                     {% set button_name = '작성' %}
                 {% endif %}
 

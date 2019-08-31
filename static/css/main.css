@@ -265,8 +265,13 @@ div.pager span.active {
   line-height: 190%;
 }
 
-img, iframe {
+img {
   max-width: 100%;
+  height: auto !important;
+}
+
+iframe {
+  max-width: 100%
 }
 
 @media(min-width:992px) {

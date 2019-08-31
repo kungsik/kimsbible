@@ -1,12 +1,19 @@
 {% extends "layout.html" %}
 {% block body %}
     {% autoescape false %}
+
+    {% if table == 'commentary' %}
+        {% set main = '오픈주석' %}
+    {% elif table == 'classic' %}
+        {% set main = '클래식 주석' %}
+    {% endif %}
+
 <!-- <div class="modal modal-wide" id="commentary">     -->
     <div id="commentary_container" class="panel panel-default">
         <div class="panel-body">
             <div class="panel-container">
                 <div>
-                    <h1>오픈주석</h1>
+                    <h1>{{ main }}</h1>
                 </div>
                 <br>
                 <div class="list_table" style="font-size: 16px">
@@ -21,7 +28,7 @@
                 {% for list in lists %}
 
                     <span class="list_row">
-                        <span class="cell col1">{{ list[8] }} · <a href="/commentary/view/{{ list[0] }}/{{ list[10] }}/">{{ list[4] }}</a></span>
+                        <span class="cell col1">{{ list[8] }} · <a href="/{{ table }}/view/{{ list[0] }}/{{ list[10] }}/">{{ list[4] }}</a></span>
                         <span class="cell col2">{{ list[2] }}</span>
                         {% set date = list[1].split(' ') %}
                         <span class="cell col3">{{ date[0] }}</span>
@@ -34,7 +41,12 @@
                 </div>
                 <br><br>
                 {% if current_user.name %}
-                    <button class="btn btn-default" onclick="location.href = '/commentary/add/{{ vcode }}';">글 작성하기</button>
+                    {% if vcode %}
+                        <button class="btn btn-default" onclick="location.href = '/commentary/add/{{ vcode }}';">오픈주석 작성</button>    
+                        <button class="btn btn-default" onclick="location.href = '/classic/add/{{ vcode }}';">클래식주석 작성</button>
+                    {% else %}
+                        <button class="btn btn-default" onclick="location.href = '/{{ table }}/add/{{ vcode }}';">글 작성하기</button>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
