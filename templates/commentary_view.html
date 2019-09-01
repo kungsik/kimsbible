@@ -23,9 +23,14 @@
                 <br>
                 작성: {{ view[2] }} ({{ view[3] }})
                 <br>
-                {% set date = view[1].split(' ') %}
-                작성일: {{ date[0] }}
+                {% set date = view[1].split('.') %}
+                작성시간: {{ date[0] }}
                 <br>
+                {% if view[12] %}
+                    {% set editied_date = view[12].split('.') %}
+                    수정시간: {{ editied_date[0] }}
+                <br>
+                {% endif %}
                 조회수: {{ view[11] }}
                 <br><br><br>
                 <div class="commentary_contents">

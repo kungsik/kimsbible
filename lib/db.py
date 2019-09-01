@@ -5,14 +5,15 @@ from flask import request, redirect
 from flask_login import login_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from kimsbible.lib import vcodeparser as vp
+from kimsbible.lib import config
 
 class Table:
     def __init__(self):
         self.db = pymysql.connect(
-          "localhost",
-          "root",
-          "alphalef1351",
-          "alphalef"
+          config.hostname,
+          config.username,
+          config.password,
+          config.db
         )
         self.cursor = self.db.cursor()
         self.current_time = datetime.now() + timedelta(hours=9)
@@ -44,6 +45,7 @@ class Table:
     
     def edit_commentary(self, table, no, title, content, vcode):
         verse = vp.codetostr(vcode, vp.bookListKorAbbr)
+        now = self.current_time.isoformat(' ')
 
         vcode_list = vcode.split('-')
         vcode1 = vcode_list[0]
@@ -54,7 +56,7 @@ class Table:
 
         urltitle = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', title).replace(" ", "-")
 
-        sql = "UPDATE " + table + " SET title=%s, content=%s, vcode1='" + str(vcode1) + "', vcode2='" + str(vcode2) + "', verse='" + verse + "', urltitle='" + urltitle + "' WHERE no=" + str(no)
+        sql = "UPDATE " + table + " SET title=%s, content=%s, vcode1='" + str(vcode1) + "', vcode2='" + str(vcode2) + "', verse='" + verse + "', urltitle='" + urltitle + "', edited_date='" + now + "' WHERE no=" + str(no)
         try: 
           self.cursor.execute(sql, (title, content))
           self.db.commit()

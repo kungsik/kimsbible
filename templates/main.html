@@ -39,6 +39,7 @@
             <div class="panel-body">
             <div class="row">
                 <div class="col-sm-6">
+                    <span class="glyphicon glyphicon-book"></span> 오픈주석
                     <ul>
                     {% for post1 in recent_posts_commentary %}
                         <li>{{ post1[8] }} · <a href="/commentary/view/{{ post1[0] }}/{{ post1[10] }}/">{{ post1[4] }}</a></li>
@@ -46,6 +47,7 @@
                     </ul>
                 </div>
                 <div class="col-sm-6">
+                    <span class="glyphicon glyphicon-book"></span> 클래식주석
                     <ul>
                     {% for post2 in recent_posts_classic %}
                         <li>{{ post2[8] }} · <a href="/classic/view/{{ post2[0] }}/{{ post2[10] }}/">{{ post2[4] }}</a></li>

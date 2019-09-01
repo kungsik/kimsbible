@@ -3,3 +3,4 @@ __init__.pyc
 __pycache__/
 lib/__pycache__/
 security/
+lib/config.py
