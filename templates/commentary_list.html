@@ -28,7 +28,7 @@
                 {% if vcode %}
                     {% for list in lists['classic'] %}
                         <span class="list_row">
-                            <span class="cell col1">{{ list[8] }} · <a href="/classic/view/{{ list[0] }}/{{ list[10] }}/">{{ list[4] }}</a></span>
+                            <span class="cell col1">{{ list[8] }} · <a href="/classic/view/{{ list[0] }}/{{ list[10] }}/">{{ list[4] }}</a> <span class="disqus-comment-count" data-disqus-identifier="{{ table }}-{{ list[0] }}-{{ list[10] }}"></span></span>
                             <span class="cell col2">{{ list[2] }}</span>
                             {% set date = list[1].split(' ') %}
                             <span class="cell col3">{{ date[0] }}</span>
@@ -38,7 +38,7 @@
                     {% endfor %}    
                     {% for list in lists['commentary'] %}
                         <span class="list_row">
-                            <span class="cell col1">{{ list[8] }} · <a href="/commentary/view/{{ list[0] }}/{{ list[10] }}/">{{ list[4] }}</a></span>
+                            <span class="cell col1">{{ list[8] }} · <a href="/commentary/view/{{ list[0] }}/{{ list[10] }}/">{{ list[4] }}</a>  <span class="disqus-comment-count" data-disqus-identifier="{{ table }}-{{ list[0] }}-{{ list[10] }}"></span>
                             <span class="cell col2">{{ list[2] }}</span>
                             {% set date = list[1].split(' ') %}
                             <span class="cell col3">{{ date[0] }}</span>
@@ -50,7 +50,7 @@
                 {% else %}
                     {% for list in lists %}
                         <span class="list_row">
-                            <span class="cell col1">{{ list[8] }} · <a href="/{{ table }}/view/{{ list[0] }}/{{ list[10] }}/">{{ list[4] }}</a></span>
+                            <span class="cell col1">{{ list[8] }} · <a href="/{{ table }}/view/{{ list[0] }}/{{ list[10] }}/#disqus_thread">{{ list[4] }}</a> <span class="disqus-comment-count" data-disqus-identifier="{{ table }}-{{ list[0] }}-{{ list[10] }}"></span></span>
                             <span class="cell col2">{{ list[2] }}</span>
                             {% set date = list[1].split(' ') %}
                             <span class="cell col3">{{ date[0] }}</span>
@@ -76,6 +76,8 @@
     <script>
         document.title = "알파알렙 오픈주석 보기";
     </script>
+    <script id="dsq-count-scr" src="//alpaalrebseonggyeong.disqus.com/count.js?v=11" async></script>
+    
 <!-- </div> -->
     {% endautoescape %}
 {% endblock %}

@@ -286,6 +286,11 @@ iframe {
   }
 }
 
+.disqus-comment-count {
+  color: #8f8d86;
+  font-size: 12px;
+}
+
 @media(max-width:500px) {
   #cke_32,
   #cke_37,
@@ -346,7 +351,7 @@ iframe {
     padding-top: 7px;
   }
   ul {
-    padding-left: 10px;
+    padding-left: 20px;
   }
 }
 

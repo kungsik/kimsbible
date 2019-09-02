@@ -26,8 +26,8 @@
             </div>
             <div class="panel-body">
             <ul>
-		        <li>오픈주석을 열었습니다. 현재는 서비스 점검중이고 곧 자세한 운영방향을 공유하도록 하겠습니다.</li>
-		        <li>현재 신약 헬라어 본문 추가와 전면적인 리뉴얼 작업 중에 있습니다. 신약 본문은 단어 분석을 사용하실 수 있습니다. 그 외의 히브리어 구약 본문에서 지원하는 기능들을 신약 본문에도 적용시키기 위한 업데이트 중에 있습니다.</li>
+		        <li>알파알렙 주석을 업데이트했습니다. 오픈주석과 클래식 주석을 통해 성경에 관한 다양한 주석을 공유하실 수 있습니다.</li>
+		        <li>신약 본문은 단어 분석과 구문 분석을 사용하실 수 있습니다. 그 외의 히브리어 구약 본문에서 지원하는 기능들을 신약 본문에도 적용시키기 위한 업데이트 중에 있습니다.</li>
                 <li><a href="/community">커뮤니티 게시판</a>이 신설되었습니다. 좋은 의견 남겨 주시면 감사하겠습니다.</li>
             </ul>
             </div>
@@ -39,7 +39,7 @@
             <div class="panel-body">
             <div class="row">
                 <div class="col-sm-6">
-                    <span class="glyphicon glyphicon-book"></span> 오픈주석
+                    <span class="glyphicon glyphicon-book"></span> 오픈주석<br>
                     <ul>
                     {% for post1 in recent_posts_commentary %}
                         <li>{{ post1[8] }} · <a href="/commentary/view/{{ post1[0] }}/{{ post1[10] }}/">{{ post1[4] }}</a></li>
@@ -47,7 +47,7 @@
                     </ul>
                 </div>
                 <div class="col-sm-6">
-                    <span class="glyphicon glyphicon-book"></span> 클래식주석
+                    <span class="glyphicon glyphicon-book"></span> 클래식주석<br>
                     <ul>
                     {% for post2 in recent_posts_classic %}
                         <li>{{ post2[8] }} · <a href="/classic/view/{{ post2[0] }}/{{ post2[10] }}/">{{ post2[4] }}</a></li>
