@@ -17,6 +17,11 @@
                 <div class="alert alert-danger">이미 등록된 이메일입니다.</div>
                 {% elif error == 2 %}  
                 <div class="alert alert-danger">서로 다른 패스워드를 입력하셨습니다.</div>
+                {% elif error == 3 %}  
+                <div class="alert alert-danger">{{ name }}은 사용하실 수 없는 이름입니다.</div>
+                {% elif error == 4 %}  
+                <div class="alert alert-danger">입력되지 않은 정보가 있습니다.</div>
+
                 {% endif %}
                 <form method="POST" action="/auth/signup/">
                     <div class="form-group">

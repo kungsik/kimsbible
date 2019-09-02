@@ -48,6 +48,12 @@ def signup():
         password = request.form['password']
         password2 = request.form['password2']
 
+        if name == '알파알렙' or name == '관리자' or name == 'admin' or name == 'administrator' or name == '알파알렙성경':
+            return render_template('signup.html', error=3, name=name)
+        
+        if not name or not email or not password or not password2:
+            return render_template('signup.html', error=4)
+
         if password != password2:
             return render_template('signup.html', error=2)
 
