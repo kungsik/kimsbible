@@ -60,14 +60,12 @@ def codetorange(code):
     code = code.replace(" ", "")
     codeSplit1 = code.split(';')
     nodeList = []
-    last = ''
     for c1 in codeSplit1:
-        i = 0
         codeSplit2 = c1.split('-')
+        i = 0
         for c2 in codeSplit2:
             if len(c2) != 7 and len(c2) != 8:
                 return False
-
             #book
             if len(c2) == 7:
                 bookCodeList = int(c2[0])
@@ -84,13 +82,12 @@ def codetorange(code):
             if i == 0:
                 first = T.nodeFromSection((bookCode, chpCode, verseCode))
                 i = 1
+                if len(codeSplit2) < 2:
+                    nodeList.append(first)
             else:
                 last = T.nodeFromSection((bookCode, chpCode, verseCode))
-        if(last):
-            for n in range(first, last + 1):
-                nodeList.append(n)
-        else:
-            nodeList.append(first)
+                for n in range(first, last + 1):
+                    nodeList.append(n)    
     return nodeList
 
 
@@ -236,10 +233,6 @@ def parsing():
         
         if nodeList == False: return False
         result = "<h4>" + rangeStr + "</h4>"
-
-        result += "<div>"
-        result += T.text(nodeList)
-        result += "</div>"
 
         result += "<div>"
         for verseNode in nodeList:

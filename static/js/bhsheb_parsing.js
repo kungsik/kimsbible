@@ -1,7 +1,7 @@
 $(function () {
     $("#parsing_post").submit(function () {
         $("#load_image").show();
-        $("#stat_submit").hide();
+        $("#parsing_submit").hide();
 
         var parsing_send = $.post('./', $('#parsing_post').serialize())
             .success(function () {
@@ -11,14 +11,14 @@ $(function () {
                 $("#search_result_ok").html(data);
 
                 $("#load_image").hide();
-                $("#stat_submit").show();
+                $("#parsing_submit").show();
             })
             .error(function () {
 
                 $("#search_result_ok").html('검색 결과가 없습니다..');
 
                 $("#load_image").hide();
-                $("#stat_submit").show();
+                $("#parsing_submit").show();
             });
         return false;
     });
