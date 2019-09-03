@@ -90,10 +90,10 @@ def show_bhsheb_word_function(node):
     w_f["인칭(접미)"] = F.prs_ps.v(node)  # pronominal suffix person
     w_f["성(접미)"] = F.prs_gn.v(node)  # pronominal suffix gender
     w_f["수(접미)"] = F.prs_nu.v(node)  # pronominal suffix number
-    w_f["의미"] = F.gloss.v(L.u(node, otype='lex')[0])
-    w_f["의미"] = w_f["의미"].replace('<', '[').replace('>', ']')
+    # w_f["의미"] = F.gloss.v(L.u(node, otype='lex')[0])
+    # w_f["의미"] = w_f["의미"].replace('<', '[').replace('>', ']')
     strong = get_strong(node)
-    # w_f["의미"] = get_kor_hgloss(strong, node)
+    w_f["의미"] = get_kor_hgloss(strong, node)
     w_f["사전1"] = "<a href='https://dict.naver.com/hbokodict/ancienthebrew/#/search?query=" + strong + "' target=_blank>네이버사전</a>"
     w_f["사전2"] = "<a href='https://biblehub.com/hebrew/" + strong + ".htm' target=_blank>바이블허브</a>"
     #w_f["사전"] = "<a href='http://dict.naver.com/hbokodict/ancienthebrew/#/search?query=" + w_f["원형"] + "' target=_blank>보기</a>"
@@ -105,23 +105,58 @@ def show_bhsheb_word_function(node):
     return w_f
 
 def get_strong(node):
-    f = open('kimsbible/static/csv/strong.csv', 'r', encoding='utf-8')
+    if int(node) < 50001:
+        csv_file = 'kimsbible/static/csv/strong1.csv'
+        row_num = int(node) - 1
+    elif int(node) < 100001:
+        csv_file = 'kimsbible/static/csv/strong2.csv'
+        row_num = int(node) - 50001
+    elif int(node) < 150001:
+        csv_file = 'kimsbible/static/csv/strong3.csv'
+        row_num = int(node) - 100001
+    elif int(node) < 50001:
+        csv_file = 'kimsbible/static/csv/strong4.csv'
+        row_num = int(node) - 150001
+    elif int(node) < 50001:
+        csv_file = 'kimsbible/static/csv/strong5.csv'
+        row_num = int(node) - 200001
+    elif int(node) < 50001:
+        csv_file = 'kimsbible/static/csv/strong6.csv'
+        row_num = int(node) - 250001
+    elif int(node) < 50001:
+        csv_file = 'kimsbible/static/csv/strong7.csv'
+        row_num = int(node) - 300001
+    elif int(node) < 50001:
+        csv_file = 'kimsbible/static/csv/strong8.csv'
+        row_num = int(node) - 350001
+    else:
+        csv_file = 'kimsbible/static/csv/strong9.csv' 
+        row_num = int(node) - 400001
+
+    f = open(csv_file, 'r', encoding='utf-8')
     strong = list(csv.reader(f))
-    result = strong[node]
+    result = strong[row_num]
     f.close()
     return result[0]
 
 def get_kor_hgloss(strongnum, w):
-    f = open('kimsbible/static/csv/hstrong.csv', 'r', encoding='utf-8')
+    if int(strongnum) > 4000:
+        csv_file = 'kimsbible/static/csv/hstrong2.csv'
+        row_num = int(strongnum) - 4001
+    else: 
+        csv_file = 'kimsbible/static/csv/hstrong1.csv'
+        row_num = int(strongnum) - 1 
+    
+    f = open(csv_file, 'r', encoding='utf-8')
     hstrong = list(csv.reader(f))
     try:
-        gloss = hstrong[int(strongnum)]
+        gloss = hstrong[row_num]
         f.close()
         result = gloss[1].split(';')
         return result[0]
     except:
         f.close()
-        return F.gloss.v(L.u(w, otype='lex')[0])
+        return F.gloss.v(L.u(w, otype='lex')[0]).replace('and', '그리고').replace('in', '~안에').replace('to', '~향해').replace('the', '[정관사]').replace('as', '~같이')
 
 
 @app.route('/')
@@ -243,7 +278,9 @@ def show_verse_function(node):
     verse_api = {'words': [], 'gloss': [], 'pdp': [], 'parse': [], 'suff': []}
     for w in wordsNode:
         verse_api['words'].append(F.g_word_utf8.v(w))
-        verse_api['gloss'].append(F.gloss.v(L.u(w, otype='lex')[0]))
+        strong = get_strong(w)
+        verse_api['gloss'].append(get_kor_hgloss(strong, w))
+        # verse_api['gloss'].append(F.gloss.v(L.u(w, otype='lex')[0]))
         pdp = kb.eng_to_kor(F.pdp.v(w), 'abbr')
         if pdp == '동':
             pdp_str = pdp + "(" + kb.eng_to_kor(F.vs.v(w), 'abbr') + ")"

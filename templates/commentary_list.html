@@ -38,7 +38,7 @@
                     {% endfor %}    
                     {% for list in lists['commentary'] %}
                         <span class="list_row">
-                            <span class="cell col1">{{ list[8] }} · <a href="/commentary/view/{{ list[0] }}/{{ list[10] }}/">{{ list[4] }}</a>  <span class="disqus-comment-count" data-disqus-identifier="{{ table }}-{{ list[0] }}-{{ list[10] }}"></span>
+                            <span class="cell col1">{{ list[8] }} · <a href="/commentary/view/{{ list[0] }}/{{ list[10] }}/">{{ list[4] }}</a>  <span class="disqus-comment-count" data-disqus-identifier="{{ table }}-{{ list[0] }}-{{ list[10] }}"></span></span>
                             <span class="cell col2">{{ list[2] }}</span>
                             {% set date = list[1].split(' ') %}
                             <span class="cell col3">{{ date[0] }}</span>
