@@ -2,6 +2,7 @@ from tf.fabric import Fabric
 from flask import render_template, request, url_for
 from kimsbible import app
 from kimsbible.bhsheb import api
+from kimsbible.bhsheb import get_strong, get_kor_hgloss
 from collections import OrderedDict
 from kimsbible.lib import lib as kb
 
@@ -224,7 +225,7 @@ def statistics():
     else:
         return render_template('bhsheb_stat.html')
 
-
+# 파싱 데이터 - 맛사 제공
 @app.route('/api/parsing/', methods=['GET', 'POST'])
 @app.route('/bhsheb/parsing/', methods=['GET', 'POST'])
 def parsing():
@@ -247,7 +248,12 @@ def parsing():
             for n in wordNode:
                 result += "<span>"
                 result += "[" + F.g_word_utf8.v(n) + "] "
-                result += F.gloss.v(L.u(n, otype='lex')[0]).replace("<", "").replace(">", "") + " "
+
+                strong = get_strong(n)
+                gloss = get_kor_hgloss(strong, n)
+                result += gloss + " "
+                # result += F.gloss.v(L.u(n, otype='lex')[0]).replace("<", "").replace(">", "") + " "
+                
                 if F.pdp.v(n) == "verb":
                     result += "(" + F.voc_utf8.v(L.u(n, otype='lex')[0]) + ") "
                     result += kb.eng_to_kor(F.vs.v(n), 'abbr') + "." + kb.eng_to_kor(F.vt.v(n), 'abbr') + "." + kb.eng_to_kor(F.ps.v(n), 'abbr') + kb.eng_to_kor(F.gn.v(n), 'abbr') + kb.eng_to_kor(F.nu.v(n), 'abbr') + " "
