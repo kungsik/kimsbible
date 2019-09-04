@@ -1,0 +1,15 @@
+.reading { 
+    font-family: 'SBLHebrew', serif;
+}
+
+.section {
+    direction:rtl; 
+    text-align:right; 
+    /* column-count: 2; */
+}
+
+.wordlist
+.parsing_heb 
+{
+    text-align: left;
+}

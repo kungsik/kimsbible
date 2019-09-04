@@ -8,6 +8,7 @@ from kimsbible.lib import lib as kb
 from kimsbible import bhsheb_stat as stat
 from weasyprint import HTML, CSS
 from weasyprint.fonts import FontConfiguration
+import random
 
 api.makeAvailableIn(globals())
 
@@ -21,11 +22,13 @@ def studytools():
 
         sections = rangeCode.split(";")
 
-        result = '<h3>본문읽기(구약 히브리어)</h3><br>'
+        result = '<div class="reading">'
+        result += '<h3>본문읽기(구약 히브리어)</h3><br>'
 
         if not check1:
             parsing = '<h4>단어 문법 분석</h4>'
-            parsing += '<br><div style="column-count: 2;">'
+            parsing += '<br><div class="parsing">'
+
 
         vocalist = {}
 
@@ -37,7 +40,8 @@ def studytools():
             
             result += '<h4>' + sectionTitle + '</h4>'
             result += '<br>'
-            result += '<div class="section" style="direction:rtl; text-align:right; column-count: 2;">'
+            # result += '<div class="section" style="direction:rtl; text-align:right; column-count: 2;">'
+            result += '<div class="section">'
             
             for node in nodeList:
                 section = T.sectionFromNode(node)
@@ -58,8 +62,9 @@ def studytools():
                             vocalist[root] = gloss
 
                     if not check1:                  
-                        parsing += '<span class="parsing">'
+                        parsing += '<span class="parsing_heb">'
                         parsing += "[" + F.g_word_utf8.v(w) + "] "
+                        parsing += "</span>"
 
                         pdp = kb.eng_to_kor(F.pdp.v(w), 'full')
                         parsing += pdp + " "
@@ -78,7 +83,7 @@ def studytools():
                         if F.g_prs_utf8.v(w) != "":
                             parsing += "접미." + kb.eng_to_kor(F.prs_ps.v(w), 'full') + "." + kb.eng_to_kor(F.prs_gn.v(w), 'full') + "." + kb.eng_to_kor(F.prs_nu.v(w), 'full') + " "
 
-                        parsing += "(" + gloss + ")</span><br>"
+                        parsing += "(" + gloss + ")<br>"
             
             result += '</div><br><br>'
         
@@ -89,23 +94,35 @@ def studytools():
         if not check2:
             result += '<h4>단어 리스트</h4>'
             result += '<br>'
-            result += '<div style="column-count: 3;">'
+            result += '<div class="wordlist">'
+
             sorted_vocalist = sorted(vocalist.items())
             for voca in sorted_vocalist:
                 result += '<span>' + voca[0] + ' ' + voca[1] + '</span><br>'
             
             result += '</div>'
+        
+        result += '</div>'
 
         if check3:
-            # font_config = FontConfiguration()
-            html = HTML(string='<h1>hi</h1>')
-            # css = CSS(filename='../static/css/main.css', font_config=font_config)
-            html.write_pdf('a.pdf')
-            # html.write_pdf(
-                # '../static/tmp/reading.pdf', stylesheets=[css],
-                # font_config=font_config)
+            font_config = FontConfiguration()
+            randnum = random.random()
+            html = HTML(string=result)
 
-            return True
+            css_string = '''
+
+            '''
+                        
+            css = CSS(string=css_string, font_config=font_config)
+            
+            html.write_pdf(
+                'kimsbible/static/tmp/reading.pdf', 
+                stylesheets=[css],
+                font_config=font_config)
+            
+            makelink = '<div>PDF링크가 생성되었습니다. 링크를 클릭해 주세요.<a href="http://app.alphalef.com/static/tmp/reading.pdf?v=' + str(randnum) + '" target="_blank">다운로드</a></div>'
+
+            return makelink
         
         return result
 
