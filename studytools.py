@@ -91,7 +91,8 @@ def studytools():
 
                         parsing += "(" + gloss + ")<br>"
                 
-                parsing += "<br>"
+                if not check1:
+                    parsing += "<br>"
             
             result += '</div><br><br>'
         
