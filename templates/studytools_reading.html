@@ -2,7 +2,7 @@
 {% block body %}
     {% autoescape false %}
 
-    <script src="/static/js/bhsheb_parsing.js?v=11111"></script>
+    <script src="/static/js/bhsheb_parsing.js?v=111111"></script>
 
     <div class="alert alert-danger" role="alert">현재 파싱 출력 페이지는 아직 테스트 중입니다. 검색 통계를 너무 크게 잡으면(예. 창세기 전체) 브라우저가 다운될 수 있습니다. 코드 입력 방법은 <a href='/bhsheb/stat/tutorial/' target="_blank">여기</a>를 클릭해 주세요.</div>
 
@@ -20,11 +20,15 @@
                 <input type="hidden" id="check2_value" name="check2" value="">
                 <input type="checkbox" id="check2" onclick="updatecheckvalue()">  
 
-                <label for="check2"> PDF파일로 다운받기 </label>
+                <label for="check3"> 인쇄화면으로 보기 </label>
                 <input type="hidden" id="check3_value" name="check3" value="">
                 <input type="checkbox" id="check3" onclick="updatecheckvalue()">  
                 
-                <br><button type="submit" class="btn btn-success" id="parsing_submit">실행</button>
+                <br>
+                
+                <button type="submit" class="btn btn-success" id="parsing_submit">실행</button>
+                <button type="submit" class="btn btn-success" id="print_submit">인쇄화면실행</button>
+
             </form>
           <div id="load_image" style="display:none"><img src="/static/img/loader.gif" align="center"></div>
         </div>

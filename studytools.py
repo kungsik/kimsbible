@@ -40,7 +40,6 @@ def studytools():
             
             result += '<h4>' + sectionTitle + '</h4>'
             result += '<br>'
-            # result += '<div class="section" style="direction:rtl; text-align:right; column-count: 2;">'
             result += '<div class="section">'
             
             for node in nodeList:
@@ -98,31 +97,39 @@ def studytools():
 
             sorted_vocalist = sorted(vocalist.items())
             for voca in sorted_vocalist:
-                result += '<span>' + voca[0] + ' ' + voca[1] + '</span><br>'
+                result += '<span class="parsing_heb">' + voca[0] + '</span> <span class="parsing">' + voca[1] + '</span><br>'
             
             result += '</div>'
         
         result += '</div>'
 
         if check3:
-            font_config = FontConfiguration()
-            randnum = random.random()
-            html = HTML(string=result)
+            # font_config = FontConfiguration()
+            # randnum = random.random()
+            # html = HTML(string=result)
 
-            css_string = '''
-
-            '''
+            # css_string = '''
+            #     @import url('https://fonts.googleapis.com/css?family=David+Libre&display=swap');
+            #     .reading {
+            #         font-family: 'David Libre', serif;
+            #     }
+            #     .section {
+            #         font-family: 'Nanum Gothic', serif;
+            #         font-size: 25px;
+            #         direction:rtl; 
+            #         text-align:right; 
+            #     }
+            # '''
                         
-            css = CSS(string=css_string, font_config=font_config)
+            # css = CSS(string=css_string, font_config=font_config)
             
-            html.write_pdf(
-                'kimsbible/static/tmp/reading.pdf', 
-                stylesheets=[css],
-                font_config=font_config)
+            # html.write_pdf(
+            #     'kimsbible/static/tmp/reading.pdf', 
+            #     stylesheets=[css])
             
-            makelink = '<div>PDF링크가 생성되었습니다. 링크를 클릭해 주세요.<a href="http://app.alphalef.com/static/tmp/reading.pdf?v=' + str(randnum) + '" target="_blank">다운로드</a></div>'
+            # makelink = '<div>PDF링크가 생성되었습니다. 링크를 클릭해 주세요.<a href="http://127.0.0.1:5000/static/tmp/reading.pdf?v=' + str(randnum) + '" target="_blank">다운로드</a></div>'
 
-            return makelink
+            return render_template('studytools_reading_pdf.html', result=result)
         
         return result
 

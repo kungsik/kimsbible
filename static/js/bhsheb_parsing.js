@@ -1,5 +1,5 @@
 $(function () {
-    $("#parsing_post").submit(function () {
+    $("#parsing_submit").click(function () {
         $("#load_image").show();
         $("#parsing_submit").hide();
 
