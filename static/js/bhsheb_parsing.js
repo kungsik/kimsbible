@@ -3,14 +3,6 @@ $(function () {
         $("#load_image").show();
         $("#parsing_submit").hide();
 
-
-        if($('#check1').is(':checked')){
-            checkarr[0].value = 'Y'
-        }
-        if($('#check2').is(':checked')){
-            checkarr[1].value = 'Y'
-        }
-
         var parsing_send = $.post('./', $('#parsing_post').serialize())
             .success(function () {
                 var data = parsing_send.responseText;

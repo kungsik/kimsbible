@@ -6,6 +6,8 @@ from kimsbible.bhsheb import get_strong, get_kor_hgloss
 from collections import OrderedDict
 from kimsbible.lib import lib as kb
 from kimsbible import bhsheb_stat as stat
+from weasyprint import HTML, CSS
+from weasyprint.fonts import FontConfiguration
 
 api.makeAvailableIn(globals())
 
@@ -15,13 +17,14 @@ def studytools():
         rangeCode = request.form['rangeCode']
         check1 = request.form['check1']
         check2 = request.form['check2']
+        check3 = request.form['check3']
 
         sections = rangeCode.split(";")
 
         result = '<h3>본문읽기(구약 히브리어)</h3><br>'
 
         if not check1:
-            parsing = '<h3>단어 문법 분석</h3>'
+            parsing = '<h4>단어 문법 분석</h4>'
             parsing += '<br><div style="column-count: 2;">'
 
         vocalist = {}
@@ -45,11 +48,11 @@ def studytools():
                     parsing += str(section[1]) + ":" + str(section[2]) + "<br>"
 
                 for w in wordsNode:
+                    strong = get_strong(w)
+                    gloss = get_kor_hgloss(strong, w)
 
                     if not check2:
                         root = F.voc_utf8.v(L.u(w, otype='lex')[0])
-                        strong = get_strong(w)
-                        gloss = get_kor_hgloss(strong, w)
 
                         if not root in vocalist:
                             vocalist[root] = gloss
@@ -84,7 +87,7 @@ def studytools():
             result += parsing
 
         if not check2:
-            result += '<h3>단어 리스트</h3>'
+            result += '<h4>단어 리스트</h4>'
             result += '<br>'
             result += '<div style="column-count: 3;">'
             sorted_vocalist = sorted(vocalist.items())
@@ -92,6 +95,18 @@ def studytools():
                 result += '<span>' + voca[0] + ' ' + voca[1] + '</span><br>'
             
             result += '</div>'
+
+        if check3:
+            # font_config = FontConfiguration()
+            html = HTML(string='<h1>hi</h1>')
+            # css = CSS(filename='../static/css/main.css', font_config=font_config)
+            html.write_pdf('a.pdf')
+            # html.write_pdf(
+                # '../static/tmp/reading.pdf', stylesheets=[css],
+                # font_config=font_config)
+
+            return True
+        
         return result
 
     else:
