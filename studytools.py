@@ -6,9 +6,6 @@ from kimsbible.bhsheb import get_strong, get_kor_hgloss
 from collections import OrderedDict
 from kimsbible.lib import lib as kb
 from kimsbible import bhsheb_stat as stat
-from weasyprint import HTML, CSS
-from weasyprint.fonts import FontConfiguration
-import random
 
 api.makeAvailableIn(globals())
 
@@ -18,12 +15,16 @@ def studytools():
         rangeCode = request.form['rangeCode']
         check1 = request.form['check1']
         check2 = request.form['check2']
-        check3 = request.form['check3']
+
+        try:
+            check3 = request.form['print_submit']
+        except:
+            check3 = ''
 
         sections = rangeCode.split(";")
 
         result = '<div class="reading">'
-        result += '<h3>본문읽기(구약 히브리어)</h3><br>'
+        result += '<h3>알파알렙 성경 원문읽기 도우미</h3><br>'
 
         if not check1:
             parsing = '<h4>단어 문법 분석</h4>'
@@ -36,7 +37,13 @@ def studytools():
             nodeList = stat.codetorange(section)
             sectionTitle = stat.codetostr(section, stat.bookListKor)
         
-            if nodeList == False: return False
+            if nodeList == False:
+                error = "오류가 발생했습니다." 
+                return render_template('studytools_reading_pdf.html', result=error)
+            
+            if len(nodeList) > 100:
+                error = "범위가 너무 많습니다. 100절 이하의 범위를 입력해 주세요."
+                return render_template('studytools_reading_pdf.html', result=error)
             
             result += '<h4>' + sectionTitle + '</h4>'
             result += '<br>'
@@ -48,7 +55,7 @@ def studytools():
                 result += '<span class=chpvrs>' + str(section[2]) + '</span> <span class="verse">' + T.text(wordsNode) + '</span>'
 
                 if not check1:
-                    parsing += str(section[1]) + ":" + str(section[2]) + "<br>"
+                    parsing += stat.booknameconv(section[0], stat.bookList, stat.bookListKorAbbr) + str(section[1]) + ":" + str(section[2]) + "<br>"
 
                 for w in wordsNode:
                     strong = get_strong(w)
@@ -83,6 +90,8 @@ def studytools():
                             parsing += "접미." + kb.eng_to_kor(F.prs_ps.v(w), 'full') + "." + kb.eng_to_kor(F.prs_gn.v(w), 'full') + "." + kb.eng_to_kor(F.prs_nu.v(w), 'full') + " "
 
                         parsing += "(" + gloss + ")<br>"
+                
+                parsing += "<br>"
             
             result += '</div><br><br>'
         
@@ -103,35 +112,19 @@ def studytools():
         
         result += '</div>'
 
-        if check3:
-            # font_config = FontConfiguration()
-            # randnum = random.random()
-            # html = HTML(string=result)
+        result += '<div class="notice">일러두기<br>'
+        result += '저작권: 저작자표시-비영리 2.0 대한민국 (CC BY-NC 2.0 KR)<br>'
+        result += '본 내용은 알파알렙성경(app.alphalef.com)을 통해서 출력되었습니다. 이 문서를 변형하거나 누구에게나 자유롭게 배포할 수 있습니다. 다만, 상업적인 이용은 불가하며 공유시 본 일러두기 부분을 반드시 첨부하여 주시면 감사하겠습니다.'
+        result += '</div>'
 
-            # css_string = '''
-            #     @import url('https://fonts.googleapis.com/css?family=David+Libre&display=swap');
-            #     .reading {
-            #         font-family: 'David Libre', serif;
-            #     }
-            #     .section {
-            #         font-family: 'Nanum Gothic', serif;
-            #         font-size: 25px;
-            #         direction:rtl; 
-            #         text-align:right; 
-            #     }
-            # '''
-                        
-            # css = CSS(string=css_string, font_config=font_config)
-            
-            # html.write_pdf(
-            #     'kimsbible/static/tmp/reading.pdf', 
-            #     stylesheets=[css])
-            
-            # makelink = '<div>PDF링크가 생성되었습니다. 링크를 클릭해 주세요.<a href="http://127.0.0.1:5000/static/tmp/reading.pdf?v=' + str(randnum) + '" target="_blank">다운로드</a></div>'
+        try: 
+            if check3:
+                return render_template('studytools_reading_pdf.html', result=result)
+            else:
+                return result
 
-            return render_template('studytools_reading_pdf.html', result=result)
-        
-        return result
+        except:
+            return result
 
     else:
         return render_template('studytools_reading.html')

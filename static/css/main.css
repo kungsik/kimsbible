@@ -149,7 +149,8 @@ select {
 #search_result_ok {
     border-radius: 5px;
     border: 1px dotted;
-    padding: 10px;
+    padding-top: 50px;
+    padding: 30px;
 }
 
 #query_input_ok {
@@ -397,4 +398,11 @@ iframe {
   .vcount_title {
     display: none;
   }
+}
+
+.notice {
+  border: 2px solid #c9c8c5;
+  padding: 10px;
+  margin-top: 30px;
+  font-size: 12px;
 }

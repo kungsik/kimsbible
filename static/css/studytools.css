@@ -14,12 +14,12 @@
     direction:rtl; 
     text-align:right; 
     font-size: 24px;
-    column-count: 2;
+    -webkit-column-count: 2;
 }
 
 .parsing {
     font-size: 15px;
-    column-count: 2;
+    -webkit-column-count: 2;
 }
 
 
@@ -31,6 +31,13 @@
 }
 
 .wordlist {
-    column-count: 3;
+    -webkit-column-count: 3;
     text-align: left;
+}
+
+.notice {
+    border: 2px solid #c9c8c5;
+    padding: 10px;
+    margin-top: 30px;
+    font-size: 12px;
 }
