@@ -114,19 +114,19 @@ def get_strong(node):
     elif int(node) < 150001:
         csv_file = 'kimsbible/static/csv/strong3.csv'
         row_num = int(node) - 100001
-    elif int(node) < 50001:
+    elif int(node) < 200001:
         csv_file = 'kimsbible/static/csv/strong4.csv'
         row_num = int(node) - 150001
-    elif int(node) < 50001:
+    elif int(node) < 250001:
         csv_file = 'kimsbible/static/csv/strong5.csv'
         row_num = int(node) - 200001
-    elif int(node) < 50001:
+    elif int(node) < 300001:
         csv_file = 'kimsbible/static/csv/strong6.csv'
         row_num = int(node) - 250001
-    elif int(node) < 50001:
+    elif int(node) < 350001:
         csv_file = 'kimsbible/static/csv/strong7.csv'
         row_num = int(node) - 300001
-    elif int(node) < 50001:
+    elif int(node) < 400001:
         csv_file = 'kimsbible/static/csv/strong8.csv'
         row_num = int(node) - 350001
     else:
