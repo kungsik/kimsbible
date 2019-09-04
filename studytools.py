@@ -28,7 +28,8 @@ def studytools():
 
         if not check1:
             parsing = '<h4>단어 문법 분석</h4>'
-            parsing += '<br><div class="parsing">'
+            parsing += '<font size=3>불변화사나 전치사 등과 같이 빈번하게 등장하는 단어들은 단어 리스트 참조</font>'
+            parsing += '<br><br><div class="parsing">'
 
 
         vocalist = {}
@@ -68,11 +69,14 @@ def studytools():
                             vocalist[root] = gloss
 
                     if not check1:                  
+                        pdp = kb.eng_to_kor(F.pdp.v(w), 'full')
+                        if pdp == '전치사' or pdp == '관사' or pdp == '접속사' or pdp == '관계사' or pdp == '부사':
+                            continue
+
                         parsing += '<span class="parsing_heb">'
                         parsing += "[" + F.g_word_utf8.v(w) + "] "
                         parsing += "</span>"
 
-                        pdp = kb.eng_to_kor(F.pdp.v(w), 'full')
                         parsing += pdp + " "
                     
                         if pdp == '동사':
