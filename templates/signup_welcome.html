@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block body %}
+{% autoescape false %}
+<div style="text-align: center">
+    <div class="panel panel-default">
+        <h3 class="title">성공적으로 가입되었습니다.</h3>
+        <div class="panel-body">
+            <div class="panel-container">
+                <br> 
+                <p>가입해 주셔서 감사합니다. 아래의 정보로 가입되셨습니다. 비밀번호는 암호화되어 안전하게 저장됩니다.</p>
+                <br>
+                <div class="alert alert-success" role="alert">
+                    <p>가입이름: {{ name }} </p>
+                    <p>이메일: {{ email }} </p>
+                </div>
+
+                <button class="btn btn-default" onclick="location.href = '{{ redirecturl }}';">돌아가기</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endautoescape %}
+{% endblock %}

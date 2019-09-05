@@ -2,6 +2,7 @@ from kimsbible import app
 from kimsbible.lib import db
 from flask import render_template, request, redirect
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
+from urllib import parse
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -47,15 +48,18 @@ def signup():
         name = request.form['name']
         password = request.form['password']
         password2 = request.form['password2']
+        redirecturl = parse.unquote(request.form['redirect'])
+
+        print(redirecturl)
 
         if name == '알파알렙' or name == '관리자' or name == 'admin' or name == 'administrator' or name == '알파알렙성경':
-            return render_template('signup.html', error=3, name=name)
+            return render_template('signup.html', error=3, name=name, redirecturl=redirecturl)
         
         if not name or not email or not password or not password2:
-            return render_template('signup.html', error=4)
+            return render_template('signup.html', error=4, redirecturl=redirecturl)
 
         if password != password2:
-            return render_template('signup.html', error=2)
+            return render_template('signup.html', error=2, redirecturl=redirecturl)
 
         user_db = db.Table()
         result = user_db.adduser(email, name, password)
@@ -63,7 +67,7 @@ def signup():
         if not result:
             return render_template('signup.html', error=1)
         
-        return redirect("/")
+        return render_template("signup_welcome.html", name=name, email=email, redirecturl=redirecturl)
 
     else:
         return render_template('signup.html') 
@@ -74,6 +78,7 @@ def signin():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
+        redirecturl = parse.unquote(request.form['redirect'])
         
         user_db = db.Table()
         result = user_db.signin_user(email, password)
@@ -85,7 +90,7 @@ def signin():
             passed_user = User(result[1], result[3], True)
             login_user(passed_user, remember=True)
 
-            return redirect("/")
+            return redirect(redirecturl)
 
     else:
         return render_template('signin.html') 

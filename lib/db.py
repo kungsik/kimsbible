@@ -66,8 +66,17 @@ class Table:
           print(">>>>>>>>>>>>>", code, message)
           return "edit failed" 
     
-    def clist(self, table):
-        sql = "SELECT * FROM " + table + " ORDER BY no DESC"
+    def get_table_count(self, table):
+        sql = "SELECT count(*) FROM " + table
+        self.cursor.execute(sql)
+        result = self.cursor.fetchone()
+        return result[0]
+
+    def clist(self, table, pagenum):
+        limit_end = int(pagenum) * 10
+        limit_start = int(limit_end) - 9
+
+        sql = "SELECT * FROM " + table + " ORDER BY no DESC LIMIT " + str(limit_start) + ", " + str(limit_end) 
         self.cursor.execute(sql)
         result = self.cursor.fetchall()
         return result

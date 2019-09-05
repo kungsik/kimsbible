@@ -59,6 +59,36 @@
                         </span>
                     {% endfor %}
                 {% endif %}
+                </div><br>
+                
+                <div style="text-align: center">
+                    <ul class="pagination">
+                        {% if pagenum|int == 1 %}
+                            <li class="disabled">
+                        {% else %}
+                            <li>
+                        {% endif %}
+                            <a href="/commentary/list/?p={{ pagenum|int - 1 }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                            </li>
+
+                        {% for n in range(totalpage)  %}
+                            {% if n + 1 == pagenum|int %}
+                                <li class="active">
+                            {% else %}
+                                <li>
+                            {% endif %}
+                                <a href="/commentary/list/?p={{ n + 1 }}">{{ n + 1 }}</a>
+                            </li>
+                        {% endfor %}
+
+                        {% if pagenum|int == totalpage %}
+                            <li class="disabled">
+                        {% else %}
+                            <li>
+                        {% endif %}
+                            <a href="/commentary/list/?p={{ pagenum|int + 1 }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+                            </li>
+                    </ul>
                 </div>
                 <br><br>
                 {% if current_user.name %}

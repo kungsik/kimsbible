@@ -55,11 +55,21 @@ def commentary_edit(table, no):
 def commentary_intro():
     return render_template('commentary_intro.html')
 
-@app.route('/<table>/list/')
+@app.route('/<table>/list/', methods=['POST', 'GET'])
 def commentary_list(table):
+    if request.method == 'GET':
+        pagenum = request.args.get('p')
+    
+    if not pagenum:
+        pagenum = 1
+
     commentary_db = db.Table()
-    clist = commentary_db.clist(table)
-    return render_template('commentary_list.html', lists=clist, user=current_user, table=table)
+    clist = commentary_db.clist(table, pagenum)
+    totalnum = commentary_db.get_table_count(table)
+    totalpage = int(int(totalnum) / 11) + 1
+
+    return render_template('commentary_list.html', lists=clist, user=current_user, table=table, totalpage=totalpage, pagenum=pagenum)
+
 
 
 @app.route('/<table>/view/<int:no>/<title>/')

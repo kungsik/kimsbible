@@ -23,7 +23,7 @@
                 <div class="alert alert-danger">입력되지 않은 정보가 있습니다.</div>
 
                 {% endif %}
-                <form method="POST" action="/auth/signup/">
+                <form method="POST" name="signup" action="/auth/signup/">
                     <div class="form-group">
                         <input class="form-control" type="email" name="email" placeholder="이메일주소">
                     </div>
@@ -40,10 +40,23 @@
                         <input class="form-control" type="password" name="password2" placeholder="비밀번호확인">
                     </div>
 
+                    <input type="hidden" name="redirect">
+
                     <button type="submit" class="btn btn-default">회원가입하기</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    var url = '{{ redirecturl }}';
+    if (url) {
+        signup.redirect.value = '{{ redirecturl }}';        
+    }
+    else {
+        signup.redirect.value = escape(document.referrer);
+    }
+</script>
+    
 {% endblock %}

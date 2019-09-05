@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-
+{% autoescape false %}
 <div style="text-align: center">
     <div class="panel panel-default">
         <h3 class="title">로그인하기</h3>
@@ -9,7 +9,7 @@
                 {% if error == 1 %}
                 <div class="alert alert-danger">로그인 정보가 잘못되었습니다.</div>
                 {% endif %}
-                <form method="POST" action="/auth/signin/">
+                <form method="POST" name="signin" action="/auth/signin/">
                     <div class="form-group">
                         <input class="form-control" type="email" name="email" placeholder="이메일주소">
                     </div>
@@ -17,6 +17,8 @@
                     <div class="form-group">
                         <input class="form-control" type="password" name="password" placeholder="비밀번호">
                     </div>
+
+                    <input type="hidden" name="redirect">
 
                     <button type="submit" class="btn btn-default">로그인하기</button>
                 </form>
@@ -35,5 +37,9 @@
     </div>
 </div>
 
+<script>
+    signin.redirect.value = escape(document.referrer);
+</script>
 
+{% endautoescape %}
 {% endblock %}
