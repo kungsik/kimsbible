@@ -75,25 +75,29 @@ def signup():
 
 @app.route("/auth/signin/", methods=['POST','GET'])
 def signin():
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-        redirecturl = parse.unquote(request.form['redirect'])
+    try:
+        if current_user.name:
+            return redirect("/")
+    except:
+        if request.method == 'POST':
+            email = request.form['email']
+            password = request.form['password']
+            redirecturl = parse.unquote(request.form['redirect'])
+            
+            user_db = db.Table()
+            result = user_db.signin_user(email, password)
         
-        user_db = db.Table()
-        result = user_db.signin_user(email, password)
-       
-        if not result:
-            return render_template('signin.html', error=1)
-        
-        else: 
-            passed_user = User(result[1], result[3], True)
-            login_user(passed_user, remember=True)
+            if not result:
+                return render_template('signin.html', error=1)
+            
+            else: 
+                passed_user = User(result[1], result[3], True)
+                login_user(passed_user, remember=True)
 
-            return redirect(redirecturl)
+                return redirect(redirecturl)
 
-    else:
-        return render_template('signin.html') 
+        else:
+            return render_template('signin.html') 
 
 @app.route('/auth/signout/')
 @login_required

@@ -80,11 +80,11 @@ def commentary_view(table, no, title=''):
     return render_template('commentary_view.html', view=cview, table=table)
 
 
-@app.route('/commentary/vcode/<int:no>')
+@app.route('/commentary/vcode/<int:no>', methods=['POST', 'GET'])
 def commentary_select_vcode(no):
     commentary_db = db.Table()
     vclist = commentary_db.vcode_list(no)
-    return render_template('commentary_list.html', lists=vclist, vcode=no)
+    return render_template('commentary_list.html', lists=vclist, vcode=no, pagenum=1, totalpage=1)
 
 
 @app.route('/<table>/remove/confirm/<int:no>')
