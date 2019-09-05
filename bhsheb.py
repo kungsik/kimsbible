@@ -11,6 +11,8 @@ from kimsbible.lib import lib as kb
 from kimsbible.lib import vcodeparser as vp
 from kimsbible.lib import db
 
+from kimsbible.lib.config import google_map_api, kml_url
+
 ### Load up TF ###
 ETCBC = 'hebrew/etcbc4c'
 TF = Fabric(locations='text-fabric-data', modules=ETCBC)
@@ -268,9 +270,9 @@ def text_page(book='Genesis', chapter=1):
         verse += '</li>'
 
     verse += '</ol>'
-    kml_file = "http://alphalef.com/apps/kml/" + book_abb[book] + '.' + str(chapter) + '.' + "kml"
+    kml_file = kml_url + book_abb[book] + '.' + str(chapter) + '.' + "kml"
 
-    return render_template('bhsheb_text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp[1], kml_file=kml_file)
+    return render_template('bhsheb_text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp[1], kml_file=kml_file, google_map_api=google_map_api)
 
 @app.route('/bhsheb/word/<int:node>')
 def show_word_function(node):

@@ -1,5 +1,5 @@
 {% extends "layout.html" %} {% block body %}
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqntw5b-vl4XdM1I2lTwUvE1yxpund5pM"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ google_map_api }}"></script>
 <script src="/static/js/syntax_viewer.js?ver=1.1"></script>
 
 <script>
@@ -7,8 +7,7 @@ let book = '{{ book }}';
 let chapter = '{{ chapter }}';
 $(document).ready(function() {
         $.ajax({
-                url: 'https://kungsik1.pythonanywhere.com/api/text/gnt/' + book + '/' +chapter,
-                // url: 'http://127.0.0.1:5000/api/text/gnt/' + book + '/' +chapter,
+                url: '{{ sblgnt_url }}/text/gnt/' + book + '/' +chapter,
                 datatype: 'json',
                 success: function(data) {
                   $('#text').html(data['verse']);
@@ -41,7 +40,6 @@ $(document).ready(function() {
 
   <div style="text-align: right">
     <br>
-    <!--  <button class="btn btn-default" id="verse_block">절(verse)구분</button> -->
     <button class="btn btn-default" id="syntax_enact">절(C)/구(P)단위표시</button> 
     <button class="btn btn-default" id="geoinfo">지도표시</button> 
     <br><br>

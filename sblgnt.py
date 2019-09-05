@@ -1,5 +1,6 @@
 from flask import render_template
 from kimsbible import app
+from kimsbible.lib.config import sblgnt_url, google_map_api, kml_url
 
 book_abb = {
     "Matthew": "matt",
@@ -36,13 +37,13 @@ book_abb = {
 @app.route('/sblgnt/<book>')
 @app.route('/sblgnt/<book>/<int:chapter>')
 def sblgnt_page(book='Matthew', chapter=1):
-    kml_file = "http://alphalef.com/apps/kml/" + book_abb[book] + '.' + str(chapter) + '.' + "kml"
-    return render_template('sblgnt_text.html', book=book, chapter=chapter, kml_file=kml_file)
+    kml_file = kml_url + book_abb[book] + '.' + str(chapter) + '.' + "kml"
+    return render_template('sblgnt_text.html', book=book, chapter=chapter, kml_file=kml_file, sblgnt_url=sblgnt_url, google_map_api=google_map_api)
 
 @app.route('/sblgnt/word/<int:node>')
 def show_sblgnt_word_function(node):
-    return render_template('sblgnt_word.html', node=node)
+    return render_template('sblgnt_word.html', node=node, sblgnt_url=sblgnt_url)
 
 @app.route('/sblgnt/verse/<int:node>')
 def show_sblgnt_verse_function(node):
-    return render_template('sblgnt_verse.html', node=node)
+    return render_template('sblgnt_verse.html', node=node, sblgnt_url=sblgnt_url)
