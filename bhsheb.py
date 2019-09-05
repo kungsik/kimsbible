@@ -229,6 +229,10 @@ def text_page(book='Genesis', chapter=1):
                     verse += '</span>'
 
             else:
+                # 정관사와 전치사가 결합된 단어의 경우 빈 값으로 전치사 정보가 들어와서 틀이 깨지는 현상을 방지하기 위함.
+                if not F.g_word_utf8.v(w):
+                    continue
+
                 verse += '<span class=wordNode><a tabindex=0 class=word_elm data-poload=/bhsheb/word/'+str(w)+' data-toggle=popover data-trigger=focus>'
                 verse += F.g_word_utf8.v(w)
                 verse += '</a></span>'
@@ -238,16 +242,20 @@ def text_page(book='Genesis', chapter=1):
                     verse += F.trailer_utf8.v(w)
                     verse += '</span>'
 
-            if w == lastClauseWordNode: verse += '</span>'
             if w == lastPhraseWordNode: verse += '</span>'
+            if w == lastClauseWordNode: verse += '</span>'
 
         #절분석 버튼
+        verse +=  '<span>'
         verse += '<button type="button" class="btn btn-default btn-xs bhsheb_verse_analysis" verse_node='+str(v)+'>절분석</button>'
         verse += '</span> '
 
         #절노트 버튼
         versenote_url = "'../../commentary/vcode/" + vcode + "'" 
+        verse += '<span>'
         verse += '<button type="button" class="btn btn-default btn-xs verse_note" onclick="location.href=' + versenote_url + '">주석</button>'
+        verse += '</span>'
+
         verse += '</span>'
 
         #한글 번역본
