@@ -193,7 +193,12 @@ def text_page(book='Genesis', chapter=1):
     last_chp = T.sectionFromNode(whole_chpNode, lastSlot=True)
     verse = "<ol>"
 
+    #성경읽기 도우미 코드에서 1절 번호를 구하기 위해 절수를 구함
+    i = -1
+
     for v in verseNode:
+        i = i + 1
+
         section = T.sectionFromNode(v)
         vcode = vp.nodetocode(section, vp.bookList)
         
@@ -272,7 +277,10 @@ def text_page(book='Genesis', chapter=1):
     verse += '</ol>'
     kml_file = kml_url + book_abb[book] + '.' + str(chapter) + '.' + "kml"
 
-    return render_template('bhsheb_text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp[1], kml_file=kml_file, google_map_api=google_map_api)
+    #원문읽기도우미를 위한 코드 (1절을 구함)
+    vcode = int(vcode) - int(i)
+
+    return render_template('bhsheb_text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp[1], kml_file=kml_file, google_map_api=google_map_api, vcode=str(vcode))
 
 @app.route('/bhsheb/word/<int:node>')
 def show_word_function(node):

@@ -1,6 +1,7 @@
 from flask import render_template
 from kimsbible import app
 from kimsbible.lib.config import sblgnt_url, google_map_api, kml_url
+from kimsbible.lib.vcodeparser import bookList
 
 book_abb = {
     "Matthew": "matt",
@@ -38,7 +39,15 @@ book_abb = {
 @app.route('/sblgnt/<book>/<int:chapter>')
 def sblgnt_page(book='Matthew', chapter=1):
     kml_file = kml_url + book_abb[book] + '.' + str(chapter) + '.' + "kml"
-    return render_template('sblgnt_text.html', book=book, chapter=chapter, kml_file=kml_file, sblgnt_url=sblgnt_url, google_map_api=google_map_api)
+
+    #성경읽기 도우미를 위한 코드값
+    if chapter < 10:
+        zero = '00'
+    else:
+        zero = '0'
+    vcode = str(bookList.index(book)) + zero + str(chapter) + '001'
+    
+    return render_template('sblgnt_text.html', book=book, chapter=chapter, kml_file=kml_file, sblgnt_url=sblgnt_url, google_map_api=google_map_api, vcode=vcode)
 
 @app.route('/sblgnt/word/<int:node>')
 def show_sblgnt_word_function(node):

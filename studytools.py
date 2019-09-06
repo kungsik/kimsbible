@@ -32,15 +32,16 @@ def studytools_reading_bhsheb():
 
         for section in sections:
             nodeList = stat.codetorange(section)
-            sectionTitle = stat.codetostr(section, stat.bookListKor)
         
             if nodeList == False:
-                error = "오류가 발생했습니다." 
-                return render_template('studytools_reading_pdf.html', result=error)
+                error = "오류가 발생했습니다. 아마 존재하지 않는 구절범위를 입력하신 것 같습니다." 
+                return error
             
             if len(nodeList) > 100:
                 error = "범위가 너무 많습니다. 100절 이하의 범위를 입력해 주세요."
-                return render_template('studytools_reading_pdf.html', result=error)
+                return error
+            
+            sectionTitle = stat.codetostr(section, stat.bookListKor)
             
             result += '<h4>' + sectionTitle + '</h4>'
             result += '<br>'
@@ -120,10 +121,19 @@ def studytools_reading_bhsheb():
 
         return result
 
+    elif request.method == 'GET':
+        vcode = request.args.get('v')
+        return render_template('bhsheb_studytools_reading.html', vcode=vcode)
+    
     else:
-        return render_template('bhsheb_studytools_reading.html')
+        return render_template('bhsheb_studytools_reading.html', vcode='')
 
 
 @app.route('/studytools/reading/sblgnt/')
 def studytools_reading_sblgnt():
-    return render_template('sblgnt_studytools_reading.html', sblgnt_url=sblgnt_url)
+    if request.method == 'GET':
+        vcode = request.args.get('v')
+        return render_template('sblgnt_studytools_reading.html', vcode=vcode, sblgnt_url=sblgnt_url)
+    
+    else:
+        return render_template('sblgnt_studytools_reading.html', vcode='', sblgnt_url=sblgnt_url)

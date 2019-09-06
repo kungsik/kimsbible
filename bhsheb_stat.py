@@ -81,11 +81,17 @@ def codetorange(code):
             verseCode = int(verseCode)
             if i == 0:
                 first = T.nodeFromSection((bookCode, chpCode, verseCode))
+                if not first:
+                    return False
+
                 i = 1
                 if len(codeSplit2) < 2:
                     nodeList.append(first)
             else:
                 last = T.nodeFromSection((bookCode, chpCode, verseCode))
+                if not last:
+                    return False
+
                 for n in range(first, last + 1):
                     nodeList.append(n)    
     return nodeList

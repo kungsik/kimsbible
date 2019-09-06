@@ -13,7 +13,12 @@
         <div class="col-md-4" style="text-align: center">
             <h4>읽기 범위 코드 입력</h4>
             <form method="post" id="parsing_post">
-                <textarea class="form-control" rows="10" name="rangeCode" id="rangeCode"></textarea>
+
+                {% if vcode == None %}
+                    {% set vcode = '' %}
+                {% endif %}
+
+                <textarea class="form-control" rows="10" name="rangeCode" id="rangeCode">{{ vcode }}</textarea>
 
                 <br><br>
                 <label for="check1"> 단어문법분석제외 </label>
