@@ -6,25 +6,21 @@ from kimsbible.bhsheb import get_strong, get_kor_hgloss
 from collections import OrderedDict
 from kimsbible.lib import lib as kb
 from kimsbible import bhsheb_stat as stat
+from kimsbible.lib.config import sblgnt_url
 
 api.makeAvailableIn(globals())
 
-@app.route('/studytools/reading/', methods=['GET', 'POST'])
-def studytools():
+@app.route('/studytools/reading/bhsheb/', methods=['GET', 'POST'])
+def studytools_reading_bhsheb():
     if request.method == 'POST':      
         rangeCode = request.form['rangeCode']
         check1 = request.form['check1']
         check2 = request.form['check2']
 
-        try:
-            check3 = request.form['print_submit']
-        except:
-            check3 = ''
-
         sections = rangeCode.split(";")
 
         result = '<div class="reading">'
-        result += '<h3>알파알렙 성경 원문읽기 도우미</h3><br>'
+        result += '<h3>알파알렙 성경 원문읽기 도우미 (구약)</h3><br>'
 
         if not check1:
             parsing = '<h4>단어 문법 분석</h4>'
@@ -86,7 +82,7 @@ def studytools():
                                 parsing += "접미."
                                 parsing += kb.eng_to_kor(F.prs_ps.v(w), 'full') + "." + kb.eng_to_kor(F.prs_gn.v(w), 'full') + "." + kb.eng_to_kor(F.prs_nu.v(w), 'full') + " "
                         
-                        if pdp == '명사':
+                        if pdp == '명사' or pdp == '형용사':
                             parsing += "(" + F.voc_utf8.v(L.u(w, otype='lex')[0]) + ") "
                             parsing += kb.eng_to_kor(F.gn.v(w), 'full') + "." + kb.eng_to_kor(F.nu.v(w), 'full') + " "
                         
@@ -122,14 +118,12 @@ def studytools():
         result += '본 내용은 알파알렙성경(app.alphalef.com)을 통해서 출력되었습니다. 이 문서를 변형하거나 누구에게나 자유롭게 배포할 수 있습니다. 다만, 상업적인 이용은 불가하며 공유시 본 일러두기 부분을 반드시 첨부하여 주시면 감사하겠습니다.'
         result += '</div>'
 
-        try: 
-            if check3:
-                return render_template('studytools_reading_pdf.html', result=result)
-            else:
-                return result
-
-        except:
-            return result
+        return result
 
     else:
-        return render_template('studytools_reading.html')
+        return render_template('bhsheb_studytools_reading.html')
+
+
+@app.route('/studytools/reading/sblgnt/')
+def studytools_reading_sblgnt():
+    return render_template('sblgnt_studytools_reading.html', sblgnt_url=sblgnt_url)

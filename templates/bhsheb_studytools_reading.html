@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% autoescape false %}
+
+    <script src="/static/js/bhsheb_parsing.js?v=111112"></script>
+
+    <div class="alert alert-danger" role="alert">
+        원하는 범위의 원문을 프린터로 출력하거나 문서 편집기에 복사해서 사용하실 수 있는 형태의 자료를 제공합니다.
+        검색 범위가 넓으면 로딩 시간이 걸립니다. 범위를 너무 넓게 잡으면(예. 창세기 전체) 브라우저가 다운될 수 있기 때문에 범위는 100절로 제한합니다. 범위 코드 입력 방법은 <a href='/commentary/vcode/' target="_blank">여기</a>를 클릭해 주세요.
+    </div>
+
+    <div class="row">
+        <div class="col-md-4" style="text-align: center">
+            <h4>읽기 범위 코드 입력</h4>
+            <form method="post" id="parsing_post">
+                <textarea class="form-control" rows="10" name="rangeCode" id="rangeCode"></textarea>
+
+                <br><br>
+                <label for="check1"> 단어문법분석제외 </label>
+                <input type="hidden" id="check1_value" name="check1" value="">
+                <input type="checkbox" id="check1" onclick="updatecheckvalue()">
+                <label for="check2"> 단어리스트제외 </label>
+                <input type="hidden" id="check2_value" name="check2" value="">
+                <input type="checkbox" id="check2" onclick="updatecheckvalue()">  
+                <br>
+                
+                <button type="submit" class="btn btn-success" id="parsing_submit">불러오기</button>
+            </form>
+          <div id="load_image" style="display:none"><img src="/static/img/loader.gif" align="center"></div>
+        </div>
+        <div class="col-md-8">
+            <h4>원문 성경읽기 도우미 (구약)</h4>
+            <button class="btn btn-success" id="print" onclick="content_print()">결과 인쇄하기</button>
+            <div id="search_result" class="search_heb"></div>
+        </div>
+    </div>
+
+    <script>
+        function updatecheckvalue() {
+            var ischecked1 = $('#check1').is(":checked");
+            var ischecked2 = $('#check2').is(":checked");
+            var ischecked3 = $('#check3').is(":checked");
+
+            if(ischecked1) {
+                $('#check1_value').attr('value', '1');
+            }
+            else {
+                $('#check1_value').attr('value', '');
+            }
+            if(ischecked2) {
+                $('#check2_value').attr('value', '1');
+            } 
+            else {
+                $('#check2_value').attr('value', '');
+            }
+        };
+
+        function content_print(){
+            var initBody = document.body.innerHTML;
+            window.onbeforeprint = function(){
+                document.body.style.margin = "15mm";
+                document.body.innerHTML = document.getElementById('search_result_ok').innerHTML;
+            }
+            window.onafterprint = function(){
+                document.body.innerHTML = initBody;
+                window.location.reload()
+            }
+            window.print();     
+        }            
+    </script>
+
+    <script>
+        document.title = "알파알렙 성경 원문읽기도우미 (구약)";
+    </script>
+
+    {% endautoescape %}
+{% endblock %}

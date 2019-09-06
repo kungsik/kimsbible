@@ -5,6 +5,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: "SBLGreek";
+    src: url("../fonts/SBLGreek.woff") format("woff"); /* Modern Browsers */
+    font-weight: normal;
+    font-style: normal;
+}
+  
 .reading { 
     font-family: 'Nanum Gothic', serif;
 }
@@ -13,6 +20,14 @@
     font-family: 'SBLHebrew', serif;
     direction:rtl; 
     text-align:right; 
+    font-size: 24px;
+    -webkit-column-count: 2;
+}
+
+.section_gnt {
+    font-family: 'SBLGreek', serif;
+    direction:ltr; 
+    text-align:left; 
     font-size: 24px;
     -webkit-column-count: 2;
 }
@@ -27,8 +42,16 @@
 {
     font-family: 'SBLHebrew';
     text-align: left;
-    font-size: 22px;
+    font-size: 20px;
 }
+
+.parsing_gnt
+{
+    font-family: 'SBLGreek';
+    text-align: left;
+    font-size: 20px;
+}
+
 
 .wordlist {
     -webkit-column-count: 3;
