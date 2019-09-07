@@ -32,6 +32,10 @@
     -webkit-column-count: 2;
 }
 
+.root_gnt {
+    font-family: 'SBLGreek', serif;
+}
+
 .parsing {
     font-size: 15px;
     -webkit-column-count: 2;
