@@ -4,16 +4,13 @@
     <div id="commentary_container" class="panel panel-default">
         <div class="panel-body">
             <div class="panel-container">
-                {% if current_user.name %}
-                <div style="text-align: right">
-                {{ current_user.name }}님으로 로그인 됨
-                </div>
-                {% endif %}
 
                 {% if table == 'commentary' %}
                     {% set main = '오픈주석' %}
                 {% elif table == 'classic' %}
                     {% set main = '클래식 주석' %}
+                    {% set check1 = 'checked' %}
+                    {% set chekc2 = 'disabled' %}
                 {% endif %}
 
                 {% if cview %}
@@ -28,6 +25,12 @@
                         {% set vcode = cview[6]|string + '-' + cview[7]|string %}
                     {% endif %}
 
+                    {% if cview[13] == 1 %}
+                        {% set check1 = 'checked' %}
+                    {% else %}
+                        {% set check2 = 'checked' %} 
+                    {% endif %}
+
                     {% set button_name = '수정하기' %}
                 {% else %}
                 <h1>{{ main }} 추가하기</h1>
@@ -35,6 +38,7 @@
                     {% set text = '' %}
                     {% set url = '/' + table + '/add/' %}
                     {% set button_name = '작성' %}
+                    {% set check2 = 'checked' %}
                 {% endif %}
 
                 {% if vcode == 1 %}
@@ -45,6 +49,9 @@
                 <script src="https://cdn.ckeditor.com/4.12.1/full/ckeditor.js"></script>
                 
                 <form name = "commentary_add" method="POST" action="{{ url }}" onsubmit="return validate()">
+                    <label class="radio-inline"><input type="radio" name="copen" id="copen" value="1" {{ check1 }}>공개</label>
+                    <label class="radio-inline"><input type="radio" name="copen" id="copen" value="0" {{ check2 }}>비공개</label>
+                    <br><br>
                     <input type="text" name="commentary_title" class="form-control" placeholder="제목" id="commentary_title" value="{{ title }}"><br>
                     <div class="row">
                         <div class="col-lg-6">

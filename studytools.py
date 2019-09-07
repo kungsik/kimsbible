@@ -24,7 +24,7 @@ def studytools_reading_bhsheb():
 
         if not check1:
             parsing = '<h4>단어 문법 분석</h4>'
-            parsing += '<font size=3>불변화사나 전치사 등과 같이 빈번하게 등장하는 단어들은 단어 리스트 참조</font>'
+            parsing += '<font size=2>불변화사나 전치사 등과 같이 빈번하게 등장하는 단어들은 단어 리스트 참조</font>'
             parsing += '<br><br><div class="parsing">'
 
 

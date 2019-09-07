@@ -18,7 +18,7 @@ class Table:
         self.cursor = self.db.cursor()
         self.current_time = datetime.now() + timedelta(hours=9)
     
-    def add_commentary(self, table, title, content, author, vcode, email):
+    def add_commentary(self, table, title, content, author, vcode, email, copen):
         verse = vp.codetostr(vcode, vp.bookListKorAbbr)
         now = self.current_time.isoformat(' ')
         headers_list = request.headers.getlist("X-Forwarded-For")
@@ -33,7 +33,7 @@ class Table:
         
         urltitle = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', title).replace(" ", "-")
 
-        sql = "INSERT INTO " + table + " (date, title, content, author, vcode1, vcode2, ip, email, verse, urltitle) VALUES ('" + str(now) + "', %s, %s, '" + author + "', '" + vcode1 + "', '"  + vcode2 + "', '" + ip +"', '" + email + "', '" + verse + "', '" + urltitle + "')"
+        sql = "INSERT INTO " + table + " (date, title, content, author, vcode1, vcode2, ip, email, verse, urltitle, copen) VALUES ('" + str(now) + "', %s, %s, '" + author + "', '" + vcode1 + "', '"  + vcode2 + "', '" + ip +"', '" + email + "', '" + verse + "', '" + urltitle + "', '" + str(copen) + "')"
         try: 
           self.cursor.execute(sql, (title, content))
           self.db.commit()
@@ -43,7 +43,7 @@ class Table:
           print(">>>>>>>>>>>>>", code, message)
           return "insertion failed"
     
-    def edit_commentary(self, table, no, title, content, vcode):
+    def edit_commentary(self, table, no, title, content, vcode, copen):
         verse = vp.codetostr(vcode, vp.bookListKorAbbr)
         now = self.current_time.isoformat(' ')
 
@@ -56,7 +56,7 @@ class Table:
 
         urltitle = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', title).replace(" ", "-")
 
-        sql = "UPDATE " + table + " SET title=%s, content=%s, vcode1='" + str(vcode1) + "', vcode2='" + str(vcode2) + "', verse='" + verse + "', urltitle='" + urltitle + "', edited_date='" + now + "' WHERE no=" + str(no)
+        sql = "UPDATE " + table + " SET title=%s, content=%s, vcode1='" + str(vcode1) + "', vcode2='" + str(vcode2) + "', verse='" + verse + "', urltitle='" + urltitle + "', edited_date='" + now + "' , copen='" + str(copen) + "' WHERE no=" + str(no)
         try: 
           self.cursor.execute(sql, (title, content))
           self.db.commit()
@@ -74,9 +74,18 @@ class Table:
 
     def clist(self, table, pagenum):
         limit_end = int(pagenum) * 10
-        limit_start = int(limit_end) - 9
+        limit_start = int(limit_end) - 10
 
-        sql = "SELECT * FROM " + table + " ORDER BY no DESC LIMIT " + str(limit_start) + ", " + str(limit_end) 
+        sql = "SELECT * FROM " + table + " WHERE copen='1' ORDER BY no DESC LIMIT " + str(limit_start) + ", " + str(limit_end) 
+        self.cursor.execute(sql)
+        result = self.cursor.fetchall()
+        return result
+
+    def myclist(self, table, pagenum, user_id):
+        limit_end = int(pagenum) * 10
+        limit_start = int(limit_end) - 10
+
+        sql = "SELECT * FROM " + table + " WHERE email='" + user_id + "' ORDER BY no DESC LIMIT " + str(limit_start) + ", " + str(limit_end) 
         self.cursor.execute(sql)
         result = self.cursor.fetchall()
         return result
@@ -114,11 +123,11 @@ class Table:
           return result
 
     def vcode_list(self, no):
-        sql_commentary = "SELECT * FROM commentary WHERE vcode1 <= '" + str(no) + "' and vcode2 >= '" + str(no) + "' ORDER BY no DESC"
+        sql_commentary = "SELECT * FROM commentary WHERE copen='1' and vcode1 <= '" + str(no) + "' and vcode2 >= '" + str(no) + "' ORDER BY no DESC"
         self.cursor.execute(sql_commentary)
         commentary_list = self.cursor.fetchall()
         
-        sql_classic = "SELECT * FROM classic WHERE vcode1 <= '" + str(no) + "' and vcode2 >= '" + str(no) + "' ORDER BY no DESC"
+        sql_classic = "SELECT * FROM classic WHERE copen='1' and vcode1 <= '" + str(no) + "' and vcode2 >= '" + str(no) + "' ORDER BY no DESC"
         self.cursor.execute(sql_classic)
         classic_list = self.cursor.fetchall()
 
@@ -126,6 +135,31 @@ class Table:
         result['commentary'] = commentary_list
         result['classic'] = classic_list
         
+        return result
+  
+    def vcode_mylist(self, no, user_id):
+        sql_my_commentary = "SELECT * FROM commentary WHERE email='" + user_id + "' and vcode1 <= '" + str(no) + "' and vcode2 >= '" + str(no) + "' ORDER BY no DESC"
+        self.cursor.execute(sql_my_commentary)
+        commentary_my_list = self.cursor.fetchall()
+
+        mylist = list(commentary_my_list)
+
+        sql_other_commentary = "SELECT * FROM commentary WHERE email NOT IN ('" + user_id + "') and copen='1' and vcode1 <= '" + str(no) + "' and vcode2 >= '" + str(no) + "' ORDER BY no DESC"
+        self.cursor.execute(sql_other_commentary)
+        commentary_other_list = self.cursor.fetchall()
+
+        otherlist = list(commentary_other_list)
+
+        sql_classic = "SELECT * FROM classic WHERE vcode1 <= '" + str(no) + "' and vcode2 >= '" + str(no) + "' ORDER BY no DESC"
+        self.cursor.execute(sql_classic)
+        classic_list = self.cursor.fetchall()
+
+        result = {}
+        commentary = mylist + otherlist
+
+        result['commentary'] = commentary
+        result['classic'] = classic_list
+
         return result
 
     def remove_commentary(self, table, no):

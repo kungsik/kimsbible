@@ -69,6 +69,9 @@
                            <li><a href="/commentary/intro/">소개</a></li>
                            <li><a href="/commentary/list/">오픈주석</a></li>
                            <li><a href="/classic/list/">클래식주석</a></li>
+                           {% if current_user.name %}
+                            <li><a href="/commentary/mylist/">내오픈주석</a></li>
+                           {% endif %}
                         </ul>
                     </li>
                     <li>

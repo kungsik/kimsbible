@@ -14,11 +14,12 @@ def commentary_add(table, vcode=1):
         commentary_title = request.form['commentary_title']
         commentary_text = request.form['commentary_text']
         commentary_vcode = request.form['commentary_vcode']
+        commentary_copen = int(request.form['copen'])
         commentary_author = current_user.name
         commentary_email = current_user.user_id
 
         commentary_db = db.Table()
-        commentary_db.add_commentary(table, commentary_title, commentary_text, commentary_author, commentary_vcode, commentary_email)
+        commentary_db.add_commentary(table, commentary_title, commentary_text, commentary_author, commentary_vcode, commentary_email, commentary_copen)
         
         return redirect("/" + table + "/list/")
 
@@ -37,8 +38,9 @@ def commentary_edit(table, no):
         commentary_title = request.form['commentary_title']
         commentary_text = request.form['commentary_text']
         commentary_vcode = request.form['commentary_vcode']
+        commentary_copen = int(request.form['copen'])
 
-        commentary_db.edit_commentary(table, no, commentary_title, commentary_text, commentary_vcode)
+        commentary_db.edit_commentary(table, no, commentary_title, commentary_text, commentary_vcode, commentary_copen)
         
         return redirect("/" + table + "/view/" + str(no))
     else:
@@ -55,6 +57,7 @@ def commentary_edit(table, no):
 def commentary_intro():
     return render_template('commentary_intro.html')
 
+
 @app.route('/<table>/list/', methods=['POST', 'GET'])
 def commentary_list(table):
     if request.method == 'GET':
@@ -68,23 +71,63 @@ def commentary_list(table):
     totalnum = commentary_db.get_table_count(table)
     totalpage = int(int(totalnum) / 11) + 1
 
-    return render_template('commentary_list.html', lists=clist, user=current_user, table=table, totalpage=totalpage, pagenum=pagenum)
+    return render_template('commentary_list.html', lists=clist, user=current_user, table=table, totalpage=totalpage, pagenum=pagenum, category='list')
+
+
+@app.route('/commentary/mylist/', methods=['POST', 'GET'])
+@login_required
+def commentary_mylist():
+    if request.method == 'GET':
+        pagenum = request.args.get('p')
+    
+    if not pagenum:
+        pagenum = 1
+
+    commentary_db = db.Table()
+    clist = commentary_db.myclist('commentary', pagenum, current_user.user_id)
+    totalnum = commentary_db.get_table_count('commentary')
+    totalpage = int(int(totalnum) / 11) + 1
+
+    return render_template('commentary_list.html', lists=clist, user=current_user, table='commentary', totalpage=totalpage, pagenum=pagenum, category='mylist')
 
 
 
-@app.route('/<table>/view/<int:no>/<title>/')
-@app.route('/<table>/view/<int:no>/')
+@app.route('/<table>/view/<int:no>/<title>/', methods=['POST', 'GET'])
+@app.route('/<table>/view/<int:no>/', methods=['POST', 'GET'])
 def commentary_view(table, no, title=''):
+
+    if request.method == 'GET':
+        mode  = request.args.get('mode')
+        pagenum = request.args.get('p')
+    else:
+        mode = ''
+        pagenum = ''
+
     commentary_db = db.Table()
     cview = commentary_db.cview(table, no)
-    return render_template('commentary_view.html', view=cview, table=table)
+
+    # 비공개 글일 경우 해당 저자가 아니면 리스트 목록으로 넘어감
+    try:
+        if cview[13] == 0 and current_user.user_id != cview[3]:
+            return redirect('/' + table + '/list/')
+    except:
+        return redirect('/' + table + '/list/')
+    else:
+        return render_template('commentary_view.html', view=cview, table=table, mode=mode, pagenum=pagenum)
 
 
-@app.route('/commentary/vcode/<int:no>', methods=['POST', 'GET'])
+@app.route('/commentary/vcode/<int:no>/', methods=['POST', 'GET'])
 def commentary_select_vcode(no):
     commentary_db = db.Table()
-    vclist = commentary_db.vcode_list(no)
-    return render_template('commentary_list.html', lists=vclist, vcode=no, pagenum=1, totalpage=1)
+    try:
+        if current_user.user_id:
+            vclist = commentary_db.vcode_mylist(no, current_user.user_id)
+            category = 'myvcode'
+    except:
+        vclist = commentary_db.vcode_list(no)
+        category = 'vcode'
+    
+    return render_template('commentary_list.html', lists=vclist, vcode=no, pagenum=1, totalpage=1, category=category)
 
 
 @app.route('/<table>/remove/confirm/<int:no>')

@@ -8,6 +8,17 @@
         {% set main = '클래식 주석' %}
     {% endif %}
 
+    {% if mode == 'mycommentary' %}
+        {% set listurl = '/commentary/mylist/?p=' + pagenum|string %}
+    <!-- vcode의 경우 사이절이나 끝절에 있을 경우 어떻게 리턴?? -->
+    {% elif mode == 'myvcode' or mode == 'vcode' %}
+        {% set listurl = '/commentary/vcode/' + view[6] + '/' %}
+    {% elif mode == 'commentary' %}
+        {% set listurl = '/commentary/list/?p=' + pagenum|string %}
+    {% elif mode == 'classic' %}
+        {% set listurl = '/classic/list/?p=' + pagenum|string %}
+    {% endif %}
+
     <div id="commentary_container" class="panel panel-default">
         <div class="panel-body">
             <div class="panel-container">
@@ -32,13 +43,17 @@
                 <br>
                 {% endif %}
                 조회수: {{ view[11] }}
+                <br>
+                {% if view[13] == 0 %}
+                    <span><font color="red">비공개</font></span>
+                {% endif %}
                 <br><br><br>
                 <div class="commentary_contents">
                     {{ view[5] }}
                 </div>
             
                 <br><br>
-                <button class="btn btn-default" onclick="location.href = '/{{ table }}/list/';">목록보기</button>
+                <button class="btn btn-default" onclick="location.href = '{{ listurl }}';">목록보기</button>
                 {% if current_user.user_id == view[3] %}
                 &nbsp <button class="btn btn-default" onclick="location.href = '/{{ table }}/edit/{{ view[0] }}';">글 수정하기</button>
                 &nbsp <button class="btn btn-default" onclick="location.href = '/{{ table }}/remove/confirm/{{ view[0] }}';">글 삭제하기</button>

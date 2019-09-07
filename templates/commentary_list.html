@@ -2,10 +2,21 @@
 {% block body %}
     {% autoescape false %}
 
-    {% if table == 'commentary' %}
+    {% if category == 'mylist' %}
+        {% set main = '내오픈주석' %}
+        {% set mode = '?mode=mycommentary&p=' + pagenum|string %}
+    {% elif category == 'myvcode' %}
+        {% set main = '' %}
+        {% set mode = '?mode=myvcode&p=' + pagenum|string %}
+    {% elif category == 'vcode' %}
+        {% set main = '' %}
+        {% set mode = '?mode=vcode&p=' + pagenum|string %}
+    {% elif table == 'commentary' %}
         {% set main = '오픈주석' %}
+        {% set mode = '?mode=commentary&p=' + pagenum|string %}
     {% elif table == 'classic' %}
         {% set main = '클래식 주석' %}
+        {% set mode = '?mode=classic&p=' + pagenum|string %}
     {% endif %}
 
 <!-- <div class="modal modal-wide" id="commentary">     -->
@@ -28,7 +39,7 @@
                 {% if vcode %}
                     {% for list in lists['classic'] %}
                         <span class="list_row">
-                            <span class="cell col1">{{ list[8] }} · <a href="/classic/view/{{ list[0] }}/{{ list[10] }}/">{{ list[4] }}</a> <span class="disqus-comment-count" data-disqus-identifier="{{ table }}-{{ list[0] }}-{{ list[10] }}"></span></span>
+                            <span class="cell col1">{{ list[8] }} · <a href="/classic/view/{{ list[0] }}/{{ list[10] }}/{{ mode }}">{{ list[4] }}</a> <span class="disqus-comment-count" data-disqus-identifier="{{ table }}-{{ list[0] }}-{{ list[10] }}"></span></span>
                             <span class="cell col2">{{ list[2] }}</span>
                             {% set date = list[1].split(' ') %}
                             <span class="cell col3">{{ date[0] }}</span>
@@ -37,20 +48,30 @@
                         </span>
                     {% endfor %}    
                     {% for list in lists['commentary'] %}
-                        <span class="list_row">
-                            <span class="cell col1">{{ list[8] }} · <a href="/commentary/view/{{ list[0] }}/{{ list[10] }}/">{{ list[4] }}</a>  <span class="disqus-comment-count" data-disqus-identifier="{{ table }}-{{ list[0] }}-{{ list[10] }}"></span></span>
+                        {% if category == 'mylist' or category == 'myvcode' %}
+                            {% if list[13] == 0 %}
+                                {% set header = '[비공개] ' %}
+                            {% endif %}
+                        {% endif %}
+                        <span class="list_row">                        
+                            <span class="cell col1">{{ list[8] }} · {{ header }}<a href="/commentary/view/{{ list[0] }}/{{ list[10] }}/{{ mode }}">{{ list[4] }}</a>  <span class="disqus-comment-count" data-disqus-identifier="{{ table }}-{{ list[0] }}-{{ list[10] }}"></span></span>
                             <span class="cell col2">{{ list[2] }}</span>
                             {% set date = list[1].split(' ') %}
                             <span class="cell col3">{{ date[0] }}</span>
                             <span class="vcount_title">조회수 | </span>
-                            <span class="cell col4">{{ list[11] }}</span>
+                            <span class="cell col4">{{ list[11] }}</span>                    
                         </span>
                     {% endfor %}
 
                 {% else %}
                     {% for list in lists %}
+                        {% if category == 'mylist' %}
+                            {% if list[13] == 0 %}
+                                {% set header = '[비공개] ' %}
+                            {% endif %}
+                        {% endif %}
                         <span class="list_row">
-                            <span class="cell col1">{{ list[8] }} · <a href="/{{ table }}/view/{{ list[0] }}/{{ list[10] }}/">{{ list[4] }}</a> <span class="disqus-comment-count" data-disqus-identifier="{{ table }}-{{ list[0] }}-{{ list[10] }}"></span></span>
+                            <span class="cell col1">{{ list[8] }} · {{ header }}<a href="/{{ table }}/view/{{ list[0] }}/{{ list[10] }}/{{ mode }}">{{ list[4] }}</a> <span class="disqus-comment-count" data-disqus-identifier="{{ table }}-{{ list[0] }}-{{ list[10] }}"></span></span>
                             <span class="cell col2">{{ list[2] }}</span>
                             {% set date = list[1].split(' ') %}
                             <span class="cell col3">{{ date[0] }}</span>
@@ -58,38 +79,39 @@
                             <span class="cell col4">{{ list[11] }}</span>
                         </span>
                     {% endfor %}
-                {% endif %}
-                </div><br>
-                
-                <div style="text-align: center">
-                    <ul class="pagination">
-                        {% if pagenum|int == 1 %}
-                            <li class="disabled">
-                        {% else %}
-                            <li>
-                        {% endif %}
-                            <a href="/commentary/list/?p={{ pagenum|int - 1 }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-                            </li>
-
-                        {% for n in range(totalpage)  %}
-                            {% if n + 1 == pagenum|int %}
-                                <li class="active">
+                    </div><br>
+                    
+                    <div style="text-align: center">
+                        <ul class="pagination">
+                            {% if pagenum|int == 1 %}
+                                <li class="disabled">
                             {% else %}
                                 <li>
                             {% endif %}
-                                <a href="/commentary/list/?p={{ n + 1 }}">{{ n + 1 }}</a>
-                            </li>
-                        {% endfor %}
+                                <a href="/{{ table }}/{{ category }}/?p={{ pagenum|int - 1 }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                                </li>
 
-                        {% if pagenum|int == totalpage %}
-                            <li class="disabled">
-                        {% else %}
-                            <li>
-                        {% endif %}
-                            <a href="/commentary/list/?p={{ pagenum|int + 1 }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-                            </li>
-                    </ul>
-                </div>
+                            {% for n in range(totalpage)  %}
+                                {% if n + 1 == pagenum|int %}
+                                    <li class="active">
+                                {% else %}
+                                    <li>
+                                {% endif %}
+                                    <a href="/{{ table }}/{{ category }}/?p={{ n + 1 }}">{{ n + 1 }}</a>
+                                </li>
+                            {% endfor %}
+
+                            {% if pagenum|int == totalpage %}
+                                <li class="disabled">
+                            {% else %}
+                                <li>
+                            {% endif %}
+                                <a href="/{{ table }}/{{ category }}/?p={{ pagenum|int + 1 }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+                                </li>
+                        </ul>
+                    </div>
+                {% endif %}
+
                 <br>
                 {% if current_user.name %}
                     {% if vcode %}
@@ -99,7 +121,7 @@
                         <button class="btn btn-default" onclick="location.href = '/{{ table }}/add/{{ vcode }}';">글 작성하기</button>
                     {% endif %}
                 {% endif %}
-                <br>
+                <br><br>
             </div>
         </div>
     </div>
