@@ -6,7 +6,7 @@ from kimsbible.lib import vcodeparser as vp
 import json
 from flask_login import login_user, current_user, login_required
 
-@app.route('/<table>/add/<int:vcode>', methods=['POST','GET'])
+@app.route('/<table>/add/<int:vcode>/', methods=['POST','GET'])
 @app.route('/<table>/add/', methods=['POST','GET'])
 @login_required
 def commentary_add(table, vcode=1):
@@ -21,13 +21,16 @@ def commentary_add(table, vcode=1):
         commentary_db = db.Table()
         commentary_db.add_commentary(table, commentary_title, commentary_text, commentary_author, commentary_vcode, commentary_email, commentary_copen)
         
-        return redirect("/" + table + "/list/")
+        if request.arg.get('v') > 1:
+            return redirect("/commentary/vcode/" + str(request.arg.get('v')))
+        else:
+            return redirect("/" + table + "/list/")
 
     else:
         return render_template('commentary_add.html', vcode=vcode, table=table)
 
 
-@app.route('/<table>/edit/<int:no>', methods=['POST','GET'])
+@app.route('/<table>/edit/<int:no>/', methods=['POST','GET'])
 @login_required
 def commentary_edit(table, no):
     if request.method == 'POST':
@@ -99,9 +102,11 @@ def commentary_view(table, no, title=''):
     if request.method == 'GET':
         mode  = request.args.get('mode')
         pagenum = request.args.get('p')
+        vcode = request.args.get('v')
     else:
         mode = ''
         pagenum = ''
+        vcode = ''
 
     commentary_db = db.Table()
     cview = commentary_db.cview(table, no)
@@ -113,7 +118,7 @@ def commentary_view(table, no, title=''):
     except:
         return redirect('/' + table + '/list/')
     else:
-        return render_template('commentary_view.html', view=cview, table=table, mode=mode, pagenum=pagenum)
+        return render_template('commentary_view.html', view=cview, table=table, mode=mode, pagenum=pagenum, vcode=vcode)
 
 
 @app.route('/commentary/vcode/<int:no>/', methods=['POST', 'GET'])

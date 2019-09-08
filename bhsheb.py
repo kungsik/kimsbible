@@ -260,7 +260,7 @@ def text_page(book='Genesis', chapter=1):
         #절노트 버튼
         versenote_url = "'../../commentary/vcode/" + vcode + "'" 
         verse += '<span>'
-        verse += '<button type="button" class="btn btn-default btn-xs verse_note" onclick="location.href=' + versenote_url + '">주석</button>'
+        verse += '<button type="button" class="btn btn-default btn-xs verse_note" onclick="location.href=' + versenote_url + '" formtarget="_blank">주석</button>'
         verse += '</span>'
 
         verse += '</span>'

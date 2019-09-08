@@ -9,8 +9,6 @@
                     {% set main = '오픈주석' %}
                 {% elif table == 'classic' %}
                     {% set main = '클래식 주석' %}
-                    {% set check1 = 'checked' %}
-                    {% set chekc2 = 'disabled' %}
                 {% endif %}
 
                 {% if cview %}
@@ -39,6 +37,11 @@
                     {% set url = '/' + table + '/add/' %}
                     {% set button_name = '작성' %}
                     {% set check2 = 'checked' %}
+                {% endif %}
+
+                {% if table == 'classic' %}
+                    {% set check1 = 'checked' %}
+                    {% set check2 = 'disabled' %}
                 {% endif %}
 
                 {% if vcode == 1 %}

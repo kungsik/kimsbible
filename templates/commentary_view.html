@@ -12,11 +12,13 @@
         {% set listurl = '/commentary/mylist/?p=' + pagenum|string %}
     <!-- vcode의 경우 사이절이나 끝절에 있을 경우 어떻게 리턴?? -->
     {% elif mode == 'myvcode' or mode == 'vcode' %}
-        {% set listurl = '/commentary/vcode/' + view[6] + '/' %}
+        {% set listurl = '/commentary/vcode/' + vcode|string + '/' %}
     {% elif mode == 'commentary' %}
         {% set listurl = '/commentary/list/?p=' + pagenum|string %}
     {% elif mode == 'classic' %}
         {% set listurl = '/classic/list/?p=' + pagenum|string %}
+    {% else %}
+        {% set listurl = '/' + table + '/list/' %}
     {% endif %}
 
     <div id="commentary_container" class="panel panel-default">

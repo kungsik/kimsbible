@@ -178,7 +178,7 @@ class Table:
           return False
 
     def get_recent(self, table, num):
-        sql = "SELECT * FROM " + table + " ORDER BY no DESC LIMIT " + str(num)
+        sql = "SELECT * FROM " + table + " WHERE copen='1' ORDER BY no DESC LIMIT " + str(num)
         self.cursor.execute(sql)
         result = self.cursor.fetchall()
         return result
