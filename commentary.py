@@ -5,6 +5,7 @@ from kimsbible.lib import vcodeparser as vp
 # from kimsbible import oauth
 import json
 from flask_login import login_user, current_user, login_required
+from kimsbible.auth import login_manager
 
 @app.route('/<table>/add/<int:vcode>/', methods=['POST','GET'])
 @app.route('/<table>/add/', methods=['POST','GET'])
@@ -136,23 +137,35 @@ def commentary_select_vcode(no):
     return render_template('commentary_list.html', lists=vclist, vcode=no, pagenum=1, totalpage=1, category=category)
 
 
-@app.route('/<table>/remove/confirm/<int:no>')
+@app.route('/<table>/remove/confirm/<int:no>', methods=['POST', 'GET'])
 @login_required
 def confirm_remove(table, no):
-    return render_template('commentary_confirm_remove.html', no=no, table=table)
+    if request.method == 'GET':
+        next_url = request.args.get('n')
+        return render_template('commentary_confirm_remove.html', no=no, table=table, next_url=next_url)
+    else:
+        return render_template('commentary_confirm_remove.html', no=no, table=table)
 
 
 @app.route('/<table>/remove/<int:no>')
 @login_required
 def commentary_del(table, no):
+    if request.method == 'GET':
+        next_url = request.args.get('n')
+    else:
+        next_url = "/" + table + "/list/"
+
     commentary_db = db.Table()
     if commentary_db.is_author(table, no, current_user):
         commentary_db.remove_commentary(table, no)
-        return redirect("/" + table + "/list/")
+        return redirect(next_url)
     else:
-        return redirect("/" + table + "/list/")
+        return redirect(next_url)
 
 @app.route('/commentary/vcode/')
 def vcode_tutorial():
     return render_template('commentary_vcode_tutorial.html')
 
+@login_manager.unauthorized_handler
+def unauthorized():
+    return redirect("/auth/signin/")

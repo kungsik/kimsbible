@@ -58,7 +58,7 @@
                 <button class="btn btn-default" onclick="location.href = '{{ listurl }}';">목록보기</button>
                 {% if current_user.user_id == view[3] %}
                 &nbsp <button class="btn btn-default" onclick="location.href = '/{{ table }}/edit/{{ view[0] }}';">글 수정하기</button>
-                &nbsp <button class="btn btn-default" onclick="location.href = '/{{ table }}/remove/confirm/{{ view[0] }}';">글 삭제하기</button>
+                &nbsp <button class="btn btn-default" onclick="location.href = '/{{ table }}/remove/confirm/{{ view[0] }}?n={{ listurl }}';">글 삭제하기</button>
                 {% endif %}
 
                 <br><br>
