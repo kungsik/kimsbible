@@ -91,6 +91,11 @@ class Table:
         return result
     
     def cview(self, table, no):    
+        # 비공개 글일 경우 조회수 업데이트 안 함.
+        copen_check_sql = "SELECT copen FROM " + table + " WHERE no='" + str(no) + "'"
+        self.cursor.execute(copen_check_sql)
+        is_copen = self.cursor.fetchone()
+
         # 조회수 관련 처리
         now = self.current_time.isoformat(' ')
         headers_list = request.headers.getlist("X-Forwarded-For")
@@ -100,7 +105,7 @@ class Table:
         self.cursor.execute(ipcheck_sql)
         check_result = self.cursor.fetchone()
        
-        if check_result:
+        if check_result or is_copen[0] == 0:
           sql = "SELECT * FROM " + table + " WHERE no='" + str(no) + "'"
           self.cursor.execute(sql)
           result = self.cursor.fetchone()

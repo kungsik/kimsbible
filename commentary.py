@@ -19,14 +19,23 @@ def commentary_add(table, vcode=1):
         commentary_author = current_user.name
         commentary_email = current_user.user_id
         return_vcode_page = request.form['return_vcode_page']
+        return_category_page = request.form['return_category_page']
 
         commentary_db = db.Table()
         commentary_db.add_commentary(table, commentary_title, commentary_text, commentary_author, commentary_vcode, commentary_email, commentary_copen)
         
         if return_vcode_page:
             return redirect("/commentary/vcode/" + str(return_vcode_page))
+
+        elif return_category_page == 'mylist':
+            return redirect("/commentary/mylist/")
+        
         else:
             return redirect("/" + table + "/list/")
+    
+    elif request.method == 'GET':
+        category = request.args.get('c')
+        return render_template('commentary_add.html', vcode=vcode, table=table, category=category)            
 
     else:
         return render_template('commentary_add.html', vcode=vcode, table=table)

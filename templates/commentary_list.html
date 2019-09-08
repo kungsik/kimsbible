@@ -118,7 +118,12 @@
                         <button class="btn btn-default" onclick="location.href = '/commentary/add/{{ vcode }}/';">오픈주석 작성</button>    
                         &nbsp <button class="btn btn-default" onclick="location.href = '/classic/add/{{ vcode }}/';">클래식주석 작성</button>
                     {% else %}
-                        <button class="btn btn-default" onclick="location.href = '/{{ table }}/add/{{ vcode }}';">글 작성하기</button>
+                        {% if vcode %}
+                            {% set vcode = vcode + '/' %}
+                        {% else %}
+                            {% set vcode = '' %}
+                        {% endif %}
+                        <button class="btn btn-default" onclick="location.href = '/{{ table }}/add/{{ vcode }}?c={{ category }}';">글 작성하기</button>
                     {% endif %}
                 {% endif %}
                 <br><br>
