@@ -67,6 +67,7 @@
                     <br>
                     <textarea name="commentary_text" id="commentary_text" rows="20" style="width:100%;" id="commentary_text">{{ text }}</textarea>
                     <br>
+                    <input type='hidden' value="{{ vcode }}" name="return_vcode_page">
                     <input type="submit" class="btn btn-default" value="{{ button_name }}" onclick="updatetext()"></button>
                 </form>
             </div>

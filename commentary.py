@@ -17,12 +17,13 @@ def commentary_add(table, vcode=1):
         commentary_copen = int(request.form['copen'])
         commentary_author = current_user.name
         commentary_email = current_user.user_id
+        return_vcode_page = request.form['return_vcode_page']
 
         commentary_db = db.Table()
         commentary_db.add_commentary(table, commentary_title, commentary_text, commentary_author, commentary_vcode, commentary_email, commentary_copen)
         
-        if request.arg.get('v') > 1:
-            return redirect("/commentary/vcode/" + str(request.arg.get('v')))
+        if return_vcode_page:
+            return redirect("/commentary/vcode/" + str(return_vcode_page))
         else:
             return redirect("/" + table + "/list/")
 
