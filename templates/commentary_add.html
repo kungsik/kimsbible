@@ -15,7 +15,7 @@
                 <h1>{{ main }} 수정하기</h1>
                     {% set title = cview[4] %}
                     {% set text = cview[5] %}
-                    {% set url = '/' + table + '/edit/' + cview[0]|string %}
+                    {% set url = '/' + table + '/edit/' + cview[0]|string + '/' %}
 
                     {% if cview[6] == cview[7] %}
                         {% set vcode = cview[6] %}

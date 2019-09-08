@@ -56,7 +56,7 @@ class Table:
 
         urltitle = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', title).replace(" ", "-")
 
-        sql = "UPDATE " + table + " SET title=%s, content=%s, vcode1='" + str(vcode1) + "', vcode2='" + str(vcode2) + "', verse='" + verse + "', urltitle='" + urltitle + "', edited_date='" + now + "' , copen='" + str(copen) + "' WHERE no=" + str(no)
+        sql = "UPDATE " + table + " SET title=%s, content=%s, vcode1='" + str(vcode1) + "', vcode2='" + str(vcode2) + "', verse='" + verse + "', urltitle='" + urltitle + "', edited_date='" + now + "', copen='" + str(copen) + "' WHERE no=" + str(no)
         try: 
           self.cursor.execute(sql, (title, content))
           self.db.commit()
