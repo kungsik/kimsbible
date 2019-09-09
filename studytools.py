@@ -115,7 +115,7 @@ def studytools_reading_bhsheb():
         result += '</div>'
 
         result += '<div class="notice">일러두기<br>'
-        result += '저작권: 저작자표시-비영리 4.0 대한민국 (CC BY-NC 4.0 KR)<br>'
+        result += '저작권: 저작자표시-비영리 4.0 (CC BY-NC 4.0)<br>'
         result += '본 내용은 알파알렙성경(app.alphalef.com)을 통해서 출력되었습니다. 이 문서를 자유롭게 변형하거나 배포할 수 있습니다. 단, 상업적인 이용은 불가하며 공유시 자료출처가 명시된 본 일러두기 부분을 반드시 첨부하여 주시면 감사하겠습니다.'
         result += '</div>'
 
