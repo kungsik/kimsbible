@@ -292,6 +292,13 @@ iframe {
   font-size: 12px;
 }
 
+#cke_32,
+#cke_37,
+#cke_87,
+#cke_90 {
+  display: none;
+}
+
 @media(max-width:500px) {
   #cke_32,
   #cke_37,
