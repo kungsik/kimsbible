@@ -2,6 +2,7 @@ import re
 import os
 import csv
 from collections import OrderedDict
+from io import StringIO
 
 from flask import render_template, request, url_for
 from tf.fabric import Fabric
@@ -187,101 +188,115 @@ def community_page():
 @app.route('/bhsheb/<book>/<int:chapter>')
 @app.route('/text/<book>/<int:chapter>')
 def text_page(book='Genesis', chapter=1):
-    chpNode = T.nodeFromSection((book, chapter))
-    verseNode = L.d(chpNode, otype='verse')
-    whole_chpNode = T.nodeFromSection((book,))
-    last_chp = T.sectionFromNode(whole_chpNode, lastSlot=True)
-    verse = "<ol>"
+    #캐싱파일 유무 확인
+    if not os.path.isfile("kimsbible/static/cached/" + book + "-" + str(chapter) + ".html"):
 
-    #성경읽기 도우미 코드에서 1절 번호를 구하기 위해 절수를 구함
-    i = -1
+        chpNode = T.nodeFromSection((book, chapter))
+        verseNode = L.d(chpNode, otype='verse')
+        whole_chpNode = T.nodeFromSection((book,))
+        last_chp = T.sectionFromNode(whole_chpNode, lastSlot=True)
+        verse = "<ol>"
 
-    for v in verseNode:
-        i = i + 1
+        #성경읽기 도우미 코드에서 1절 번호를 구하기 위해 절수를 구함
+        i = -1
 
-        section = T.sectionFromNode(v)
-        vcode = vp.nodetocode(section, vp.bookList)
-        
-        verse += '<li>'
-        verse += '<span class=verseNode>'
-        wordsNode = L.d(v, otype='word')
-        for w in wordsNode:
-            clauseNode = L.u(w, otype='clause')
-            phraseNode = L.u(w, otype='phrase')
-            firstClauseWordNode = L.d(clauseNode[0], otype='word')[0]
-            firstPhraseWordNode = L.d(phraseNode[0], otype='word')[0]
-            lastClauseWordNode = L.d(clauseNode[0], otype='word')[-1]
-            lastPhraseWordNode = L.d(phraseNode[0], otype='word')[-1]
+        for v in verseNode:
+            i = i + 1
 
-            if w == firstClauseWordNode:
-                verse += '<span class=clauseNode clause_node='+str(clauseNode[0])+'>'
-                verse += "<span class=clause1>C:"+ kb.eng_to_kor(F.typ.v(clauseNode[0]), 'full') +"</span>"
+            section = T.sectionFromNode(v)
+            vcode = vp.nodetocode(section, vp.bookList)
+            
+            verse += '<li>'
+            verse += '<span class=verseNode>'
+            wordsNode = L.d(v, otype='word')
+            for w in wordsNode:
+                clauseNode = L.u(w, otype='clause')
+                phraseNode = L.u(w, otype='phrase')
+                firstClauseWordNode = L.d(clauseNode[0], otype='word')[0]
+                firstPhraseWordNode = L.d(phraseNode[0], otype='word')[0]
+                lastClauseWordNode = L.d(clauseNode[0], otype='word')[-1]
+                lastPhraseWordNode = L.d(phraseNode[0], otype='word')[-1]
 
-            if w == firstPhraseWordNode:
-                verse += '<span class=phraseNode phrase_node='+str(phraseNode[0])+'>'
-                verse += "<span class=phrase1>P:"+ kb.eng_to_kor(F.typ.v(phraseNode[0]), 'full') + "," + kb.eng_to_kor(F.function.v(phraseNode[0]), 'full') + "</span>"
+                if w == firstClauseWordNode:
+                    verse += '<span class=clauseNode clause_node='+str(clauseNode[0])+'>'
+                    verse += "<span class=clause1>C:"+ kb.eng_to_kor(F.typ.v(clauseNode[0]), 'full') +"</span>"
 
-            if F.qere_utf8.v(w):
-                verse += '<span class=wordNode>'
-                verse += F.g_word_utf8.v(w) + ' '
-                verse += '</a></span>'
+                if w == firstPhraseWordNode:
+                    verse += '<span class=phraseNode phrase_node='+str(phraseNode[0])+'>'
+                    verse += "<span class=phrase1>P:"+ kb.eng_to_kor(F.typ.v(phraseNode[0]), 'full') + "," + kb.eng_to_kor(F.function.v(phraseNode[0]), 'full') + "</span>"
 
-                verse += '<span class=wordNode><a tabindex=0 class=word_elm data-poload=/bhsheb/word/'+str(w)+' data-toggle=popover data-trigger=focus>'
-                verse += F.qere_utf8.v(w)
-                verse += '</a></span>'
+                if F.qere_utf8.v(w):
+                    verse += '<span class=wordNode>'
+                    verse += F.g_word_utf8.v(w) + ' '
+                    verse += '</a></span>'
 
-                if F.qere_trailer_utf8.v(w):
-                    verse += '<span class=trailerNode>'
-                    verse += F.qere_trailer_utf8.v(w)
-                    verse += '</span>'
+                    verse += '<span class=wordNode><a tabindex=0 class=word_elm data-poload=/bhsheb/word/'+str(w)+' data-toggle=popover data-trigger=focus>'
+                    verse += F.qere_utf8.v(w)
+                    verse += '</a></span>'
 
-            else:
-                # 정관사와 전치사가 결합된 단어의 경우 빈 값으로 전치사 정보가 들어와서 틀이 깨지는 현상을 방지하기 위함.
-                if not F.g_word_utf8.v(w):
-                    continue
+                    if F.qere_trailer_utf8.v(w):
+                        verse += '<span class=trailerNode>'
+                        verse += F.qere_trailer_utf8.v(w)
+                        verse += '</span>'
 
-                verse += '<span class=wordNode><a tabindex=0 class=word_elm data-poload=/bhsheb/word/'+str(w)+' data-toggle=popover data-trigger=focus>'
-                verse += F.g_word_utf8.v(w)
-                verse += '</a></span>'
+                else:
+                    # 정관사와 전치사가 결합된 단어의 경우 빈 값으로 전치사 정보가 들어와서 틀이 깨지는 현상을 방지하기 위함.
+                    if not F.g_word_utf8.v(w):
+                        continue
 
-                if F.trailer_utf8.v(w):
-                    verse += '<span class=trailerNode>'
-                    verse += F.trailer_utf8.v(w)
-                    verse += '</span>'
+                    verse += '<span class=wordNode><a tabindex=0 class=word_elm data-poload=/bhsheb/word/'+str(w)+' data-toggle=popover data-trigger=focus>'
+                    verse += F.g_word_utf8.v(w)
+                    verse += '</a></span>'
 
-            if w == lastPhraseWordNode: verse += '</span>'
-            if w == lastClauseWordNode: verse += '</span>'
+                    if F.trailer_utf8.v(w):
+                        verse += '<span class=trailerNode>'
+                        verse += F.trailer_utf8.v(w)
+                        verse += '</span>'
 
-        #절분석 버튼
-        verse +=  '<span>'
-        verse += '<button type="button" class="btn btn-default btn-xs bhsheb_verse_analysis" verse_node='+str(v)+'>절분석</button>'
-        verse += '</span> '
+                if w == lastPhraseWordNode: verse += '</span>'
+                if w == lastClauseWordNode: verse += '</span>'
 
-        #절노트 버튼
-        versenote_url = "../../commentary/vcode/" + vcode + "/"
-        verse += '<span>'
-        verse += '<a href="' + versenote_url + '" target="_blank"><button class="btn btn-default btn-xs verse_note">주석</button></a>'
-        # verse += '<input type="button" class="btn btn-default btn-xs verse_note" onclick="location.href=' + versenote_url + '" formtarget="_blank" value="주석">'
-        verse += '</span>'
+            #절분석 버튼
+            verse +=  '<span>'
+            verse += '<button type="button" class="btn btn-default btn-xs bhsheb_verse_analysis" verse_node='+str(v)+'>절분석</button>'
+            verse += '</span> '
 
-        verse += '</span>'
+            #절노트 버튼
+            versenote_url = "../../commentary/vcode/" + vcode + "/"
+            verse += '<span>'
+            verse += '<a href="' + versenote_url + '" target="_blank"><button class="btn btn-default btn-xs verse_note">주석</button></a>'
+            # verse += '<input type="button" class="btn btn-default btn-xs verse_note" onclick="location.href=' + versenote_url + '" formtarget="_blank" value="주석">'
+            verse += '</span>'
 
-        #한글 번역본
-        eng_chp_vrs = kb.heb_vrs_to_eng(section[0], str(section[1]), str(section[2]))
-        for c_v in eng_chp_vrs:
-            chp_vrs = re.split(":", c_v)
-            kor_vrs = kb.json_to_verse(section[0], chp_vrs[0], chp_vrs[1], 'korean')
+            verse += '</span>'
 
-        verse += "<p class='heb_korean' id='heb_korean' dir=ltr align=left>" + kor_vrs + "</p>"
-        verse += '</li>'
+            #한글 번역본
+            eng_chp_vrs = kb.heb_vrs_to_eng(section[0], str(section[1]), str(section[2]))
+            for c_v in eng_chp_vrs:
+                chp_vrs = re.split(":", c_v)
+                kor_vrs = kb.json_to_verse(section[0], chp_vrs[0], chp_vrs[1], 'korean')
 
-    verse += '</ol>'
-    kml_file = kml_url + book_abb[book] + '.' + str(chapter) + '.' + "kml"
+            verse += "<p class='heb_korean' id='heb_korean' dir=ltr align=left>" + kor_vrs + "</p>"
+            verse += '</li>'
 
-    #원문읽기도우미를 위한 코드 (1절을 구함)
-    vcode = int(vcode) - int(i)
+        verse += '</ol>'
+        kml_file = kml_url + book_abb[book] + '.' + str(chapter) + '.' + "kml"
 
-    return render_template('bhsheb_text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp[1], kml_file=kml_file, google_map_api=google_map_api, vcode=str(vcode))
+        #원문읽기도우미를 위한 코드 (1절을 구함)
+        vcode = int(vcode) - int(i)
+
+        #캐싱페이지 작성
+        data = render_template('bhsheb_text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp[1], kml_file=kml_file, google_map_api=google_map_api, vcode=str(vcode))
+        f = open("kimsbible/static/cached/" + book + "-" + str(chapter) + ".html", 'w')
+        f.write(data)
+        f.close()
+
+        return render_template('bhsheb_text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp[1], kml_file=kml_file, google_map_api=google_map_api, vcode=str(vcode))
+    
+    #캐싱파일이 있을 경우 
+    else:        
+        return app.send_static_file("cached/" + book + "-" + str(chapter) + ".html")
+
 
 @app.route('/bhsheb/word/<int:node>')
 def show_word_function(node):

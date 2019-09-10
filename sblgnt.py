@@ -1,3 +1,4 @@
+import os
 from flask import render_template
 from kimsbible import app
 from kimsbible.lib.config import sblgnt_url, google_map_api, kml_url
@@ -38,16 +39,29 @@ book_abb = {
 @app.route('/sblgnt/<book>')
 @app.route('/sblgnt/<book>/<int:chapter>')
 def sblgnt_page(book='Matthew', chapter=1):
-    kml_file = kml_url + book_abb[book] + '.' + str(chapter) + '.' + "kml"
+    #캐싱파일 유무 확인
+    if not os.path.isfile("kimsbible/static/cached/" + book + "-" + str(chapter) + ".html"):
+        kml_file = kml_url + book_abb[book] + '.' + str(chapter) + '.' + "kml"
 
-    #성경읽기 도우미를 위한 코드값
-    if chapter < 10:
-        zero = '00'
-    else:
-        zero = '0'
-    vcode = str(bookList.index(book)) + zero + str(chapter) + '001'
+        #성경읽기 도우미를 위한 코드값
+        if chapter < 10:
+            zero = '00'
+        else:
+            zero = '0'
+        vcode = str(bookList.index(book)) + zero + str(chapter) + '001'
+
+         #캐싱페이지 작성
+        data = render_template('sblgnt_text.html', book=book, chapter=chapter, kml_file=kml_file, sblgnt_url=sblgnt_url, google_map_api=google_map_api, vcode=vcode)
+        f = open("kimsbible/static/cached/" + book + "-" + str(chapter) + ".html", 'w')
+        f.write(data)
+        f.close()
+        
+        return render_template('sblgnt_text.html', book=book, chapter=chapter, kml_file=kml_file, sblgnt_url=sblgnt_url, google_map_api=google_map_api, vcode=vcode)
     
-    return render_template('sblgnt_text.html', book=book, chapter=chapter, kml_file=kml_file, sblgnt_url=sblgnt_url, google_map_api=google_map_api, vcode=vcode)
+    #캐싱파일이 있을 경우 
+    else:        
+        return app.send_static_file("cached/" + book + "-" + str(chapter) + ".html")
+
 
 @app.route('/sblgnt/word/<int:node>')
 def show_sblgnt_word_function(node):

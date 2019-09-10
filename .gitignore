@@ -5,3 +5,4 @@ lib/__pycache__/
 security/
 lib/config.py
 static/csv/
+cached/
