@@ -5,5 +5,5 @@ lib/__pycache__/
 security/
 lib/config.py
 static/csv/
-cache/
+cached/
 sitemap.xml
