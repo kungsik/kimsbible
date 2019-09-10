@@ -287,7 +287,7 @@ def text_page(book='Genesis', chapter=1):
 
         #캐싱페이지 작성
         data = render_template('bhsheb_text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp[1], kml_file=kml_file, google_map_api=google_map_api, vcode=str(vcode))
-        f = open("kimsbible/static/cached/" + book + "-" + str(chapter) + ".html", 'w')
+        f = open("kimsbible/static/cached/bhsheb/" + book + "-" + str(chapter) + ".html", 'w')
         f.write(data)
         f.close()
 
@@ -295,7 +295,7 @@ def text_page(book='Genesis', chapter=1):
     
     #캐싱파일이 있을 경우 
     else:        
-        return app.send_static_file("cached/" + book + "-" + str(chapter) + ".html")
+        return app.send_static_file("cached/bhsheb/" + book + "-" + str(chapter) + ".html")
 
 
 @app.route('/bhsheb/word/<int:node>')

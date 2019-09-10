@@ -1,4 +1,4 @@
-<script> 
+<!-- <script> 
 let node = '{{ node }}';
 $(document).ready(function() {
         $.ajax({
@@ -14,7 +14,16 @@ $(document).ready(function() {
                 }
         });
 });
-</script>
+</script> -->
 
+<!-- <div class="word_api" id="sblgnt_word">
+</div> -->
 <div class="word_api" id="sblgnt_word">
+{% autoescape false %}
+        {% for info in w_f %}
+                {{ info }} <br>
+        {% endfor %}
+{% endautoescape %}
+
 </div>
+    

@@ -1,8 +1,9 @@
 {% extends "layout.html" %} {% block body %}
 <script src="https://maps.googleapis.com/maps/api/js?key={{ google_map_api }}"></script>
 <script src="/static/js/syntax_viewer.js?ver=1.1"></script>
+<script src="/static/js/modal_word_api.js"></script>
 
-<script>
+<!-- <script>
 let book = '{{ book }}';
 let chapter = '{{ chapter }}';
 $(document).ready(function() {
@@ -15,7 +16,7 @@ $(document).ready(function() {
                 }
         });
 });
-</script>
+</script> -->
 
 {% set next_chapter = chapter + 1 %}
 {% set prev_chapter = chapter - 1 %}
@@ -69,7 +70,7 @@ $(document).ready(function() {
   </div>
   <br>
   {% autoescape false %}
-  <div class="sblgnt" id="text"></div>
+  <div class="sblgnt" id="text">{{ verse }}</div>
   {% endautoescape %}
 </div>
 
@@ -105,6 +106,6 @@ $(document).ready(function() {
  }
 </script>
 <script>
-  document.title = "알파알렙 신약본문(헬라어,그리스어)";
+  document.title = "{{ book }} {{ chapter }}장(알파알렙성경)";
 </script>
 {% endblock %}

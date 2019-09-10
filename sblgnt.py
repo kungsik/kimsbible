@@ -3,6 +3,8 @@ from flask import render_template
 from kimsbible import app
 from kimsbible.lib.config import sblgnt_url, google_map_api, kml_url
 from kimsbible.lib.vcodeparser import bookList
+import requests
+from kimsbible.lib.config import sblgnt_url
 
 book_abb = {
     "Matthew": "matt",
@@ -50,22 +52,30 @@ def sblgnt_page(book='Matthew', chapter=1):
             zero = '0'
         vcode = str(bookList.index(book)) + zero + str(chapter) + '001'
 
-         #캐싱페이지 작성
-        data = render_template('sblgnt_text.html', book=book, chapter=chapter, kml_file=kml_file, sblgnt_url=sblgnt_url, google_map_api=google_map_api, vcode=vcode)
-        f = open("kimsbible/static/cached/" + book + "-" + str(chapter) + ".html", 'w')
+        API_url = sblgnt_url + '/text/gnt/' + book + '/' + str(chapter) + '/'
+        response = requests.get(API_url)
+        verse = response.json()['verse']
+
+        #캐싱페이지 작성
+        data = render_template('sblgnt_text.html', book=book, chapter=chapter, kml_file=kml_file, sblgnt_url=sblgnt_url, google_map_api=google_map_api, vcode=vcode, verse=verse)
+        f = open("kimsbible/static/cached/sblgnt/" + book + "-" + str(chapter) + ".html", 'w')
         f.write(data)
         f.close()
         
-        return render_template('sblgnt_text.html', book=book, chapter=chapter, kml_file=kml_file, sblgnt_url=sblgnt_url, google_map_api=google_map_api, vcode=vcode)
+        return render_template('sblgnt_text.html', book=book, chapter=chapter, kml_file=kml_file, sblgnt_url=sblgnt_url, google_map_api=google_map_api, vcode=vcode, verse=verse)
     
     #캐싱파일이 있을 경우 
     else:        
-        return app.send_static_file("cached/" + book + "-" + str(chapter) + ".html")
+        return app.send_static_file("cached/sblgnt/" + book + "-" + str(chapter) + ".html")
 
 
 @app.route('/sblgnt/word/<int:node>')
 def show_sblgnt_word_function(node):
-    return render_template('sblgnt_word.html', node=node, sblgnt_url=sblgnt_url)
+    API_url = sblgnt_url + '/word/gnt/' + str(node)
+    response = requests.get(API_url)
+    w_f = response.json()['gntwordinfo']
+
+    return render_template('sblgnt_word.html', w_f=w_f)
 
 @app.route('/sblgnt/verse/<int:node>')
 def show_sblgnt_verse_function(node):
