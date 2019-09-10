@@ -189,7 +189,7 @@ def community_page():
 @app.route('/text/<book>/<int:chapter>')
 def text_page(book='Genesis', chapter=1):
     #캐싱파일 유무 확인
-    if not os.path.isfile("kimsbible/static/cached/" + book + "-" + str(chapter) + ".html"):
+    if not os.path.isfile("kimsbible/static/cached/bhsheb/" + book + "-" + str(chapter) + ".html"):
 
         chpNode = T.nodeFromSection((book, chapter))
         verseNode = L.d(chpNode, otype='verse')

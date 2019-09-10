@@ -42,7 +42,7 @@ book_abb = {
 @app.route('/sblgnt/<book>/<int:chapter>')
 def sblgnt_page(book='Matthew', chapter=1):
     #캐싱파일 유무 확인
-    if not os.path.isfile("kimsbible/static/cached/" + book + "-" + str(chapter) + ".html"):
+    if not os.path.isfile("kimsbible/static/cached/sblgnt/" + book + "-" + str(chapter) + ".html"):
         kml_file = kml_url + book_abb[book] + '.' + str(chapter) + '.' + "kml"
 
         #성경읽기 도우미를 위한 코드값
