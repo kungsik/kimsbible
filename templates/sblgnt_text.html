@@ -4,7 +4,6 @@
 
 {% set next_chapter = chapter + 1 %}
 {% set prev_chapter = chapter - 1 %}
-{% set last_chp = 50 %}
 
 <div class="panel panel-default" style="padding: 10px;">
   <div class="left">
@@ -23,30 +22,39 @@
     {% include 'sblgnt_selector.html' %}
   </div>
 
-  <div style="text-align: right">
+  <div style="text-align: center">
     <br>
+
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        화면표시<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="#" id="syntax_enact">절(C)/구(P)단위표시</a></li>
+        <li><a href="#" id="geoinfo">지도표시</a></li>
+      </ul>
+    </div>
+
     <div class="btn-group">
       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         도구모음<span class="caret"></span>
       </button>
       <ul class="dropdown-menu">
-        <!-- <li><a href="/bhsheb/search/">구약원문검색</a></li>
-        <li><a href="/search_tutorial/">원문검색방법</a></li>
-        <li><a href="/search_sample/">원문검색예문</a></li>
-        <li role="separator" class="divider"></li>
-        <li><a href="http://alphalef.com/apps/teamim/" target="_blank">테아밈분석기</a></li>
-        <li><a href="http://alphalef.com/apps/Hebrew_Parsing_Quiz/" target="_blank">히브리어동사퀴즈</a></li>
-        <li><a href="/bhsheb/stat/">구약텍스트통계</a></li>
-        <li><a href="/bhsheb/conjugator/">히브리어동사형</a></li>
-        <li role="separator" class="divider"></li> -->
         <li><a href="/studytools/reading/sblgnt/?v={{ vcode }}">원문읽기도우미</a></li>
       </ul>
     </div>
-    <button class="btn btn-default" id="syntax_enact">절(C)/구(P)단위표시</button> 
-    <button class="btn btn-default" id="geoinfo">지도표시</button> 
-    <br><br>
-    <input type="checkbox" id="showkorean" value="korean" checked onclick="showKor();">개역한글 대역
+
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        번역본<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" style="padding-right: 10px">
+        <li style="padding-left: 20px"><input type="checkbox" id="showkorean" value="korean" checked onclick="showKor();"> 개역한글</li>
+      </ul>
+    </div>
   </div>
+
+  <br>
 
   <div id="map-canvas" style="width:100%; height:400px; display:none"></div>
   <div id="map-comment" style="display:none">
