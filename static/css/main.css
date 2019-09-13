@@ -96,12 +96,19 @@ a.sblgnt_word_elm {
   text-decoration: none;
 }
 
-.heb_korean {
+.heb_kor,
+.heb_kjv,
+.gnt_kor {
   font-size: 18px;
   padding-top: 14px;
 }
 
-.sblgnt_korean {
+.heb_kjv,
+.gnt_kjv {
+  display: none;
+}
+
+.gnt_kjv {
   font-size: 18px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -412,4 +419,14 @@ iframe {
   padding: 10px;
   margin-top: 30px;
   font-size: 12px;
+}
+
+.submenu_button {
+  border-color: #fff;
+}
+
+.text_submenu {
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+  text-align: center;
 }

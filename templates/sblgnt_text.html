@@ -6,6 +6,39 @@
 {% set prev_chapter = chapter - 1 %}
 
 <div class="panel panel-default" style="padding: 10px;">
+
+    <div class="text_submenu">    
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle submenu_button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            화면표시<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="#" id="syntax_enact">절(C)/구(P)단위표시</a></li>
+            <li><a href="#" id="geoinfo">지도표시</a></li>
+          </ul>
+        </div>
+    
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle submenu_button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            도구모음<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="/studytools/reading/sblgnt/?v={{ vcode }}">원문읽기도우미</a></li>
+          </ul>
+        </div>
+    
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle submenu_button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            번역본<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" style="padding-right: 10px">
+            <li style="padding-left: 20px"><input type="checkbox" id="showkor" value="korean" checked onclick="showTrans('.gnt_kor', 'showkor');"> 개역한글</li>
+            <li style="padding-left: 20px"><input type="checkbox" id="showkjv" value="kjv" onclick="showTrans('.gnt_kjv', 'showkjv');"> KJV</li>
+          </ul>
+        </div>
+      </div>
+
+  <br>
   <div class="left">
     {% if chapter > 1 %}
     <a href="/sblgnt/{{ book }}/{{ prev_chapter }}">이전 장</a><br><br> {% else %}
@@ -20,38 +53,6 @@
 
   <div class="center" align="center">
     {% include 'sblgnt_selector.html' %}
-  </div>
-
-  <div style="text-align: center">
-    <br>
-
-    <div class="btn-group">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        화면표시<span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu">
-        <li><a href="#" id="syntax_enact">절(C)/구(P)단위표시</a></li>
-        <li><a href="#" id="geoinfo">지도표시</a></li>
-      </ul>
-    </div>
-
-    <div class="btn-group">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        도구모음<span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu">
-        <li><a href="/studytools/reading/sblgnt/?v={{ vcode }}">원문읽기도우미</a></li>
-      </ul>
-    </div>
-
-    <div class="btn-group">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        번역본<span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu" style="padding-right: 10px">
-        <li style="padding-left: 20px"><input type="checkbox" id="showkorean" value="korean" checked onclick="showKor();"> 개역한글</li>
-      </ul>
-    </div>
   </div>
 
   <br>
@@ -97,9 +98,9 @@
     layer.setMap(map);
   }
  
- function showKor() {
-	 let myelements = document.querySelectorAll(".sblgnt_korean");
-	 if (document.getElementById("showkorean").checked == true) {
+  function showTrans(transclassname, button_id) {
+	 let myelements = document.querySelectorAll(transclassname);
+	 if (document.getElementById(button_id).checked == true) {
 		for (var i = 0; i < myelements.length; i++) {
 			myelements[i].style.display = "block";
 		}

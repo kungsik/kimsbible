@@ -5,28 +5,10 @@
 {% set next_chapter = chapter + 1 %} {% set prev_chapter = chapter - 1 %}
 
 <div class="panel panel-default" style="padding: 10px;">
-  <div class="left">
-    {% if chapter > 1 %}
-    <a href="/bhsheb/{{ book }}/{{ prev_chapter }}">이전 장</a><br><br> {% else %}
-    <font color="white">이전 장</font><br><br> {% endif %}
-  </div>
 
-  <div class="right">
-    {% if chapter < last_chp %} 
-      <a href="/bhsheb/{{ book }}/{{ next_chapter }}">다음 장</a><br><br> {% else %}
-      <font color="white">다음 장</font><br><br> 
-    {% endif %}
-  </div>
-
-  <div class="center" align="center">
-    {% include 'bhsheb_selector.html' %}
-  </div>
-
-  <div style="text-align: center">
-    <br>
-
+  <div class="text_submenu">
     <div class="btn-group">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <button type="button" class="btn btn-default dropdown-toggle submenu_button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         화면표시<span class="caret"></span>
       </button>
       <ul class="dropdown-menu">
@@ -36,7 +18,7 @@
     </div>
 
     <div class="btn-group">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <button type="button" class="btn btn-default dropdown-toggle submenu_button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         도구모음<span class="caret"></span>
       </button>
       <ul class="dropdown-menu">
@@ -58,14 +40,33 @@
     </div>
 
     <div class="btn-group">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <button type="button" class="btn btn-default dropdown-toggle submenu_button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         번역본<span class="caret"></span>
       </button>
       <ul class="dropdown-menu" style="padding-right: 10px">
-        <li style="padding-left: 20px"><input type="checkbox" id="showkorean" value="korean" checked onclick="showKor();"> 개역한글</li>
+        <li style="padding-left: 20px"><input type="checkbox" id="showkor" value="korean" checked onclick="showTrans('.heb_kor', 'showkor');"> 개역한글</li>
+        <li style="padding-left: 20px"><input type="checkbox" id="showkjv" value="kjv" onclick="showTrans('.heb_kjv', 'showkjv');"> KJV</li>
       </ul>
     </div>
 
+  </div>
+  <br>
+
+  <div class="left">
+    {% if chapter > 1 %}
+    <a href="/bhsheb/{{ book }}/{{ prev_chapter }}">이전 장</a><br><br> {% else %}
+    <font color="white">이전 장</font><br><br> {% endif %}
+  </div>
+
+  <div class="right">
+    {% if chapter < last_chp %} 
+      <a href="/bhsheb/{{ book }}/{{ next_chapter }}">다음 장</a><br><br> {% else %}
+      <font color="white">다음 장</font><br><br> 
+    {% endif %}
+  </div>
+
+  <div class="center" align="center">
+    {% include 'bhsheb_selector.html' %}
   </div>
 
   <br>
@@ -110,9 +111,9 @@
     layer.setMap(map);
   }
  
- function showKor() {
-	 let myelements = document.querySelectorAll(".heb_korean");
-	 if (document.getElementById("showkorean").checked == true) {
+ function showTrans(transclassname, button_id) {
+	 let myelements = document.querySelectorAll(transclassname);
+	 if (document.getElementById(button_id).checked == true) {
 		for (var i = 0; i < myelements.length; i++) {
 			myelements[i].style.display = "block";
 		}
