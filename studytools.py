@@ -16,6 +16,7 @@ def studytools_reading_bhsheb():
         rangeCode = request.form['rangeCode']
         check1 = request.form['check1']
         check2 = request.form['check2']
+        check3 = request.form['check3']
 
         sections = rangeCode.split(";")
 
@@ -44,13 +45,15 @@ def studytools_reading_bhsheb():
             sectionTitle = stat.codetostr(section, stat.bookListKor)
             
             result += '<h4>' + sectionTitle + '</h4>'
-            result += '<br>'
+            # result += '<br>'
             result += '<div class="section">'
             
             for node in nodeList:
                 section = T.sectionFromNode(node)
                 wordsNode = L.d(node, otype='word')
-                result += '<span class=chpvrs>' + str(section[2]) + '</span> <span class="verse">' + T.text(wordsNode) + '</span>'
+
+                if not check3:
+                    result += '<span class=chpvrs>' + str(section[2]) + '</span> <span class="verse">' + T.text(wordsNode) + '</span>'
 
                 if not check1:
                     parsing += stat.booknameconv(section[0], stat.bookList, stat.bookListKorAbbr) + str(section[1]) + ":" + str(section[2]) + "<br>"
@@ -115,7 +118,7 @@ def studytools_reading_bhsheb():
         result += '</div>'
 
         result += '<div class="notice">일러두기<br>'
-        result += '저작권: 저작자표시-비영리 4.0 (CC BY-NC 4.0)<br>'
+        result += '저작권: 저작자표시-비영리-동일조건변경허락 4.0 국제 (CC BY-NC-SA 4.0)<br>'
         result += '본 내용은 알파알렙성경(app.alphalef.com)을 통해서 출력되었습니다. 이 문서를 자유롭게 변형하거나 배포할 수 있습니다. 단, 상업적인 이용은 불가하며 공유시 자료출처가 명시된 본 일러두기 부분을 반드시 첨부하여 주시면 감사하겠습니다.'
         result += '</div>'
 

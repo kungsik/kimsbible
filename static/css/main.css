@@ -430,3 +430,43 @@ iframe {
   padding-bottom: 10px;
   text-align: center;
 }
+
+@media print {
+  body { 
+    font-size: 11px; 
+  }
+
+  a.word_elm {
+    font-family: 'SBLHebrew';
+    font-size: 20px;
+    direction: rtl;
+    color: black;
+  }
+
+  li {
+    font-size: 18px;
+  }
+
+  a.sblgnt_word_elm {
+    font-family: 'SBLGreek';
+    font-size: 18px;
+    color: black;
+  }
+
+  .heb_kor,
+  .heb_kjv,
+  .gnt_kor {
+    font-size: 12px;
+    padding-top: 10px;
+  }
+
+  a[href]:after {
+    display: none;
+    visibility: hidden;
+  }
+  
+  button {
+    display: none;
+  }
+  
+}

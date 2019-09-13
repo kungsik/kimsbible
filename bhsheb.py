@@ -207,7 +207,8 @@ def text_page(book='Genesis', chapter=1):
             vcode = vp.nodetocode(section, vp.bookList)
             
             verse += '<li>'
-            verse += '<span class=verseNode>'
+            verse += '<div class=verseContainer>'
+            verse += '<div class=verseNode>'
             wordsNode = L.d(v, otype='word')
             for w in wordsNode:
                 clauseNode = L.u(w, otype='clause')
@@ -267,8 +268,9 @@ def text_page(book='Genesis', chapter=1):
             verse += '<a href="' + versenote_url + '" target="_blank"><button class="btn btn-default btn-xs verse_note">주석</button></a>'
             verse += '</span>'
 
-            verse += '</span>'
+            verse += '</div>' #versenode
 
+            verse += '<div class="transversions">'
             #개역한글 번역본
             eng_chp_vrs = kb.heb_vrs_to_eng(section[0], str(section[1]), str(section[2]))
             for c_v in eng_chp_vrs:
@@ -284,6 +286,9 @@ def text_page(book='Genesis', chapter=1):
                 kjv_vrs = kb.json_to_verse(section[0], chp_vrs[0], chp_vrs[1], 'kjv')
 
             verse += "<p class='heb_kjv' id='heb_kjv' dir=ltr align=left>" + kjv_vrs + "</p>"
+            verse += "</div>" #transversions
+
+            verse += '</div>' #versecontainer
 
             verse += '</li>'
 

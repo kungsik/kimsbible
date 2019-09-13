@@ -20,18 +20,28 @@
 
                 <textarea class="form-control" rows="10" name="rangeCode" id="rangeCode">{{ vcode }}</textarea>
 
-                <br><br>
+                <br>
+
+                <label for="check3"> 본문제외 </label>
+                <input type="hidden" id="check3_value" name="check3" value="">
+                <input type="checkbox" id="check3" onclick="updatecheckvalue()"> 
+
+                <br>
+
                 <label for="check1"> 단어문법분석제외 </label>
                 <input type="hidden" id="check1_value" name="check1" value="">
-                <input type="checkbox" id="check1" onclick="updatecheckvalue()">
+                <input type="checkbox" id="check1" onclick="updatecheckvalue()"> 
+
+                <br>
+
                 <label for="check2"> 단어리스트제외 </label>
                 <input type="hidden" id="check2_value" name="check2" value="">
                 <input type="checkbox" id="check2" onclick="updatecheckvalue()">  
-                <br>
+                <br><br>
                 
                 <button type="submit" class="btn btn-success" id="parsing_submit">불러오기</button>
             </form>
-          <div id="load_image" style="display:none"><img src="/static/img/loader.gif" align="center"></div>
+          <div id="load_image" style="display:none"><img src="/static/img/loader.gif" align="center"></div><br><br>
         </div>
         <div class="col-md-8">
             <h4>원문 성경읽기 도우미 (구약)</h4>
@@ -58,6 +68,12 @@
             else {
                 $('#check2_value').attr('value', '');
             }
+            if(ischecked3) {
+                $('#check3_value').attr('value', '3');
+            } 
+            else {
+                $('#check3_value').attr('value', '');
+            }
         };
 
         function content_print(){
@@ -71,7 +87,7 @@
                 window.location.reload()
             }
             window.print();     
-        }            
+        }
     </script>
 
     <script>
