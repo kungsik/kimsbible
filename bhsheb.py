@@ -33,6 +33,7 @@ api = TF.load('''
 
 api.makeAvailableIn(globals())
 
+# kml 파일 관련
 book_abb = {
     "Genesis": "gen",
     "Exodus": "exod",

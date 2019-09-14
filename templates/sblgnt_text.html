@@ -1,6 +1,7 @@
 {% extends "layout.html" %} {% block body %}
 <script src="https://maps.googleapis.com/maps/api/js?key={{ google_map_api }}"></script>
 <script src="/static/js/syntax_viewer.js?ver=1.1111"></script>
+<script src="/static/js/bookname.js"></script>
 
 {% set next_chapter = chapter + 1 %}
 {% set prev_chapter = chapter - 1 %}
@@ -15,7 +16,7 @@
           <ul class="dropdown-menu">
             <li><a href="#" id="syntax_enact">절(C)/구(P)단위표시</a></li>
             <li><a href="#" id="geoinfo" data-kml="{{kml_file}}">지도표시</a></li>
-            <li><a href="#" id="printing" onclick="content_print()">본문인쇄화면</a></li>
+            <li><a href="#" id="printing" onclick="content_print(bookname)">본문인쇄화면</a></li>
           </ul>
         </div>
     
@@ -55,9 +56,10 @@
 
   <div id="text_body">
 
-    <div class="center" align="center">
+    <div class="center" align="center" id="selector_title">
       {% include 'sblgnt_selector.html' %}
     </div>
+    <div id="printing_title"></div>
 
     <br>
 
@@ -88,9 +90,9 @@
 </div>
 
 <script>
-  document.title = "{{ book }} {{ chapter }}장(알파알렙성경)";
+  document.title = bookname["{{ book }}"] + " {{ chapter }}장(알파알렙성경)";
 </script>
 
-<script src="/static/js/text_tools.js?ver=11111"></script>
+<script src="/static/js/text_tools.js?ver=11112"></script>
 
 {% endblock %}

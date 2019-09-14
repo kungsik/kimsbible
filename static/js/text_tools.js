@@ -59,9 +59,24 @@ function initialize(kml) {
    }
  }
 
- function content_print(){
+ function content_print(bookname){
     var initBody = document.body.innerHTML;
     var buttons = document.querySelectorAll('button');
+
+    var path = location.pathname.split('/');
+    var book = path[2];
+
+    var bookname_korean = bookname[book];
+
+    if (path[3]) {
+      var chapter = path[3];
+    }
+    else {
+      var chapter = '1';
+    }
+
+    document.getElementById('selector_title').style.display = 'none';
+    document.getElementById('printing_title').innerHTML = '<h3>' + bookname_korean + ' ' + chapter + '장</h3>';
 
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].style.display = 'none';
