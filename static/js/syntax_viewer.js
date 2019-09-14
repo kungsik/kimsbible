@@ -55,11 +55,13 @@
 
  $(function() {
    $(document.body).on('click', '#geoinfo', function() {
+     var kml = $(this).data('kml');
+     console.log(kml)
      $(this).html('지도숨기기');
      $(this).attr('id', 'geoinfo_hide');
      $('#map-canvas').toggle({
        complete: function() {
-         initialize();
+         initialize(kml);
        },
        duration: 'slow'
      });
