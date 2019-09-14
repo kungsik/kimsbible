@@ -14,6 +14,11 @@ from kimsbible.lib import db
 
 from kimsbible.lib.config import google_map_api, kml_url
 
+# @app.after_request
+# def set_response_headers(r):
+#     r.headers['Cache-Control'] = 'public, max-age=3600'
+#     return r
+
 ### Load up TF ###
 ETCBC = 'hebrew/etcbc4c'
 TF = Fabric(locations='text-fabric-data', modules=ETCBC)

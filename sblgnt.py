@@ -1,10 +1,15 @@
 import os
-from flask import render_template
+from flask import render_template, request
 from kimsbible import app
 from kimsbible.lib.config import sblgnt_url, google_map_api, kml_url
 from kimsbible.lib.vcodeparser import bookList
 import requests
 from kimsbible.lib.config import sblgnt_url
+
+# @app.after_request
+# def set_response_headers(r):
+#     r.headers['Cache-Control'] = 'public, max-age=3600'
+#     return r
 
 book_abb = {
     "Matthew": "matt",
