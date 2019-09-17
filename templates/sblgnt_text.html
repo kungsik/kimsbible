@@ -35,8 +35,8 @@
           </button>
           <ul class="dropdown-menu" style="padding-right: 10px">
             <li style="padding-left: 20px"><input type="checkbox" id="showhorizon" value="howhorizon" onclick="showhorizon('sblgnt');"> 가로배열</li>
-            <li style="padding-left: 20px"><input type="checkbox" id="showkor" value="korean" checked onclick="showTrans('.gnt_kor', 'showkor');"> 개역한글</li>
-            <li style="padding-left: 20px"><input type="checkbox" id="showkjv" value="kjv" onclick="showTrans('.gnt_kjv', 'showkjv');"> KJV</li>
+            <li style="padding-left: 20px"><input type="checkbox" id="showkor" value="korean" onclick="showTrans('.kor', 'showkor');"> 개역한글</li>
+            <li style="padding-left: 20px"><input type="checkbox" id="showkjv" value="kjv" onclick="showTrans('.kjv', 'showkjv');"> KJV</li>
           </ul>
         </div>
       </div>
@@ -93,6 +93,6 @@
   document.title = bookname["{{ book }}"] + " {{ chapter }}장(알파알렙성경)";
 </script>
 
-<script src="/static/js/text_tools.js?ver=11112"></script>
+<script src="/static/js/text_tools.js?ver=11113"></script>
 
 {% endblock %}

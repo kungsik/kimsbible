@@ -30,6 +30,9 @@ a.sblgnt_word_elm {
   color: black;
 }
 
+.verseNode {
+  padding-top: 14px;
+}
 
 .verse_heb {
   font-family: 'SBLHebrew';
@@ -96,16 +99,15 @@ a.sblgnt_word_elm {
   text-decoration: none;
 }
 
-.heb_kor,
-.heb_kjv,
-.gnt_kor {
+.kor,
+.kjv {
   font-size: 18px;
   padding-top: 14px;
+  display: none;
 }
 
-.heb_kjv,
-.gnt_kjv {
-  display: none;
+.transversions {
+  padding-top: 14px;
 }
 
 .gnt_kjv {
