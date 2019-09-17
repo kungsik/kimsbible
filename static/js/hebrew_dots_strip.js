@@ -22,15 +22,15 @@ const doFix = () => {
 
     $.getScript('/static/js/modal_word_api.js')
 
-    // 악센트 관련 체크시 번역본이 사라지는 오류 보정
+    // 악센트 관련 체크시 다른 설정이 초기화되는 오류 보정
     if (localStorage.getItem(".kjv") == 'on' ) {
-        document.getElementById('kjv').style.display = "block"
+        showTrans(".kjv", 'showkjv')
     }
     if (localStorage.getItem(".kor") == 'on' ) {
-        document.getElementById('kor').style.display = "block"
+        showTrans(".kor", 'showkor')
     } 
 
-    if (horizon == 'on') {
+    if (localStorage.getItem("horizon") == 'on') {
         let currentText = document.location.href.split('/')[3];
         showhorizon(currentText);
     }
@@ -42,13 +42,11 @@ document.querySelector("#optDagesh").addEventListener('change', doFix)
 
 if (localStorage.accent == 'on') { 
     document.getElementById("optAccents").checked = true 
-    doFix()
 }
 if (localStorage.vowels == 'on') { 
     document.getElementById("optVowels").checked = true 
-    doFix()
 }
 if (localStorage.dagesh == 'on') { 
     document.getElementById("optDagesh").checked = true 
-    doFix()
 }
+doFix()
