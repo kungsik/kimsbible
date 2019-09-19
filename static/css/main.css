@@ -490,6 +490,12 @@ iframe {
   }
 }
 
+/* @media (max-width: 575px) {
+  .container.border {
+    border-color: #DDD;
+  }
+} */
+
 @media (max-width: 990px) {
   .contents {
       margin-top: 0px;

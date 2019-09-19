@@ -3,7 +3,30 @@ body {
   line-height: 1.7;
   color: rgb(0, 0, 0);
   font-weight: 300;
-  font-size: 1rem; }
+  font-size: 1rem;
+  will-change: position;
+ }
+
+body.modal-wide {
+  position: fixed;
+  top:    0;
+  right:  0;
+  bottom: 0;
+  left:   0;
+}
+
+.modal-body {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.modal {
+  will-change: display;
+}
+
+.modal-dialog {
+  will-change: transform;
+}
 
 ::-moz-selection {
   background: #000;
