@@ -1,93 +1,194 @@
 {% extends "layout.html" %}
 {% block body %}
-  <div class="jumbotron" style="text-align:center">
-    <img src="../static/img/logo.png" height="120" width="125"><br>
-    <font size=6>알파알렙 온라인 성경</font>
-    <p></p>
-    <iframe width=100% height="300" src="https://www.youtube.com/embed/hmNFOa0CLlA" frameborder="0" allowfullscreen></iframe>
-  </div>
-    <h4>
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                주요 기능
-            </div>
-            <div class="panel-body">
-            <ul>
-		        <li>성서 원문 열람 (헬라어/그리스어, 히브리어)</li>
-		        <li>단어분석, 절분석, 구문분석, 원어검색 (원어검색은 현재 구약만 지원)</li>
-		        <li>성서 지도 열람</li>
-                <li>주석 - 자유롭게 주석을 추가/열람하실 수 있습니다.</li>
-            </ul>
-            </div>
-        </div>
-        <div class="panel panel-success">
-            <div class="panel-heading">
-                공지
-            </div>
-            <div class="panel-body">
-            <ul>
-                <li>구약,신약 원문읽기도우미 기능이 업데이트 되었습니다. <a href="/studytools/reading/">바로가기</a> 다음 설명을 참고해 주세요. <a href="http://alphalef.com/2019/09/04/%ec%95%8c%ed%8c%8c%ec%95%8c%eb%a0%99-%ec%84%b1%ea%b2%bd-%ec%9d%bd%ea%b8%b0-%eb%8f%84%ec%9a%b0%eb%af%b8-%ea%b8%b0%eb%8a%a5/" target="blank">설명보기</a></li>
-                <li>알파알렙 주석 개인 저장소를 사용하실 수 있습니다. 글을 작성하실 때, 비공개로 설정하시면 자신만 자료를 확인할 수 있습니다. 로그인하면 나오는 내오픈주석 메뉴에서 나의 공개/비공개 글을 모두 확인하실 수 있습니다.</li>
-                <li>알파알렙 주석을 업데이트했습니다. 오픈주석과 클래식 주석을 통해 성경에 관한 다양한 주석을 공유하실 수 있습니다.</li>
-                <li><a href="/community">커뮤니티 게시판</a>에 의견이나 문의를 올리실 수 있습니다.</li>
-            </ul>
+    {% autoescape false %}
+
+<div class="site-blocks-cover">
+    <div class="container">
+        <div class="row align-items-center justify-content-center">
+        <div class="col-md-12" style="position: relative; text-align: center;" data-aos="fade-up">
+            
+            <img src="/static/img/main.png" alt="Image" style="max-width: 100%">
+
+            <div>
+            <br>
+            <h1>온전한 말씀 이해를 위해</h1>
+            <p class="mb-5">알파알렙 성경은 히브리어 성경과 헬라어 성경에 친숙해 질 수 있는 컨텐츠를 제공해 드립니다.</p>
+            <div>
+                <a href="#" class="btn btn-primary mr-2 mb-2">시작하기</a>
+            </div>             
+            <br><br>
             </div>
         </div>
-        <div class="panel panel-danger">
-            <div class="panel-heading">
-                최근주석
-            </div>
-            <div class="panel-body">
-            <div class="row">
-                <div class="col-sm-6">
-                    <span class="glyphicon glyphicon-book"></span> 오픈주석<br>
-                    <ul>
-                    {% for post1 in recent_posts_commentary %}
-                        <li>{{ post1[8] }} · <a href="/commentary/view/{{ post1[0] }}/{{ post1[10] }}/">{{ post1[4] }}</a></li>
-                    {% endfor %}
-                    </ul>
-                </div>
-                <div class="col-sm-6">
-                    <span class="glyphicon glyphicon-book"></span> 클래식주석<br>
-                    <ul>
-                    {% for post2 in recent_posts_classic %}
-                        <li>{{ post2[8] }} · <a href="/classic/view/{{ post2[0] }}/{{ post2[10] }}/">{{ post2[4] }}</a></li>
-                    {% endfor %}
-                    </ul>
-                </div>
-            </div>
-            </div>
         </div>
-        <div class="panel panel-warning">
-            <div class="panel-heading">
-                알파알렙과 함께하는 분들
-            </div>
-            <div class="panel-body">
-		    <div class="row">
-			    <div class="col-sm-6">
-				    <a href="https://www.touch-bible.com" target=_blank><img src="/static/img/touch.png"></a>
-				    <p><br>터치 바이블 선교회는 문화, 지리, 역사와 언어 등의 배경에서 성서를 이해하는 다양한 세미나를 진행하고 있습니다. 저는 터치 바이블 아카데미를 통해 알파알렙 성경을 이용해서 히브리어를 공부하고 원문을 이해하는 방법과 관련된 강의들을 진행하는 협력강사로 동역하고 있습니다.<br><br></p>
-			    </div>
-			    <div class="col-sm-6">
-				    <a href="http://www.massaqt.com" target=_blank><img src="http://www.massaqt.com/ONMAM_FILE/100581/T//%EB%A7%9B%EC%8B%B8.jpg"></a>
-				    <p><br>맛싸 큐티는 성서 원문을 이용한 새로운 방식의 큐티입니다. <a href="http://www.massaqt.com/bbs/viewPage/2" target=_blank>샘플 페이지</a>를 통해 맛사 큐티의 특징을 보실 수 있습니다. 저는 본 큐티지에서 히브리어와 지리를 바탕으로 한 본문이해에 관한 글을 기고하고 있습니다. 본 사이트를 통해 구독 신청해 주시면 알파알렙 성경을 개발하고 유지하는데 도움이 됩니다(<a href="https://forms.gle/EDpgp3BuxLgGPVTf8" target=_blank>구독신청</a>).</p>
-			    </div>
-		    </div>
-            </div>
+    </div>
+    </div>  
+
+
+    <div class="site-section bg-light" id="features-section">
+    <div class="container">
+        <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h2 class="section-title mb-3">주요기능</h2>
         </div>
-        <div class="panel panel-info">
-            <div class="panel-heading">
-              관련 사이트
+        </div>
+        <div class="row align-items-stretch">
+        <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">  
+            <div class="unit-4 d-block">
+            <div class="unit-4-icon mb-3">
+                <span class="icon-wrap"><span class="text-primary icon-autorenew"></span></span>
             </div>
-            <div class="panel-body" style="background-color: #fafafa">
-            <ul>
-              <li style="margin: 20px"><a href="http://kimsbible.com" target="_blank">KIM'S BIBLE</a>: 성서학과 성서언어에 관한 다양한 정보를 올리는 블로그</li>
-	          <li style="margin: 20px"><a href="http://alphalef.com" target="_blank">알파알렙 커뮤니티</a>: 알파알렙 성경을 비롯한 원어, 고전어에 관한 커뮤니티 사이트</li>
-              <li style="margin: 20px"><a href="https://www.youtube.com/channel/UCgSRYohubxOTB8G7RUb1Szg" target="_blank">유투브 채널</a>: 알파알렙 성경 사용법과 성서 히브리어 강좌</li>
-              <li style="margin: 20px"><a href="https://www.notion.so/alphalef/746b027386b44614b79b6686864c95f2?v=a2c14506071444a0b308528241a6ff9f" target="_blank">알파알렙 업데이트</a>: 알파알렙 성경 최근 업데이트 내역 및 향후 업데이트 계획</li>
-            </ul>
+            <div>
+                <h3>성서원문열람</h3>
+                <p>구약과 신약이 쓰여진 본래 언어인 히브리어(구약)와 헬라어(본문)로 된 원문을 제공합니다.</p>
+            </div>
             </div>
         </div>
 
-    </h4>
+        <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">
+            <div class="unit-4 d-block">
+            <div class="unit-4-icon mb-3">
+                <span class="icon-wrap"><span class="text-primary icon-store_mall_directory"></span></span>
+            </div>
+            <div>
+                <h3>원어분석</h3>
+                <p>누구나 쉽게 원어를 공부하고 원어로 성경을 읽으실 수 있도록 단어와 구문, 그리고 절 단위 등의 분석내용을 제공합니다.</p>
+            </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" >
+            <div class="unit-4 d-block">
+            <div class="unit-4-icon mb-3">
+                <span class="icon-wrap"><span class="text-primary icon-shopping_basket"></span></span>
+            </div>
+            <div>
+                <h3>성경지도</h3>
+                <p>해당하는 각 장에서 언급된 지역들을 표시하는 지도 정보를 통해 성경을 보다 입체적으로 이해하실 수 있습니다.</p>
+            </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">
+            <div class="unit-4 d-block">
+            <div class="unit-4-icon mb-3">
+                <span class="icon-wrap"><span class="text-primary icon-settings_backup_restore"></span></span>
+            </div>
+            <div>
+                <h3>주석</h3>
+                <p>각 성경 구절에 대한 주석과 정보등을 공유하는 오픈/클래식 주석 플래폼을 사용하실 수 있습니다.</p>
+            </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">
+            <div class="unit-4 d-block">
+            <div class="unit-4-icon mb-3">
+                <span class="icon-wrap"><span class="text-primary icon-sentiment_satisfied"></span></span>
+            </div>
+            <div>
+                <h3>성경 원어 강의</h3>
+                <p>알파알렙 성경과 유튜브 채널 등을 통해 다양한 성경 원어에 대한 강의를 제공해 드릴 예정입니다.</p>
+            </div>
+            </div>           
+        </div>
+        
+        <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">
+            <div class="unit-4 d-block">
+            <div class="unit-4-icon mb-3">
+                <span class="icon-wrap"><span class="text-primary icon-power"></span></span>
+            </div>
+            <div>
+                <h3>기타 다양한 기능들</h3>
+                <p>이 외에도 본사이트를 통해서 원어검색, 동사퀴즈 등과 같은 다양한 학습자료들을 제공합니다.</p>
+            </div>
+            </div>
+        </div>
+
+        </div>
+    </div>
+    </div>
+
+    <div class="site-section" id="blog-section">
+    <div class="container">
+        <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h2 class="section-title mb-3">최근주석</h2>
+        </div>
+        </div>
+
+        <div class="row">
+        <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
+            <div class="h-entry">
+            <img src="{{ img[0] }}" alt="Image" class="img-fluid" align="center" width="350px">
+            <h2><a href="#">{{ title[0] }} </a></h2>
+            <div class="meta mb-4">{{ author[0] }} <span class="mx-2">&bullet;</span> {{ date[0] }}</div>
+            <p>{{ content[0] }} ...</p>
+            <p><a href="/commentary/view/{{ no[0] }}/{{ urltitle[0] }}">계속읽기...</a></p>
+            </div> 
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
+            <div class="h-entry">
+            <img src="{{ img[1] }}" alt="Image" class="img-fluid" align="center" width="350px">
+            <h2><a href="#">{{ title[1] }} </a></h2>
+            <div class="meta mb-4">{{ author[1] }} <span class="mx-2">&bullet;</span> {{ date[1] }}</div>
+            <p>{{ content[1] }} ...</p>
+            <p><a href="/commentary/view/{{ no[1] }}/{{ urltitle[1] }}">계속읽기...</a></p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
+            <div class="h-entry">
+            <img src="{{ img[2] }}" alt="Image" class="img-fluid" align="center" width="350px">
+            <h2><a href="#">{{ title[2] }} </a></h2>
+            <div class="meta mb-4">{{ author[2] }} <span class="mx-2">&bullet;</span> {{ date[2] }}</div>
+            <p>{{ content[2] }} ...</p>
+            <p><a href="/commentary/view/{{ no[2] }}/{{ urltitle[2] }}">계속읽기...</a></p>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+    </div>
+
+    <!-- <div class="site-section bg-light" id="blog-section">
+    <div class="container">
+        <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h2 class="section-title mb-3">최근주석</h2>
+        </div>
+        </div>
+
+        <div class="row">
+        <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
+            <div class="h-entry">
+            <img src="images/img_1.jpg" alt="Image" class="img-fluid">
+            <h2><a href="#">Create interactive prototypes</a></h2>
+            <div class="meta mb-4">Ham Brook <span class="mx-2">&bullet;</span> Jan 18, 2019<span class="mx-2">&bullet;</span> <a href="#">News</a></div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus eligendi nobis ea maiores sapiente veritatis reprehenderit suscipit quaerat rerum voluptatibus a eius.</p>
+            <p><a href="#">Continue Reading...</a></p>
+            </div> 
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
+            <div class="h-entry">
+            <img src="images/img_2.jpg" alt="Image" class="img-fluid">
+            <h2><a href="#">Create interactive prototypes</a></h2>
+            <div class="meta mb-4">James Phelps <span class="mx-2">&bullet;</span> Jan 18, 2019<span class="mx-2">&bullet;</span> <a href="#">News</a></div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus eligendi nobis ea maiores sapiente veritatis reprehenderit suscipit quaerat rerum voluptatibus a eius.</p>
+            <p><a href="#">Continue Reading...</a></p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
+            <div class="h-entry">
+            <img src="images/img_3.jpg" alt="Image" class="img-fluid">
+            <h2><a href="#">Create interactive prototypes</a></h2>
+            <div class="meta mb-4">James Phelps <span class="mx-2">&bullet;</span> Jan 18, 2019<span class="mx-2">&bullet;</span> <a href="#">News</a></div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus eligendi nobis ea maiores sapiente veritatis reprehenderit suscipit quaerat rerum voluptatibus a eius.</p>
+            <p><a href="#">Continue Reading...</a></p>
+            </div> 
+        </div>
+        
+        </div>
+    </div>
+    </div> -->
+
+    {% endautoescape %}
 {% endblock %}

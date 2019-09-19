@@ -3,7 +3,7 @@ $(function() {
   var hebrewkey = "";
 
   for (var i = 0; i < hebrew.length; i++) {
-    hebrewkey += "<button class='btn btn-default btn-xs' letter=" + hebrew[i] + ">" + hebrew[i] + "</button>";
+    hebrewkey += "<button class='btn btn-outline-info btn-sm' style='margin-bottom:3px; margin-right:2px; width: 27.3px' letter=" + hebrew[i] + ">" + hebrew[i] + "</button>";
     if (i == 10) {
       hebrewkey += "<br>";
     }
@@ -12,7 +12,7 @@ $(function() {
 });
 
 $(function() {
-  $(".btn-xs").click(function() {
+  $(".btn-sm").click(function() {
     var txtArea = $("#query_text").get(0);
     var hebrewletter = $(this).attr("letter");
     var txtValue = $("#query_text").val(); // 텍스트 영역 값 가져오기

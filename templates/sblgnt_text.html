@@ -6,31 +6,31 @@
 {% set next_chapter = chapter + 1 %}
 {% set prev_chapter = chapter - 1 %}
 
-<div class="panel panel-default" style="padding: 10px;">
+<div class="container border border-secondary rounded">
 
-    <div class="text_submenu">    
+    <div class="text_submenu">     
         <div class="btn-group">
-          <button type="button" class="btn btn-default dropdown-toggle submenu_button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            화면표시<span class="caret"></span>
+          <button type="button" class="btn btn-sm dropdown-toggle btn-outline-dark submenu_button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              화면표시<span class="caret"></span>
           </button>
           <ul class="dropdown-menu">
-            <li><a href="#" id="syntax_enact">절(C)/구(P)단위표시</a></li>
-            <li><a href="#" id="geoinfo" data-kml="{{kml_file}}">지도표시</a></li>
-            <li><a href="#" id="printing" onclick="content_print(bookname)">본문인쇄화면</a></li>
+            <a class="dropdown-item" href="#" id="syntax_enact">절(C)/구(P)단위표시</a>
+            <a class="dropdown-item" href="#" id="geoinfo" data-kml="{{kml_file}}">지도표시</a>
+            <a class="dropdown-item" href="#" id="printing" onclick="content_print(bookname)">본문인쇄화면</a>
           </ul>
         </div>
     
         <div class="btn-group">
-          <button type="button" class="btn btn-default dropdown-toggle submenu_button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            도구모음<span class="caret"></span>
+          <button type="button" class="btn btn-sm dropdown-toggle btn-outline-dark submenu_button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              도구모음<span class="caret"></span>
           </button>
           <ul class="dropdown-menu">
-            <li><a href="/studytools/reading/sblgnt/?v={{ vcode }}">원문읽기도우미</a></li>
+            <a class="dropdown-item" href="/studytools/reading/sblgnt/?v={{ vcode }}">원문읽기도우미</a>
           </ul>
         </div>
     
         <div class="btn-group">
-          <button type="button" class="btn btn-default dropdown-toggle submenu_button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button type="button" class="btn btn-sm dropdown-toggle btn-outline-dark submenu_button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             번역본<span class="caret"></span>
           </button>
           <ul class="dropdown-menu" style="padding-right: 10px">
@@ -56,7 +56,7 @@
 
   <div id="text_body">
 
-    <div class="center" align="center" id="selector_title">
+    <div class="center" id="selector_title">
       {% include 'sblgnt_selector.html' %}
     </div>
     <div id="printing_title"></div>

@@ -1,15 +1,15 @@
 {% extends "layout.html" %}
 {% block body %}
     {% autoescape false %}
-    <div id="commentary_container" class="panel panel-default">
-        <div class="panel-body">
+    <div class="container border border-secondary rounded" style="padding: 20px;">
+
             <center>
                 <h3>정말로 삭제하시겠습니까?</h3><br><br>
                 <button class="btn btn-default" onclick="location.href = '/{{ table }}/remove/{{ no }}?n={{ next_url }}';">삭제하기</button>
                 <!-- <button class="btn btn-default" onclick="location.href = '/{{ table }}/list/';">취소하기</button> -->
                 <button class="btn btn-default" onclick="location.href = '{{ next_url }}';">취소하기</button>
             </center>
-        </div>
+
     </div>
     {% endautoescape %}
 {% endblock %}

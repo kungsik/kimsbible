@@ -10,7 +10,7 @@ $(document).ready(function(){
         var verse_node = $(this).attr("verse_node");
         var url = '/bhsheb/verse/'+verse_node;
         $('.modal-container').load(url, function(result){
-            $('#verse_api').modal({show:true});
+            $('#verse_api').modal({show:true, backdrop:false});
         });
     });
 });
@@ -20,7 +20,7 @@ $(document).ready(function(){
         var verse_node = $(this).attr("verse_node");
         var url = '/sblgnt/verse/'+verse_node;
         $('.modal-container').load(url, function(result){
-            $('#verse_api').modal({show:true});
+            $('#verse_api').modal({show:true, backdrop:false});
         });
     });
 });

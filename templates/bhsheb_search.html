@@ -3,68 +3,75 @@
 <script src="/static/js/text_tab.js"></script>
 <script src="/static/js/search.js?v=1.111"></script>
 
+<div class="container border border-white rounded">
 
-<div class="alert alert-danger" role="alert">현재 검색 페이지는 아직 테스트 중입니다. 검색결과는 500개로 제한합니다. 검색하시기 전에 검색 <a href="/search_tutorial" target="_blank">튜토리얼</a>과
-  <a href="https://www.youtube.com/playlist?list=PLe20Ld-Xa6NjkFVBFhXrRMhwqyowipHbv" target="_blank">동영상 안내</a>를 참고하시기 바랍니다. 결과값이 많거나 쿼리 로직이 복잡할 경우는 로딩 시간이 좀 걸릴 수 있습니다. 검색 결과가 아주 많은 데이터의 경우 검색이 아예 실행이 되지 않을 수 있습니다. 이 경우 책의 범위를 한정해 주면 됩니다.</div>
+  <div class="alert alert-danger" role="alert">검색결과는 500개로 제한합니다. 검색하시기 전에 검색 <a href="/search_tutorial" target="_blank">튜토리얼</a>과
+    <a href="https://www.youtube.com/playlist?list=PLe20Ld-Xa6NjkFVBFhXrRMhwqyowipHbv" target="_blank">동영상 안내</a>를 참고하시기 바랍니다. 결과값이 많거나 쿼리 로직이 복잡할 경우는 로딩 시간이 좀 걸릴 수 있습니다. 검색 결과가 아주 많은 데이터의 경우 검색이 아예 실행이 되지 않을 수 있습니다. 이 경우 책의 범위를 한정해 주면 됩니다.</div>
 
-<div class="row">
-  <div class="col-md-4" style="text-align: center">
-    <h4>검색 쿼리 입력</h4>
-    <form method="post" id="query_post">
-      <textarea class="form-control" rows="10" name="query" id="query_text"></textarea> 
-      *שׁ(쉰)은 ש1으로 שׂ(신)은 ש2로 입력하세요.<br>
-      * = 기호를 사용할 경우 양 옆에 공백이 없어야 합니다.<br>
-      book=Genesis(O), book = Genesis(X)<br>
-      <br><button type="submit" class="btn btn-success" id="query_submit">쿼리실행</button>
-    </form>
+  <div class="row">
+    <div class="col-md-4" style="text-align: center">
+      <h5>검색 쿼리 입력</h5>
+      <form method="post" id="query_post">
+        <textarea class="form-control" rows="10" name="query" id="query_text"></textarea> 
+        <p>
+          *שׁ(쉰)은 ש1으로 שׂ(신)은 ש2로 입력하세요.<br>
+          * = 기호를 사용할 경우 공백이 없어야 합니다.<br>
+          book=Genesis(O), book = Genesis(X)<br>
+        </p>
+        <br><button type="submit" class="btn btn-outline-success" id="query_submit">쿼리실행</button>
+      </form>
 
-    <div id="load_image" style="display:none"><img src="/static/img/loader.gif" align="center"></div>
+      <div id="load_image" style="display:none"><img src="/static/img/loader.gif" align="center"></div>
 
-    <br>
-    <div id="hebrewkey" style="text-align:center"></div>
-    <script src="/static/js/hebrewkeySearch.js?v=1.111"></script>
-
-    <div class="search_helper" id="search_helper">
       <br>
-      <h5>검색 쿼리 입력 도우미</h5>
-      <select name="init" id="init" class="form-control">
-              <option value="">선택자</option>
-              <option value="book">책선택</option>
-              <option value="chapter">장선택</option>
-              <option value="verse">본문절(verse)선택</option>
-              <!-- <option value="sentence">문장선택</option> -->
-              <option value="clause">문장절(clause)선택</option>
-              <option value="phrase">구선택</option>
-              <option value="word">단어선택</option>
-            </select>
+      <div id="hebrewkey" style="text-align:center"></div>
+      <script src="/static/js/hebrewkeySearch.js?v=1.1111"></script>
+
+      <div class="search_helper" id="search_helper">
+        <br>
+        <h6>검색 쿼리 입력 도우미</h6>
+        <select name="init" id="init" class="form-control">
+                <option value="">선택자</option>
+                <option value="book">책선택</option>
+                <option value="chapter">장선택</option>
+                <option value="verse">본문절(verse)선택</option>
+                <!-- <option value="sentence">문장선택</option> -->
+                <option value="clause">문장절(clause)선택</option>
+                <option value="phrase">구선택</option>
+                <option value="word">단어선택</option>
+              </select>
+      </div>
+      <div class="search_selector" id="search_selector"></div>
+      <div class="search_selector2" id="search_selector2"></div>
+      <label for="check"> 새로운 줄에 추가</label>
+      <input type="checkbox" id="check" checked>
+      <label for="check2"> 커서위치 다음에 추가</label>
+      <input type="checkbox" id="check2"><br><br>
+
+      <div class="input-group">
+        <span class="input-group-prepend">
+          <button type="button" count_range="m" class="btn btn-outline-secondary" id="indent_minus">
+            -
+          </button>
+        </span>
+        <input num=0 class="form-control" id="indent_count" style="text-align:center" placeholder="들여쓰기 레벨">
+        <span class="input-group-append">
+          <button type="button" count_range="p" class="btn btn-outline-secondary" id="indent_plus">
+            +
+          </button>
+        </span>
+      </div>
+
+      <div style="padding:20px"><input type="button" name="add_search" id="add_search" class="btn btn-outline-primary" value="검색옵션추가"></div>
     </div>
-    <div class="search_selector" id="search_selector"></div>
-    <div class="search_selector2" id="search_selector2"></div>
-    <label for="check"> 새로운 줄에 추가</label>
-    <input type="checkbox" id="check" checked>
-    <label for="check2"> 커서위치 다음에 추가</label>
-    <input type="checkbox" id="check2"><br><br>
-    <div class="input-group">
-      <span class="input-group-btn">
-              <button type="button" count_range="m" class="btn btn-default btn-number" id="indent_minus">
-                <span class="glyphicon glyphicon-minus"></span>
-      </button>
-      </span>
-      <input num=0 class="form-control" id="indent_count" style="text-align:center" placeholder="들여쓰기 레벨">
-      <span class="input-group-btn">
-              <button type="button" count_range="p" class="btn btn-default btn-number" id="indent_plus">
-                <span class="glyphicon glyphicon-plus"></span>
-      </button>
-      </span>
+    <div class="col-md-8">
+      <div id="query_input"></div>
+      <div id="pager" class="pager"></div>
+      <div id="search_result" class="search_heb"></div><br>
     </div>
-    <div style="padding:20px"><input type="button" name="add_search" id="add_search" class="btn btn-default" value="검색옵션추가"></div>
+    <script src="/static/js/search_helper.js"></script>
   </div>
-  <div class="col-md-8">
-    <div id="query_input"></div>
-    <div id="pager" class="pager"></div>
-    <div id="search_result" class="search_heb"></div><br>
-  </div>
-  <script src="/static/js/search_helper.js"></script>
+
 </div>
 
 <script>

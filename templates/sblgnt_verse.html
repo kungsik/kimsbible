@@ -1,5 +1,5 @@
 <script>
-    let node = '{{ node }}';
+    var node = '{{ node }}';
     $(document).ready(function() {
             $.ajax({
                     url: '{{ sblgnt_url }}/verse/gnt/' + node,
@@ -45,9 +45,9 @@
                     }
             });
     });
-    </script>
+</script>
 
-<div class="modal modal-wide" id="verse_api">
+<div class="modal modal-wide" id="verse_api"> 
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- header -->

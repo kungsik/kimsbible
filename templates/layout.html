@@ -17,22 +17,35 @@
     <meta property="og:image" content="https://app.alphalef.com/static/img/logo.png">
     <meta property="og:url" content="https://app.alphalef.com"> -->
 
-  <!-- 부트스트랩  및 css -->
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
-    <link rel="stylesheet" href="/static/external/bootstrap.min.css">
-    <link href="/static/css/main.css?ver=1.1335" rel="stylesheet">
-    <link href="/static/css/nav_style.css?ver=1.11" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css"> -->
-    <link rel="stylesheet" href="/static/external/katex.min.css">
-    <link href="/static/css/mk.css" rel="stylesheet">
-    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
-    <link href="/static/external/font-awesome.min.css" rel="stylesheet">
-    <!-- <script src="//code.jquery.com/jquery-1.11.2.min.js"></script> -->
-    <script src="/static/external/jquery-1.11.2.min.js"></script>
-    <script src="/static/js/modal_word_api.js?ver=1.116"></script>
-    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
-    <link href="/static/css/studytools.css?v=111115531" rel="stylesheet">
 
+    <!-- 구글폰트 -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
+
+    <!-- 외부 스타일 파일 -->
+    <link rel="stylesheet" href="/static/external/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="/static/external/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/external/css/jquery-ui.css">
+    <link rel="stylesheet" href="/static/external/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/static/external/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/static/external/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/static/external/css/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/static/external/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/static/external/fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" href="/static/external/css/aos.css">
+    <link rel="stylesheet" href="/static/external/css/style.css">
+    <link rel="stylesheet" href="/static/external/css/fontawesome.min.css">
+
+
+    <!-- 자체 스타일 파일 -->
+    <link href="/static/css/main.css?ver=1.1336" rel="stylesheet">
+    <link href="/static/css/studytools.css?v=111115531" rel="stylesheet">
+    <link href="/static/css/mk.css" rel="stylesheet">
+
+    <!-- jquery -->
+    <script src="/static/external/js/jquery-3.3.1.min.js"></script>
+
+    <!-- 검색 사이트 관련 -->
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -42,111 +55,163 @@
       ga('send', 'pageview');
     </script>
     <meta name="naver-site-verification" content="c658814c7f6b024449cd1a746fb8d4c51b25add4"/>
-
+    <!-- 검색 사이트 관련 끝 -->
   </head>
-  <body>
-    <div class = container>
-        <section class="navigation">
-          <div class="nav-container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="brand">
-              <a href="/">알파알렙성경</a>
+
+  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+
+    <div class="site-wrap"  id="home-section">
+
+      <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+          <div class="site-mobile-menu-close mt-3">
+            <span class="icon-close2 js-menu-toggle"></span>
+          </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+      </div>
+      
+      <div class="container d-none d-lg-block">
+        <div class="row">
+          <div class="col-12 text-center mb-4 mt-5">
+              <!-- <h1 class="mb-0 site-logo"><a href="/" class="text-black h2 mb-0">알파알렙성경</a></h1> -->
+              <h1 class="mb-0 site-logo"><a href="/" class="text-black h2 mb-0"><img src="/static/img/sublogo.png"></a></h1>
             </div>
-            <nav>
-                <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
-                <ul class="nav-list">
-                    <li>
-                        <a href="#!">소개</a>
-                        <ul class="nav-dropdown">
-                            <li><a href="/">알파알렙 성서</a></li>
-                            <li><a href="/developer">알파알렙 연구소</a></li>
-                            <li><a href="/license">저작권 안내</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                      <a href="#!">성서본문</a>
-                      <ul class="nav-dropdown">
-                         <li><a href="/bhsheb/Genesis/1">구약</a></li>
-                         <li><a href="/sblgnt/Matthew/1">신약</a></li>
-                      </ul>
-                    </li>
-                    <li>
-                        <a href="#!">주석</a>
-                        <ul class="nav-dropdown">
-                           <li><a href="/commentary/intro/">소개</a></li>
-                           <li><a href="/commentary/list/">오픈주석</a></li>
-                           <li><a href="/classic/list/">클래식주석</a></li>
-                           {% if current_user.name %}
-                            <li><a href="/commentary/mylist/">내오픈주석</a></li>
-                           {% endif %}
-                        </ul>
-                    </li>
-                    <li>
-                      <a href="/community">커뮤니티</a>
-                    </li>
-                    <li>
-                        <a href="#!">회원메뉴</a>
-                        <ul class="nav-dropdown">
-                            {% if current_user.name %}
-                              <li><a href="#">{{ current_user.name }}님</a></li>
-                              <li><a href="/auth/signout/">로그아웃</a></li>
-                            {% else %}
-                              <li><a href="/auth/signup/">회원가입</a></li>
-                              <li><a href="/auth/signin/">로그인</a></li>
-                            {% endif %}
-                        </ul>
-                    </li>
+        </div>
+      </div>
+      <header class="site-navbar py-md-4 js-sticky-header site-navbar-target" role="banner">
+  
+        <div class="container">
+          <div class="row align-items-center">
+            
+            <div class="col-6 col-md-6 col-xl-2  d-block d-lg-none">
+              <h1 class="mb-0 site-logo"><a href="/" class="text-black h2 mb-0"><img src="/static/img/sublogo.png"></a></h1>
+            </div>
+  
+            <div class="col-12 col-md-12 main-menu">
+              <nav class="site-navigation position-relative text-center" role="navigation">
+                <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                  <li class="has-children">
+                    <a href="#!" class="nav-link">소개</a>
+                    <ul class="dropdown">
+                        <li><a href="/">알파알렙 성서</a></li>
+                        <li><a href="/developer">알파알렙 연구소</a></li>
+                        <li><a href="/license">저작권 안내</a></li>
+                    </ul>
+                  </li>
+                  <li class="has-children">
+                    <a href="#!" class="nav-link">성서본문</a>
+                    <ul class="dropdown">
+                        <li><a href="/bhsheb/Genesis/1">구약</a></li>
+                        <li><a href="/sblgnt/Matthew/1">신약</a></li>
+                    </ul>
+                  </li>
+                  <li class="has-children">
+                    <a href="#!" class="nav-link">주석</a>
+                    <ul class="dropdown">
+                        <li><a href="/commentary/intro/">소개</a></li>
+                        <li><a href="/commentary/list/">오픈주석</a></li>
+                        <li><a href="/classic/list/">클래식주석</a></li>
+                        {% if current_user.name %}
+                        <li><a href="/commentary/mylist/">내오픈주석</a></li>
+                        {% endif %}
+                    </ul>
+                  </li>
+                  <li>
+                    <a href="/community" class="nav-link">커뮤니티</a>
+                  </li>
+                  <li class="has-children">
+                    <a href="#!" class="nav-link">회원메뉴</a>
+                    <ul class="dropdown">
+                      {% if current_user.name %}
+                        <li><a href="#">{{ current_user.name }}님</a></li>
+                        <li><a href="/auth/signout/">로그아웃</a></li>
+                      {% else %}
+                        <li><a href="/auth/signup/">회원가입</a></li>
+                        <li><a href="/auth/signin/">로그인</a></li>
+                      {% endif %}
+                    </ul>
+                  </li>
                 </ul>
-            </nav>
-          </div><!-- /.container-fluid -->
-        </section>
-
-        {% block body %}
-        {% endblock %}
-
-        <div class="gcse-search"></div>
-        <div class="modal modal-wide fade">
-          <div class="modal-dialog">
-            <div class="modal-content">
-            <!-- modal ajax 호출되는  곳-->
+              </nav>
             </div>
+ 
+            <div class="col-6 col-md-6 d-inline-block d-lg-none ml-md-0" ><a href="#" class="site-menu-toggle js-menu-toggle text-black float-right"><span class="icon-menu h3"></span></a></div>
+  
           </div>
         </div>
+        
+      </header>
+      
+      <div class="contents">
+      {% block body %}
+      {% endblock %}
+      </div>
+      
+    </div> <!-- .site-wrap -->
 
-    <script async src="https://cse.google.com/cse.js?cx=partner-pub-1821654659787030:59s52d-9yr1"></script>
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-		<!-- Kim -->
-		<ins class="adsbygoogle"
-		     style="display:block"
-		     data-ad-client="ca-pub-1821654659787030"
-		     data-ad-slot="3495261380"
-		     data-ad-format="auto"
-		     data-full-width-responsive="true"></ins>
-		<script>
-     		(adsbygoogle = window.adsbygoogle || []).push({});
-		</script>
+    <div class="container">
+      <!-- 구글 검색 -->
+      <br>
+      <div class="gcse-search"></div>
+      <script async src="https://cse.google.com/cse.js?cx=partner-pub-1821654659787030:59s52d-9yr1"></script>
 
-        <div class="footer">
-          <div style="float:left; margin-right:10px">
-            <img src="/static/img/logo.png" height="80" width="80" style="vertical-align:middle">
-          </div>
-          <div style="float:left">
-            알파알렙성경(AlphAlef Bible) (Since 2017)<br>
-            Powered by <a href="http://etcbc.nl/" target="_blank">BHSA C Dataset</a><br>
-            Contact: kks@alphalef.com
-          </div>
-        </div>
-
+      <!-- 구글 광고 -->
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+      <!-- Kim -->
+      <ins class="adsbygoogle"
+          style="display:block"
+          data-ad-client="ca-pub-1821654659787030"
+          data-ad-slot="3495261380"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+      <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+      </script> <!-- 구글 광고 끝 -->
     </div>
+
+  
+    <!-- 푸터 -->
+    <div class="footer py-5 border-top text-center">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-12">
+            <p class="mb-0">
+              <a href="https://www.facebook.com/alphalefcommunity" class="p-3" target="_blank"><span class="icon-facebook"> 페이스북페이지</span></a>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <p class="mb-0">
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              Copyright &copy;<script>document.write(new Date().getFullYear());</script> 알파알렙성경 All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- 모달 자리 -->
     <div class="modal-container"></div>
-    <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
-    <script src="/static/external/jquery.min.js"></script>
-    <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-    <script src="/static/external/bootstrap.min.js"></script>
-    <script src="/static/js/nav.js"></script>
 
+    <!-- 자체 js 파일 -->
+    <script src="/static/js/modal_word_api.js?ver=1.1161"></script> 
+
+    <!-- 외부 js 파일 -->
+    <script src="/static/external/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="/static/external/js/jquery-ui.js"></script>
+    <script src="/static/external/js/popper.min.js"></script>
+    <script src="/static/external/js/bootstrap.min.js"></script>
+    <script src="/static/external/js/owl.carousel.min.js"></script>
+    <script src="/static/external/js/jquery.stellar.min.js"></script>
+    <script src="/static/external/js/jquery.countdown.min.js"></script>
+    <script src="/static/external/js/bootstrap-datepicker.min.js"></script>
+    <script src="/static/external/js/jquery.easing.1.3.js"></script>
+    <script src="/static/external/js/aos.js"></script>
+    <script src="/static/external/js/jquery.fancybox.min.js"></script>
+    <script src="/static/external/js/jquery.sticky.js"></script>    
+    <script src="/static/external/js/main.js"></script>
   </body>
 </html>

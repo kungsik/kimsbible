@@ -1,10 +1,9 @@
 {% extends "layout.html" %}
 {% block body %}
-<div id="commentary_container" class="panel panel-default">
-  <div class="panel-body">
-      <div class="panel-container">
+<div class="container border border-secondary rounded" style="padding: 20px;">
+
         <div>
-          <h1>저작권(license) 및 자료출처</h1>
+          <h3>저작권(license) 및 자료출처</h3>
         </div>
 
         <hr />
@@ -12,21 +11,21 @@
 
         <div style="font-size: 16px; line-height: 1.5em;">
         
-            <h3>1. 소스코드 (<a href="https://github.com/kungsik/kimsbible" target="_blank" rel="noopener">깃허브 저장소</a>)</h3>
+            <h4>1. 소스코드 (<a href="https://github.com/kungsik/kimsbible" target="_blank" rel="noopener">깃허브 저장소</a>)</h4>
             <div>
             <ul>
             <li>본&nbsp;사이트의&nbsp;소스코드는&nbsp;현재&nbsp;사이트의&nbsp;관리자(김경식,&nbsp;kks@alphalef.com)에&nbsp;의해&nbsp;작성되었습니다.&nbsp;본&nbsp;소스코드는 <a href="https://github.com/kungsik/kimsbible/blob/master/licence" target="_blank" rel="noopener">GPL&nbsp;v3.0&nbsp;라이선스</a> 규약을&nbsp;따르고&nbsp;있습니다.&nbsp;이&nbsp;규약에&nbsp;의거, 누구나 본&nbsp;소스코드를&nbsp;자유롭게&nbsp;변형하거나&nbsp;재배포&nbsp;할&nbsp;수&nbsp;있습니다. 그러나 동시에 재배포시&nbsp;반드시&nbsp;원저자를&nbsp;명시해야&nbsp;하고&nbsp;재배포자는&nbsp;자신의&nbsp;소스코드&nbsp;역시&nbsp;공개해야&nbsp;할&nbsp;의무를&nbsp;가집니다.</li>
             </ul>
             </div>
             <p>&nbsp;</p>
-            <h3>2. 데이터 소스</h3>
+            <h4>2. 데이터 소스</h4>
             <ul>
             <li>히브리어 어형과 구문정보 데이터는 네델란드 자유대학에서 구축한 <a href="https://github.com/ETCBC/bhsa" target="_blank" rel="noopener">BHSA 4C</a> 버전을 이용했습니다. 그리고 이 데이터는 동 대학에서 개발한 <a href="https://github.com/annotation/text-fabric" target="_blank" rel="noopener">Text-Fabric</a>이라는 파이썬 라이브러리(<a href="https://github.com/annotation/text-fabric/blob/master/LICENSE" target="_blank" rel="noopener">MIT 라이선스</a>)를 통해 구동됩니다.&nbsp;</li>
             <li>그리스어 어형과 구문정보 데이터는 Eliran Wong이 기존의 <a href="https://github.com/morphgnt/sblgnt" target="_blank" rel="noopener">SBLGNT 성서 파싱 데이터</a>(<a href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC-BY-SA 라이선스</a>)를 Text-Fabric 용으로 가공한 <a href="https://github.com/eliranwong/SBLGNT-add-ons" target="_blank" rel="noopener">버전</a>을 활용했습니다(<a href="https://github.com/kungsik/kimsbible/blob/master/licence" target="_blank" rel="noopener">GPL&nbsp;v3.0&nbsp;라이선스</a>).</li>
             <li>히브리어, 그리스어 스트롱 코드는&nbsp;Eliran Wong이 Text-Fabric 용으로 가공한 <a href="https://github.com/eliranwong/BHS-Strong-no" target="_blank" rel="noopener">데이터</a>를 사용했습니다.</li>
             </ul>
             <p>&nbsp;</p>
-            <h3>3. 성서본문</h3>
+            <h4>3. 성서본문</h4>
             <ul>
             <li>본 사이트에 인용된 그리스어/히브리어 원어 성경 자료에 관한 저작권은 아래 링크를 참조해 주시기 바랍니다. 사전 허가 없이 내용을 변경하거나 영리목적으로 이용이 불가합니다.</li>
             <li>그리스어: SBL Greek New Testament,&nbsp;Copyright 2010 by the Society of Biblical Literature and Logos Bible Software. (<a href="http://sblgnt.com/license/" target="_blank" rel="noopener">저작권 안내</a>)</li>
@@ -36,13 +35,13 @@
             <li>영어 번역: 킹제임스,&nbsp;1611. (저작권 만료)</li>
             </ul>
             <p>&nbsp;</p>
-            <h3>4. 본 사이트에 링크된 외부 자료</h3>
+            <h4>4. 본 사이트에 링크된 외부 자료</h4>
             <ul>
             <li>지도 데이터: Bible Geocoding&nbsp;(<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0 라이선스</a>) (<a href="http://www.openbible.info/geo/" target="_blank" rel="noopener">링크</a>)&nbsp;</li>
             <li>히브리어, 헬라어 사전: 네이버 고대 히브리어 사전(<a href="https://dict.naver.com/hbokodict/ancienthebrew/#/main" target="_blank" rel="noopener">링크</a>), 네이버 고대 그리스어 사전(<a href="https://dict.naver.com/grckodict/ancientgreek/#/entry/grcko/bcecdc5ddd9742de97fbdddb81e60b4a" target="_blank" rel="noopener">링크</a>), Bible Hub(<a href="https://biblehub.com/" target="_blank" rel="noopener">링크</a>)</li>
             </ul>
             <p>&nbsp;</p>
-            <h3>5. 알파알렙 파싱 포맷 및 주석 자료</h3>
+            <h4>5. 알파알렙 파싱 포맷 및 주석 자료</h4>
             <ul>
             <li>기본적으로 클래식 주석에 들어가는 자료는 상용 라이선스 기간이 지난 공공재(Public Domain) 자료들입니다.&nbsp; 혹시 라이선스 위반이 되는 자료를 발견하시면 알려 주시면 감사하겠습니다.</li>
             <li>오픈 주석에 들어가는 자료의 기본적인 저작권은 글을 올려주신 분들에게 있습니다. 필요하다면 그 글 하단에 원하시는 저작권 세부 사항을 기재해 주시면 감사하겠습니다. 알파알렙 성경에서 기본적으로 정의하는 저작권은&nbsp;<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ko" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>입니다. 이 라이선스는 동일한 라이선스를 사용한다는 조건하에 변경이나 자유로운 배포가 가능하지만 원 저작자를 밝혀야 하며, 상업용으로는 사용하실 수 없습니다.</li>
@@ -52,8 +51,5 @@
         
         </div>
 
-
-     </div>
-  </div>
 </div>
 {% endblock %} 

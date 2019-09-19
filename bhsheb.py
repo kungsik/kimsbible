@@ -171,9 +171,38 @@ def get_kor_hgloss(strongnum, w):
 @app.route('/')
 def main_page():
     commentary_db = db.Table()
-    recent_posts_commentary = commentary_db.get_recent('commentary', 5)
-    recent_posts_classic = commentary_db.get_recent('classic', 5)
-    return render_template('main.html', recent_posts_commentary=recent_posts_commentary, recent_posts_classic=recent_posts_classic)
+    recent_posts_commentary = commentary_db.get_recent('commentary', 3)
+    img_pattern = re.compile(r"<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>")
+    
+    title = []
+    content = []
+    img = []
+    date = []
+    author = []
+    no = []
+    urltitle = []
+
+    for post in recent_posts_commentary:
+        title.append(post[4])
+
+        try:
+            img.append(re.findall(img_pattern, str(post[5]))[0])
+        except:
+            img.append("https://app.alphalef.com/static/img/logo.png")
+
+        date.append(post[1].split(' ')[0])
+        author.append(post[2])
+
+        content_text = re.sub('<.+?>', '', post[5], 0, re.I|re.S)
+        content_text = re.sub('$.+?;', '', content_text, 0, re.I|re.S)
+        content.append(content_text[0:150])
+
+        no.append(post[0])
+        urltitle.append(post[10])
+
+    # recent_posts_classic = commentary_db.get_recent('classic', 5)
+    # return render_template('main.html', recent_posts_commentary=recent_posts_commentary, recent_posts_classic=recent_posts_classic)
+    return render_template('main.html', author=author, date=date, img=img, content=content, title=title, urltitle=urltitle, no=no)
 
 @app.route('/developer/')
 def developer_page():
@@ -265,13 +294,13 @@ def text_page(book='Genesis', chapter=1):
 
             #절분석 버튼
             verse +=  '<br><span>'
-            verse += '<button type="button" class="btn btn-default btn-xs bhsheb_verse_analysis" verse_node='+str(v)+'>절분석</button>'
+            verse += '<button type="button" class="btn btn-outline-secondary btn-sm bhsheb_verse_analysis" verse_node='+str(v)+'>절분석</button>'
             verse += '</span> '
 
             #절노트 버튼
             versenote_url = "../../commentary/vcode/" + vcode + "/"
             verse += '<span>'
-            verse += '<a href="' + versenote_url + '" target="_blank"><button class="btn btn-default btn-xs verse_note">주석</button></a>'
+            verse += '<a href="' + versenote_url + '" target="_blank"><button class="btn btn-outline-secondary btn-sm verse_note">주석</button></a>'
             verse += '</span>'
 
             verse += '</div>' #versenode

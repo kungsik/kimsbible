@@ -2,50 +2,49 @@
 {% block body %}
 
 <div style="text-align: center">
-    <div class="panel panel-default">
+    <div class="container border border-white rounded">
+
         <h3 class="title">회원 가입 하기</h3>
-        <div class="panel-body">
-            <div class="panel-container">
-                <div class="alert alert-info">
-                    <ol>
-                        <li>본 사이트에 회원가입을 하시면 오픈주석에 기여하실 수 있습니다.</li>
-                        <li>본 사이트는 회원가입시 최소한의 정보만을 받고 다른 용도로는 사용하지 않습니다.</li>
-                        <li>이메일 주소는 이 사이트에 올리시는 글에 대한 소유권 확인을 위해 필요합니다.</li>
-                    </ol>
-                </div>
-                {% if error == 1 %}
-                <div class="alert alert-danger">이미 등록된 이메일입니다.</div>
-                {% elif error == 2 %}  
-                <div class="alert alert-danger">서로 다른 패스워드를 입력하셨습니다.</div>
-                {% elif error == 3 %}  
-                <div class="alert alert-danger">{{ name }}은 사용하실 수 없는 이름입니다.</div>
-                {% elif error == 4 %}  
-                <div class="alert alert-danger">입력되지 않은 정보가 있습니다.</div>
-
-                {% endif %}
-                <form method="POST" name="signup" action="/auth/signup/">
-                    <div class="form-group">
-                        <input class="form-control" type="email" name="email" placeholder="이메일주소">
-                    </div>
-
-                    <div class="form-group">
-                        <input class="form-control" type="text" name="name" placeholder="닉네임(이름)">
-                    </div>
-
-                    <div class="form-group">
-                        <input class="form-control" type="password" name="password" placeholder="비밀번호">
-                    </div>
-
-                    <div class="form-group">
-                        <input class="form-control" type="password" name="password2" placeholder="비밀번호확인">
-                    </div>
-
-                    <input type="hidden" name="redirect">
-
-                    <button type="submit" class="btn btn-default">회원가입하기</button>
-                </form>
+        
+            <div class="alert alert-info">
+                <ol>
+                    <li>본 사이트에 회원가입을 하시면 오픈주석에 기여하실 수 있습니다.</li>
+                    <li>본 사이트는 회원가입시 최소한의 정보만을 받고 다른 용도로는 사용하지 않습니다.</li>
+                    <li>이메일 주소는 이 사이트에 올리시는 글에 대한 소유권 확인을 위해 필요합니다.</li>
+                </ol>
             </div>
-        </div>
+            {% if error == 1 %}
+            <div class="alert alert-danger">이미 등록된 이메일입니다.</div>
+            {% elif error == 2 %}  
+            <div class="alert alert-danger">서로 다른 패스워드를 입력하셨습니다.</div>
+            {% elif error == 3 %}  
+            <div class="alert alert-danger">{{ name }}은 사용하실 수 없는 이름입니다.</div>
+            {% elif error == 4 %}  
+            <div class="alert alert-danger">입력되지 않은 정보가 있습니다.</div>
+
+            {% endif %}
+            <form method="POST" name="signup" action="/auth/signup/">
+                <div class="form-group">
+                    <input class="form-control" type="email" name="email" placeholder="이메일주소">
+                </div>
+
+                <div class="form-group">
+                    <input class="form-control" type="text" name="name" placeholder="닉네임(이름)">
+                </div>
+
+                <div class="form-group">
+                    <input class="form-control" type="password" name="password" placeholder="비밀번호">
+                </div>
+
+                <div class="form-group">
+                    <input class="form-control" type="password" name="password2" placeholder="비밀번호확인">
+                </div>
+
+                <input type="hidden" name="redirect">
+
+                <button type="submit" class="btn btn-default">회원가입하기</button>
+            </form>
+
     </div>
 </div>
 
