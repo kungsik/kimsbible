@@ -29,7 +29,7 @@ $(function () {
                 var num = data.match(/<tr>/g).length;
 
                 $("#search_result_ok").html('검색결과: 총' + num +'개 결과값 <span class=clause style="padding:2px; font-size:15px">구절(clause)</span> <span class=phrase style="padding:2px; font-size:15px">구(phrase)</span> <span class=word style="font-size:15px">단어(word)</span><br>' + data);
-                $("#query_input_ok").html('입력한 쿼리:<button type="button" class="btn btn-default btn btn-sm" id="copy_query">입력창에 복사</button><div id=used_query>' + input + '</div>');
+                $("#query_input_ok").html('입력한 쿼리:<button type="button" class="btn btn-secondary btn-sm" id="copy_query">입력창에 복사</button><div id=used_query>' + input + '</div>');
                 $("#query_post").find('textarea').val('');
 
                 $.ajax({
@@ -71,7 +71,7 @@ $(function () {
                 $("#query_input").attr("id", "query_input_ok");
                 $("#search_result").attr("id", "search_result_ok");
 
-                $("#query_input_ok").html('입력한 쿼리:<button type="button" class="btn btn-default btn btn-sm" id="copy_query">입력창에 복사</button><div id=used_query>' + input + '</div>');
+                $("#query_input_ok").html('입력한 쿼리:<button type="button" class="btn btn-secondary btn-sm" id="copy_query">입력창에 복사</button><div id=used_query>' + input + '</div>');
                 $("#search_result_ok").html('검색 결과가 없습니다. 검색 결과가 너무 많아도 결과값이 나오지 않습니다. 이 경우 검색 범위를 한정하는 것이 좋습니다.(<a href="/search_tutorial/" target=_blank>튜토리얼 참조</a>)');
                 $("#query_post").find('textarea').val('');
 

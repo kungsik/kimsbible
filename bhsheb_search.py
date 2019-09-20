@@ -74,7 +74,7 @@ def bible_search():
                     verse = verse.replace('wordNode_'+str(each_node), 'word')
             result += '<tr><td width=180px><span verse_node=' + str(v) + '>'
             result += section[0] + " " + str(section[1]) + ":" + str(section[2]) + "</span>"
-            result += '<p><button type="button" class="btn btn-default btn-xs bhsheb_verse_analysis" verse_node='+str(v)+'>절분석</button></p></td>'
+            result += '<p><button type="button" class="btn btn-secondary btn-sm bhsheb_verse_analysis" verse_node='+str(v)+'>절분석</button></p></td>'
             result += "<td class=result_verse>" + verse + "</td></tr>"
 
         result += "</tbody></table>"

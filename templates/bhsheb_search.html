@@ -1,7 +1,7 @@
 {% extends "layout.html" %} {% block body %} {% autoescape false %}
 
 <script src="/static/js/text_tab.js"></script>
-<script src="/static/js/search.js?v=1.111"></script>
+<script src="/static/js/search.js?v=1.1111"></script>
 
 <div class="container border border-white rounded">
 
@@ -13,9 +13,10 @@
       <h5>검색 쿼리 입력</h5>
       <form method="post" id="query_post">
         <textarea class="form-control" rows="10" name="query" id="query_text"></textarea> 
-        <p>
+        <br>
+        <p class="alert alert-success">
           *שׁ(쉰)은 ש1으로 שׂ(신)은 ש2로 입력하세요.<br>
-          * = 기호를 사용할 경우 공백이 없어야 합니다.<br>
+          * = 양 옆에 공백이 없어야 합니다.<br>
           book=Genesis(O), book = Genesis(X)<br>
         </p>
         <br><button type="submit" class="btn btn-outline-success" id="query_submit">쿼리실행</button>
@@ -69,7 +70,7 @@
       <div id="pager" class="pager"></div>
       <div id="search_result" class="search_heb"></div><br>
     </div>
-    <script src="/static/js/search_helper.js"></script>
+    <script src="/static/js/search_helper.js?v=11"></script>
   </div>
 
 </div>
