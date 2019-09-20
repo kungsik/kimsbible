@@ -112,7 +112,7 @@
     <div class="container">
         <div class="row mb-5">
         <div class="col-12 text-center">
-            <h2 class="section-title mb-3">최근주석</h2>
+            <h3 class="section-title mb-3">최근주석</h3>
         </div>
         </div>
 
@@ -120,7 +120,7 @@
         <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
             <div class="h-entry">
             <img src="{{ img[0] }}" alt="Image" class="img-fluid" align="center" width="350px">
-            <h2><a href="#">{{ title[0] }} </a></h2>
+            <h4><a href="/commentary/view/{{ no[0] }}/{{ urltitle[0] }}">{{ title[0] }} </a></h4>
             <div class="meta mb-4">{{ author[0] }} <span class="mx-2">&bullet;</span> {{ date[0] }}</div>
             <p>{{ content[0] }} ...</p>
             <p><a href="/commentary/view/{{ no[0] }}/{{ urltitle[0] }}">계속읽기...</a></p>
@@ -129,7 +129,7 @@
         <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
             <div class="h-entry">
             <img src="{{ img[1] }}" alt="Image" class="img-fluid" align="center" width="350px">
-            <h2><a href="#">{{ title[1] }} </a></h2>
+            <h4><a href="/commentary/view/{{ no[1] }}/{{ urltitle[1] }}">{{ title[1] }} </a></h4>
             <div class="meta mb-4">{{ author[1] }} <span class="mx-2">&bullet;</span> {{ date[1] }}</div>
             <p>{{ content[1] }} ...</p>
             <p><a href="/commentary/view/{{ no[1] }}/{{ urltitle[1] }}">계속읽기...</a></p>
@@ -138,7 +138,7 @@
         <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
             <div class="h-entry">
             <img src="{{ img[2] }}" alt="Image" class="img-fluid" align="center" width="350px">
-            <h2><a href="#">{{ title[2] }} </a></h2>
+            <h4><a href="/commentary/view/{{ no[2] }}/{{ urltitle[2] }}">{{ title[2] }} </a></h4>
             <div class="meta mb-4">{{ author[2] }} <span class="mx-2">&bullet;</span> {{ date[2] }}</div>
             <p>{{ content[2] }} ...</p>
             <p><a href="/commentary/view/{{ no[2] }}/{{ urltitle[2] }}">계속읽기...</a></p>
@@ -149,46 +149,19 @@
     </div>
     </div>
 
-    <!-- <div class="site-section bg-light" id="blog-section">
-    <div class="container">
-        <div class="row mb-5">
-        <div class="col-12 text-center">
-            <h2 class="section-title mb-3">최근주석</h2>
-        </div>
-        </div>
-
-        <div class="row">
-        <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
-            <div class="h-entry">
-            <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-            <h2><a href="#">Create interactive prototypes</a></h2>
-            <div class="meta mb-4">Ham Brook <span class="mx-2">&bullet;</span> Jan 18, 2019<span class="mx-2">&bullet;</span> <a href="#">News</a></div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus eligendi nobis ea maiores sapiente veritatis reprehenderit suscipit quaerat rerum voluptatibus a eius.</p>
-            <p><a href="#">Continue Reading...</a></p>
-            </div> 
-        </div>
-        <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
-            <div class="h-entry">
-            <img src="images/img_2.jpg" alt="Image" class="img-fluid">
-            <h2><a href="#">Create interactive prototypes</a></h2>
-            <div class="meta mb-4">James Phelps <span class="mx-2">&bullet;</span> Jan 18, 2019<span class="mx-2">&bullet;</span> <a href="#">News</a></div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus eligendi nobis ea maiores sapiente veritatis reprehenderit suscipit quaerat rerum voluptatibus a eius.</p>
-            <p><a href="#">Continue Reading...</a></p>
+    <div class="site-section bg-light" id="blog-section">
+        <div class="container">
+            <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h3 class="section-title mb-3">커뮤니티 최근글</h2>
             </div>
-        </div>
-        <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
-            <div class="h-entry">
-            <img src="images/img_3.jpg" alt="Image" class="img-fluid">
-            <h2><a href="#">Create interactive prototypes</a></h2>
-            <div class="meta mb-4">James Phelps <span class="mx-2">&bullet;</span> Jan 18, 2019<span class="mx-2">&bullet;</span> <a href="#">News</a></div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus eligendi nobis ea maiores sapiente veritatis reprehenderit suscipit quaerat rerum voluptatibus a eius.</p>
-            <p><a href="#">Continue Reading...</a></p>
-            </div> 
-        </div>
-        
+            </div>
+
+            <div class="row justify-content-center" id="disqus_recent"></div>
+            <script src="/static/js/disqus_recent_posts.js"></script>
+
         </div>
     </div>
-    </div> -->
 
     {% endautoescape %}
 {% endblock %}
