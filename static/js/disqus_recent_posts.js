@@ -20,7 +20,7 @@ $(document).ready(function() {
 				
 				dots = post.raw_message.length > 150 ? "..." : ""
 
-				html += "<p><a href='/community'>" + post.raw_message.substr(0,150) + dots + "</a></p>";
+				html += "<p><a href='/community/#comment-" + post.id + "'>" + post.raw_message.substr(0,150) + dots + "</a></p>";
 				html += "<p class='postRef'>Posted at " + post.createdAt.split("T")[0] + "</p>";
 				html += "</div>";
 				
