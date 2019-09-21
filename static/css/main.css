@@ -415,13 +415,6 @@ iframe {
   }
 }
 
-.notice {
-  border: 2px solid #c9c8c5;
-  padding: 10px;
-  margin-top: 30px;
-  font-size: 12px;
-}
-
 .submenu_button {
   border-color: #fff;
 }
@@ -444,13 +437,15 @@ iframe {
 @media print {
   body { 
     font-size: 11px; 
+    padding: 22mm !important;
   }
 
   a.word_elm {
     font-family: 'SBLHebrew';
     font-size: 20px;
     direction: rtl;
-    color: black;
+    color: black !important;
+    text-decoration: none !important;
   }
 
   li {
@@ -460,7 +455,8 @@ iframe {
   a.sblgnt_word_elm {
     font-family: 'SBLGreek';
     font-size: 18px;
-    color: black;
+    color: black !important;
+    text-decoration: none !important;
   }
 
   .heb_kor,
@@ -508,29 +504,13 @@ iframe {
 }
 
 blockquote {  
-padding: 1rem 1.2rem 1rem 4rem;  
+padding: 1rem 1.2rem 1rem 1rem;  
 border-left: 1rem solid #c76c0c;
-border-right: 0.4rem solid #c76c0c;
   /*Font*/
-  font-family: Georgia, serif;
+  font-family: "Nanum-Gothic";
   font-size: 1rem;
   line-height: 1.2;
   color: #666;
   text-align: justify;
-}
-blockquote::before{
-  content: "\201C"; /*Unicode for Left Double Quote*/
-        /*Font*/
-  font-family: Georgia, serif;
-  font-size: 4.5rem;
-  font-weight: bold;
-  color: #999;  
-  /*Positioning*/
-  position: absolute;
-  left: 1.5rem;
-  top:0;  
-}
-blockquote::after{
-  /*Reset to make sure*/
-  content: "";
+  margin-left: 20px;
 }

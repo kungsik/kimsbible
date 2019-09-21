@@ -91,7 +91,6 @@ function initialize(kml) {
     }
 
     window.onbeforeprint = function(){
-        document.body.style.margin = "15mm";
         document.body.innerHTML = document.getElementById('text_body').innerHTML;
     }
     window.onafterprint = function(){

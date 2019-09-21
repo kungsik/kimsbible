@@ -82,7 +82,6 @@
         function content_print(){
             var initBody = document.body.innerHTML;
             window.onbeforeprint = function(){
-                document.body.style.margin = "15mm";
                 document.body.innerHTML = document.getElementById('search_result_ok').innerHTML;
             }
             window.onafterprint = function(){
