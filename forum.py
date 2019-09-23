@@ -5,8 +5,6 @@ import json
 from flask_login import login_user, current_user, login_required
 from kimsbible.auth import login_manager
 
-forum_db = db.Forum()
-
 @app.route('/forum/add/', methods=['POST','GET'])
 @login_required
 def topic_add():
@@ -16,6 +14,7 @@ def topic_add():
         author = current_user.name
         email = current_user.user_id
 
+        forum_db = db.Forum()
         forum_db.add_topic(topic, content, author, email)
 
         return redirect("/forum/list")
@@ -26,12 +25,14 @@ def topic_add():
 
 @app.route('/forum/list/')
 def topic_list():
+    forum_db = db.Forum()
     lists = forum_db.list_topic()
     return render_template('forum_list_topic.html', lists=lists)
 
 
 @app.route('/forum/view/<no>')
 def topic_view(no):
+    forum_db = db.Forum()
     view = forum_db.view_topic(no)
     reply_list = forum_db.view_reply(no)
     return render_template('forum_view_topic.html', view=view, reply_list=reply_list)
@@ -44,6 +45,7 @@ def add_reply(topic_no):
         author = current_user.name
         email = current_user.user_id
 
+        forum_db = db.Forum()
         forum_db.add_reply(topic_no, content, author, email)
 
         return redirect("/forum/view/" + topic_no)
@@ -62,6 +64,7 @@ def topic_edit(no):
         topic = request.form['topic']
         content = request.form['content']
 
+        forum_db = db.Forum()
         forum_db.edit(no, topic, content)
 
         if forum_db.get_topicid(no):
@@ -75,6 +78,7 @@ def topic_edit(no):
         if not dbdata.is_author('forum', no, current_user):
             return redirect("/")
 
+        forum_db = db.Forum()
         view = forum_db.view_topic(no)
         no = view[0]
         topic = view[3]
@@ -90,6 +94,7 @@ def topic_remove(no):
     if not dbdata.is_author('forum', no, current_user):
         return redirect("/")
 
+    forum_db = db.Forum()
     forum_db.remove_topic(no)
 
     return redirect("/forum/list")
