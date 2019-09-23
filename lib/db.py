@@ -222,3 +222,109 @@ class Table:
           return False
         else:
           return name[0]
+
+
+class Forum:
+    def __init__(self):
+        self.db = pymysql.connect(
+          config.hostname,
+          config.username,
+          config.password,
+          config.db
+        )
+        self.cursor = self.db.cursor()
+        self.current_time = datetime.now() + timedelta(hours=9)
+    
+    def add_topic(self, topic, content, author, email):
+        now = self.current_time.isoformat(' ')
+        headers_list = request.headers.getlist("X-Forwarded-For")
+        ip = headers_list[0] if headers_list else request.remote_addr
+
+        # 새로운 토픽의 카테고리는 1로 설정함. 
+        sql = "INSERT INTO forum (date, topic, content, author, ip, email, updated_date, category) VALUES ('" + str(now) + "', %s, %s, '" + author + "', '" + ip +"', '" + email + "', '" + now + "', '1')"
+        try: 
+          self.cursor.execute(sql, (topic, content))
+          self.db.commit()
+          return "insertion is done"
+        except pymysql.InternalError as error:
+          code, message = error.args
+          print(">>>>>>>>>>>>>", code, message)
+          return "insertion failed"
+    
+    def list_topic(self):
+        sql = "SELECT * FROM forum WHERE category='1' ORDER BY updated_date DESC"
+        try:
+          self.cursor.execute(sql)
+          forum_list = self.cursor.fetchall()
+          return forum_list
+        except pymysql.InternalError as error:
+          code, message = error.args
+          print(">>>>>>>>>>>>>", code, message)
+          return "load db failed" 
+    
+    def view_topic(self, no):
+        sql = "SELECT * FROM forum WHERE no=" + str(no)
+        try:
+          self.cursor.execute(sql)
+          view = self.cursor.fetchone()
+          return view
+        except pymysql.InternalError as error:
+          code, message = error.args
+          print(">>>>>>>>>>>>>", code, message)
+          return "load db failed" 
+
+    def add_reply(self, topic_no, content, author, email):
+        now = self.current_time.isoformat(' ')
+        headers_list = request.headers.getlist("X-Forwarded-For")
+        ip = headers_list[0] if headers_list else request.remote_addr
+
+        # 토픽의 답변 카테고리는 2로 설정함. 
+        sql = "INSERT INTO forum (date, topic_no, content, author, ip, email, category) VALUES ('" + str(now) + "', '" + str(topic_no) + "',  %s, '" + author + "', '" + ip +"', '" + email + "', '2')"
+
+        # 토픽의 updated_date를 새롭게 갱신
+        sql2 = "UPDATE forum SET updated_date='" + now + "', threads=threads+1 WHERE no='" + str(topic_no) + "'"
+
+        try: 
+          self.cursor.execute(sql, (content))
+          self.db.commit()
+          self.cursor.execute(sql2)
+          self.db.commit()
+          return "insertion is done"
+        except pymysql.InternalError as error:
+          code, message = error.args
+          print(">>>>>>>>>>>>>", code, message)
+          return "insertion failed"
+    
+    def view_reply(self, no):
+        sql = "SELECT * FROM forum WHERE topic_no='" + str(no) + "' AND category='2' ORDER BY no ASC"
+        self.cursor.execute(sql)
+        reply_list = self.cursor.fetchall()
+        return reply_list
+
+    def edit(self, no, topic, content):
+        now = self.current_time.isoformat(' ')
+        sql = "UPDATE forum SET edited_date='" + now + "', content='" + content + "', topic='" + topic + "' WHERE no='" + str(no) + "'"
+        self.cursor.execute(sql)
+        self.db.commit()
+        return "successfully edited"
+
+    def get_topicid(self, no):
+        sql = "SELECT topic_no FROM forum WHERE no='" + str(no) + "' AND category='2'"
+        self.cursor.execute(sql)
+        topicid = self.cursor.fetchone()
+        if topicid:
+          return topicid[0]
+        else:
+          return False
+    
+    def remove_topic(self, no):
+        if self.get_topicid(no):            
+          sql2 = "UPDATE forum SET threads=threads-1 WHERE no='" + str(self.get_topicid(no)) + "'"
+          self.cursor.execute(sql2)
+          self.db.commit()        
+
+        sql = "DELETE FROM forum WHERE no='" + str(no) + "'"
+        self.cursor.execute(sql)
+        self.db.commit()
+
+        return "delete is done"

@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% autoescape false %}
+    <div class="container border border-secondary rounded" style="padding: 20px;">
+
+    {% if content %}
+    <h1>토론 수정하기</h1>
+        {% set url = '/forum/edit/' + no|string %}
+        {% set button_name = '수정하기' %}
+    {% else %}
+    <h1>토픽 추가하기</h1>
+        {% set url = '/forum/add' %}
+        {% set button_name = '추가하기' %}
+    {% endif %}
+
+        <hr />
+        <script src="https://cdn.ckeditor.com/4.12.1/basic/ckeditor.js"></script>
+        
+        <form name = "forum_topic_add" method="POST" action="{{ url }}" onsubmit="return validate()">
+            {% if topic or not content %}
+            <input type="text" name="topic" class="form-control" placeholder="토픽제목" id="topic" value="{{ topic }}">
+            <br>
+            {% else %}
+            <input type="hidden" name="topic" value="">
+            {% endif %}
+            <textarea name="content" id="content" rows="10" style="width:100%;" onchange="updatetext()">{{ content }}</textarea>
+            <br>
+            <input type="submit" class="btn btn-info" value="{{ button_name }}"></button>
+        </form>
+
+    </div>
+
+    <script>
+        CKEDITOR.replace('content', {
+            height: 300
+        });
+    </script>    
+
+
+    <script type="text/javascript">
+        function validate() {
+            "{% if topic or not content %}"
+            if( document.getElementById('topic').value == "" ) {
+                alert( "제목을 입력해 주세요!" );
+                document.getElementById('topic').focus();
+                return false
+            }
+            "{% endif %}"
+            if( $("#cke_1_contents iframe").contents().find("body").text() == "" ) {
+                alert( "내용를 입력해 주세요!" );
+                document.getElementById('content').focus();
+                return false
+            }
+            return true;
+        }
+    </script>
+
+    <script>
+        document.title = "알파알렙 포럼 토픽 추가하기";
+    </script>
+
+    {% endautoescape %}
+{% endblock %}

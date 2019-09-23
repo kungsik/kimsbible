@@ -1,0 +1,109 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% autoescape false %}
+
+    <div class="container border border-secondary rounded" style="padding: 20px;">
+
+        <div class="page-header">
+            <h1>토픽 보기</h1>
+        </div>
+        <hr />
+
+        <br>
+        
+        <h3>{{ view[3] }}</h3>
+
+        <br>
+        {% if not view[7] %}
+            {% set date = view[6].split(".")[0] %}
+        {% else %}
+            {% set date = view[7].split(".")[0] + '(수정됨)' %}
+        {% endif %}
+        <div class="card border-dark mb-12" style="max-width: 100%;">
+            <div class="card-header" style="background-color: #c5ffc9">{{ view[1] }} ({{ view[2] }}) | {{ date }}</div>
+            <div class="card-body text-dark">
+                <p class="card-text">{{ view[4] }}</p>
+            </div>
+            {% if current_user.user_id == view[2] %}
+            <div class="card-footer bg-transparent border-dark" style="text-align: right; font-size: 12px;">
+                <a href="/forum/edit/{{ view[0] }}">수정하기</a> | <a href="javascript:confirm_remove({{ view[0] }})">삭제하기</a>
+            </div>                
+            {% endif %}
+        </div>
+        <br>
+
+        {% if reply_list %}
+            {% for reply in reply_list %}
+            {% if not reply[7] %}
+                {% set date = reply[6].split(".")[0] %}
+            {% else %}
+                {% set date = reply[7].split(".")[0] + '(수정됨)' %}
+            {% endif %}
+            <div class="card border-dark mb-12" style="max-width: 100%;">
+                <div class="card-header">{{ reply[1] }} ({{ reply[2] }}) | {{ date }}</div>
+                <div class="card-body text-dark">
+                    <p class="card-text">{{ reply[4] }}</p>
+                </div>
+                {% if current_user.user_id == reply[2] %}
+                <div class="card-footer bg-transparent border-dark" style="text-align: right; font-size: 12px;">
+                    <a href="/forum/edit/{{ reply[0] }}">수정하기</a> | <a href="javascript:confirm_remove({{ reply[0] }})">삭제하기</a>
+                </div>
+                {% endif %}
+            </div>
+            <br>
+            {% endfor %}
+        {% endif %}
+
+        <br>
+
+        {% if current_user.name  %}
+        <!-- reply부분 -->
+        <script src="https://cdn.ckeditor.com/4.12.1/basic/ckeditor.js"></script>
+
+        <form name = "forum_reply_add" method="POST" action="/forum/addreply/{{ view[0] }}" onsubmit="return validate()">
+            <textarea name="content" id="content" rows="10" style="width:100%;">{{ content }}</textarea>
+            <br>
+            <input type="submit" class="btn btn-info" value="토론추가하기" onclick="updatetext()"></button>
+        </form>
+
+        <script>
+            CKEDITOR.replace('content', {
+                height: 200
+            });
+        </script>    
+
+        <script type="text/javascript">
+            function validate() {
+                if( $("#cke_1_contents iframe").contents().find("body").text() == "" ) {
+                    alert( "내용를 입력해 주세요!" );
+                    document.getElementById('content').focus();
+                    return false
+                }
+                return true;
+            }
+
+            function confirm_remove(no) {
+                var confirm_remove = confirm("정말로 삭제하시겠습니까?");
+                if(confirm_remove == true){
+                    location.href = "/forum/remove/" + no;
+                }
+            }
+        </script>
+        <!-- reply 부분 -->
+        {% endif %}
+
+
+        <br>
+        <button class="btn btn-secondary" onclick="location.href = '/forum/list';">목록보기</button> &nbsp;
+    </div>
+    <br><br>
+
+
+
+    <script>
+        document.title = "{{ view[3] }}";
+    </script>
+
+
+    {% endautoescape %}
+{% endblock %}

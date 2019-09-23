@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% autoescape false %}
+
+    <div class="container border border-secondary rounded" style="padding: 20px;">
+        
+        <div>
+            <h1>포럼 리스트</h1>
+        </div>
+        <hr />
+        
+        <br>
+
+        <div class="alert alert-info" role="alert">
+            본 페이지는 알파알렙 포럼입니다. 히브리어, 헬라어 원어나 성경과 관련된, 혹은 본 사이트와 관련한 어떤 내용도 함께 나눌 수 있습니다. 
+            함께 질문하고 배워나가는 장이 되기를 바랍니다!            
+        </div>
+
+        <br>
+
+        <div class="list_table" style="font-size: 16px">
+
+            <span class="list_header">
+                <span class="cell col1">토픽</span>
+                <span class="cell col2">작성</span>
+                <span class="cell col3">업데이트</span>
+                <span class="cell col4">토론수</span>
+            </span>
+
+            {% for list in lists %}
+            <span class="list_row" onclick='location.href="/forum/view/{{ list[0] }}"'>
+                <span class="cell col1"><a href="/forum/view/{{ list[0] }}">{{ list[3] }}</a></span>
+                <span class="cell col2">{{ list[1] }}</span>
+                <span class="cell col3">{{ list[9].split('.')[0] }}</span>
+                <span class="vcount_title">토론수 | </span>
+                <span class="cell col4">{{ list[11] }}</span>
+            </span>
+            {% endfor %}    
+        </div>
+
+        {% if current_user.name %}
+            <br>
+            <button class="btn btn-info" onclick="location.href = '/forum/add';">새토픽 만들기</button>    
+        {% endif %}
+    </div>
+
+    <br>
+
+    <script>
+        document.title = "알파알렙 포럼 리스트 보기";
+    </script>
+    
+    {% endautoescape %}
+{% endblock %}
