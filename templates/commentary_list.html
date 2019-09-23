@@ -37,7 +37,7 @@
 
         {% if vcode %}
             {% for list in lists['classic'] %}
-                <span class="list_row">
+                <span class="list_row" onclick='location.href="/classic/view/{{ list[0] }}/{{ list[10] }}/{{ mode }}"'>
                     <span class="cell col1">{{ list[8] }} · <a href="/classic/view/{{ list[0] }}/{{ list[10] }}/{{ mode }}">{{ list[4] }}</a> <span class="disqus-comment-count" data-disqus-identifier="{{ table }}-{{ list[0] }}-{{ list[10] }}"></span></span>
                     <span class="cell col2">{{ list[2] }}</span>
                     {% set date = list[1].split(' ') %}
@@ -52,7 +52,7 @@
                         {% set header = '[비공개] ' %}
                     {% endif %}
                 {% endif %}
-                <span class="list_row">                        
+                <span class="list_row" onclick='location.href="/commentary/view/{{ list[0] }}/{{ list[10] }}/{{ mode }}"'>
                     <span class="cell col1">{{ list[8] }} · {{ header }}<a href="/commentary/view/{{ list[0] }}/{{ list[10] }}/{{ mode }}">{{ list[4] }}</a>  <span class="disqus-comment-count" data-disqus-identifier="{{ table }}-{{ list[0] }}-{{ list[10] }}"></span></span>
                     <span class="cell col2">{{ list[2] }}</span>
                     {% set date = list[1].split(' ') %}
@@ -69,7 +69,7 @@
                         {% set header = '[비공개] ' %}
                     {% endif %}
                 {% endif %}
-                <span class="list_row">
+                <span class="list_row" onclick='location.href="/{{ table }}/view/{{ list[0] }}/{{ list[10] }}/{{ mode }}"'>
                     <span class="cell col1">{{ list[8] }} · {{ header }}<a href="/{{ table }}/view/{{ list[0] }}/{{ list[10] }}/{{ mode }}">{{ list[4] }}</a> <span class="disqus-comment-count" data-disqus-identifier="{{ table }}-{{ list[0] }}-{{ list[10] }}"></span></span>
                     <span class="cell col2">{{ list[2] }}</span>
                     {% set date = list[1].split(' ') %}

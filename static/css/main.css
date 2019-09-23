@@ -84,19 +84,16 @@ ol {
   color: #336fff;
 }
 
-.verse_num:hover {
-  color: #3420ff;
-  font-weight: bold;
-}
-
 .word_elm:hover {
   color: #ff6d00;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .sblgnt_word_elm:hover {
   color: #ff6d00;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .kor,
@@ -285,6 +282,7 @@ iframe {
 
 .list_row:hover {
     background-color: #cdd8e4;
+    cursor: pointer;
 }
 
 .list_header {
