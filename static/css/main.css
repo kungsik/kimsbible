@@ -280,8 +280,17 @@ img {
 }
 
 iframe {
-  max-width: 100%
+  max-width: 100%;
 }
+
+.list_row:hover {
+    background-color: #cdd8e4;
+}
+
+.list_header {
+    background-color: #f5f5f5;
+}
+
 
 @media(min-width:992px) {
   .panel-container {
@@ -307,7 +316,7 @@ iframe {
   display: none;
 }
 
-@media(max-width:500px) {
+@media(max-width:767px) {
   #cke_32,
   #cke_37,
   #cke_70,
@@ -376,7 +385,7 @@ iframe {
   display: block;
 }*/
 
-@media(min-width:501px) {
+@media(min-width:768px) {
   .list_table {
     display: table; 
     width: 100%;
