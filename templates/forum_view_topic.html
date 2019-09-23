@@ -20,7 +20,7 @@
             {% set date = view[7].split(".")[0] + '(수정됨)' %}
         {% endif %}
         <div class="card border-dark mb-12" style="max-width: 100%;">
-            <div class="card-header" style="background-color: #c5ffc9">{{ view[1] }} ({{ view[2] }}) | {{ date }}</div>
+            <div class="card-header" style="background-color: #c5ffc9">{{ view[1] }} | {{ date }}</div>
             <div class="card-body text-dark">
                 <p class="card-text">{{ view[4] }}</p>
             </div>
@@ -40,7 +40,7 @@
                 {% set date = reply[7].split(".")[0] + '(수정됨)' %}
             {% endif %}
             <div class="card border-dark mb-12" style="max-width: 100%;">
-                <div class="card-header">{{ reply[1] }} ({{ reply[2] }}) | {{ date }}</div>
+                <div class="card-header">{{ reply[1] }} | {{ date }}</div>
                 <div class="card-body text-dark">
                     <p class="card-text">{{ reply[4] }}</p>
                 </div>
