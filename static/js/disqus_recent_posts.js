@@ -9,20 +9,20 @@ $(document).ready(function() {
 			for(var i=0, len=res.response.length; i<len; i++) {
 				var post = res.response[i];
 				console.dir(post);
-                var html = "<div class='author-box col-sm-3' data-aos='fade-up' style='margin: 10px'>";
+				var html = "<div class= 'col-md-6 col-lg-4 mb-4 mb-lg-4' style='display:flex' data-aos='fade-up'>";
+                html += "<div class='author-box'>";
                 html += "<div class='d-flex mb-4'>";
                 html += "<div class='mr-3'>" 
                 html += "<img src='" + post.author.avatar.small.permalink + "' alt='Image' class='img-fluid rounded-circle'>";
-                html += "</div>"
-                html += "<div class='mr-auto text-black'>"
+				html += "</div>"
+				html += "<div class='mr-auto text-black'>"
                 html += "<a href='"+ post.author.profileUrl + "'>" + post.author.name + "</a>";
 				html += "</div></div>"
 				
 				dots = post.raw_message.length > 150 ? "..." : ""
-
-				html += "<p><a href='/community/#comment-" + post.id + "'>" + post.raw_message.substr(0,150) + dots + "</a></p>";
 				html += "<p class='postRef'>" + post.createdAt.split("T")[0] + "</p>";
-				html += "</div>";
+				html += "<p><a href='/community/#comment-" + post.id + "'>" + post.raw_message.substr(0,150) + dots + "</a></p>";
+				html += "</div></div>";
 				
 				result+=html;
 			}
