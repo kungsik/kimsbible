@@ -96,6 +96,10 @@ ol {
   cursor: pointer;
 }
 
+.recent_commentary {
+  cursor: pointer;
+}
+
 .kor,
 .kjv {
   font-size: 18px;
