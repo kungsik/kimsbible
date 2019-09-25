@@ -100,7 +100,7 @@ def signin():
             return render_template('signin.html') 
 
 @app.route('/auth/signout/')
-@login_required
+# @login_required
 def signout():
     user = current_user
     user.authenticated = False
