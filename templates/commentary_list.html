@@ -112,18 +112,16 @@
         {% endif %}
 
         <br>
-        {% if current_user.name %}
+        {% if vcode %}
+            <button class="btn btn-info" onclick="location.href = '/commentary/add/{{ vcode }}/';">오픈주석 작성</button>    
+            &nbsp <button class="btn btn-success" onclick="location.href = '/classic/add/{{ vcode }}/';">클래식주석 작성</button>
+        {% else %}
             {% if vcode %}
-                <button class="btn btn-info" onclick="location.href = '/commentary/add/{{ vcode }}/';">오픈주석 작성</button>    
-                &nbsp <button class="btn btn-success" onclick="location.href = '/classic/add/{{ vcode }}/';">클래식주석 작성</button>
+                {% set vcode = vcode + '/' %}
             {% else %}
-                {% if vcode %}
-                    {% set vcode = vcode + '/' %}
-                {% else %}
-                    {% set vcode = '' %}
-                {% endif %}
-                <button class="btn btn-secondary" onclick="location.href = '/{{ table }}/add/{{ vcode }}?c={{ category }}';">글 작성하기</button>
+                {% set vcode = '' %}
             {% endif %}
+            <button class="btn btn-secondary" onclick="location.href = '/{{ table }}/add/{{ vcode }}?c={{ category }}';">글 작성하기</button>
         {% endif %}
         <br>
 
