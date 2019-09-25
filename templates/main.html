@@ -113,14 +113,36 @@
     <div class="site-section bg-light" id="blog-section">
         <div class="container">
             <div class="row mb-5">
-            <div class="col-12 text-center">
-                <h3 class="section-title mb-3">커뮤니티 최근글</h2>
+                <div class="col-12 text-center">
+                    <h3 class="section-title mb-3">커뮤니티 최근글</h2>
+                </div>
             </div>
-            </div>
-
             <div class="row justify-content-center" id="disqus_recent"></div>
-            <script src="/static/js/disqus_recent_posts.js?v=11114"></script>
-
+            <script src="/static/js/disqus_recent_posts.js?v=11115"></script>
+        </div>
+        <br>
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center">
+                    <h3 class="section-title mb-3">최근 포럼 토픽</h2>
+                </div> 
+            </div>
+            <div class="row justify-content-center" id="disqus_recent">
+                {% for topic in recent_forum_topic %}
+                <div class= 'col-md-6 col-lg-4 mb-4 mb-lg-4' style='display:flex' data-aos='fade-up'>
+                    <div class='author-box' onclick='location.href="/forum/view/{{ topic[0] }}"'>
+                        <div class='d-flex mb-4'>
+                           <div class='mr-auto text-black'>
+                                <h4>{{ topic[3] }}</h4>
+                                {{ topic[1] }} | {{ topic[6].split(' ')[0] }} 
+                                <br><br>
+                                {{ topic[4][0:150] }} ...
+                           </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 

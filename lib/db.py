@@ -261,6 +261,17 @@ class Forum:
           code, message = error.args
           print(">>>>>>>>>>>>>", code, message)
           return "load db failed" 
+
+    def get_recent_topic(self, num):
+        sql = "SELECT * FROM forum WHERE category='1' ORDER BY date DESC LIMIT " + str(num)
+        try:
+          self.cursor.execute(sql)
+          recent_forum_list = self.cursor.fetchall()
+          return recent_forum_list
+        except pymysql.InternalError as error:
+          code, message = error.args
+          print(">>>>>>>>>>>>>", code, message)
+          return "load db failed" 
     
     def view_topic(self, no):
         sql = "SELECT * FROM forum WHERE no=" + str(no)

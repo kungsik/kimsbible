@@ -10,7 +10,7 @@ $(document).ready(function() {
 				var post = res.response[i];
 				console.dir(post);
 				var html = "<div class= 'col-md-6 col-lg-4 mb-4 mb-lg-4' style='display:flex' data-aos='fade-up'>";
-                html += "<div class='author-box'>";
+                html += '<div class="author-box" onclick="location.href=\'/community/#comment-' + post.id + '\'">';
                 html += "<div class='d-flex mb-4'>";
                 html += "<div class='mr-3'>" 
                 html += "<img src='" + post.author.avatar.small.permalink + "' alt='Image' class='img-fluid rounded-circle'>";

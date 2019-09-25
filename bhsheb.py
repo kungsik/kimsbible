@@ -200,9 +200,12 @@ def main_page():
         no.append(post[0])
         urltitle.append(post[10])
 
+    forum_db = db.Forum()
+    recent_forum_topic = forum_db.get_recent_topic(3)
+
     # recent_posts_classic = commentary_db.get_recent('classic', 5)
     # return render_template('main.html', recent_posts_commentary=recent_posts_commentary, recent_posts_classic=recent_posts_classic)
-    return render_template('main.html', author=author, date=date, img=img, content=content, title=title, urltitle=urltitle, no=no)
+    return render_template('main.html', author=author, date=date, img=img, content=content, title=title, urltitle=urltitle, no=no, recent_forum_topic=recent_forum_topic)
 
 @app.route('/developer/')
 def developer_page():

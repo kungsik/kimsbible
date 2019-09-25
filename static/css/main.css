@@ -293,6 +293,11 @@ iframe {
     background-color: #f5f5f5;
 }
 
+.author-box:hover {
+    cursor: pointer;
+    border-color: green;
+}
+
 
 @media(min-width:992px) {
   .panel-container {
