@@ -124,14 +124,7 @@
                   </li>
                   <li class="has-children">
                     <a href="#!" class="nav-link">회원메뉴</a>
-                    <ul class="dropdown">
-                      {% if current_user.name %}
-                        <li><a href="#">{{ current_user.name }}님</a></li>
-                        <li><a href="/auth/signout/">로그아웃</a></li>
-                      {% else %}
-                        <li><a href="/auth/signup/">회원가입</a></li>
-                        <li><a href="/auth/signin/">로그인</a></li>
-                      {% endif %}
+                    <ul class="dropdown" id="auth">
                     </ul>
                   </li>
                 </ul>
@@ -200,6 +193,7 @@
 
     <!-- 자체 js 파일 -->
     <script src="/static/js/modal_word_api.js?ver=1.1161"></script> 
+    <script src="/static/js/show_auth_status.js?v=1"></script>
 
     <!-- 외부 js 파일 -->
     <script src="/static/external/js/jquery-migrate-3.0.1.min.js"></script>
