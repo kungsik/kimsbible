@@ -19,10 +19,10 @@ class Indexing:
             os.mkdir(self.index_path)
             self.ix = create_in(self.index_path, self.schema)
             self.index_files = True
+            self.writer = self.ix.writer()
         else:
             self.ix = open_dir(self.index_path) 
         
-        self.writer = self.ix.writer()
         self.searcher = self.ix.searcher()
         self.parser = QueryParser("content", self.ix.schema)
 
@@ -51,6 +51,6 @@ class Indexing:
         return result
 
 
-# indexing = Indexing()
+indexing = Indexing()
 # indexing.build_index('bhsheb')
-# indexing.search_index('god')
+print(indexing.search_index(str('모세', "utf-8")))

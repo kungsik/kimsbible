@@ -76,7 +76,7 @@ class Table:
         limit_end = int(pagenum) * 10
         limit_start = int(limit_end) - 10
 
-        sql = "SELECT * FROM " + table + " WHERE copen='1' ORDER BY no DESC LIMIT " + str(limit_start) + ", " + str(limit_end) 
+        sql = "SELECT * FROM " + table + " WHERE copen='1' ORDER BY no DESC LIMIT " + str(limit_start) + ", 10"
         self.cursor.execute(sql)
         result = self.cursor.fetchall()
         return result
@@ -85,7 +85,7 @@ class Table:
         limit_end = int(pagenum) * 10
         limit_start = int(limit_end) - 10
 
-        sql = "SELECT * FROM " + table + " WHERE email='" + user_id + "' ORDER BY no DESC LIMIT " + str(limit_start) + ", " + str(limit_end) 
+        sql = "SELECT * FROM " + table + " WHERE email='" + user_id + "' ORDER BY no DESC LIMIT " + str(limit_start) + ", 10"
         self.cursor.execute(sql)
         result = self.cursor.fetchall()
         return result
