@@ -4,7 +4,7 @@
     <div class="container border border-secondary rounded" style="padding: 20px;">
 
         {% if view %}
-            {% set url= '/page/edit/' + view[3] %}        
+            {% set url= '/page/edit/' + view[3] + '/' %}
         {% else %}
             {% set url = '/page/add' %}
             {% set view = ['','','',''] %}
@@ -13,7 +13,7 @@
         <h1>페이지 수정/추가하기</h1>
         <hr />
         <script src="https://cdn.ckeditor.com/4.12.1/full/ckeditor.js"></script>
-        
+
         <form name = "page_add" method="POST" action="{{ url }}" onsubmit="return validate()">
             <input type="text" name="title" class="form-control" placeholder="제목" id="title" value="{{ view[1] }}"><br>
             <input type="text" name="url" class="form-control" placeholder="페이지 URL" id="url" value="{{ view[3] }}"><br>
@@ -28,7 +28,7 @@
         CKEDITOR.replace('content', {
             height: 500
         });
-    </script>    
+    </script>
 
 
     <script type="text/javascript">
