@@ -5,22 +5,22 @@
 var menu = {
     "소개": {
         "알파알렙 성서": "/",
-        "알파알렙 연구소": "/page/developer",
-        "저작권 안내": "/page/license"
+        "알파알렙 연구소": "/page/developer/",
+        "저작권 안내": "/page/license/"
     },
     "성서본문" : {
         "구약": "/bhsheb/Genesis/1",
         "신약": "/sblgnt/Matthew/1"
     },
     "주석": {
-        "소개": "/page/commentary",
+        "소개": "/page/commentary/",
         "오픈주석": "/commentary/list/",
         "클래식주석": "/classic/list/",
         "내오픈주석": "/commentary/mylist/" 
     },
     "나눔": {
-        "커뮤니티": "/community",
-        "포럼": "/forum/list"
+        "커뮤니티": "/community/",
+        "포럼": "/forum/list/"
     },
     "회원메뉴": {
         "회원가입": "/auth/signup/",

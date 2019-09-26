@@ -7,7 +7,7 @@ import json
 from flask_login import login_user, current_user, login_required
 from kimsbible.auth import login_manager
 
-@app.route('/page/add', methods=['POST','GET'])
+@app.route('/page/add/', methods=['POST','GET'])
 @login_required
 def page_add():
     if request.method == 'POST' and current_user.user_id == config.admin:
@@ -24,14 +24,14 @@ def page_add():
         return render_template('page_add.html')
 
 
-@app.route('/page/<pageurl>')
+@app.route('/page/<pageurl>/')
 def page_view(pageurl):
     page_db = db.Page()
     view = page_db.view_page(pageurl)
     return render_template('page_view.html', view=view, admin=config.admin)
 
 
-@app.route('/page/edit/<url>', methods=['POST','GET'])
+@app.route('/page/edit/<url>/', methods=['POST','GET'])
 @login_required
 def page_edit(url):
     if request.method == 'POST' and current_user.user_id == config.admin:

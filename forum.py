@@ -30,14 +30,14 @@ def topic_list():
     return render_template('forum_list_topic.html', lists=lists)
 
 
-@app.route('/forum/view/<no>')
+@app.route('/forum/view/<no>/')
 def topic_view(no):
     forum_db = db.Forum()
     view = forum_db.view_topic(no)
     reply_list = forum_db.view_reply(no)
     return render_template('forum_view_topic.html', view=view, reply_list=reply_list)
 
-@app.route('/forum/addreply/<topic_no>', methods=['POST','GET'])
+@app.route('/forum/addreply/<topic_no>/', methods=['POST','GET'])
 @login_required
 def add_reply(topic_no):
     if request.method == 'POST':
@@ -53,7 +53,7 @@ def add_reply(topic_no):
     else:
         return render_template('forum_add_reply.html') 
 
-@app.route('/forum/edit/<int:no>', methods=['POST','GET'])
+@app.route('/forum/edit/<int:no>/', methods=['POST','GET'])
 @login_required
 def topic_edit(no):
     if request.method == 'POST':
@@ -87,7 +87,7 @@ def topic_edit(no):
         return render_template('forum_add_topic.html', topic=topic, content=content, no=no)
 
 
-@app.route('/forum/remove/<int:no>', methods=['POST','GET'])
+@app.route('/forum/remove/<int:no>/', methods=['POST','GET'])
 @login_required
 def topic_remove(no):
     dbdata = db.Table()
