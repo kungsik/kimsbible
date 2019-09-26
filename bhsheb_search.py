@@ -5,15 +5,6 @@ from kimsbible import app
 
 api.makeAvailableIn(globals())
 
-@app.route('/search_tutorial/')
-def tutorial_page():
-    return render_template('search_tutorial.html')
-
-@app.route('/search_sample/')
-def sample_page():
-    return render_template('search_sample.html')
-
-
 @app.route('/bhsheb/search/', methods=['GET', 'POST'])
 def bible_search():
     if request.method == 'POST':

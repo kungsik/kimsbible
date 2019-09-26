@@ -67,11 +67,6 @@ def commentary_edit(table, no):
         return render_template('commentary_add.html', cview=cview, table=table)
 
 
-@app.route('/commentary/intro/')
-def commentary_intro():
-    return render_template('commentary_intro.html')
-
-
 @app.route('/<table>/list/', methods=['POST', 'GET'])
 def commentary_list(table):
     if request.method == 'GET':
@@ -171,9 +166,6 @@ def commentary_del(table, no):
     else:
         return redirect(next_url)
 
-@app.route('/commentary/vcode/')
-def vcode_tutorial():
-    return render_template('commentary_vcode_tutorial.html')
 
 @login_manager.unauthorized_handler
 def unauthorized():

@@ -207,13 +207,6 @@ def main_page():
     # return render_template('main.html', recent_posts_commentary=recent_posts_commentary, recent_posts_classic=recent_posts_classic)
     return render_template('main.html', author=author, date=date, img=img, content=content, title=title, urltitle=urltitle, no=no, recent_forum_topic=recent_forum_topic)
 
-@app.route('/developer/')
-def developer_page():
-    return render_template('developer.html')
-
-@app.route('/license/')
-def license_page():
-    return render_template('license.html')
 
 @app.route('/community/')
 def community_page():

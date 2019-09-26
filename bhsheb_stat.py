@@ -146,11 +146,6 @@ def featureStat(node, synType, feat, num):
 
     return result
 
-@app.route('/bhsheb/stat/tutorial/')
-def stat_tutorial():
-    return render_template('bhsheb_stat_tutorial.html')
-
-
 @app.route('/bhsheb/stat/', methods=['GET', 'POST'])
 def statistics():
     i = 0
