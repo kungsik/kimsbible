@@ -70,10 +70,11 @@ def signup():
         return render_template("signup_welcome.html", name=name, email=email, redirecturl=redirecturl)
 
     else:
-        if current_user.name:
-            return redirect("/")
-            
-        return render_template('signup.html') 
+        try: 
+            if current_user.name:
+                return redirect("/")
+        except:
+            return render_template('signup.html') 
 
 
 @app.route("/auth/signin/", methods=['POST','GET'])
