@@ -4,7 +4,7 @@
     <div class="container border border-secondary rounded" style="padding: 20px;">
 
         {% if view %}
-            {% set url= '/page/edit/' + view[1] %}        
+            {% set url= '/page/edit/' + view[3] %}        
         {% else %}
             {% set url = '/page/add' %}
             {% set view = ['','','',''] %}
