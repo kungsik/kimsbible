@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% autoescape false %}
+    <div class="container border border-secondary rounded" style="padding: 20px;">
+
+        {% if view %}
+            {% set url= '/page/edit/' + view[1] %}        
+        {% else %}
+            {% set url = '/page/add' %}
+            {% set view = ['','','',''] %}
+        {% endif %}
+
+        <h1>페이지 수정/추가하기</h1>
+        <hr />
+        <script src="https://cdn.ckeditor.com/4.12.1/full/ckeditor.js"></script>
+        
+        <form name = "page_add" method="POST" action="{{ url }}" onsubmit="return validate()">
+            <input type="text" name="title" class="form-control" placeholder="제목" id="title" value="{{ view[1] }}"><br>
+            <input type="text" name="url" class="form-control" placeholder="페이지 URL" id="url" value="{{ view[3] }}"><br>
+            <textarea name="content" id="content" rows="20" style="width:100%;">{{ view[2] }}</textarea>
+            <br>
+            <input type="submit" class="btn btn-info" value="추가/수정"></button>
+        </form>
+
+    </div>
+
+    <script>
+        CKEDITOR.replace('content', {
+            height: 500
+        });
+    </script>    
+
+
+    <script type="text/javascript">
+        function validate() {
+            if( document.getElementById('title').value == "" ) {
+                alert( "제목을 입력해 주세요!" );
+                document.getElementById('title').focus();
+                return false
+            }
+        }
+    </script>
+
+    <script>
+        document.title = "알파알렙 페이지 추가/수정하기";
+    </script>
+
+    {% endautoescape %}
+{% endblock %}

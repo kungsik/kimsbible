@@ -70,6 +70,9 @@ def signup():
         return render_template("signup_welcome.html", name=name, email=email, redirecturl=redirecturl)
 
     else:
+        if current_user.name:
+            return redirect("/")
+            
         return render_template('signup.html') 
 
 

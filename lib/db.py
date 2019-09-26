@@ -339,3 +339,43 @@ class Forum:
         self.db.commit()
 
         return "delete is done"
+
+
+class Page:
+    def __init__(self):
+        self.db = pymysql.connect(
+          config.hostname,
+          config.username,
+          config.password,
+          config.db
+        )
+        self.cursor = self.db.cursor()
+    
+    def add_page(self, title, content, pageurl):
+        sql = "INSERT INTO page (title, content, url) VALUES (%s, %s, %s)"
+        try: 
+          self.cursor.execute(sql, (title, content, pageurl))
+          self.db.commit()
+          return "insertion is done"
+        except pymysql.InternalError as error:
+          code, message = error.args
+          print(">>>>>>>>>>>>>", code, message)
+          return "insertion failed"
+    
+    def view_page(self, pageurl):
+        sql = "SELECT * FROM page WHERE url='" + str(pageurl) + "'"
+        print(sql)
+        try:
+          self.cursor.execute(sql)
+          view = self.cursor.fetchone()
+          return view
+        except pymysql.InternalError as error:
+          code, message = error.args
+          print(">>>>>>>>>>>>>", code, message)
+          return "load db failed" 
+
+    def edit_page(self, title, content, pageurl):
+        sql = "UPDATE page SET title='" + title + "', content='" + content + "', url='" + pageurl + "' WHERE url='" + pageurl + "'"
+        self.cursor.execute(sql)
+        self.db.commit()
+        return "successfully edited"

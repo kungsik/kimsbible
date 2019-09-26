@@ -20,4 +20,5 @@ import kimsbible.commentary
 #import kimsbible.oauth
 import kimsbible.studytools
 import kimsbible.forum
+import kimsbible.page
 # import kimsbible.search

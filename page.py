@@ -1,54 +1,51 @@
 from flask import render_template, request, url_for, redirect, session
 from kimsbible import app
 from kimsbible.lib import db
+from kimsbible.lib import config
+
 import json
 from flask_login import login_user, current_user, login_required
 from kimsbible.auth import login_manager
 
-@app.route('/page/add/', methods=['POST','GET'])
+@app.route('/page/add', methods=['POST','GET'])
 @login_required
 def page_add():
-    if request.method == 'POST' and current_user.user_id == 'kks@alphalef.com':
+    if request.method == 'POST' and current_user.user_id == config.admin:
         title = request.form['title']
         content = request.form['content']
+        url = request.form['url']
 
         page_db = db.Page()
-        page_db.add_page(title, content)
+        page_db.add_page(title, content, url)
 
-        return redirect("/page/" + title)
+        return redirect("/page/" + url)
         
     else:
         return render_template('page_add.html')
 
 
-@app.route('/page/<title>')
-def page_view(title):
+@app.route('/page/<pageurl>')
+def page_view(pageurl):
     page_db = db.Page()
-    page = page_db.view_page(title)
-    return render_template('page_view.html', page=page)
+    view = page_db.view_page(pageurl)
+    return render_template('page_view.html', view=view, admin=config.admin)
 
 
-@app.route('/page/edit/<title>', methods=['POST','GET'])
+@app.route('/page/edit/<url>', methods=['POST','GET'])
 @login_required
-def topic_edit(no):
-    if request.method == 'POST' and current_user.user_id == 'kks@alphalef.com':
+def page_edit(url):
+    if request.method == 'POST' and current_user.user_id == config.admin:
         title = request.form['title']
         content = request.form['content']
+        url = request.form['url']
 
         page_db = db.Page()
-        page_db.add_page(title, content)
+        page_db.edit_page(title, content, url)
 
-        return redirect("/page/" + title)
+        return redirect("/page/" + url)
         
     else:
-        dbdata = db.Table()
-        if not dbdata.is_author('forum', no, current_user):
-            return redirect("/")
+        page_db = db.Page()
+        view = page_db.view_page(url)
 
-        forum_db = db.Forum()
-        view = forum_db.view_topic(no)
-        no = view[0]
-        topic = view[3]
-        content = view[4]
-
-        return render_template('forum_add_topic.html', topic=topic, content=content, no=no)
+        return render_template('page_add.html', view=view) 
