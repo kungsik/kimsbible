@@ -35,7 +35,18 @@ def topic_view(no):
     forum_db = db.Forum()
     view = forum_db.view_topic(no)
     reply_list = forum_db.view_reply(no)
-    return render_template('forum_view_topic.html', view=view, reply_list=reply_list)
+
+    # 이메일 공개/비공개
+    user_db = db.User()
+    identity = user_db.get_identity(view[2])
+
+    # reply 리스트 이메일 공개/비공개 체크
+    if reply_list:
+        reply_identity = []
+        for reply in reply_list:
+            reply_identity.append(user_db.get_identity(reply[2]))       
+
+    return render_template('forum_view_topic.html', view=view, reply_list=reply_list, identity=identity, reply_identity=reply_identity)
 
 @app.route('/forum/addreply/<topic_no>/', methods=['POST','GET'])
 @login_required
@@ -57,8 +68,8 @@ def add_reply(topic_no):
 @login_required
 def topic_edit(no):
     if request.method == 'POST':
-        dbdata = db.Table()
-        if not dbdata.is_author('forum', no, current_user):
+        user_db = db.User()
+        if not user_db.is_author('forum', no, current_user):
             return redirect("/")
 
         topic = request.form['topic']
@@ -74,8 +85,8 @@ def topic_edit(no):
         
         return redirect("/forum/view/" + str(topicid))
     else:
-        dbdata = db.Table()
-        if not dbdata.is_author('forum', no, current_user):
+        user_db = db.User()
+        if not user_db.is_author('forum', no, current_user):
             return redirect("/")
 
         forum_db = db.Forum()
@@ -90,8 +101,8 @@ def topic_edit(no):
 @app.route('/forum/remove/<int:no>/', methods=['POST','GET'])
 @login_required
 def topic_remove(no):
-    dbdata = db.Table()
-    if not dbdata.is_author('forum', no, current_user):
+    user_db = db.User()
+    if not user_db.is_author('forum', no, current_user):
         return redirect("/")
 
     forum_db = db.Forum()

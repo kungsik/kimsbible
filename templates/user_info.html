@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+{% block body %}
+
+
+    <div class="container border border-white rounded">
+
+        <h3>회원 가입 정보 / 수정</h3>
+        <br>
+        
+            <div class="alert alert-info">
+                <ol>
+                    <li>아래 내용은 회원가입시 입력하신 정보입니다.</li>
+                    <li>변경하고자 하는 내용이 있으면 아래 항목의 정보를 수정해서 수정 버튼을 누르시면 됩니다.</li>
+                    <li>비밀번호 항목을 비워두시면 기존의 비밀번호가 유지됩니다.</li>
+                    <li>이메일 주소 비공개를 선택하시면 글 작성시 닉네임(이름) 옆에 이메일 대신 고유 아이디 번호(가입순)가 표시됩니다.</li>
+                </ol>
+            </div>
+            
+            {% if error == 1 %}
+            <div class="alert alert-danger">이미 등록된 이메일입니다.</div>
+            {% elif error == 2 %}  
+            <div class="alert alert-danger">서로 다른 패스워드를 입력하셨습니다.</div>
+            {% elif error == 3 %}  
+            <div class="alert alert-danger">{{ name }}은 사용하실 수 없는 이름입니다.</div>
+            {% elif error == 4 %}  
+            <div class="alert alert-danger">입력되지 않은 정보가 있습니다.</div>
+            {% endif %}
+
+            <form method="POST" name="editinfo" action="/auth/info/">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">고유번호</label>
+                    <div class="col-sm-10">
+                        # {{ user_info[0] }}            
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="email" class="col-sm-2 col-form-label">이메일주소</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="email" name="email" placeholder="이메일주소" value="{{ user_info[1] }}">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="name" class="col-sm-2 col-form-label">이름(닉네임)</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" name="name" placeholder="닉네임(이름)" value="{{ user_info[3] }}">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="password" class="col-sm-2 col-form-label">비밀번호</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="password" name="password" placeholder="비밀번호">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="password2" class="col-sm-2 col-form-label">비밀번호 확인</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="password" name="password2" placeholder="비밀번호확인">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    {% if user_info[4] == 1 %}
+                        {% set check1 = 'checked="checked"' %}
+                    {% else %}
+                        {% set check2 = 'checked="checked"' %}
+                    {% endif %}
+                    <label for="open_email" class="col-sm-2 col-form-label">이메일 공개</label>
+                    <div class="col-sm-10">
+                        <!-- <input type="checkbox" class="custom-control-input" id="open_email" name="open_email" {{ check }}> -->
+                        <!-- <input class="form-check-input" type="checkbox" value="1" name="open_email" {{ check }}> -->
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="open_email" id="open_email" value="0" {{ check2 }}>
+                            <label class="form-check-label" for="inlineRadio1">비공개</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="open_email" id="open_email" value="1" {{ check1 }}>
+                            <label class="form-check-label" for="inlineRadio2">공개</label>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" value="{{ randstr }}" name="randstr">
+
+                <button type="submit" class="btn btn-secondary">회원정보수정</button>
+            </form>
+
+    </div>
+
+
+    
+{% endblock %}

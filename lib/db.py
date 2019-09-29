@@ -7,7 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from kimsbible.lib import vcodeparser as vp
 from kimsbible.lib import config
 
-class Table:
+class Commentary:
     def __init__(self):
         self.db = pymysql.connect(
           config.hostname,
@@ -173,20 +173,22 @@ class Table:
         self.db.commit()
         return "delete is done"
 
-    def is_author(self, table, no, current_user):
-        sql = "SELECT email FROM " + table + " WHERE no='" + str(no) + "'"
-        self.cursor.execute(sql)
-        result = self.cursor.fetchone()
-        if result[0] == current_user.user_id:
-          return True
-        else:
-          return False
-
     def get_recent(self, table, num):
         sql = "SELECT * FROM " + table + " WHERE copen='1' ORDER BY no DESC LIMIT " + str(num)
         self.cursor.execute(sql)
         result = self.cursor.fetchall()
         return result
+
+class User:
+    def __init__(self):
+        self.db = pymysql.connect(
+          config.hostname,
+          config.username,
+          config.password,
+          config.db
+        )
+        self.cursor = self.db.cursor()
+        self.current_time = datetime.now() + timedelta(hours=9)
 
     # 회원 인증 관련
     def adduser(self, email, name, password):
@@ -195,7 +197,7 @@ class Table:
         if check_user:
           return False
 
-        sql2 = "INSERT INTO user (email, name, password) VALUES ('" + email + "', '"  + name + "', '" + generate_password_hash(password, method='sha256') + "')"
+        sql2 = "INSERT INTO user (email, name, password, open_email) VALUES ('" + email + "', '"  + name + "', '" + generate_password_hash(password, method='sha256') + "', '0')"
         try: 
           self.cursor.execute(sql2)
           self.db.commit()
@@ -222,6 +224,91 @@ class Table:
           return False
         else:
           return name[0]
+
+    def getUserNumbyEmail(self, email):
+        sql = "SELECT no FROM user where email='" + email + "'"
+        self.cursor.execute(sql)
+        num = self.cursor.fetchone()
+        if not num:
+          return False
+        else:
+          return num[0]
+    
+    def getUserInfo(self, email):
+        sql = "SELECT * FROM user WHERE email='" + email + "'"
+        self.cursor.execute(sql)
+        info = self.cursor.fetchone()
+        if not info:
+          return False
+        else:
+          return info
+    
+    def edituser(self, email, name, password, open_email):
+       
+        if password:
+          pass_query = "', password='" + generate_password_hash(password, method='sha256')
+        else:
+          pass_query = ''
+
+        sql2 = "UPDATE user SET email='" + email + "', name='"  + name + pass_query +  "', open_email='"  + open_email + "' WHERE email='" + email +"'"
+        print(sql2)
+        try: 
+          self.cursor.execute(sql2)
+          self.db.commit()
+          return "edit is done"
+        except pymysql.InternalError as error:
+          code, message = error.args
+          print(">>>>>>>>>>>>>", code, message)
+          return "edit failed"
+    
+    def is_author(self, table, no, current_user):
+        sql = "SELECT email FROM " + table + " WHERE no='" + str(no) + "'"
+        self.cursor.execute(sql)
+        result = self.cursor.fetchone()
+        if result[0] == current_user.user_id:
+          return True
+        else:
+          return False
+    
+    def is_open_email(self, email):
+        sql = "SELECT open_email FROM user WHERE email='" + email  + "'"
+        self.cursor.execute(sql)
+        result = self.cursor.fetchone()
+        if result[0] == 1:
+          return True
+        else:
+          return False
+
+    def get_identity(self, email):
+        try:
+          email_open = self.is_open_email(email)
+          if email_open:
+            return email
+          else:
+            return '#' + str(self.getUserNumbyEmail(email))
+
+        except:
+          return "탈퇴함"        
+    
+    def add_pass_restore(self, email, randstr):
+        sql = "INSERT INTO restorepass (randstr, email) VALUES ('" + randstr + "', '" + email + "')"
+        self.cursor.execute(sql)
+        self.db.commit()
+        return "insert is done"
+    
+    def getEmailbyRand(self, randstr):
+        sql = "SELECT email FROM restorepass WHERE randstr='" + randstr + "'"
+        self.cursor.execute(sql)
+        result = self.cursor.fetchone()
+        return result[0]
+    
+    def removeRand(self, randstr):
+        sql = "DELETE FROM forum WHERE randstr='" + randstr + "'"
+        self.cursor.execute(sql)
+        self.db.commit
+        return "delete is done"
+
+        
 
 
 class Forum:

@@ -20,7 +20,7 @@
             {% set date = view[7].split(".")[0] + '(수정됨)' %}
         {% endif %}
         <div class="card border-dark mb-12" style="max-width: 100%;">
-            <div class="card-header" style="background-color: #c5ffc9">{{ view[1] }} | {{ date }}</div>
+            <div class="card-header" style="background-color: #c5ffc9">{{ view[1] }} ({{ identity }}) | {{ date }}</div>
             <div class="card-body text-dark">
                 <p class="card-text">{{ view[4] }}</p>
             </div>
@@ -33,24 +33,26 @@
         <br>
 
         {% if reply_list %}
+            {% set count = namespace(a=0) %}
             {% for reply in reply_list %}
-            {% if not reply[7] %}
-                {% set date = reply[6].split(".")[0] %}
-            {% else %}
-                {% set date = reply[7].split(".")[0] + '(수정됨)' %}
-            {% endif %}
-            <div class="card border-dark mb-12" style="max-width: 100%;">
-                <div class="card-header">{{ reply[1] }} | {{ date }}</div>
-                <div class="card-body text-dark">
-                    <p class="card-text">{{ reply[4] }}</p>
-                </div>
-                {% if current_user.user_id == reply[2] %}
-                <div class="card-footer bg-transparent border-dark" style="text-align: right; font-size: 12px;">
-                    <a href="/forum/edit/{{ reply[0] }}">수정하기</a> | <a href="javascript:confirm_remove({{ reply[0] }})">삭제하기</a>
-                </div>
+                {% if not reply[7] %}
+                    {% set date = reply[6].split(".")[0] %}
+                {% else %}
+                    {% set date = reply[7].split(".")[0] + '(수정됨)' %}
                 {% endif %}
-            </div>
-            <br>
+                <div class="card border-dark mb-12" style="max-width: 100%;">
+                    <div class="card-header">{{ reply[1] }} ({{ reply_identity[count.a] }}) | {{ date }}</div>
+                    <div class="card-body text-dark">
+                        <p class="card-text">{{ reply[4] }}</p>
+                    </div>
+                    {% if current_user.user_id == reply[2] %}
+                    <div class="card-footer bg-transparent border-dark" style="text-align: right; font-size: 12px;">
+                        <a href="/forum/edit/{{ reply[0] }}">수정하기</a> | <a href="javascript:confirm_remove({{ reply[0] }})">삭제하기</a>
+                    </div>
+                    {% endif %}
+                </div>
+                <br>
+                {% set count.a = count.a + 1 %}
             {% endfor %}
         {% endif %}
 
@@ -60,7 +62,7 @@
         <!-- reply부분 -->
         <script src="https://cdn.ckeditor.com/4.12.1/basic/ckeditor.js"></script>
 
-        <form name = "forum_reply_add" method="POST" action="/forum/addreply/{{ view[0] }}" onsubmit="return validate()">
+        <form name = "forum_reply_add" method="POST" action="/forum/addreply/{{ view[0] }}/" onsubmit="return validate()">
             <textarea name="content" id="content" rows="10" style="width:100%;">{{ content }}</textarea>
             <br>
             <input type="submit" class="btn btn-info" value="토론추가하기" onclick="updatetext()"></button>

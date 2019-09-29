@@ -25,6 +25,7 @@ var menu = {
     "회원메뉴": {
         "회원가입": "/auth/signup/",
         "로그인": "/auth/signin/",
+        "회원정보": "/auth/info/",
         "로그아웃": "/auth/signout/"
     }
 };
@@ -40,7 +41,7 @@ function check_auth() {
         }
     }
     if (auth == 1) {
-        result += '<li><a href="/auth/signout/">로그아웃</a></li>';
+        result += '<li><a href="/auth/info/">회원정보</a></li><li><a href="/auth/signout/">로그아웃</a></li>';
     }
     else {
         result += '<li><a href="/auth/signup/">회원가입</a></li><li><a href="/auth/signin/">로그인</a></li>';

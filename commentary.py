@@ -21,7 +21,7 @@ def commentary_add(table, vcode=1):
         return_vcode_page = request.form['return_vcode_page']
         return_category_page = request.form['return_category_page']
 
-        commentary_db = db.Table()
+        commentary_db = db.Commentary()
         commentary_db.add_commentary(table, commentary_title, commentary_text, commentary_author, commentary_vcode, commentary_email, commentary_copen)
         
         if return_vcode_page:
@@ -45,8 +45,9 @@ def commentary_add(table, vcode=1):
 @login_required
 def commentary_edit(table, no):
     if request.method == 'POST':
-        commentary_db = db.Table()
-        if not commentary_db.is_author(table, no, current_user):
+        commentary_db = db.Commentary()
+        user_db = db.User()
+        if not user_db.is_author(table, no, current_user):
             return redirect("/" + table + "/view/" + str(no))
 
         commentary_title = request.form['commentary_title']
@@ -58,8 +59,9 @@ def commentary_edit(table, no):
         
         return redirect("/" + table + "/view/" + str(no))
     else:
-        commentary_db = db.Table()
-        if not commentary_db.is_author(table, no, current_user):
+        commentary_db = db.Commentary()
+        user_db = db.User()
+        if not user_db.is_author(table, no, current_user):
             return redirect("/" + table + "/view/" + str(no))
 
         cview = commentary_db.cview(table, no)
@@ -75,7 +77,7 @@ def commentary_list(table):
     if not pagenum:
         pagenum = 1
 
-    commentary_db = db.Table()
+    commentary_db = db.Commentary()
     clist = commentary_db.clist(table, pagenum)
     totalnum = commentary_db.get_table_count(table)
     totalpage = int(int(totalnum) / 11) + 1
@@ -92,13 +94,12 @@ def commentary_mylist():
     if not pagenum:
         pagenum = 1
 
-    commentary_db = db.Table()
+    commentary_db = db.Commentary()
     clist = commentary_db.myclist('commentary', pagenum, current_user.user_id)
     totalnum = commentary_db.get_table_count('commentary')
     totalpage = int(int(totalnum) / 11) + 1
 
     return render_template('commentary_list.html', lists=clist, user=current_user, table='commentary', totalpage=totalpage, pagenum=pagenum, category='mylist')
-
 
 
 @app.route('/<table>/view/<int:no>/<title>/', methods=['POST', 'GET'])
@@ -114,8 +115,12 @@ def commentary_view(table, no, title=''):
         pagenum = ''
         vcode = ''
 
-    commentary_db = db.Table()
+    commentary_db = db.Commentary()
     cview = commentary_db.cview(table, no)
+
+    # 이메일 공개/비공개
+    user_db = db.User()
+    identity = user_db.get_identity(cview[3])
 
     # 비공개 글일 경우 해당 저자가 아니면 리스트 목록으로 넘어감
     try:
@@ -124,12 +129,12 @@ def commentary_view(table, no, title=''):
     except:
         return redirect('/' + table + '/list/')
     else:
-        return render_template('commentary_view.html', view=cview, table=table, mode=mode, pagenum=pagenum, vcode=vcode)
+        return render_template('commentary_view.html', view=cview, table=table, mode=mode, pagenum=pagenum, vcode=vcode, identity=identity)
 
 
 @app.route('/commentary/vcode/<int:no>/', methods=['POST', 'GET'])
 def commentary_select_vcode(no):
-    commentary_db = db.Table()
+    commentary_db = db.Commentary()
     try:
         if current_user.user_id:
             vclist = commentary_db.vcode_mylist(no, current_user.user_id)
@@ -159,8 +164,9 @@ def commentary_del(table, no):
     else:
         next_url = "/" + table + "/list/"
 
-    commentary_db = db.Table()
-    if commentary_db.is_author(table, no, current_user):
+    commentary_db = db.Commentary()
+    user_db = db.User()
+    if user_db.is_author(table, no, current_user):
         commentary_db.remove_commentary(table, no)
         return redirect(next_url)
     else:

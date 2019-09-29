@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block body %}
+{% autoescape false %}
+<div style="text-align: center">
+    <div class="container border border-white rounded">
+        <h3 class="title">비밀번호 다시 생성</h3>
+
+            <form method="POST" name="findpass" action="/auth/findpass/">
+                <div class="alert alert-success" role="alert">
+                    <p>
+                        아래의 항목에 가입하신 이메일 주소를 입력하시면 비밀번호를 변경하실 수 있는 링크가 메일로 발송됩니다. 
+                        받은 편지함에 메일이 없으면 스팸함을 확인해 주시기 바랍니다.
+                        그래도 메일 발송에 문제가 있으면 관리자(kks@alphalef.com)에게 메일을 보내 주시면 처리해 드리겠습니다.
+                    </p>
+                </div>
+
+                {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    <p>
+                        {{ error }}
+                    </p>
+                </div>
+                {% endif %}
+
+                <div class="form-group">
+                    <input class="form-control" type="email" name="email" placeholder="이메일주소">
+                </div>
+
+                <button type="submit" class="btn btn-secondary">비밀번호 다시 생성</button>
+            </form>
+
+            <br><br>
+
+
+    </div>
+</div>
+
+<script>
+    signin.redirect.value = escape(document.referrer);
+</script>
+
+{% endautoescape %}
+{% endblock %}

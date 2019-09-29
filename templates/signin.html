@@ -6,7 +6,7 @@
         <h3 class="title">로그인하기</h3>
 
             {% if error == 1 %}
-            <div class="alert alert-danger">로그인 정보가 잘못되었습니다.</div>
+            <div class="alert alert-danger">로그인 정보가 잘못되었습니다. (<a href="/auth/findpass/">비밀번호 찾기</a>)</div>
             {% endif %}
             <form method="POST" name="signin" action="/auth/signin/">
                 <div class="form-group">
@@ -24,11 +24,10 @@
 
             <br><br>
             <div class="alert alert-success" role="alert">
-                <p>아직 비밀번호 찾기/변경이나 탈퇴 기능이 미비합니다. 
+                <p>아직 비밀번호 찾기 기능이 미비합니다. 
                     비밀번호는 운영자도 알 수 없도록 단방향 암호 방식으로 저장됩니다. 
-                    그래서 당분간은 비밀번호 변경이나 탈퇴를 원하시는 경우 가입하신 이메일을 통해 
-                    저에게 연락을 주시면 계정 삭제할 수 있는 링크를 별도로 보내드리독 하겠습니다.
-                    비밀번호나 이름 변경은 계정 삭제 후 재가입의 방법으로 하시면 되겠습니다.
+                    그래서 당분간은 비밀번호를 찾기 원하시는 경우 가입하신 이메일을 통해 
+                    저에게 연락을 주시면 비밀번호 초기화를 시켜드리도록 하겠습니다.
                 </p>
             </div>
 

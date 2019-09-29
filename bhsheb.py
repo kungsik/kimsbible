@@ -170,7 +170,7 @@ def get_kor_hgloss(strongnum, w):
 
 @app.route('/')
 def main_page():
-    commentary_db = db.Table()
+    commentary_db = db.Commentary()
     recent_posts_commentary = commentary_db.get_recent('commentary', 3)
     img_pattern = re.compile(r"<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>")
     
