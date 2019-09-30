@@ -303,9 +303,15 @@ class User:
         return result[0]
     
     def removeRand(self, randstr):
-        sql = "DELETE FROM forum WHERE randstr='" + randstr + "'"
+        sql = "DELETE FROM restorepass WHERE randstr='" + randstr + "'"
         self.cursor.execute(sql)
-        self.db.commit
+        self.db.commit()
+        return "delete is done"
+    
+    def removeUser(self, email):
+        sql = "DELETE FROM user WHERE email='" + email + "'"
+        self.cursor.execute(sql)
+        self.db.commit()
         return "delete is done"
 
         

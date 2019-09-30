@@ -72,9 +72,8 @@ def signup():
         password2 = request.form['password2']
         redirecturl = parse.unquote(request.form['redirect'])
 
-        if current_user.user_id != config.admin:
-            if name == '알파알렙' or name == '관리자' or name == 'admin' or name == 'administrator' or name == '알파알렙성경':
-                return render_template('signup.html', error=3, name=name, redirecturl=redirecturl)
+        if name == '알파알렙' or name == '관리자' or name == 'admin' or name == 'administrator' or name == '알파알렙성경':
+            return render_template('signup.html', error=3, name=name, redirecturl=redirecturl)
         
         if not name or not email or not password or not password2:
             return render_template('signup.html', error=4, redirecturl=redirecturl)
@@ -149,8 +148,12 @@ def findpass():
         recipients = []
         recipients.append(email)
         subject = "알파알렙 성경 비밀번호 재설정"
-        html = "비밀번호 변경 링크 안내<br><br>"
-        html += "<a href='https://app.alphalef.com/auth/info/?randstr=" + rand_str + "'>비밀번호 변경</a>"
+        html = "<img src='https://app.alphalef.com/static/img/logo.png'><br><br>"
+        html += "비밀번호 변경 링크 안내<br><br>"
+        html += "안녕하세요? 본 메일은 알파알렙 성경을 통해 발송된 메일입니다.<br>"
+        html += "본 메일은 비밀번호 찾기를 신청하셔서 발송되었습니다. 아래 링크를 클릭하시면 회원정보와 비밀번호를 변경하실 수 있습니다.<br>"
+        html += "<a href='https://app.alphalef.com/auth/info/?randstr=" + rand_str + "'>비밀번호 변경</a><br><br>"
+        html += "위 링크는 당일 자정까지 유효합니다. 비밀번호 찾기를 신청하지 않으셨다면 이 메일을 무시하셔도 좋습니다."
 
         mail.sendmail(recipients, subject, html)
 
@@ -159,7 +162,36 @@ def findpass():
     else:
         return render_template('sign_find_pass.html')
 
+
+@app.route('/auth/remove/', methods=['POST','GET'])
+def removeuser():
+    if request.method == 'POST':
         
+        email = request.form['email']
+        password = request.form['password']
+
+        if current_user.user_id == email:
+
+            user_db = db.User() 
+            user_info = user_db.signin_user(email, password)
+
+            if user_info:
+                user_db.removeUser(email)
+
+                current_user.authenticated = False
+                logout_user()
+
+                return render_template('sign_remove_user.html', msg="정상적으로 탈퇴 처리되었습니다.")
+            
+            else:
+                return render_template('sign_remove_user.html', msg="잘못된 비밀번호를 입력하셨습니다.")    
+        
+        else:
+            return render_template('sign_remove_user.html', msg="잘못된 이메일을 입력하셨습니다.")
+    
+    else:
+        return render_template('sign_remove_user.html')
+
 
 
 @app.route('/auth/info/', methods=['POST','GET'])
@@ -218,10 +250,11 @@ def show_member_info():
         return render_template('user_info.html', user_info=user_info, randstr=randstr)
 
 
-    elif current_user:
-        user_db = db.User()
-        user_info = user_db.getUserInfo(current_user.user_id)
-        return render_template('user_info.html', user_info=user_info)
-
     else:
-        return redirect('/')
+        try:
+            user_db = db.User()
+            user_info = user_db.getUserInfo(current_user.user_id)
+            return render_template('user_info.html', user_info=user_info)
+
+        except:
+            return redirect('/')
