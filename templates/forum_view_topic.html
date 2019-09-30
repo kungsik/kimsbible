@@ -33,7 +33,7 @@
         <br>
 
         {% if reply_list %}
-            {% set count = namespace(a=0) %}
+            {% set count = [] %}
             {% for reply in reply_list %}
                 {% if not reply[7] %}
                     {% set date = reply[6].split(".")[0] %}
@@ -41,7 +41,7 @@
                     {% set date = reply[7].split(".")[0] + '(수정됨)' %}
                 {% endif %}
                 <div class="card border-dark mb-12" style="max-width: 100%;">
-                    <div class="card-header">{{ reply[1] }} ({{ reply_identity[count.a] }}) | {{ date }}</div>
+                    <div class="card-header">{{ reply[1] }} ({{ reply_identity[count|length] }}) | {{ date }}</div>
                     <div class="card-body text-dark">
                         <p class="card-text">{{ reply[4] }}</p>
                     </div>
@@ -52,7 +52,7 @@
                     {% endif %}
                 </div>
                 <br>
-                {% set count.a = count.a + 1 %}
+                {% set __ = count.append(1) %}
             {% endfor %}
         {% endif %}
 
