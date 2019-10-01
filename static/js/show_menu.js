@@ -4,8 +4,8 @@
 
 var menu = {
     "소개": {
-        "알파알렙 성서": "/",
-        "알파알렙 연구소": "/page/developer/",
+        "사용 안내": "/page/guide/",
+        "개발자 소개": "/page/developer/",
         "저작권 안내": "/page/license/"
     },
     "성서본문" : {
