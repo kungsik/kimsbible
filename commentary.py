@@ -3,7 +3,7 @@ from kimsbible import app
 from kimsbible.lib import db
 from kimsbible.lib import vcodeparser as vp
 # from kimsbible import oauth
-import json
+import json, re
 from flask_login import login_user, current_user, login_required
 from kimsbible.auth import login_manager
 
@@ -176,3 +176,21 @@ def commentary_del(table, no):
 @login_manager.unauthorized_handler
 def unauthorized():
     return redirect("/auth/signin/")
+
+
+@app.template_filter('getexcerpt')
+def getexcerpt(text):
+    content_text = re.sub('<.+?>', '', text, 0, re.I|re.S)
+    content_text = re.sub('$.+?;', '', content_text, 0, re.I|re.S)
+    return content_text[0:150]
+
+
+@app.template_filter('getimgurl')
+def getimgurl(text):
+    img_pattern = re.compile(r"<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>")
+    try:
+        imgurl = re.findall(img_pattern, str(text)[0])
+    except:
+        imgurl = "https://app.alphalef.com/static/img/logo.png"
+
+    return imgurl

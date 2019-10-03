@@ -21,6 +21,7 @@
         {% set listurl = '/' + table + '/list/' %}
     {% endif %}
 
+
     <div class="container border border-secondary rounded" style="padding: 20px;">
 
                 <div class="page-header">
@@ -54,6 +55,10 @@
                 <div class="commentary_contents">
                     {{ view[5] }}
                 </div>
+
+                <span class="sociallink ml-1">
+                    <img src="/static/img/kakao.png" width=36 alt="Kakaotalk" onclick="sendLinkKakao()">
+                </span>
             
                 <br><br>
                 <button class="btn btn-secondary" onclick="location.href = '{{ listurl }}';">목록보기</button>
@@ -66,24 +71,53 @@
 
                 <div id="disqus_thread"></div>
                 <script>
-                /**
-                *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-                *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-                
-                var disqus_config = function () {
-                  this.page.url = "https://app.alphalef.com/{{ table }}/view/{{ view[0] }}/{{ view[10] }}/";  // Replace PAGE_URL with your page's canonical URL variable
-                  this.page.identifier = "{{ table }}-{{ view[0] }}-{{ view[10] }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-                };
-                
-                (function() { // DON'T EDIT BELOW THIS LINE
-                var d = document, s = d.createElement('script');
-                s.src = 'https://alpaalrebseonggyeong.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', +new Date());
-                (d.head || d.body).appendChild(s);
-                })();
+                    /**
+                    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+                    
+                    var disqus_config = function () {
+                    this.page.url = "https://app.alphalef.com/{{ table }}/view/{{ view[0] }}/{{ view[10] }}/";  // Replace PAGE_URL with your page's canonical URL variable
+                    this.page.identifier = "{{ table }}-{{ view[0] }}-{{ view[10] }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                    };
+                    
+                    (function() { // DON'T EDIT BELOW THIS LINE
+                    var d = document, s = d.createElement('script');
+                    s.src = 'https://alpaalrebseonggyeong.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                    })();
                 </script>
-                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>  
                 
+                
+                <!-- 소셜링크 -->
+                <script>
+                    Kakao.init('062c1050eef5ed2c680d281999db675a');
+                    function sendLinkKakao(){
+                        Kakao.Link.sendDefault({
+                        objectType: 'feed',
+                        content: {
+                            title: '{{ view[4] }}',
+                            // description: '{{ view[5]|getexcerpt }}',
+                            description: '테스트',
+                            // imageUrl: '{{ view[5]|getimgurl }}',
+                            link: {
+                                mobileWebUrl: 'https://app.alphalef.com/{{ table }}/view/{{ view[0] }}/{{ view[10] }}/',
+                                webUrl: 'https://app.alphalef.com/{{ table }}/view/{{ view[0] }}/{{ view[10] }}/'
+                            }
+                        },
+                        buttons: [       
+                            {
+                            title: '링크 열기',
+                            link: {
+                                mobileWebUrl: 'https://app.alphalef.com/{{ table }}/view/{{ view[0] }}/{{ view[10] }}/',
+                                webUrl: 'https://app.alphalef.com/{{ table }}/view/{{ view[0] }}/{{ view[10] }}/'
+                            }
+                            }
+                        ]
+                        }); 
+                    }
+                </script>
 
         <br><br>
     </div>
