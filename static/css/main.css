@@ -246,6 +246,10 @@ div.pager span.active {
     text-indent: 0;
 }
 
+.sociallink:hover {
+  cursor: pointer;
+}
+
 .clause1,
 .phrase1,
 .clauseatom

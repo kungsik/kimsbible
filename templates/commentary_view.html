@@ -56,8 +56,22 @@
                     {{ view[5] }}
                 </div>
 
+                <br>
+
                 <span class="sociallink ml-1">
                     <img src="/static/img/kakao.png" width=36 alt="Kakaotalk" onclick="sendLinkKakao()">
+                </span>
+                 
+                <span class="sociallink ml-1">
+                    <img src="/static/img/naver.png" width=36 alt="Kakaotalk" onclick="sendLinkNaver()">
+                </span>
+                 
+                <span class="sociallink ml-1">
+                    <img src="/static/img/facebook.png" width=36 alt="Kakaotalk" onclick="sendLinkFacebook()">
+                </span>
+                 
+                <span class="sociallink ml-1">
+                    <img src="/static/img/twitter.png" width=36 alt="Kakaotalk" onclick="sendLinkTwitter()">
                 </span>
             
                 <br><br>
@@ -91,34 +105,64 @@
                 
                 
                 <!-- 소셜링크 -->
-                <script>
+                <script type="text/javascript">                    
                     Kakao.init('062c1050eef5ed2c680d281999db675a');
                     function sendLinkKakao(){
                         Kakao.Link.sendDefault({
-                        objectType: 'feed',
-                        content: {
-                            title: '{{ view[4] }}',
-                            // description: '{{ view[5]|getexcerpt }}',
-                            description: '테스트',
-                            // imageUrl: '{{ view[5]|getimgurl }}',
-                            link: {
-                                mobileWebUrl: 'https://app.alphalef.com/{{ table }}/view/{{ view[0] }}/{{ view[10] }}/',
-                                webUrl: 'https://app.alphalef.com/{{ table }}/view/{{ view[0] }}/{{ view[10] }}/'
-                            }
-                        },
-                        buttons: [       
-                            {
-                            title: '링크 열기',
-                            link: {
-                                mobileWebUrl: 'https://app.alphalef.com/{{ table }}/view/{{ view[0] }}/{{ view[10] }}/',
-                                webUrl: 'https://app.alphalef.com/{{ table }}/view/{{ view[0] }}/{{ view[10] }}/'
-                            }
-                            }
-                        ]
+                            objectType: 'feed',
+                            content: {
+                                title: '{{ view[4] }}',
+                                description: '{{ view[5]|getexcerpt }}',
+                                imageUrl: '{{ view[5]|getimgurl }}',
+                                link: {
+                                    mobileWebUrl: 'https://app.alphalef.com/{{ table }}/view/{{ view[0] }}/{{ view[10] }}/',
+                                    webUrl: 'https://app.alphalef.com/{{ table }}/view/{{ view[0] }}/{{ view[10] }}/'
+                                }
+                            },
+                            buttons: [       
+                                {
+                                    title: '링크 열기',
+                                    link: {
+                                        mobileWebUrl: 'https://app.alphalef.com/{{ table }}/view/{{ view[0] }}/{{ view[10] }}/',
+                                        webUrl: 'https://app.alphalef.com/{{ table }}/view/{{ view[0] }}/{{ view[10] }}/'
+                                    }
+                                }
+                            ]
                         }); 
+                    };
+
+                    function sendLinkFacebook(){
+
+                        var facebook_share_url = "https://www.facebook.com/sharer/sharer.php?u=https://app.alphalef.com/{{ table }}/view/{{ view[0] }}/{{ view[10] }}/";
+                        window.open(facebook_share_url, 
+                                    'Share on Facebook', 
+                                    'scrollbars=no, width=500, height=500');    
+                        // return false;
+                        // FireFox에서는 anchor tag에 걸린 함수에 명시된 return 값이 있으면 그 값을 string 으로 화면에 띄우는 버그(? 인지 의도된 동작인지?) 발생.
+                        // 즉 return false; 해놓으면 Facebook 걸려있는 anchor tag 클릭했을때 새 창이 뜨고 원래 창에는 흰 화면에 false 라고 글자가 표시된다.
+                        // 이를 방지하기 위해서 return false; 는 지워주었음
+                    }
+
+                    function sendLinkTwitter(){
+                        var twitter_share_text="{{ view[4] }}";
+                        var twitter_share_url="https://app.alphalef.com/{{ table }}/view/{{ view[0] }}/{{ view[10] }}/";
+                        window.open("https://twitter.com/share?text="+twitter_share_text+"&url="+twitter_share_url,
+                                    'Share on Twitter',
+                                    'scrollbars=no, width=500, height=500');
+                    }
+
+                    function sendLinkNaver(){
+                        var raw_url = "https://app.alphalef.com/{{ table }}/view/{{ view[0] }}/{{ view[10] }}/";
+                        var raw_title = "{{ view[4] }}"
+                        var naver_root_url = "http://share.naver.com/web/shareView.nhn?url="
+                        var naver_share_url = naver_root_url+encodeURI(raw_url)+"&title="+encodeURI(raw_title);
+
+                        window.open(naver_share_url,
+                                    'Share on Naver',
+                                    'scrollbars=no, width=500, height=500');    
                     }
                 </script>
-
+               
         <br><br>
     </div>
     <script>

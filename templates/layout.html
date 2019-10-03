@@ -11,10 +11,18 @@
     <meta name="naver-site-verification" content="c658814c7f6b024449cd1a746fb8d4c51b25add4"/>
 
     <meta property="og:type" content="website">
+
+    {% if view %}
+    <meta property="og:title" content="{{ view[4] }}">
+    <meta property="og:description" content="{{ view[5]|getexcerpt }}">
+    <meta property="og:image" content="{{ view[5]|getimgurl }}">
+    <meta property="og:url" content="https://app.alphalef.com/{{ table }}/view/{{ view[0] }}/{{ view[10] }}/">
+    {% else %}
     <meta property="og:title" content="알파알렙 온라인 성경 AlphAlef BIBLE APP">
     <meta property="og:description" content="알파알렙 온라인 성경입니다. 원어 성경 본문을 검색할 수 있고, 히브리어, 헬라어(그리스어) 단어 분석, 구문 분석 및 검색 기능을 지원합니다.">
     <meta property="og:image" content="https://app.alphalef.com/static/img/logo.png">
     <meta property="og:url" content="https://app.alphalef.com">
+    {% endif %}
 
     <!-- 구글폰트 -->
     <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet"> -->
@@ -36,7 +44,7 @@
 
 
     <!-- 자체 스타일 파일 -->
-    <link href="/static/css/main.css?ver=1.133921" rel="stylesheet">
+    <link href="/static/css/main.css?ver=1.133922" rel="stylesheet">
     <link href="/static/css/studytools.css?v=111115532" rel="stylesheet">
     <link href="/static/css/mk.css" rel="stylesheet">
 
@@ -57,7 +65,6 @@
 
     <!-- 카카오톡 -->
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-
   </head>
 
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">

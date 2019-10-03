@@ -182,14 +182,13 @@ def unauthorized():
 def getexcerpt(text):
     content_text = re.sub('<.+?>', '', text, 0, re.I|re.S)
     content_text = re.sub('$.+?;', '', content_text, 0, re.I|re.S)
-    return content_text[0:150]
-
+    return content_text[0:150].strip()
 
 @app.template_filter('getimgurl')
 def getimgurl(text):
     img_pattern = re.compile(r"<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>")
     try:
-        imgurl = re.findall(img_pattern, str(text)[0])
+        imgurl = re.findall(img_pattern, str(text))[0] 
     except:
         imgurl = "https://app.alphalef.com/static/img/logo.png"
 
