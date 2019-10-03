@@ -182,7 +182,9 @@ def unauthorized():
 def getexcerpt(text):
     content_text = re.sub('<.+?>', '', text, 0, re.I|re.S)
     content_text = re.sub('$.+?;', '', content_text, 0, re.I|re.S)
-    return content_text[0:150].strip()
+    content_text = content_text.replace('nbsp;', '')
+    content_text = content_text.replace('&', '').strip().replace('\n', '')
+    return content_text[0:150]
 
 @app.template_filter('getimgurl')
 def getimgurl(text):
