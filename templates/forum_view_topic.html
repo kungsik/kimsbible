@@ -11,22 +11,22 @@
 
         <br>
         
-        <h3>{{ view[3] }}</h3>
+        <h3>{{ fview[3] }}</h3>
 
         <br>
-        {% if not view[7] %}
-            {% set date = view[6].split(".")[0] %}
+        {% if not fview[7] %}
+            {% set date = fview[6].split(".")[0] %}
         {% else %}
-            {% set date = view[7].split(".")[0] + '(수정됨)' %}
+            {% set date = fview[7].split(".")[0] + '(수정됨)' %}
         {% endif %}
         <div class="card border-dark mb-12" style="max-width: 100%;">
-            <div class="card-header" style="background-color: #c5ffc9">{{ view[1] }} ({{ identity }}) | {{ date }}</div>
+            <div class="card-header" style="background-color: #c5ffc9">{{ fview[1] }} ({{ identity }}) | {{ date }}</div>
             <div class="card-body text-dark">
-                <p class="card-text">{{ view[4] }}</p>
+                <p class="card-text">{{ fview[4] }}</p>
             </div>
-            {% if current_user.user_id == view[2] %}
+            {% if current_user.user_id == fview[2] %}
             <div class="card-footer bg-transparent border-dark" style="text-align: right; font-size: 12px;">
-                <a href="/forum/edit/{{ view[0] }}">수정하기</a> | <a href="javascript:confirm_remove({{ view[0] }})">삭제하기</a>
+                <a href="/forum/edit/{{ fview[0] }}">수정하기</a> | <a href="javascript:confirm_remove({{ fview[0] }})">삭제하기</a>
             </div>                
             {% endif %}
         </div>
@@ -62,7 +62,7 @@
         <!-- reply부분 -->
         <script src="https://cdn.ckeditor.com/4.12.1/basic/ckeditor.js"></script>
 
-        <form name = "forum_reply_add" method="POST" action="/forum/addreply/{{ view[0] }}/" onsubmit="return validate()">
+        <form name = "forum_reply_add" method="POST" action="/forum/addreply/{{ fview[0] }}/" onsubmit="return validate()">
             <textarea name="content" id="content" rows="10" style="width:100%;">{{ content }}</textarea>
             <br>
             <input type="submit" class="btn btn-info" value="토론추가하기" onclick="updatetext()"></button>
@@ -103,7 +103,7 @@
 
 
     <script>
-        document.title = "{{ view[3] }}";
+        document.title = "{{ fview[3] }}";
     </script>
 
 

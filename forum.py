@@ -46,7 +46,7 @@ def topic_view(no):
         for reply in reply_list:
             reply_identity.append(user_db.get_identity(reply[2]))       
 
-    return render_template('forum_view_topic.html', view=view, reply_list=reply_list, identity=identity, reply_identity=reply_identity)
+    return render_template('forum_view_topic.html', fview=view, reply_list=reply_list, identity=identity, reply_identity=reply_identity)
 
 @app.route('/forum/addreply/<topic_no>/', methods=['POST','GET'])
 @login_required
