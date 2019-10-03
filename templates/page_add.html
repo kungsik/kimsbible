@@ -3,11 +3,11 @@
     {% autoescape false %}
     <div class="container border border-secondary rounded" style="padding: 20px;">
 
-        {% if view %}
-            {% set url= '/page/edit/' + view[3] + '/' %}
+        {% if pview %}
+            {% set url= '/page/edit/' + pview[3] + '/' %}
         {% else %}
             {% set url = '/page/add/' %}
-            {% set view = ['','','',''] %}
+            {% set pview = ['','','',''] %}
         {% endif %}
 
         <h1>페이지 수정/추가하기</h1>
@@ -15,9 +15,9 @@
         <script src="https://cdn.ckeditor.com/4.12.1/full/ckeditor.js"></script>
 
         <form name = "page_add" method="POST" action="{{ url }}" onsubmit="return validate()">
-            <input type="text" name="title" class="form-control" placeholder="제목" id="title" value="{{ view[1] }}"><br>
-            <input type="text" name="url" class="form-control" placeholder="페이지 URL" id="url" value="{{ view[3] }}"><br>
-            <textarea name="content" id="content" rows="20" style="width:100%;">{{ view[2] }}</textarea>
+            <input type="text" name="title" class="form-control" placeholder="제목" id="title" value="{{ pview[1] }}"><br>
+            <input type="text" name="url" class="form-control" placeholder="페이지 URL" id="url" value="{{ pview[3] }}"><br>
+            <textarea name="content" id="content" rows="20" style="width:100%;">{{ pview[2] }}</textarea>
             <br>
             <input type="submit" class="btn btn-info" value="추가/수정"></button>
         </form>

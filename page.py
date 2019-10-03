@@ -48,4 +48,4 @@ def page_edit(url):
         page_db = db.Page()
         view = page_db.view_page(url)
 
-        return render_template('page_add.html', view=view) 
+        return render_template('page_add.html', pview=view) 
