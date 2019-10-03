@@ -3,22 +3,22 @@
     {% autoescape false %}
         <div class="container border border-secondary rounded" style="padding: 20px;">
             
-        {% if view %}
-            {{ view[2] }}
+        {% if pview %}
+            {{ pview[2] }}
         {% else %}
             <h2>죄송합니다. 이 페이지는 현재 존재하지 않거나 수정중입니다.</h2>
         {% endif %}
 
         {% if current_user.user_id == admin %}
 
-            <a href="/page/edit/{{ view[3] }}">페이지수정</a>
+            <a href="/page/edit/{{ pview[3] }}">페이지수정</a>
 
         {% endif %}
 
         </div>
 
         <script>
-            document.title = "{{ view[1] }}";
+            document.title = "{{ pview[1] }}";
         </script>
     {% endautoescape %}
 {% endblock %}

@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% autoescape false %}
+
+<div class="container border border-white rounded">
+    <script src="/static/js/bhsheb_statistics.js"></script>
+
+    <div class="alert alert-danger" role="alert">현재 텍스트 통계 페이지는 아직 테스트 중입니다. 현재 통계 대상 단어의 수는 40,000개로 제한합니다.
+      검색결과가 나오지 않는다면 범위를 더 좁히십시오.<br> 통계 범위 코드 입력 방법은 <a href='/page/stat/' target="_blank">여기</a>를 클릭해 주세요.</div>
+
+
+    <div class="row">
+        <div class="col-md-4" style="text-align: center">
+            <h4>검색 범위 코드 입력</h4>
+            <form method="post" id="stat_post">
+                <textarea class="form-control" rows="10" name="statCode" id="statCode"></textarea>
+                <br><button type="submit" class="btn btn-success" id="stat_submit">실행</button>
+            </form>
+          <div id="load_image" style="display:none"><img src="/static/img/loader.gif" align="center"></div>
+        </div>
+        <div class="col-md-8">
+            <h4>통계결과:</h4>
+            <div id="search_result"></div>
+        </div>
+    </div>
+</div>
+
+    {% endautoescape %}
+{% endblock %}

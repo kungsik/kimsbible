@@ -28,7 +28,7 @@ def page_add():
 def page_view(pageurl):
     page_db = db.Page()
     view = page_db.view_page(pageurl)
-    return render_template('page_view.html', view=view, admin=config.admin)
+    return render_template('page_view.html', pview=view, admin=config.admin)
 
 
 @app.route('/page/edit/<url>/', methods=['POST','GET'])
