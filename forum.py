@@ -45,6 +45,8 @@ def topic_view(no):
         reply_identity = []
         for reply in reply_list:
             reply_identity.append(user_db.get_identity(reply[2]))       
+    else:
+        reply_identity = []
 
     return render_template('forum_view_topic.html', fview=view, reply_list=reply_list, identity=identity, reply_identity=reply_identity)
 
