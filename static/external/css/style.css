@@ -1832,7 +1832,9 @@ h1, h2, h3, h4, h5,
   border-radius: 4px;
   padding: 20px;
   background-color: #fff;
-  border: 1px solid #eee; }
+  border: 1px solid #eee;
+  word-break: break-all;
+}
   .author-box *:last-child {
     margin-bottom: 0; }
   .author-box img {

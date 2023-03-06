@@ -38,7 +38,7 @@ book_abb = {
     "2_John": "none",
     "3_John": "none",
     "Jude": "jude",
-    "Revelation": "rev" 
+    "Revelation": "rev"
 }
 
 
@@ -63,15 +63,15 @@ def sblgnt_page(book='Matthew', chapter=1):
         last_chp = response.json()['lastchp']
 
         #캐싱페이지 작성
-        data = render_template('sblgnt_text.html', book=book, chapter=chapter, kml_file=kml_file, sblgnt_url=sblgnt_url, google_map_api=google_map_api, vcode=vcode, verse=verse, last_chp=last_chp)
-        f = open("kimsbible/static/cached/sblgnt/" + book + "-" + str(chapter) + ".html", 'w')
-        f.write(data)
-        f.close()
-        
+        # data = render_template('sblgnt_text.html', book=book, chapter=chapter, kml_file=kml_file, sblgnt_url=sblgnt_url, google_map_api=google_map_api, vcode=vcode, verse=verse, last_chp=last_chp)
+        # f = open("kimsbible/static/cached/sblgnt/" + book + "-" + str(chapter) + ".html", 'w')
+        # f.write(data)
+        # f.close()
+
         return render_template('sblgnt_text.html', book=book, chapter=chapter, kml_file=kml_file, sblgnt_url=sblgnt_url, google_map_api=google_map_api, vcode=vcode, verse=verse, last_chp=last_chp)
-    
-    #캐싱파일이 있을 경우 
-    else:        
+
+    #캐싱파일이 있을 경우
+    else:
         return app.send_static_file("cached/sblgnt/" + book + "-" + str(chapter) + ".html")
 
 

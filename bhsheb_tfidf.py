@@ -74,7 +74,7 @@ def tfidf():
         result.append(result_1)
         result.append(result_2)
 
-        return json.dumps(result)
+        return json.dumps(result, ensure_ascii=False)
 
     else:
         return render_template('bhsheb_tfidf.html')

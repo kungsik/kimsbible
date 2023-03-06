@@ -6,7 +6,7 @@
     <div class="container">
         <div class="row align-items-center justify-content-center">
         <div class="col-md-12" style="position: relative; text-align: center;" data-aos="fade-up">
-            
+
             <img src="/static/img/main.png" alt="Image" style="max-width: 100%">
 
             <div>
@@ -15,13 +15,13 @@
             <p class="mb-5">알파알렙 성경은 히브리어 성경과 헬라어 성경에 친숙해 질 수 있는 컨텐츠를 제공해 드립니다.</p>
             <div>
                 <a href="/bhsheb/Genesis/1" class="btn btn-primary mr-2 mb-2">시작하기</a>
-            </div>             
+            </div>
             <br><br>
             </div>
         </div>
         </div>
     </div>
-    </div>  
+    </div>
 
 
     <div class="site-section bg-light" id="features-section">
@@ -32,7 +32,7 @@
         </div>
         </div>
         <div class="row align-items-stretch">
-        <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">  
+        <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">
             <div class="unit-4 d-block">
             <div class="unit-4-icon mb-3">
                 <span class="icon-wrap"><span class="text-primary icon-book"></span></span>
@@ -87,7 +87,7 @@
             <h4><a href="/commentary/view/{{ no[0] }}/{{ urltitle[0] }}">{{ title[0] }} </a></h4>
             <div class="meta mb-4">{{ author[0] }} <span class="mx-2">&bullet;</span> {{ date[0] }}</div>
             <p>{{ content[0] }} ...</p>
-            </div> 
+            </div>
         </div>
         <div class="col-md-6 col-lg-4 mb-4 mb-lg-4 recent_commentary" data-aos="fade-up" onclick='location.href="/commentary/view/{{ no[1] }}/{{ urltitle[1] }}"'>
             <div class="h-entry">
@@ -105,7 +105,7 @@
             <p>{{ content[2] }} ...</p>
             </div>
         </div>
-        
+
         </div>
     </div>
     </div>
@@ -125,7 +125,7 @@
             <div class="row mb-5">
                 <div class="col-12 text-center">
                     <h3 class="section-title mb-3">최근 포럼 토픽</h2>
-                </div> 
+                </div>
             </div>
             <div class="row justify-content-center" id="disqus_recent">
                 {% for topic in recent_forum_topic %}
@@ -134,7 +134,7 @@
                         <div class='d-flex mb-4'>
                            <div class='mr-auto text-black'>
                                 <h4>{{ topic[3] }}</h4>
-                                {{ topic[1] }} | {{ topic[6].split(' ')[0] }} 
+                                {{ topic[1] }} | {{ topic[6].split(' ')[0] }}
                                 <br><br>
                                 {{ topic[4][0:150] }} ...
                            </div>

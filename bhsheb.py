@@ -110,6 +110,7 @@ def show_bhsheb_word_function(node):
 
     if w_f["동사형"] != "NA" and w_f["동사형"] != "" and w_f["동사형"] != "unknown":
         w_f["동사형태"] = "<a href='/bhsheb/conjugator/?cons=" + w_f["원형"] + "' target=_blank>검색</a>"
+        w_f["변화형"] = "<a href='https://www.pealim.com/search/?q=" + w_f["원형"] +  "' target=_blank>검색</a>"
 
     return w_f
 
@@ -237,7 +238,7 @@ def text_page(book='Genesis', chapter=1):
             section = T.sectionFromNode(v)
             vcode = vp.nodetocode(section, vp.bookList)
             
-            verse += '<li>'
+            verse += '<li id='+str(i)+'>'
             verse += '<div class=verseContainer>'
             verse += '<div class=verseNode>'
             wordsNode = L.d(v, otype='word')
