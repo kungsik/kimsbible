@@ -20,7 +20,8 @@ var menu = {
     },
     "나눔": {
         "커뮤니티": "/community/",
-        "포럼": "/forum/list/"
+        "포럼": "/forum/list/",
+        "디스코드채널":"https://discord.gg/QKvfH6fK" 
     },
     "회원메뉴": {
         "회원가입": "/auth/signup/",
