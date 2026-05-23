@@ -16,12 +16,11 @@ var menu = {
         "소개": "/page/commentary/",
         "오픈주석": "/commentary/list/",
         "클래식주석": "/classic/list/",
-        "내오픈주석": "/commentary/mylist/" 
+        "내오픈주석": "/commentary/mylist/"
     },
     "나눔": {
         "커뮤니티": "/community/",
-        "포럼": "/forum/list/",
-        "디스코드채널":"https://discord.gg/QKvfH6fK" 
+        "포럼": "/forum/list/"
     },
     "회원메뉴": {
         "회원가입": "/auth/signup/",
