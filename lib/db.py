@@ -15,7 +15,7 @@ def _check_password(pwhash, password):
         # 구버전 Werkzeug sha256 형식: sha256$<salt>$<hash>
         try:
             _, salt, hashval = pwhash.split('$', 2)
-            actual = hashlib.sha256((salt + password).encode('utf-8')).hexdigest()
+            actual = _hmac.new(salt.encode('utf-8'), password.encode('utf-8'), hashlib.sha256).hexdigest()
             return _hmac.compare_digest(actual, hashval)
         except Exception:
             return False
