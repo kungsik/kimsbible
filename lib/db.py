@@ -1,11 +1,25 @@
 import pymysql
 import re
+import hashlib
+import hmac as _hmac
 from datetime import datetime, timedelta
 from flask import request, redirect
 from flask_login import login_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from kimsbible.lib import vcodeparser as vp
 from kimsbible.lib import config
+
+def _check_password(pwhash, password):
+    """구버전 sha256 방식과 신버전 pbkdf2 방식을 모두 지원하는 비밀번호 검증 함수"""
+    if pwhash.startswith('sha256$'):
+        # 구버전 Werkzeug sha256 형식: sha256$<salt>$<hash>
+        try:
+            _, salt, hashval = pwhash.split('$', 2)
+            actual = hashlib.sha256((salt + password).encode('utf-8')).hexdigest()
+            return _hmac.compare_digest(actual, hashval)
+        except Exception:
+            return False
+    return check_password_hash(pwhash, password)
 
 class Commentary:
     def __init__(self):
@@ -213,7 +227,7 @@ class User:
         sql = "SELECT * FROM user where email='" + email + "'"
         self.cursor.execute(sql)
         user = self.cursor.fetchone()
-        if not user or not check_password_hash(user[2], password):
+        if not user or not _check_password(user[2], password):
           return False
         else:
           return user

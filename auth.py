@@ -99,10 +99,9 @@ def signup():
 
 @app.route("/auth/signin/", methods=['POST','GET'])
 def signin():
-    try:
-        if current_user.name:
-            return redirect("/")
-    except:
+    if current_user.is_authenticated:
+        return redirect("/")
+    if True:
         if request.method == 'POST':
             email = request.form['email']
             password = request.form['password']
