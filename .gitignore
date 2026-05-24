@@ -1,9 +1,31 @@
-__init__.pyc
+# 컴파일된 파이썬 파일
+*.pyc
+*.pyo
+**/__pycache__/
 
-__pycache__/
-lib/__pycache__/
-security/
+# 가상환경
+venv/
+
+# 로컬 실행 스크립트 (인증정보 포함 가능)
+*.sh
+
+# 설정 파일 (인증정보 포함)
 lib/config.py
+
+# 보안 폴더
+security/
+
+# 캐시 파일 (자동 생성)
+static/cached/
+
+# 데이터 파일 (용량 큰 CSV)
 static/csv/
-cached/
+
+# IDE 설정
+.idea/
+
+# macOS 시스템 파일
+.DS_Store
+
+# 사이트맵 (자동 생성)
 sitemap.xml

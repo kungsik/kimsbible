@@ -10,14 +10,15 @@ from kimsbible.lib import config
 class Commentary:
     def __init__(self):
         self.db = pymysql.connect(
-          config.hostname,
-          config.username,
-          config.password,
-          config.db
+          host=config.hostname,
+          port=getattr(config, 'port', 3306),
+          user=config.username,
+          password=config.password,
+          database=config.db
         )
         self.cursor = self.db.cursor()
         self.current_time = datetime.now() + timedelta(hours=9)
-    
+
     def add_commentary(self, table, title, content, author, vcode, email, copen):
         verse = vp.codetostr(vcode, vp.bookListKorAbbr)
         now = self.current_time.isoformat(' ')
@@ -182,10 +183,11 @@ class Commentary:
 class User:
     def __init__(self):
         self.db = pymysql.connect(
-          config.hostname,
-          config.username,
-          config.password,
-          config.db
+          host=config.hostname,
+          port=getattr(config, 'port', 3306),
+          user=config.username,
+          password=config.password,
+          database=config.db
         )
         self.cursor = self.db.cursor()
         self.current_time = datetime.now() + timedelta(hours=9)
@@ -197,7 +199,7 @@ class User:
         if check_user:
           return False
 
-        sql2 = "INSERT INTO user (email, name, password, open_email) VALUES ('" + email + "', '"  + name + "', '" + generate_password_hash(password, method='sha256') + "', '0')"
+        sql2 = "INSERT INTO user (email, name, password, open_email) VALUES ('" + email + "', '"  + name + "', '" + generate_password_hash(password) + "', '0')"
         try: 
           self.cursor.execute(sql2)
           self.db.commit()
@@ -246,7 +248,7 @@ class User:
     def edituser(self, email, name, password, open_email):
        
         if password:
-          pass_query = "', password='" + generate_password_hash(password, method='sha256')
+          pass_query = "', password='" + generate_password_hash(password)
         else:
           pass_query = ''
 
@@ -320,14 +322,15 @@ class User:
 class Forum:
     def __init__(self):
         self.db = pymysql.connect(
-          config.hostname,
-          config.username,
-          config.password,
-          config.db
+          host=config.hostname,
+          port=getattr(config, 'port', 3306),
+          user=config.username,
+          password=config.password,
+          database=config.db
         )
         self.cursor = self.db.cursor()
         self.current_time = datetime.now() + timedelta(hours=9)
-    
+
     def add_topic(self, topic, content, author, email):
         now = self.current_time.isoformat(' ')
         headers_list = request.headers.getlist("X-Forwarded-For")
@@ -437,13 +440,14 @@ class Forum:
 class Page:
     def __init__(self):
         self.db = pymysql.connect(
-          config.hostname,
-          config.username,
-          config.password,
-          config.db
+          host=config.hostname,
+          port=getattr(config, 'port', 3306),
+          user=config.username,
+          password=config.password,
+          database=config.db
         )
         self.cursor = self.db.cursor()
-    
+
     def add_page(self, title, content, pageurl):
         sql = "INSERT INTO page (title, content, url) VALUES (%s, %s, %s)"
         try: 

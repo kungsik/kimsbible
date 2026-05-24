@@ -21,7 +21,7 @@ from kimsbible.lib.config import google_map_api, kml_url
 
 ### Load up TF ###
 ETCBC = 'hebrew/etcbc4c'
-TF = Fabric(locations='text-fabric-data', modules=ETCBC)
+TF = Fabric(locations=os.path.expanduser('~/text-fabric-data'), modules=ETCBC)
 #api = TF.load('book')
 
 api = TF.load('''
@@ -226,7 +226,8 @@ def text_page(book='Genesis', chapter=1):
         chpNode = T.nodeFromSection((book, chapter))
         verseNode = L.d(chpNode, otype='verse')
         whole_chpNode = T.nodeFromSection((book,))
-        last_chp = T.sectionFromNode(whole_chpNode, lastSlot=True)
+        chapter_nodes = L.d(whole_chpNode, otype='chapter')
+        last_chp_num = T.sectionFromNode(chapter_nodes[-1])[1]
         verse = "<ol>"
 
         #성경읽기 도우미 코드에서 1절 번호를 구하기 위해 절수를 구함
@@ -331,12 +332,12 @@ def text_page(book='Genesis', chapter=1):
         vcode = int(vcode) - int(i)
 
         #캐싱페이지 작성
-        data = render_template('bhsheb_text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp[1], kml_file=kml_file, google_map_api=google_map_api, vcode=str(vcode))
+        data = render_template('bhsheb_text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp_num, kml_file=kml_file, google_map_api=google_map_api, vcode=str(vcode))
         f = open("kimsbible/static/cached/bhsheb/" + book + "-" + str(chapter) + ".html", 'w')
         f.write(data)
         f.close()
 
-        return render_template('bhsheb_text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp[1], kml_file=kml_file, google_map_api=google_map_api, vcode=str(vcode))
+        return render_template('bhsheb_text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp_num, kml_file=kml_file, google_map_api=google_map_api, vcode=str(vcode))
     
     #캐싱파일이 있을 경우 
     else:        
@@ -352,7 +353,7 @@ def show_word_function(node):
 
 @app.route('/bhsheb/verse/<int:node>')
 def show_verse_function(node):
-    wordsNode = L.d(node, otype='word')
+    wordsNode = list(L.d(node, otype='word'))
     wordsNode.reverse()
     verse_api = {'words': [], 'gloss': [], 'pdp': [], 'parse': [], 'suff': []}
     for w in wordsNode:
