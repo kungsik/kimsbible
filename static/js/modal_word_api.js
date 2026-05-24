@@ -5,6 +5,11 @@
 //     })
 // });
 
+function openDictPopup(url) {
+    window.open(url, 'dictpopup', 'width=960,height=700,scrollbars=yes,resizable=yes,location=yes');
+    return false;
+}
+
 $(document).ready(function(){
     $(".bhsheb_verse_analysis").click(function(){
         var verse_node = $(this).attr("verse_node");

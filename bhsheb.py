@@ -1,6 +1,7 @@
 import re
 import os
 import csv
+import sqlite3
 from collections import OrderedDict
 from io import StringIO
 
@@ -38,6 +39,20 @@ api = TF.load('''
 ''')
 
 api.makeAvailableIn(globals())
+
+# UBS SDBH 히브리어 사전 — DB 경로 및 도메인 맵 (SDBH 팝업 엔드포인트에서 사용)
+_heb_db = os.path.join(app.root_path, 'static', 'json', 'heb_dict.db')
+
+# 의미 영역(Lexical Domains) 코드 → 라벨 매핑 (112KB JSON, 직접 로드)
+_HEB_DOMAINS = {}
+_heb_domain_json = os.path.join(app.root_path, 'static', 'json',
+                                 'UBSHebrewDicLexicalDomains-v0.9.2-en.JSON')
+if os.path.exists(_heb_domain_json):
+    import json as _json
+    with open(_heb_domain_json, 'r', encoding='utf-8') as _f:
+        for _d in _json.load(_f):
+            _locs = _d.get('SemanticDomainLocalizations') or []
+            _HEB_DOMAINS[_d['Code']] = _locs[0]['Label'] if _locs else ''
 
 # TF 책 이름 → Sefaria API 책 이름 매핑
 SEFARIA_BOOK_MAP = {
@@ -124,8 +139,9 @@ def show_bhsheb_word_function(node):
     # w_f["의미"] = w_f["의미"].replace('<', '[').replace('>', ']')
     strong = get_strong(node)
     w_f["의미"] = get_kor_hgloss(strong, node)
-    w_f["사전1"] = "<a href='https://dict.naver.com/hbokodict/ancienthebrew/#/search?query=" + strong + "' target=_blank>네이버사전</a>"
-    w_f["사전2"] = "<a href='https://biblehub.com/hebrew/" + strong + ".htm' target=_blank>바이블허브</a>"
+    w_f["사전1"] = "<a href='#' onclick=\"openDictPopup('https://dict.naver.com/hbokodict/ancienthebrew/#/search?query=" + strong + "'); return false;\">네이버사전</a>"
+    w_f["사전2"] = "<a href='#' onclick=\"openDictPopup('https://biblehub.com/hebrew/" + strong + ".htm'); return false;\">바이블허브</a>"
+    w_f["사전3"] = "<a href='#' onclick=\"openDictPopup('/bhsheb/sdbh/" + strong + "/'); return false;\">SDBH</a>"
     #w_f["사전"] = "<a href='http://dict.naver.com/hbokodict/ancienthebrew/#/search?query=" + w_f["원형"] + "' target=_blank>보기</a>"
     w_f["용례"] = "<a href='/bhsheb/search/?cons=" + F.lex_utf8.v(node) + "&sp=" + w_f["품사"] + "' target=_blank>검색</a>"
 
@@ -416,6 +432,32 @@ def show_verse_function(node):
         verse_str['kor'].append(kb.json_to_verse(section[0], chp_vrs[0], chp_vrs[1], 'korean'))
 
     return render_template('bhsheb_verse.html', verse_api=verse_api, section=section, verse_str=verse_str)
+
+
+@app.route('/bhsheb/sdbh/<strong>/')
+def sdbh_popup(strong):
+    """UBS SDBH 히브리어 사전 풀 팝업 페이지 — SQLite 직접 조회"""
+    import json as _json
+    try:
+        hkey = 'H' + str(int(strong)).zfill(4)
+    except (ValueError, TypeError):
+        hkey = strong
+    row = None
+    if os.path.exists(_heb_db):
+        _conn = sqlite3.connect(_heb_db)
+        row = _conn.execute(
+            'SELECT lemma, pos, full_data FROM dict WHERE strong=?', (hkey,)
+        ).fetchone()
+        _conn.close()
+    if not row or not row[2]:
+        return render_template('sdbh_popup.html', found=False, strong=hkey,
+                               lemma='', pos='', senses=[], dict_name='Hebrew')
+    fd = _json.loads(row[2])
+    for s in fd.get('senses', []):
+        s['domains'] = [_HEB_DOMAINS.get(c, c) for c in s.get('domain_codes', []) if c]
+    return render_template('sdbh_popup.html', found=True, strong=hkey,
+                           lemma=fd['lemma'], pos=fd['pos'],
+                           senses=fd['senses'], dict_name='Hebrew (SDBH)')
 
 
 @app.route('/bhsheb/sefaria/<path:ref>/')

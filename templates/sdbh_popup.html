@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ lemma }} — UBS사전</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 14px;
+      margin: 0;
+      padding: 16px 20px;
+      color: #222;
+      background: #fff;
+    }
+    .header {
+      border-bottom: 2px solid #444;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }
+    .lemma {
+      font-size: 2em;
+      font-weight: bold;
+      direction: rtl;
+      unicode-bidi: bidi-override;
+    }
+    .meta {
+      color: #555;
+      font-size: 0.9em;
+      margin-top: 4px;
+    }
+    .strong-code {
+      display: inline-block;
+      background: #eee;
+      border-radius: 3px;
+      padding: 1px 6px;
+      font-family: monospace;
+      font-size: 0.85em;
+    }
+    .sense {
+      border-left: 3px solid #ccc;
+      padding: 6px 10px;
+      margin: 8px 0;
+    }
+    .sense:hover {
+      border-left-color: #888;
+      background: #fafafa;
+    }
+    .glosses {
+      font-weight: bold;
+      color: #1a1a8c;
+      font-size: 1em;
+    }
+    .domain-tag {
+      display: inline-block;
+      background: #e8f4fd;
+      color: #2c7ab5;
+      border-radius: 3px;
+      padding: 1px 6px;
+      font-size: 0.8em;
+      margin: 2px 2px 2px 0;
+    }
+    .def-short {
+      margin-top: 4px;
+      color: #333;
+      line-height: 1.5;
+    }
+    .def-long {
+      margin-top: 4px;
+      color: #555;
+      font-size: 0.9em;
+      line-height: 1.5;
+    }
+    .comment {
+      margin-top: 4px;
+      color: #777;
+      font-size: 0.85em;
+      font-style: italic;
+    }
+    .sense-num {
+      color: #999;
+      font-size: 0.8em;
+      margin-bottom: 2px;
+    }
+    .footer {
+      margin-top: 16px;
+      padding-top: 8px;
+      border-top: 1px solid #eee;
+      font-size: 0.8em;
+      color: #999;
+    }
+    .no-result {
+      color: #888;
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+{% if not found %}
+  <div class="no-result">해당 단어의 사전 정보가 없습니다. ({{ strong }})</div>
+{% else %}
+  <div class="header">
+    <div class="lemma">{{ lemma }}</div>
+    <div class="meta">
+      <span class="strong-code">{{ strong }}</span>
+      {% if pos %} &nbsp;·&nbsp; {{ pos }}{% endif %}
+    </div>
+  </div>
+
+  {% for s in senses %}
+  <div class="sense">
+    <div class="sense-num">{{ loop.index }}.</div>
+    {% if s.domains %}
+      {% for d in s.domains %}
+        {% if d %}<span class="domain-tag">{{ d }}</span>{% endif %}
+      {% endfor %}
+    {% endif %}
+    <div class="glosses">{{ s.glosses | join(', ') }}</div>
+    {% if s.def_short %}
+      <div class="def-short">{{ s.def_short }}</div>
+    {% endif %}
+    {% if s.def_long %}
+      <div class="def-long">{{ s.def_long }}</div>
+    {% endif %}
+    {% if s.comment %}
+      <div class="comment">{{ s.comment }}</div>
+    {% endif %}
+  </div>
+  {% endfor %}
+
+  <div class="footer">
+    출처: UBS {{ dict_name }} Dictionary (CC BY-SA 4.0)
+  </div>
+{% endif %}
+
+</body>
+</html>

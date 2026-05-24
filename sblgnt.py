@@ -1,6 +1,18 @@
 import os
+import sqlite3
+import json as _json
 from flask import render_template, request
 from kimsbible import app
+
+# UBS 그리스어 도메인 맵 — 모듈 시작 시 한 번만 로드 (236KB)
+_GRK_DOMAINS = {}
+_grk_domain_json = os.path.join(app.root_path, 'static', 'json',
+                                 'UBSGreekNTDicLexicalDomains-v1.0-en.JSON')
+if os.path.exists(_grk_domain_json):
+    with open(_grk_domain_json, 'r', encoding='utf-8') as _f:
+        for _d in _json.load(_f):
+            _locs = _d.get('SemanticDomainLocalizations') or []
+            _GRK_DOMAINS[_d['Code']] = _locs[0]['Label'] if _locs else ''
 from kimsbible.lib.config import sblgnt_url, google_map_api, kml_url
 from kimsbible.lib.vcodeparser import bookList
 import requests
@@ -86,3 +98,37 @@ def show_sblgnt_word_function(node):
 @app.route('/sblgnt/verse/<int:node>')
 def show_sblgnt_verse_function(node):
     return render_template('sblgnt_verse.html', node=node, sblgnt_url=sblgnt_url)
+
+
+@app.route('/sblgnt/sdbh/<strong>/')
+def sblgnt_sdbh_popup(strong):
+    """UBS 그리스어 사전 풀 팝업 페이지"""
+    _grk_db = os.path.join(app.root_path, 'static', 'json', 'grk_dict.db')
+    try:
+        gkey = 'G' + str(int(strong)).zfill(4)
+    except (ValueError, TypeError):
+        gkey = strong
+
+    grk_domains = _GRK_DOMAINS  # 모듈 레벨에서 이미 로드됨
+
+    # DB 조회
+    if not os.path.exists(_grk_db):
+        return render_template('sdbh_popup.html', found=False, strong=gkey,
+                               lemma='', pos='', senses=[], dict_name='Greek')
+    conn = sqlite3.connect(_grk_db)
+    # G0001a 형태도 매칭되도록 LIKE 조회
+    row = conn.execute(
+        'SELECT lemma, pos, full_data FROM dict WHERE strong=? OR strong LIKE ?',
+        (gkey, gkey + '%')
+    ).fetchone()
+    conn.close()
+
+    if not row or not row[2]:
+        return render_template('sdbh_popup.html', found=False, strong=gkey,
+                               lemma='', pos='', senses=[], dict_name='Greek')
+    fd = _json.loads(row[2])
+    for s in fd.get('senses', []):
+        s['domains'] = [grk_domains.get(c, c) for c in s.get('domain_codes', []) if c]
+    return render_template('sdbh_popup.html', found=True, strong=gkey,
+                           lemma=fd['lemma'], pos=fd['pos'],
+                           senses=fd['senses'], dict_name='Greek NT (UBS)')
