@@ -200,54 +200,60 @@ def removeuser():
 def show_member_info():
     if request.method == 'POST':
 
-        email = request.form['email']
-        name = request.form['name']
-        password = request.form['password']
+        name     = request.form['name']
+        password  = request.form['password']
         password2 = request.form['password2']
         open_email = request.form.get('open_email', '0')
-        randstr = request.form.get('randstr', '')
+        randstr    = request.form.get('randstr', '')
 
         user_db = db.User()
-        if not randstr:
-            user_info = user_db.getUserInfo(current_user.user_id)
 
-        # 이메일 링크를 통해 회원 정보를 수정하려는 경우
+        # 비밀번호 찾기 링크를 통한 수정
+        if randstr:
+            email = user_db.getEmailbyRand(randstr)
+            if not email:
+                return render_template('sign_find_pass.html',
+                    error="링크가 만료되었거나 유효하지 않습니다. 비밀번호 찾기를 다시 시도해 주세요.")
+            user_info = user_db.getUserInfo(email)
+            # 링크를 통한 경우 새 비밀번호 필수
+            if not password:
+                return render_template('user_info.html', error=5, user_info=user_info, randstr=randstr)
+
+        # 로그인 상태에서 직접 수정
         else:
-            try:
-                email = user_db.getEmailbyRand(randstr)
-                user_info = user_db.getUserInfo(email)
-            except:
-                return redirect("/")
-            
-       
-        if name == '알파알렙' or name == '관리자' or name == 'admin' or name == 'administrator' or name == '알파알렙성경':
-            return render_template('user_info.html', error=3, user_info=user_info, name=name)
-        
+            email     = current_user.user_id
+            user_info = user_db.getUserInfo(email)
+
+        # 금지 닉네임 체크
+        if name in ('알파알렙', '관리자', 'admin', 'administrator', '알파알렙성경'):
+            return render_template('user_info.html', error=3, user_info=user_info, randstr=randstr)
+
         if not name or not email:
-            return render_template('user_info.html', error=4, user_info=user_info)
+            return render_template('user_info.html', error=4, user_info=user_info, randstr=randstr)
 
         if password != password2:
-            return render_template('user_info.html', error=2, user_info=user_info)
+            return render_template('user_info.html', error=2, user_info=user_info, randstr=randstr)
 
-        if not randstr:
-            email = current_user.user_id
-        
         result = user_db.edituser(email, name, password, open_email)
 
+        if not result:
+            return render_template('user_info.html', error=1, user_info=user_info, randstr=randstr)
+
+        # 성공 — randstr 사용한 경우 링크 삭제
         if randstr:
             user_db.removeRand(randstr)
 
-        if not result:
-            return render_template('user_info.html', error=1, user_info=user_info)
-        
         user_info = user_db.getUserInfo(email)
-        return render_template('user_info.html', user_info=user_info)
-    
+        return render_template('user_info.html', user_info=user_info, success=True)
+
 
     elif request.args.get('randstr') and request.method == 'GET':
         randstr = request.args.get('randstr')
         user_db = db.User()
         email = user_db.getEmailbyRand(randstr)
+        if not email:
+            return render_template('sign_find_pass.html',
+                error="링크가 만료되었거나 유효하지 않습니다. 비밀번호 찾기를 다시 시도해 주세요.")
         user_info = user_db.getUserInfo(email)
         return render_template('user_info.html', user_info=user_info, randstr=randstr)
 
@@ -257,7 +263,6 @@ def show_member_info():
             user_db = db.User()
             user_info = user_db.getUserInfo(current_user.user_id)
             return render_template('user_info.html', user_info=user_info)
-
         except:
             return redirect('/')
 

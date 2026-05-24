@@ -307,16 +307,34 @@ class User:
           return "탈퇴함"        
     
     def add_pass_restore(self, email, randstr):
-        sql = "INSERT INTO restorepass (randstr, email) VALUES ('" + randstr + "', '" + email + "')"
+        # 같은 이메일의 기존 요청 삭제 (중복 방지)
+        sql_del = "DELETE FROM restorepass WHERE email='" + email + "'"
+        self.cursor.execute(sql_del)
+        self.db.commit()
+
+        now = self.current_time.isoformat(' ')
+        sql = "INSERT INTO restorepass (randstr, email, created_at) VALUES ('" + randstr + "', '" + email + "', '" + now + "')"
         self.cursor.execute(sql)
         self.db.commit()
         return "insert is done"
-    
+
     def getEmailbyRand(self, randstr):
-        sql = "SELECT email FROM restorepass WHERE randstr='" + randstr + "'"
+        sql = "SELECT email, created_at FROM restorepass WHERE randstr='" + randstr + "'"
         self.cursor.execute(sql)
         result = self.cursor.fetchone()
-        return result[0]
+        if not result:
+            return None
+
+        email, created_at = result
+
+        # 24시간 유효기간 체크
+        if created_at:
+            now = self.current_time
+            if now - created_at > timedelta(hours=24):
+                self.removeRand(randstr)
+                return None
+
+        return email
     
     def removeRand(self, randstr):
         sql = "DELETE FROM restorepass WHERE randstr='" + randstr + "'"
