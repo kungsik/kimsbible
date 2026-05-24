@@ -2,7 +2,7 @@ from kimsbible import app
 from kimsbible.lib import db
 from kimsbible.lib import config
 from kimsbible.lib import mail
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, jsonify
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 from urllib import parse
 
@@ -154,9 +154,12 @@ def findpass():
         html += "<a href='https://app.alphalef.com/auth/info/?randstr=" + rand_str + "'>비밀번호 변경</a><br><br>"
         html += "위 링크는 당일 자정까지 유효합니다. 비밀번호 찾기를 신청하지 않으셨다면 이 메일을 무시하셔도 좋습니다."
 
-        mail.sendmail(recipients, subject, html)
+        result = mail.sendmail(recipients, subject, html)
 
-        return render_template('sign_find_pass.html', error="비밀번호 재설정 링크가 정상적으로 발송되었습니다.")
+        if result:
+            return render_template('sign_find_pass.html', error="비밀번호 재설정 링크가 정상적으로 발송되었습니다.")
+        else:
+            return render_template('sign_find_pass.html', error="메일 발송에 실패했습니다. 관리자에게 문의해 주세요.")
     
     else:
         return render_template('sign_find_pass.html')
@@ -201,8 +204,8 @@ def show_member_info():
         name = request.form['name']
         password = request.form['password']
         password2 = request.form['password2']
-        open_email = request.form['open_email']
-        randstr = request.form['randstr']
+        open_email = request.form.get('open_email', '0')
+        randstr = request.form.get('randstr', '')
 
         user_db = db.User()
         if not randstr:
@@ -257,3 +260,14 @@ def show_member_info():
 
         except:
             return redirect('/')
+
+
+@app.route('/auth/status/')
+def auth_status():
+    try:
+        authenticated = bool(current_user.user_id)
+        name = current_user.name if authenticated else ''
+    except AttributeError:
+        authenticated = False
+        name = ''
+    return jsonify({'authenticated': authenticated, 'name': name})
