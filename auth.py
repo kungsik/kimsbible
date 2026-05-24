@@ -239,9 +239,10 @@ def show_member_info():
         if not result:
             return render_template('user_info.html', error=1, user_info=user_info, randstr=randstr)
 
-        # 성공 — randstr 사용한 경우 링크 삭제
+        # 성공
         if randstr:
             user_db.removeRand(randstr)
+            return render_template('user_info.html', user_info=user_info, success=True, via_link=True)
 
         user_info = user_db.getUserInfo(email)
         return render_template('user_info.html', user_info=user_info, success=True)

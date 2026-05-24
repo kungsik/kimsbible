@@ -1,12 +1,22 @@
 {% extends "layout.html" %}
 {% block body %}
 
-
     <div class="container border border-white rounded">
 
         <h3>회원 가입 정보 / 수정</h3>
         <br>
-        
+
+        {% if success and via_link %}
+
+            <!-- 비밀번호 찾기 링크를 통한 변경 성공 화면 -->
+            <div class="alert alert-success">
+                <strong>비밀번호가 정상적으로 수정되었습니다.</strong><br>
+                새 비밀번호로 로그인해 주세요.
+            </div>
+            <a href="/auth/signin/" class="btn btn-primary">로그인하기</a>
+
+        {% else %}
+
             <div class="alert alert-info">
                 <ol>
                     <li>아래 내용은 회원가입시 입력하신 정보입니다.</li>
@@ -15,22 +25,26 @@
                     <li>이메일 주소 비공개를 선택하시면 글 작성시 닉네임(이름) 옆에 이메일 대신 고유 아이디 번호(가입순)가 표시됩니다.</li>
                 </ol>
             </div>
-            
-            {% if error == 1 %}
+
+            {% if success %}
+            <div class="alert alert-success">회원정보가 정상적으로 수정되었습니다.</div>
+            {% elif error == 1 %}
             <div class="alert alert-danger">이미 등록된 이메일입니다.</div>
-            {% elif error == 2 %}  
+            {% elif error == 2 %}
             <div class="alert alert-danger">서로 다른 패스워드를 입력하셨습니다.</div>
-            {% elif error == 3 %}  
+            {% elif error == 3 %}
             <div class="alert alert-danger">{{ name }}은 사용하실 수 없는 이름입니다.</div>
-            {% elif error == 4 %}  
+            {% elif error == 4 %}
             <div class="alert alert-danger">입력되지 않은 정보가 있습니다.</div>
+            {% elif error == 5 %}
+            <div class="alert alert-danger">새 비밀번호를 입력해 주세요.</div>
             {% endif %}
 
             <form method="POST" name="editinfo" action="/auth/info/">
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">고유번호</label>
                     <div class="col-sm-10">
-                        # {{ user_info[0] }}            
+                        # {{ user_info[0] }}
                     </div>
                 </div>
 
@@ -70,8 +84,6 @@
                     {% endif %}
                     <label for="open_email" class="col-sm-2 col-form-label">이메일 공개</label>
                     <div class="col-sm-10">
-                        <!-- <input type="checkbox" class="custom-control-input" id="open_email" name="open_email" {{ check }}> -->
-                        <!-- <input class="form-check-input" type="checkbox" value="1" name="open_email" {{ check }}> -->
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="open_email" id="open_email" value="0" {{ check2 }}>
                             <label class="form-check-label" for="inlineRadio1">비공개</label>
@@ -90,8 +102,8 @@
             <br><br>
             <button class="btn btn-danger" onclick="location.href = '/auth/remove/';">탈퇴하기</button>
 
+        {% endif %}
+
     </div>
 
-
-    
 {% endblock %}

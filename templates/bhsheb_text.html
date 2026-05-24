@@ -56,18 +56,19 @@
   </div>
   <br>
 
-  <div class="left">
-    {% if chapter > 1 %}
-    <a href="/bhsheb/{{ book }}/{{ prev_chapter }}">이전 장</a><br><br> {% else %}
-    <font color="white">이전 장</font><br><br> {% endif %}
+  <div style="display:flex; justify-content:space-between; align-items:center; padding: 0 4px;">
+    <div>
+      {% if chapter > 1 %}
+      <a href="/bhsheb/{{ book }}/{{ prev_chapter }}" class="btn btn-outline-secondary btn-sm">&laquo; 이전 장</a>
+      {% endif %}
+    </div>
+    <div>
+      {% if chapter < last_chp %}
+      <a href="/bhsheb/{{ book }}/{{ next_chapter }}" class="btn btn-outline-secondary btn-sm">다음 장 &raquo;</a>
+      {% endif %}
+    </div>
   </div>
-
-  <div class="right">
-    {% if chapter < last_chp %} 
-      <a href="/bhsheb/{{ book }}/{{ next_chapter }}">다음 장</a><br><br> {% else %}
-      <font color="white">다음 장</font><br><br> 
-    {% endif %}
-  </div>
+  <br>
 
   <div id="text_body">
     <div class="center" id="selector_title">
@@ -95,6 +96,22 @@
         문법파싱: <b>ETCBC BHSA</b> Tagged BHS with Syntax Trees <a href="http://dx.doi.org/10.17026%2Fdans-z6y-skyh" target="_blank">10.17026/dans-z6y-skyh</a><a href="https://creativecommons.org/licenses/by-nc/4.0/deed.ko" target="_blank"> 저작자표시-비영리 4.0 국제 (CC BY-NC 4.0)</a><br>
         텍스트: <b>Biblia Hebraica Stuttgartensia</b>, © 1977/1997 Deutsche Bibelgesellschaft (원문무단변경금지)
     </div>
+
+    <br>
+    <div style="display:flex; justify-content:space-between; align-items:center; padding: 0 4px;">
+      <div>
+        {% if chapter > 1 %}
+        <a href="/bhsheb/{{ book }}/{{ prev_chapter }}" class="btn btn-outline-secondary btn-sm">&laquo; 이전 장</a>
+        {% endif %}
+      </div>
+      <div>
+        {% if chapter < last_chp %}
+        <a href="/bhsheb/{{ book }}/{{ next_chapter }}" class="btn btn-outline-secondary btn-sm">다음 장 &raquo;</a>
+        {% endif %}
+      </div>
+    </div>
+    <br>
+
   </div>
 
 </div>
@@ -105,7 +122,26 @@
 
 <script src="/static/js/text_tools.js?ver=11113"></script>
 <script src="/static/js/hebrew_dots_strip.js?ver=111111"></script>
+<script src="/static/js/sefaria.js?ver=1"></script>
 
-
+<!-- Sefaria 주석 모달 -->
+<div class="modal fade" id="sefariaModal" tabindex="-1" role="dialog" aria-labelledby="sefariaModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="max-width:660px; margin:1.75rem auto;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="sefariaModalLabel">Sefaria 주석</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="sefariaModalBody" style="max-height:70vh; overflow-y:auto;">
+      </div>
+      <div class="modal-footer">
+        <small class="text-muted mr-auto">출처: <a href="https://www.sefaria.org" target="_blank">Sefaria</a> (CC BY-NC)</small>
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

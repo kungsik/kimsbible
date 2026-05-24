@@ -4,7 +4,8 @@ import csv
 from collections import OrderedDict
 from io import StringIO
 
-from flask import render_template, request, url_for
+import requests as req
+from flask import render_template, request, url_for, jsonify
 from tf.fabric import Fabric
 
 from kimsbible import app
@@ -37,6 +38,26 @@ api = TF.load('''
 ''')
 
 api.makeAvailableIn(globals())
+
+# TF 책 이름 → Sefaria API 책 이름 매핑
+SEFARIA_BOOK_MAP = {
+    "Genesis": "Genesis", "Exodus": "Exodus", "Leviticus": "Leviticus",
+    "Numbers": "Numbers", "Deuteronomy": "Deuteronomy",
+    "Joshua": "Joshua", "Judges": "Judges", "Ruth": "Ruth",
+    "1_Samuel": "I_Samuel", "2_Samuel": "II_Samuel",
+    "1_Kings": "I_Kings", "2_Kings": "II_Kings",
+    "Isaiah": "Isaiah", "Jeremiah": "Jeremiah", "Ezekiel": "Ezekiel",
+    "Hosea": "Hosea", "Joel": "Joel", "Amos": "Amos",
+    "Obadiah": "Obadiah", "Jonah": "Jonah", "Micah": "Micah",
+    "Nahum": "Nahum", "Habakkuk": "Habakkuk", "Zephaniah": "Zephaniah",
+    "Haggai": "Haggai", "Zechariah": "Zechariah", "Malachi": "Malachi",
+    "Psalms": "Psalms", "Job": "Job", "Proverbs": "Proverbs",
+    "Song_of_songs": "Song_of_Songs", "Ruth": "Ruth",
+    "Lamentations": "Lamentations", "Ecclesiastes": "Ecclesiastes",
+    "Esther": "Esther", "Daniel": "Daniel", "Ezra": "Ezra",
+    "Nehemiah": "Nehemiah",
+    "1_Chronicles": "I_Chronicles", "2_Chronicles": "II_Chronicles",
+}
 
 # kml 파일 관련
 book_abb = {
@@ -301,6 +322,13 @@ def text_page(book='Genesis', chapter=1):
             verse += '<a href="' + versenote_url + '" target="_blank"><button class="btn btn-outline-secondary btn-sm verse_note">주석</button></a>'
             verse += '</span>'
 
+            # Sefaria 주석 버튼
+            sefaria_book = SEFARIA_BOOK_MAP.get(section[0], section[0])
+            sefaria_ref = sefaria_book + '.' + str(section[1]) + '.' + str(section[2])
+            verse += ' <span>'
+            verse += '<button type="button" class="btn btn-outline-info btn-sm sefaria_btn" data-ref="' + sefaria_ref + '">Sefaria</button>'
+            verse += '</span>'
+
             verse += '</div>' #versenode
 
             verse += '<div class="transversions">'
@@ -388,3 +416,33 @@ def show_verse_function(node):
         verse_str['kor'].append(kb.json_to_verse(section[0], chp_vrs[0], chp_vrs[1], 'korean'))
 
     return render_template('bhsheb_verse.html', verse_api=verse_api, section=section, verse_str=verse_str)
+
+
+@app.route('/bhsheb/sefaria/<path:ref>/')
+def sefaria_proxy(ref):
+    """Sefaria API 프록시 — CORS 우회 및 데이터 필터링"""
+    try:
+        url = 'https://www.sefaria.org/api/links/' + ref
+        response = req.get(url, timeout=10)
+        data = response.json()
+
+        SHOW_CATEGORIES = {'Commentary', 'Targum', 'Midrash'}
+        result = []
+        for item in data:
+            if item.get('category') not in SHOW_CATEGORIES:
+                continue
+            text = item.get('text', '')
+            # 텍스트가 리스트인 경우 합치기
+            if isinstance(text, list):
+                text = ' '.join(t for t in text if t)
+            result.append({
+                'source':   item.get('index_title', ''),
+                'category': item.get('category', ''),
+                'ref':      item.get('sourceRef', ''),
+                'text':     text,
+            })
+
+        return jsonify(result)
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
