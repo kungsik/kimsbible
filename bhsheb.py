@@ -67,6 +67,68 @@ _XML_TO_TF_GRK = {
 # TF 구약 책 이름 → XML 약어 (역방향)
 _TF_TO_XML_HEB = {v: k for k, v in _XML_TO_TF_HEB.items()}
 
+# ── 평행구 한글 책 이름 ─────────────────────────────────────────────────────────
+_PARALLEL_KOR_NAME = {
+    # 구약
+    'GEN':'창세기','EXO':'출애굽기','LEV':'레위기','NUM':'민수기','DEU':'신명기',
+    'JOS':'여호수아','JDG':'사사기','RUT':'룻기','1SA':'사무엘상','2SA':'사무엘하',
+    '1KI':'열왕기상','2KI':'열왕기하','1CH':'역대상','2CH':'역대하',
+    'EZR':'에스라','NEH':'느헤미야','EST':'에스더','JOB':'욥기','PSA':'시편',
+    'PRO':'잠언','ECC':'전도서','SNG':'아가','ISA':'이사야','JER':'예레미야',
+    'LAM':'예레미야애가','EZK':'에스겔','DAN':'다니엘','HOS':'호세아','JOL':'요엘',
+    'AMO':'아모스','OBA':'오바댜','JON':'요나','MIC':'미가','NAM':'나훔',
+    'HAB':'하박국','ZEP':'스바냐','HAG':'학개','ZEC':'스가랴','MAL':'말라기',
+    # 신약
+    'MAT':'마태복음','MRK':'마가복음','LUK':'누가복음','JHN':'요한복음',
+    'ACT':'사도행전','ROM':'로마서','1CO':'고린도전서','2CO':'고린도후서',
+    'GAL':'갈라디아서','EPH':'에베소서','PHP':'빌립보서','COL':'골로새서',
+    '1TH':'데살로니가전서','2TH':'데살로니가후서','1TI':'디모데전서','2TI':'디모데후서',
+    'TIT':'디도서','PHM':'빌레몬서','HEB':'히브리서','JAS':'야고보서',
+    '1PE':'베드로전서','2PE':'베드로후서','1JN':'요한일서','2JN':'요한이서',
+    '3JN':'요한삼서','JUD':'유다서','REV':'요한계시록',
+}
+
+# 평행구 번역 조회용 책 인덱스 (JSON 배열 순서)
+_PARALLEL_OT_IDX = {
+    'GEN':0,'EXO':1,'LEV':2,'NUM':3,'DEU':4,'JOS':5,'JDG':6,'RUT':7,
+    '1SA':8,'2SA':9,'1KI':10,'2KI':11,'1CH':12,'2CH':13,'EZR':14,'NEH':15,
+    'EST':16,'JOB':17,'PSA':18,'PRO':19,'ECC':20,'SNG':21,'ISA':22,'JER':23,
+    'LAM':24,'EZK':25,'DAN':26,'HOS':27,'JOL':28,'AMO':29,'OBA':30,'JON':31,
+    'MIC':32,'NAM':33,'HAB':34,'ZEP':35,'HAG':36,'ZEC':37,'MAL':38,
+}
+_PARALLEL_NT_IDX = {
+    'MAT':0,'MRK':1,'LUK':2,'JHN':3,'ACT':4,'ROM':5,'1CO':6,'2CO':7,
+    'GAL':8,'EPH':9,'PHP':10,'COL':11,'1TH':12,'2TH':13,'1TI':14,'2TI':15,
+    'TIT':16,'PHM':17,'HEB':18,'JAS':19,'1PE':20,'2PE':21,'1JN':22,'2JN':23,
+    '3JN':24,'JUD':25,'REV':26,
+}
+
+# 개역한글 번역 JSON 로드 (모듈 시작 시 1회)
+import json as _json_mod
+_KOR_OT = []
+_KOR_NT = []
+_kor_ot_path = os.path.join(app.root_path, 'static', 'json', 'korean.json')
+_kor_nt_path = os.path.join(app.root_path, 'static', 'json', 'kor_new.json')
+if os.path.exists(_kor_ot_path):
+    with open(_kor_ot_path, 'r', encoding='utf-8') as _f:
+        _KOR_OT = _json_mod.load(_f)
+if os.path.exists(_kor_nt_path):
+    with open(_kor_nt_path, 'r', encoding='utf-8') as _f:
+        _KOR_NT = _json_mod.load(_f)
+
+def _get_parallel_verse_text(book_code, chapter, verse):
+    """XML 책 약어 + 장 + 절 → 개역한글 번역 텍스트"""
+    try:
+        if book_code in _PARALLEL_OT_IDX:
+            idx = _PARALLEL_OT_IDX[book_code]
+            return _KOR_OT[idx]['chapters'][chapter - 1][str(chapter)][str(verse)]
+        elif book_code in _PARALLEL_NT_IDX:
+            idx = _PARALLEL_NT_IDX[book_code]
+            return _KOR_NT[idx]['chapters'][chapter - 1][str(chapter)][str(verse)]
+    except (IndexError, KeyError, TypeError):
+        pass
+    return ''
+
 # 평행구 룩업: {"GEN 1:27": [{"ref":"GEN 5:2","type":"HEB"}, ...], ...}
 _PARALLEL = defaultdict(list)
 _parallel_xml = os.path.join(app.root_path, 'static', 'json', 'ParallelPassages.xml')
@@ -137,6 +199,23 @@ SEFARIA_BOOK_MAP = {
     "Esther": "Esther", "Daniel": "Daniel", "Ezra": "Ezra",
     "Nehemiah": "Nehemiah",
     "1_Chronicles": "I_Chronicles", "2_Chronicles": "II_Chronicles",
+}
+
+# 대한성서공회 URL 코드 매핑 (구약)
+_BSKOREA_HEB_MAP = {
+    'Genesis': 'GEN', 'Exodus': 'EXO', 'Leviticus': 'LEV',
+    'Numbers': 'NUM', 'Deuteronomy': 'DEU', 'Joshua': 'JOS',
+    'Judges': 'JDG', 'Ruth': 'RUT', '1_Samuel': '1SA',
+    '2_Samuel': '2SA', '1_Kings': '1KI', '2_Kings': '2KI',
+    '1_Chronicles': '1CH', '2_Chronicles': '2CH', 'Ezra': 'EZR',
+    'Nehemiah': 'NEH', 'Esther': 'EST', 'Job': 'JOB',
+    'Psalms': 'PSA', 'Proverbs': 'PRO', 'Ecclesiastes': 'ECC',
+    'Song_of_songs': 'SNG', 'Isaiah': 'ISA', 'Jeremiah': 'JER',
+    'Lamentations': 'LAM', 'Ezekiel': 'EZK', 'Daniel': 'DAN',
+    'Hosea': 'HOS', 'Joel': 'JOL', 'Amos': 'AMO',
+    'Obadiah': 'OBA', 'Jonah': 'JON', 'Micah': 'MIC',
+    'Nahum': 'NAM', 'Habakkuk': 'HAB', 'Zephaniah': 'ZEP',
+    'Haggai': 'HAG', 'Zechariah': 'ZEC', 'Malachi': 'MAL',
 }
 
 # kml 파일 관련
@@ -392,8 +471,18 @@ def text_page(book='Genesis', chapter=1):
                 if w == lastPhraseWordNode: verse += '</span>'
                 if w == lastClauseWordNode: verse += '</span>'
 
+            verse += '<br>'
+
+            # 대한성서공회 버튼
+            _bskorea_code = _BSKOREA_HEB_MAP.get(section[0])
+            if _bskorea_code:
+                _bskorea_url = 'https://bible.bskorea.or.kr/bible/NKT,NKRV/' + _bskorea_code + '.' + str(section[1]) + '.' + str(section[2])
+                verse += '<span>'
+                verse += '<a href="' + _bskorea_url + '" target="_blank"><button class="btn btn-outline-dark btn-sm">성서공회</button></a>'
+                verse += '</span> '
+
             #절분석 버튼
-            verse +=  '<br><span>'
+            verse += '<span>'
             verse += '<button type="button" class="btn btn-outline-secondary btn-sm bhsheb_verse_analysis" verse_node='+str(v)+'>절분석</button>'
             verse += '</span> '
 
@@ -401,12 +490,12 @@ def text_page(book='Genesis', chapter=1):
             versenote_url = "../../commentary/vcode/" + vcode + "/"
             verse += '<span>'
             verse += '<a href="' + versenote_url + '" target="_blank"><button class="btn btn-outline-secondary btn-sm verse_note">주석</button></a>'
-            verse += '</span>'
+            verse += '</span> '
 
             # Sefaria 주석 버튼
             sefaria_book = SEFARIA_BOOK_MAP.get(section[0], section[0])
             sefaria_ref = sefaria_book + '.' + str(section[1]) + '.' + str(section[2])
-            verse += ' <span>'
+            verse += '<span>'
             verse += '<button type="button" class="btn btn-outline-info btn-sm sefaria_btn" data-ref="' + sefaria_ref + '">Sefaria</button>'
             verse += '</span>'
 
@@ -511,7 +600,7 @@ def show_verse_function(node):
 
 @app.route('/bhsheb/parallel/<path:ref>/')
 def parallel_passages(ref):
-    """평행구 목록 반환 (JSON) — 중복 제거"""
+    """평행구 목록 반환 (JSON) — 중복 제거, 한글 이름 + 개역한글 번역 포함"""
     seen = set()
     result = []
     for item in _PARALLEL.get(ref, []):
@@ -519,10 +608,32 @@ def parallel_passages(ref):
             continue
         seen.add(item['ref'])
         url, _, _ = _xml_ref_to_url(item['ref'], item['type'])
+
+        # 한글 책 이름 + 장절 조합
+        parts = item['ref'].split(' ')
+        book_code = parts[0]
+        chap_verse = parts[1] if len(parts) > 1 else ''
+        kor_name = _PARALLEL_KOR_NAME.get(book_code, book_code)
+        kor_ref = kor_name + ' ' + chap_verse
+
+        # 개역한글 번역 조회
+        verse_text = ''
+        if chap_verse:
+            cv = chap_verse.split(':')
+            if len(cv) == 2:
+                try:
+                    chap = int(cv[0])
+                    verse_num = int(cv[1].split('-')[0])  # 범위(7-8)는 첫 절만
+                    verse_text = _get_parallel_verse_text(book_code, chap, verse_num)
+                except (ValueError, TypeError):
+                    pass
+
         result.append({
-            'ref':  item['ref'],
-            'type': item['type'],
-            'url':  url,
+            'ref':      item['ref'],
+            'kor_ref':  kor_ref,
+            'type':     item['type'],
+            'url':      url,
+            'text':     verse_text,
         })
     return jsonify(result)
 

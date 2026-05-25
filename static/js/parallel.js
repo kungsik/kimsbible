@@ -3,7 +3,7 @@
 $(document).on('click', '.parallel_btn', function () {
     var ref = $(this).data('ref');  // 예: "GEN 1:27"
 
-    $('#parallelModalLabel').text('평행구 — ' + ref);
+    $('#parallelModalLabel').text('평행구');
     $('#parallelModalBody').html(
         '<div class="text-center py-4"><span class="text-muted">불러오는 중...</span></div>'
     );
@@ -28,13 +28,17 @@ $(document).on('click', '.parallel_btn', function () {
                     html += '<h6 class="mt-3 mb-2 text-secondary border-bottom pb-1">' + typeLabel + '</h6>';
                 }
 
+                var displayRef = item.kor_ref || item.ref;
                 html += '<div class="parallel-item mb-2">';
                 if (item.url) {
                     html += '<a href="' + item.url + '" class="parallel-ref-link">';
-                    html += '<strong>' + item.ref + '</strong>';
+                    html += '<strong>' + displayRef + '</strong>';
                     html += '</a>';
                 } else {
-                    html += '<strong>' + item.ref + '</strong>';
+                    html += '<strong>' + displayRef + '</strong>';
+                }
+                if (item.text) {
+                    html += '<br><small style="color:#333;">' + item.text + '</small>';
                 }
                 html += '</div>';
             });
