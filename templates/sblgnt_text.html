@@ -42,17 +42,19 @@
       </div>
 
   <br>
-  <div class="left">
-    {% if chapter > 1 %}
-    <a href="/sblgnt/{{ book }}/{{ prev_chapter }}">이전 장</a><br><br> {% else %}
-    <font color="white">이전 장</font><br><br> {% endif %}
+  <div style="display:flex; justify-content:space-between; align-items:center; padding: 0 4px;">
+    <div>
+      {% if chapter > 1 %}
+      <a href="/sblgnt/{{ book }}/{{ prev_chapter }}" class="btn btn-outline-secondary btn-sm">&laquo; 이전 장</a>
+      {% endif %}
+    </div>
+    <div>
+      {% if chapter < last_chp %}
+      <a href="/sblgnt/{{ book }}/{{ next_chapter }}" class="btn btn-outline-secondary btn-sm">다음 장 &raquo;</a>
+      {% endif %}
+    </div>
   </div>
-
-  <div class="right">
-    {% if chapter
-    < last_chp %} <a href="/sblgnt/{{ book }}/{{ next_chapter }}">다음 장</a><br><br> {% else %}
-      <font color="white">다음 장</font><br><br> {% endif %}
-  </div>
+  <br>
 
   <div id="text_body">
 
@@ -83,6 +85,21 @@
         문법파싱: <b>MorphGNT SBLGNT</b>  SBL Greek New Testament w/tagging by MorphGNT <a href="https://github.com/morphgnt/sblgnt" target="_blank">10.5281/zenodo.376200</a><a href="https://creativecommons.org/licenses/by-sa/3.0/deed.ko" target="_blank"> 저작자표시-동일조건변경허락 3.0 (CC-BY-SA 3.0)</a><br>
         텍스트: <b>SBLGNT</b>, © 2010 by the Society of Biblical Literature and Logos Bible Software (원문무단변경금지)
     </div>
+
+    <br>
+    <div style="display:flex; justify-content:space-between; align-items:center; padding: 0 4px;">
+      <div>
+        {% if chapter > 1 %}
+        <a href="/sblgnt/{{ book }}/{{ prev_chapter }}" class="btn btn-outline-secondary btn-sm">&laquo; 이전 장</a>
+        {% endif %}
+      </div>
+      <div>
+        {% if chapter < last_chp %}
+        <a href="/sblgnt/{{ book }}/{{ next_chapter }}" class="btn btn-outline-secondary btn-sm">다음 장 &raquo;</a>
+        {% endif %}
+      </div>
+    </div>
+    <br>
 
   </div>
 
