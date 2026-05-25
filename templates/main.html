@@ -2,61 +2,6 @@
 {% block body %}
     {% autoescape false %}
 
-<div class="site-section bg-light" id="community-recent-section">
-    <div class="container" style="padding-top:30px; padding-bottom:10px;">
-        <div class="row mb-3">
-            <div class="col-12 text-center">
-                <h3 class="section-title mb-3">커뮤니티 최근 댓글</h3>
-            </div>
-        </div>
-        <div id="recent-community-list" style="max-width:760px; margin:0 auto;">
-            <p style="text-align:center; color:#aaa;">불러오는 중...</p>
-        </div>
-        <div style="text-align:center; margin-top:16px; padding-bottom:10px;">
-            <a href="/community/" class="btn btn-outline-secondary btn-sm">커뮤니티 전체 보기</a>
-        </div>
-    </div>
-</div>
-
-<script>
-(function() {
-    fetch('https://kungsik2.pythonanywhere.com/?uri=%2Fcommunity%2F&limit=3', {
-        headers: {'Accept': 'application/json'}
-    })
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-        var container = document.getElementById('recent-community-list');
-        var replies = (data.replies || []).filter(function(c) { return !c.parent; });
-        if (!replies.length) {
-            container.innerHTML = '<p style="text-align:center;color:#aaa;">최근 댓글이 없습니다.</p>';
-            return;
-        }
-        var html = '';
-        replies.forEach(function(c) {
-            var tmp = document.createElement('div');
-            tmp.innerHTML = c.text || '';
-            var text = (tmp.textContent || tmp.innerText || '').trim().replace(/\s+/g, ' ');
-            if (text.length > 160) text = text.substring(0, 160) + '...';
-            var d = new Date(c.created * 1000);
-            var dateStr = d.getFullYear() + '.' + (d.getMonth()+1) + '.' + d.getDate();
-            var author = c.author || '익명';
-            html += '<div style="border-bottom:1px solid #ddd; padding:14px 4px;">';
-            html += '<div style="margin-bottom:5px;">';
-            html += '<strong>' + author + '</strong>';
-            html += '<span style="color:#999; font-size:0.85em; margin-left:10px;">' + dateStr + '</span>';
-            html += '</div>';
-            html += '<div style="color:#444; line-height:1.7;">' + text + '</div>';
-            html += '</div>';
-        });
-        container.innerHTML = html;
-    })
-    .catch(function() {
-        document.getElementById('recent-community-list').innerHTML =
-            '<p style="text-align:center;color:#aaa;">댓글을 불러올 수 없습니다.</p>';
-    });
-})();
-</script>
-
 <div class="site-blocks-cover">
     <div class="container">
         <div class="row align-items-center justify-content-center">
@@ -126,6 +71,61 @@
         </div>
     </div>
     </div>
+
+    <div class="site-section bg-light" id="community-recent-section">
+    <div class="container" style="padding-top:30px; padding-bottom:10px;">
+        <div class="row mb-3">
+            <div class="col-12 text-center">
+                <h3 class="section-title mb-3">커뮤니티 최근 댓글</h3>
+            </div>
+        </div>
+        <div id="recent-community-list" style="max-width:760px; margin:0 auto;">
+            <p style="text-align:center; color:#aaa;">불러오는 중...</p>
+        </div>
+        <div style="text-align:center; margin-top:16px; padding-bottom:10px;">
+            <a href="/community/" class="btn btn-outline-secondary btn-sm">커뮤니티 전체 보기</a>
+        </div>
+    </div>
+    </div>
+
+    <script>
+    (function() {
+        fetch('https://kungsik2.pythonanywhere.com/?uri=%2Fcommunity%2F&limit=3', {
+            headers: {'Accept': 'application/json'}
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            var container = document.getElementById('recent-community-list');
+            var replies = (data.replies || []).filter(function(c) { return !c.parent; });
+            if (!replies.length) {
+                container.innerHTML = '<p style="text-align:center;color:#aaa;">최근 댓글이 없습니다.</p>';
+                return;
+            }
+            var html = '';
+            replies.forEach(function(c) {
+                var tmp = document.createElement('div');
+                tmp.innerHTML = c.text || '';
+                var text = (tmp.textContent || tmp.innerText || '').trim().replace(/\s+/g, ' ');
+                if (text.length > 160) text = text.substring(0, 160) + '...';
+                var d = new Date(c.created * 1000);
+                var dateStr = d.getFullYear() + '.' + (d.getMonth()+1) + '.' + d.getDate();
+                var author = c.author || '익명';
+                html += '<div style="border-bottom:1px solid #ddd; padding:14px 4px;">';
+                html += '<div style="margin-bottom:5px;">';
+                html += '<strong>' + author + '</strong>';
+                html += '<span style="color:#999; font-size:0.85em; margin-left:10px;">' + dateStr + '</span>';
+                html += '</div>';
+                html += '<div style="color:#444; line-height:1.7;">' + text + '</div>';
+                html += '</div>';
+            });
+            container.innerHTML = html;
+        })
+        .catch(function() {
+            document.getElementById('recent-community-list').innerHTML =
+                '<p style="text-align:center;color:#aaa;">댓글을 불러올 수 없습니다.</p>';
+        });
+    })();
+    </script>
 
     <div class="site-section" id="blog-section">
     <div class="container">
