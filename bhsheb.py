@@ -666,29 +666,48 @@ def sdbh_popup(strong):
 
 @app.route('/bhsheb/sefaria/<path:ref>/')
 def sefaria_proxy(ref):
-    """Sefaria API 프록시 — CORS 우회 및 데이터 필터링"""
+    """Sefaria API 프록시 — CORS 우회, JPS 번역 + 주석 데이터 반환"""
+    import concurrent.futures
+
+    def fetch_jps(r):
+        jps_url = ('https://www.sefaria.org/api/v3/texts/' + r
+                   + '?version=english%7CTHE%20JPS%20TANAKH%3A%20Gender-Sensitive%20Edition'
+                   + '&return_format=text_only')
+        resp = req.get(jps_url, timeout=10)
+        d = resp.json()
+        versions = d.get('versions', [])
+        if versions and isinstance(versions, list):
+            return versions[0].get('text', '')
+        return ''
+
+    def fetch_links(r):
+        links_url = 'https://www.sefaria.org/api/links/' + r
+        resp = req.get(links_url, timeout=10)
+        return resp.json()
+
     try:
-        url = 'https://www.sefaria.org/api/links/' + ref
-        response = req.get(url, timeout=10)
-        data = response.json()
+        with concurrent.futures.ThreadPoolExecutor(max_workers=2) as ex:
+            jps_fut   = ex.submit(fetch_jps, ref)
+            links_fut = ex.submit(fetch_links, ref)
+            jps_text  = jps_fut.result()
+            links_data = links_fut.result()
 
         SHOW_CATEGORIES = {'Commentary', 'Targum', 'Midrash'}
-        result = []
-        for item in data:
+        links = []
+        for item in links_data:
             if item.get('category') not in SHOW_CATEGORIES:
                 continue
             text = item.get('text', '')
-            # 텍스트가 리스트인 경우 합치기
             if isinstance(text, list):
                 text = ' '.join(t for t in text if t)
-            result.append({
+            links.append({
                 'source':   item.get('index_title', ''),
                 'category': item.get('category', ''),
                 'ref':      item.get('sourceRef', ''),
                 'text':     text,
             })
 
-        return jsonify(result)
+        return jsonify({'jps': jps_text, 'links': links})
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
