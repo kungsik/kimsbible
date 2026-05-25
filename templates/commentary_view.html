@@ -84,12 +84,14 @@
                 <br><br>
 
                 <script>document.title = "{{ view[4] }}";</script>
-                <div id="isso-thread"></div>
+                <div id="isso-thread" data-isso-id="/{{ table }}/view/{{ view[0] }}/{{ view[10] }}/"></div>
                 <script data-isso="https://kungsik2.pythonanywhere.com/"
                         data-isso-lang="ko"
                         data-isso-require-author="false"
                         data-isso-require-email="false"
                         data-isso-vote="false"
+                        data-isso-max-comments-top="10"
+                        data-isso-reveal-on-click="10"
                         src="https://kungsik2.pythonanywhere.com/js/embed.min.js">
                 </script>
 

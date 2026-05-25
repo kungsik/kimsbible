@@ -49,7 +49,7 @@
         {% if vcode %}
             {% for list in lists['classic'] %}
                 <span class="list_row" onclick='location.href="/classic/view/{{ list[0] }}/{{ list[10] }}/{{ mode }}"'>
-                    <span class="cell col1">{{ list[8] }} · <a href="/classic/view/{{ list[0] }}/{{ list[10] }}/{{ mode }}">{{ list[4] }}</a></span>
+                    <span class="cell col1">{{ list[8] }} · <a href="/classic/view/{{ list[0] }}/{{ list[10] }}/{{ mode }}">{{ list[4] }}</a> <span class="isso-count" data-uri="/classic/view/{{ list[0] }}/{{ list[10] }}/"></span></span>
                     <span class="cell col2">{{ list[2] }}</span>
                     {% set date = list[1].split(' ') %}
                     <span class="cell col3">{{ date[0] }}</span>
@@ -64,7 +64,7 @@
                     {% endif %}
                 {% endif %}
                 <span class="list_row" onclick='location.href="/commentary/view/{{ list[0] }}/{{ list[10] }}/{{ mode }}"'>
-                    <span class="cell col1">{{ list[8] }} · {{ header }}<a href="/commentary/view/{{ list[0] }}/{{ list[10] }}/{{ mode }}">{{ list[4] }}</a></span>
+                    <span class="cell col1">{{ list[8] }} · {{ header }}<a href="/commentary/view/{{ list[0] }}/{{ list[10] }}/{{ mode }}">{{ list[4] }}</a> <span class="isso-count" data-uri="/commentary/view/{{ list[0] }}/{{ list[10] }}/"></span></span>
                     <span class="cell col2">{{ list[2] }}</span>
                     {% set date = list[1].split(' ') %}
                     <span class="cell col3">{{ date[0] }}</span>
@@ -81,7 +81,7 @@
                     {% endif %}
                 {% endif %}
                 <span class="list_row" onclick='location.href="/{{ table }}/view/{{ list[0] }}/{{ list[10] }}/{{ mode }}"'>
-                    <span class="cell col1">{{ list[8] }} · {{ header }}<a href="/{{ table }}/view/{{ list[0] }}/{{ list[10] }}/{{ mode }}">{{ list[4] }}</a></span>
+                    <span class="cell col1">{{ list[8] }} · {{ header }}<a href="/{{ table }}/view/{{ list[0] }}/{{ list[10] }}/{{ mode }}">{{ list[4] }}</a> <span class="isso-count" data-uri="/{{ table }}/view/{{ list[0] }}/{{ list[10] }}/"></span></span>
                     <span class="cell col2">{{ list[2] }}</span>
                     {% set date = list[1].split(' ') %}
                     <span class="cell col3">{{ date[0] }}</span>
@@ -138,6 +138,28 @@
 
     <script>
         document.title = "알파알렙 오픈주석 보기";
+    </script>
+    <script>
+    (function() {
+        var spans = document.querySelectorAll('.isso-count');
+        if (!spans.length) return;
+        var uris = Array.from(spans).map(function(el) { return el.dataset.uri; });
+        fetch('https://kungsik2.pythonanywhere.com/count', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(uris)
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(counts) {
+            spans.forEach(function(el, i) {
+                if (counts[i] > 0) {
+                    el.textContent = '💬 ' + counts[i];
+                    el.style.cssText = 'color:#666; font-size:0.85em; margin-left:4px;';
+                }
+            });
+        })
+        .catch(function() {});
+    })();
     </script>
     
 <!-- </div> -->
