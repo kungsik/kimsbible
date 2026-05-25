@@ -57,29 +57,31 @@ function build_menu(authenticated) {
     html += '</ul></nav>';
     document.getElementById('main-menu').innerHTML = html;
 
-    // main.js의 siteMenuClone()이 AJAX 완료 전에 실행됐을 수 있으므로
-    // 모바일 메뉴 바디를 여기서 직접 재구성
-    var $mobileBody = $('.site-mobile-menu-body');
-    $mobileBody.empty();
-    $('.js-clone-nav').each(function() {
-        $(this).clone().attr('class', 'site-nav-wrap').appendTo($mobileBody);
-    });
+    // main.js의 siteMenuClone()이 document.ready에서 동기 실행되므로
+    // setTimeout으로 그 이후에 실행하여 중복 방지 + 빈 메뉴 보완
+    setTimeout(function() {
+        var $mobileBody = $('.site-mobile-menu-body');
+        $mobileBody.empty();  // main.js가 복사한 내용 포함 전체 초기화
+        $('.js-clone-nav').each(function() {
+            $(this).clone().attr('class', 'site-nav-wrap').appendTo($mobileBody);
+        });
 
-    // 드롭다운 화살표 버튼 추가
-    var counter = 0;
-    $('.site-mobile-menu .has-children').each(function() {
-        var $this = $(this);
-        $this.prepend('<span class="arrow-collapse collapsed">');
-        $this.find('.arrow-collapse').attr({
-            'data-toggle': 'collapse',
-            'data-target': '#collapseItem' + counter
+        // 드롭다운 화살표 버튼 추가
+        var counter = 0;
+        $('.site-mobile-menu .has-children').each(function() {
+            var $this = $(this);
+            $this.prepend('<span class="arrow-collapse collapsed">');
+            $this.find('.arrow-collapse').attr({
+                'data-toggle': 'collapse',
+                'data-target': '#collapseItem' + counter
+            });
+            $this.find('> ul').attr({
+                'class': 'collapse',
+                'id': 'collapseItem' + counter
+            });
+            counter++;
         });
-        $this.find('> ul').attr({
-            'class': 'collapse',
-            'id': 'collapseItem' + counter
-        });
-        counter++;
-    });
+    }, 200);
 }
 
 // 서버에 로그인 상태 확인 후 메뉴 생성
