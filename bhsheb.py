@@ -2,7 +2,8 @@ import re
 import os
 import csv
 import sqlite3
-from collections import OrderedDict
+import xml.etree.ElementTree as ET
+from collections import OrderedDict, defaultdict
 from io import StringIO
 
 import requests as req
@@ -40,7 +41,71 @@ api = TF.load('''
 
 api.makeAvailableIn(globals())
 
-# UBS SDBH 히브리어 사전 — DB 경로 및 도메인 맵 (SDBH 팝업 엔드포인트에서 사용)
+# ── 평행구 데이터 (ParallelPassages.xml) ─────────────────────────────────────
+# XML 책 약어 → TF 책 이름 (구약)
+_XML_TO_TF_HEB = {
+    'GEN':'Genesis','EXO':'Exodus','LEV':'Leviticus','NUM':'Numbers','DEU':'Deuteronomy',
+    'JOS':'Joshua','JDG':'Judges','1SA':'1_Samuel','2SA':'2_Samuel',
+    '1KI':'1_Kings','2KI':'2_Kings','1CH':'1_Chronicles','2CH':'2_Chronicles',
+    'EZR':'Ezra','NEH':'Nehemiah','EST':'Esther','JOB':'Job','PSA':'Psalms',
+    'PRO':'Proverbs','ECC':'Ecclesiastes','SNG':'Song_of_songs',
+    'ISA':'Isaiah','JER':'Jeremiah','LAM':'Lamentations','EZK':'Ezekiel',
+    'DAN':'Daniel','HOS':'Hosea','JOL':'Joel','AMO':'Amos','OBA':'Obadiah',
+    'JON':'Jonah','MIC':'Micah','NAM':'Nahum','HAB':'Habakkuk','ZEP':'Zephaniah',
+    'HAG':'Haggai','ZEC':'Zechariah','MAL':'Malachi',
+}
+# XML 책 약어 → sblgnt URL 책 이름 (신약)
+_XML_TO_TF_GRK = {
+    'MAT':'Matthew','MRK':'Mark','LUK':'Luke','JHN':'John','ACT':'Acts',
+    'ROM':'Romans','1CO':'1_Corinthians','2CO':'2_Corinthians','GAL':'Galatians',
+    'EPH':'Ephesians','PHP':'Philippians','COL':'Colossians',
+    '1TH':'1_Thessalonians','2TH':'2_Thessalonians','1TI':'1_Timothy','2TI':'2_Timothy',
+    'TIT':'Titus','PHM':'Philemon','HEB':'Hebrews','JAS':'James',
+    '1PE':'1_Peter','2PE':'2_Peter','1JN':'1_John','2JN':'2_John','3JN':'3_John',
+    'JUD':'Jude','REV':'Revelation',
+}
+# TF 구약 책 이름 → XML 약어 (역방향)
+_TF_TO_XML_HEB = {v: k for k, v in _XML_TO_TF_HEB.items()}
+
+# 평행구 룩업: {"GEN 1:27": [{"ref":"GEN 5:2","type":"HEB"}, ...], ...}
+_PARALLEL = defaultdict(list)
+_parallel_xml = os.path.join(app.root_path, 'static', 'json', 'ParallelPassages.xml')
+if os.path.exists(_parallel_xml):
+    _pt = ET.parse(_parallel_xml)
+    for _passage in _pt.getroot().findall('Passage'):
+        _verses = _passage.findall('Verse')
+        _refs = [(v.text.strip(), 'HEB' if v.get('HEB') else 'GRK') for v in _verses]
+        for i, (_ref, _type) in enumerate(_refs):
+            _others = [{'ref': r, 'type': t} for j, (r, t) in enumerate(_refs) if j != i]
+            _PARALLEL[_ref].extend(_others)
+
+def _tf_to_xml_ref(tf_book, chapter, verse):
+    """TF 책 이름 + 장 + 절 → XML 참조 문자열 (예: 'GEN 1:27')"""
+    abbr = _TF_TO_XML_HEB.get(tf_book)
+    if not abbr:
+        return None
+    return f'{abbr} {chapter}:{verse}'
+
+def _xml_ref_to_url(ref, ref_type):
+    """XML 참조 (예: 'GEN 1:27') → 앱 내부 URL"""
+    parts = ref.split()
+    if len(parts) != 2:
+        return None, None, None
+    abbr = parts[0]
+    cv = parts[1].split(':')
+    chp = cv[0]
+    vrs = cv[1].split('-')[0]  # 범위 구절은 시작 절만
+    if ref_type == 'HEB':
+        book = _XML_TO_TF_HEB.get(abbr)
+        if book:
+            return f'/bhsheb/{book}/{chp}', book, chp
+    else:
+        book = _XML_TO_TF_GRK.get(abbr)
+        if book:
+            return f'/sblgnt/{book}/{chp}', book, chp
+    return None, None, None
+
+# ── UBS SDBH 히브리어 사전 — DB 경로 및 도메인 맵 (SDBH 팝업 엔드포인트에서 사용)
 _heb_db = os.path.join(app.root_path, 'static', 'json', 'heb_dict.db')
 
 # 의미 영역(Lexical Domains) 코드 → 라벨 매핑 (112KB JSON, 직접 로드)
@@ -345,6 +410,13 @@ def text_page(book='Genesis', chapter=1):
             verse += '<button type="button" class="btn btn-outline-info btn-sm sefaria_btn" data-ref="' + sefaria_ref + '">Sefaria</button>'
             verse += '</span>'
 
+            # 평행구 버튼 (평행구가 존재하는 절에만 표시)
+            _xml_ref = _tf_to_xml_ref(section[0], section[1], section[2])
+            if _xml_ref and _xml_ref in _PARALLEL:
+                verse += ' <span>'
+                verse += '<button type="button" class="btn btn-outline-success btn-sm parallel_btn" data-ref="' + _xml_ref + '">평행구</button>'
+                verse += '</span>'
+
             verse += '</div>' #versenode
 
             verse += '<div class="transversions">'
@@ -432,6 +504,24 @@ def show_verse_function(node):
         verse_str['kor'].append(kb.json_to_verse(section[0], chp_vrs[0], chp_vrs[1], 'korean'))
 
     return render_template('bhsheb_verse.html', verse_api=verse_api, section=section, verse_str=verse_str)
+
+
+@app.route('/bhsheb/parallel/<path:ref>/')
+def parallel_passages(ref):
+    """평행구 목록 반환 (JSON) — 중복 제거"""
+    seen = set()
+    result = []
+    for item in _PARALLEL.get(ref, []):
+        if item['ref'] in seen:
+            continue
+        seen.add(item['ref'])
+        url, _, _ = _xml_ref_to_url(item['ref'], item['type'])
+        result.append({
+            'ref':  item['ref'],
+            'type': item['type'],
+            'url':  url,
+        })
+    return jsonify(result)
 
 
 @app.route('/bhsheb/sdbh/<strong>/')

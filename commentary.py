@@ -69,6 +69,23 @@ def commentary_edit(table, no):
         return render_template('commentary_add.html', cview=cview, table=table)
 
 
+@app.route('/<table>/search/', methods=['GET'])
+def commentary_search(table):
+    keyword = request.args.get('kw', '').strip()
+    pagenum = int(request.args.get('p', 1))
+    if not keyword:
+        return redirect('/' + table + '/list/')
+
+    commentary_db = db.Commentary()
+    clist = commentary_db.search(table, keyword, pagenum)
+    totalnum = commentary_db.search_count(table, keyword)
+    totalpage = max(1, (totalnum + 9) // 10)
+
+    return render_template('commentary_list.html', lists=clist, user=current_user,
+                           table=table, totalpage=totalpage, pagenum=pagenum,
+                           category='search', keyword=keyword)
+
+
 @app.route('/<table>/list/', methods=['POST', 'GET'])
 def commentary_list(table):
     if request.method == 'GET':
@@ -79,8 +96,8 @@ def commentary_list(table):
 
     commentary_db = db.Commentary()
     clist = commentary_db.clist(table, pagenum)
-    totalnum = commentary_db.get_table_count(table)
-    totalpage = int(int(totalnum) / 11) + 1
+    totalnum = commentary_db.get_public_count(table)
+    totalpage = max(1, (totalnum + 9) // 10)
 
     return render_template('commentary_list.html', lists=clist, user=current_user, table=table, totalpage=totalpage, pagenum=pagenum, category='list')
 
@@ -96,8 +113,8 @@ def commentary_mylist():
 
     commentary_db = db.Commentary()
     clist = commentary_db.myclist('commentary', pagenum, current_user.user_id)
-    totalnum = commentary_db.get_table_count('commentary')
-    totalpage = int(int(totalnum) / 11) + 1
+    totalnum = commentary_db.get_user_count('commentary', current_user.user_id)
+    totalpage = max(1, (totalnum + 9) // 10)
 
     return render_template('commentary_list.html', lists=clist, user=current_user, table='commentary', totalpage=totalpage, pagenum=pagenum, category='mylist')
 

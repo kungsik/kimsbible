@@ -23,6 +23,17 @@ def topic_add():
         return render_template('forum_add_topic.html')
 
 
+@app.route('/forum/search/', methods=['GET'])
+def forum_search():
+    keyword = request.args.get('kw', '').strip()
+    if not keyword:
+        return redirect('/forum/list/')
+
+    forum_db = db.Forum()
+    lists = forum_db.search(keyword)
+    return render_template('forum_list_topic.html', lists=lists, keyword=keyword)
+
+
 @app.route('/forum/list/')
 def topic_list():
     forum_db = db.Forum()

@@ -4,20 +4,28 @@
 
     <div class="container border border-secondary rounded" style="padding: 20px;">
         
-        <div>
-            <h1>포럼 리스트</h1>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <h1>{% if keyword %}검색 결과: {{ keyword }}{% else %}포럼 리스트{% endif %}</h1>
+            <form action="/forum/search/" method="get" class="form-inline">
+                <input class="form-control form-control-sm mr-1" type="text" name="kw"
+                       placeholder="토픽/본문 검색" value="{{ keyword or '' }}" style="min-width:180px"
+                       onkeydown="event.stopPropagation();">
+                <button class="btn btn-outline-secondary btn-sm" type="submit">검색</button>
+            </form>
         </div>
         <hr />
-        
+
         <br>
 
+        {% if not keyword %}
         <div class="alert alert-info" role="alert">
-            본 페이지는 알파알렙 포럼입니다. 히브리어, 헬라어 원어나 성경과 관련된, 혹은 본 사이트와 관련한 어떤 내용도 함께 나눌 수 있습니다. 
-            함께 질문하고 배워나가는 장이 되기를 바랍니다. 본 포럼은 본 사이트에서 가입하신 계정으로 로그인 후에 사용하실 수 있습니다.       
+            본 페이지는 알파알렙 포럼입니다. 히브리어, 헬라어 원어나 성경과 관련된, 혹은 본 사이트와 관련한 어떤 내용도 함께 나눌 수 있습니다.
+            함께 질문하고 배워나가는 장이 되기를 바랍니다. 본 포럼은 본 사이트에서 가입하신 계정으로 로그인 후에 사용하실 수 있습니다.
         </div>
+        {% endif %}
 
         <br>
-        <button class="btn btn-info" onclick="location.href = '/forum/add';">새토픽 만들기</button>    
+        <button class="btn btn-info" onclick="location.href = '/forum/add';">새토픽 만들기</button>
         <br><br>
         
         <div class="list_table" style="font-size: 16px">

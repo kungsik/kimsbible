@@ -87,6 +87,16 @@ class Commentary:
         result = self.cursor.fetchone()
         return result[0]
 
+    def get_public_count(self, table):
+        sql = "SELECT count(*) FROM " + table + " WHERE copen='1'"
+        self.cursor.execute(sql)
+        return self.cursor.fetchone()[0]
+
+    def get_user_count(self, table, user_id):
+        sql = "SELECT count(*) FROM " + table + " WHERE email=%s"
+        self.cursor.execute(sql, (user_id,))
+        return self.cursor.fetchone()[0]
+
     def clist(self, table, pagenum):
         limit_end = int(pagenum) * 10
         limit_start = int(limit_end) - 10
@@ -193,6 +203,22 @@ class Commentary:
         self.cursor.execute(sql)
         result = self.cursor.fetchall()
         return result
+
+    def search(self, table, keyword, pagenum):
+        limit_start = (int(pagenum) - 1) * 10
+        kw = '%' + keyword + '%'
+        sql = ("SELECT * FROM " + table +
+               " WHERE copen='1' AND (title LIKE %s OR content LIKE %s)"
+               " ORDER BY no DESC LIMIT %s, 10")
+        self.cursor.execute(sql, (kw, kw, limit_start))
+        return self.cursor.fetchall()
+
+    def search_count(self, table, keyword):
+        kw = '%' + keyword + '%'
+        sql = ("SELECT count(*) FROM " + table +
+               " WHERE copen='1' AND (title LIKE %s OR content LIKE %s)")
+        self.cursor.execute(sql, (kw, kw))
+        return self.cursor.fetchone()[0]
 
 class User:
     def __init__(self):
@@ -456,6 +482,14 @@ class Forum:
         else:
           return False
     
+    def search(self, keyword):
+        kw = '%' + keyword + '%'
+        sql = ("SELECT * FROM forum WHERE category='1'"
+               " AND (topic LIKE %s OR content LIKE %s)"
+               " ORDER BY updated_date DESC")
+        self.cursor.execute(sql, (kw, kw))
+        return self.cursor.fetchall()
+
     def remove_topic(self, no):
         if self.get_topicid(no):            
           sql2 = "UPDATE forum SET threads=threads-1 WHERE no='" + str(self.get_topicid(no)) + "'"

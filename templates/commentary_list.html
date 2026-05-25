@@ -11,6 +11,9 @@
     {% elif category == 'vcode' %}
         {% set main = '' %}
         {% set mode = '?mode=vcode&v=' + vcode|string + '&p=' + pagenum|string %}
+    {% elif category == 'search' %}
+        {% set main = '검색 결과: ' + (keyword or '') %}
+        {% set mode = '?mode=search&kw=' + (keyword or '') + '&p=' + pagenum|string %}
     {% elif table == 'commentary' %}
         {% set main = '오픈주석' %}
         {% set mode = '?mode=commentary&p=' + pagenum|string %}
@@ -22,8 +25,16 @@
 <!-- <div class="modal modal-wide" id="commentary">     -->
     <div class="container border border-secondary rounded" style="padding: 20px;">
         
-        <div>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
             <h1>{{ main }}</h1>
+            {% if category != 'vcode' and category != 'myvcode' %}
+            <form action="/{{ table }}/search/" method="get" class="form-inline">
+                <input class="form-control form-control-sm mr-1" type="text" name="kw"
+                       placeholder="제목/본문 검색" value="{{ keyword or '' }}" style="min-width:180px"
+                       onkeydown="event.stopPropagation();">
+                <button class="btn btn-outline-secondary btn-sm" type="submit">검색</button>
+            </form>
+            {% endif %}
         </div>
         <br>
         <div class="list_table" style="font-size: 16px">
@@ -82,31 +93,29 @@
             
             <div style="text-align: center">
                 <ul class="pagination justify-content-center">
-                    {% if pagenum|int == 1 %}
-                        <li class="page-item disabled">
+                    {% if category == 'search' %}
+                        {% set page_base = '/' + table + '/search/?kw=' + (keyword or '') + '&p=' %}
                     {% else %}
-                        <li class="page-item">
+                        {% set page_base = '/' + table + '/' + category + '/?p=' %}
                     {% endif %}
-                        <a class="page-link" href="/{{ table }}/{{ category }}/?p={{ pagenum|int - 1 }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-                        </li>
+                    {% set cur = pagenum|int %}
+                    {% set p_start = [1, cur - 4]|max %}
+                    {% set p_end = [totalpage, p_start + 9]|min %}
+                    {% set p_start = [1, p_end - 9]|max %}
 
-                    {% for n in range(totalpage)  %}
-                        {% if n + 1 == pagenum|int %}
-                            <li class="page-item active">
-                        {% else %}
-                            <li class="page-item">
-                        {% endif %}
-                            <a class="page-link" href="/{{ table }}/{{ category }}/?p={{ n + 1 }}">{{ n + 1 }}</a>
+                    <li class="page-item {% if cur == 1 %}disabled{% endif %}">
+                        <a class="page-link" href="{{ page_base }}{{ cur - 1 }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                    </li>
+
+                    {% for n in range(p_start - 1, p_end) %}
+                        <li class="page-item {% if n + 1 == cur %}active{% endif %}">
+                            <a class="page-link" href="{{ page_base }}{{ n + 1 }}">{{ n + 1 }}</a>
                         </li>
                     {% endfor %}
 
-                    {% if pagenum|int == totalpage %}
-                        <li class="page-item disabled">
-                    {% else %}
-                        <li class="page-item">
-                    {% endif %}
-                        <a class="page-link" href="/{{ table }}/{{ category }}/?p={{ pagenum|int + 1 }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-                        </li>
+                    <li class="page-item {% if cur == totalpage %}disabled{% endif %}">
+                        <a class="page-link" href="{{ page_base }}{{ cur + 1 }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+                    </li>
                 </ul>
             </div>
         {% endif %}

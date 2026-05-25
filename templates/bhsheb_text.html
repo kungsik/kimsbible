@@ -123,6 +123,7 @@
 <script src="/static/js/text_tools.js?ver=11113"></script>
 <script src="/static/js/hebrew_dots_strip.js?ver=111111"></script>
 <script src="/static/js/sefaria.js?ver=1"></script>
+<script src="/static/js/parallel.js?ver=1"></script>
 
 <!-- Sefaria 주석 모달 -->
 <div class="modal fade" id="sefariaModal" tabindex="-1" role="dialog" aria-labelledby="sefariaModalLabel" aria-hidden="true">
@@ -138,6 +139,26 @@
       </div>
       <div class="modal-footer">
         <small class="text-muted mr-auto">출처: <a href="https://www.sefaria.org" target="_blank">Sefaria</a> (CC BY-NC)</small>
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 평행구 모달 -->
+<div class="modal fade" id="parallelModal" tabindex="-1" role="dialog" aria-labelledby="parallelModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="max-width:480px; margin:1.75rem auto;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="parallelModalLabel">평행구</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="parallelModalBody" style="max-height:60vh; overflow-y:auto;">
+      </div>
+      <div class="modal-footer">
+        <small class="text-muted mr-auto">출처: UBS Parallel Passages (CC BY-SA 4.0)</small>
         <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">닫기</button>
       </div>
     </div>
