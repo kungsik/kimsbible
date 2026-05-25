@@ -447,13 +447,16 @@ def text_page(book='Genesis', chapter=1):
         #원문읽기도우미를 위한 코드 (1절을 구함)
         vcode = int(vcode) - int(i)
 
-        #캐싱페이지 작성
+        # 캐싱페이지 작성
         data = render_template('bhsheb_text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp_num, kml_file=kml_file, google_map_api=google_map_api, vcode=str(vcode))
-        f = open("kimsbible/static/cached/bhsheb/" + book + "-" + str(chapter) + ".html", 'w')
-        f.write(data)
-        f.close()
+        cache_path = "kimsbible/static/cached/bhsheb/" + book + "-" + str(chapter) + ".html"
+        try:
+            with open(cache_path, 'w', encoding='utf-8') as f:
+                f.write(data)
+        except Exception:
+            pass
 
-        return render_template('bhsheb_text.html', verse=verse, book=book, chapter=chapter, last_chp=last_chp_num, kml_file=kml_file, google_map_api=google_map_api, vcode=str(vcode))
+        return data
     
     #캐싱파일이 있을 경우 
     else:        

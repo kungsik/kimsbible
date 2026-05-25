@@ -74,13 +74,16 @@ def sblgnt_page(book='Matthew', chapter=1):
         verse = response.json()['verse']
         last_chp = response.json()['lastchp']
 
-        #캐싱페이지 작성
-        # data = render_template('sblgnt_text.html', book=book, chapter=chapter, kml_file=kml_file, sblgnt_url=sblgnt_url, google_map_api=google_map_api, vcode=vcode, verse=verse, last_chp=last_chp)
-        # f = open("kimsbible/static/cached/sblgnt/" + book + "-" + str(chapter) + ".html", 'w')
-        # f.write(data)
-        # f.close()
+        # 캐싱페이지 작성
+        data = render_template('sblgnt_text.html', book=book, chapter=chapter, kml_file=kml_file, sblgnt_url=sblgnt_url, google_map_api=google_map_api, vcode=vcode, verse=verse, last_chp=last_chp)
+        cache_path = "kimsbible/static/cached/sblgnt/" + book + "-" + str(chapter) + ".html"
+        try:
+            with open(cache_path, 'w', encoding='utf-8') as f:
+                f.write(data)
+        except Exception:
+            pass
 
-        return render_template('sblgnt_text.html', book=book, chapter=chapter, kml_file=kml_file, sblgnt_url=sblgnt_url, google_map_api=google_map_api, vcode=vcode, verse=verse, last_chp=last_chp)
+        return data
 
     #캐싱파일이 있을 경우
     else:
