@@ -82,10 +82,6 @@
     <hr />
 
     <div class="license">
-        문법파싱: <b>MorphGNT SBLGNT</b>  SBL Greek New Testament w/tagging by MorphGNT <a href="https://github.com/morphgnt/sblgnt" target="_blank">10.5281/zenodo.376200</a><a href="https://creativecommons.org/licenses/by-sa/3.0/deed.ko" target="_blank"> 저작자표시-동일조건변경허락 3.0 (CC-BY-SA 3.0)</a><br>
-        텍스트: <b>SBLGNT</b>, © 2010 by the Society of Biblical Literature and Logos Bible Software (원문무단변경금지)
-    </div>
-
     <br>
     <div style="display:flex; justify-content:space-between; align-items:center; padding: 0 4px;">
       <div>
@@ -100,8 +96,30 @@
       </div>
     </div>
     <br>
+    <div class="center">
+      <form class="inline-block">
+        <select id="bible_selector_bottom" onchange="location.href=this.value"></select>
+        <select id="chp_selector_bottom" onchange="location.href=this.value"></select>
+      </form>
+    </div>
+    <br>
+    <hr>
+    <div class="license">
+        문법파싱: <b>MorphGNT SBLGNT</b>  SBL Greek New Testament w/tagging by MorphGNT <a href="https://github.com/morphgnt/sblgnt" target="_blank">10.5281/zenodo.376200</a><a href="https://creativecommons.org/licenses/by-sa/3.0/deed.ko" target="_blank"> 저작자표시-동일조건변경허락 3.0 (CC-BY-SA 3.0)</a><br>
+        텍스트: <b>SBLGNT</b>, © 2010 by the Society of Biblical Literature and Logos Bible Software (원문무단변경금지)
+    </div>
+    <br>
 
   </div>
+
+  <script>
+  $(function() {
+    $('#bible_selector').children().clone().appendTo('#bible_selector_bottom');
+    $('#bible_selector_bottom').val($('#bible_selector').val());
+    $('#chp_selector').children().clone().appendTo('#chp_selector_bottom');
+    $('#chp_selector_bottom').val($('#chp_selector').val());
+  });
+  </script>
 
   
 </div>

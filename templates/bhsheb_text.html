@@ -92,11 +92,6 @@
     <br><br>
     <hr />
 
-    <div class="license">
-        문법파싱: <b>ETCBC BHSA</b> Tagged BHS with Syntax Trees <a href="http://dx.doi.org/10.17026%2Fdans-z6y-skyh" target="_blank">10.17026/dans-z6y-skyh</a><a href="https://creativecommons.org/licenses/by-nc/4.0/deed.ko" target="_blank"> 저작자표시-비영리 4.0 국제 (CC BY-NC 4.0)</a><br>
-        텍스트: <b>Biblia Hebraica Stuttgartensia</b>, © 1977/1997 Deutsche Bibelgesellschaft (원문무단변경금지)
-    </div>
-
     <br>
     <div style="display:flex; justify-content:space-between; align-items:center; padding: 0 4px;">
       <div>
@@ -111,8 +106,30 @@
       </div>
     </div>
     <br>
+    <div class="center">
+      <form class="inline-block">
+        <select id="bible_selector_bottom" onchange="location.href=this.value"></select>
+        <select id="chp_selector_bottom" onchange="location.href=this.value"></select>
+      </form>
+    </div>
+    <br>
+    <hr>
+    <div class="license">
+        문법파싱: <b>ETCBC BHSA</b> Tagged BHS with Syntax Trees <a href="http://dx.doi.org/10.17026%2Fdans-z6y-skyh" target="_blank">10.17026/dans-z6y-skyh</a><a href="https://creativecommons.org/licenses/by-nc/4.0/deed.ko" target="_blank"> 저작자표시-비영리 4.0 국제 (CC BY-NC 4.0)</a><br>
+        텍스트: <b>Biblia Hebraica Stuttgartensia</b>, © 1977/1997 Deutsche Bibelgesellschaft (원문무단변경금지)
+    </div>
+    <br>
 
   </div>
+
+  <script>
+  $(function() {
+    $('#bible_selector').children().clone().appendTo('#bible_selector_bottom');
+    $('#bible_selector_bottom').val($('#bible_selector').val());
+    $('#chp_selector').children().clone().appendTo('#chp_selector_bottom');
+    $('#chp_selector_bottom').val($('#chp_selector').val());
+  });
+  </script>
 
 </div>
 
