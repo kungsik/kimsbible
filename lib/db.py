@@ -316,6 +316,8 @@ class User:
         sql = "SELECT open_email FROM user WHERE email='" + email  + "'"
         self.cursor.execute(sql)
         result = self.cursor.fetchone()
+        if result is None:
+          raise LookupError("user not found")
         if result[0] == 1:
           return True
         else:
@@ -329,8 +331,11 @@ class User:
           else:
             return '#' + str(self.getUserNumbyEmail(email))
 
-        except:
-          return "탈퇴함"        
+        except LookupError:
+          return "탈퇴함"
+        except Exception:
+          # DB 오류 등 예외 발생 시에도 탈퇴함 반환
+          return "탈퇴함"
     
     def add_pass_restore(self, email, randstr):
         # 같은 이메일의 기존 요청 삭제 (중복 방지)
