@@ -420,7 +420,7 @@ def text_page(book='Genesis', chapter=1):
             section = T.sectionFromNode(v)
             vcode = vp.nodetocode(section, vp.bookList)
             
-            verse += '<li id='+str(i)+'>'
+            verse += '<li id='+str(section[2])+'>'
             verse += '<div class=verseContainer>'
             verse += '<div class=verseNode>'
             wordsNode = L.d(v, otype='word')

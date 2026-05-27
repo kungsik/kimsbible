@@ -90,12 +90,19 @@
 
     <script>
     (function() {
+        var container = document.getElementById('recent-community-list');
+        // 3초 타임아웃: isso 서버 슬립 상태일 때 페이지가 느려 보이는 현상 방지
+        var timer = setTimeout(function() {
+            container.innerHTML = '';  // 타임아웃 시 섹션을 조용히 숨김
+            document.getElementById('community-recent-section').style.display = 'none';
+        }, 3000);
+
         fetch('https://kungsik2.pythonanywhere.com/?uri=%2Fcommunity%2F&limit=3', {
             headers: {'Accept': 'application/json'}
         })
         .then(function(r) { return r.json(); })
         .then(function(data) {
-            var container = document.getElementById('recent-community-list');
+            clearTimeout(timer);
             var replies = (data.replies || []).filter(function(c) { return !c.parent; });
             if (!replies.length) {
                 container.innerHTML = '<p style="text-align:center;color:#aaa;">최근 댓글이 없습니다.</p>';
@@ -121,8 +128,8 @@
             container.innerHTML = html;
         })
         .catch(function() {
-            document.getElementById('recent-community-list').innerHTML =
-                '<p style="text-align:center;color:#aaa;">댓글을 불러올 수 없습니다.</p>';
+            clearTimeout(timer);
+            document.getElementById('community-recent-section').style.display = 'none';
         });
     })();
     </script>
