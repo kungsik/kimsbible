@@ -364,7 +364,7 @@
     var bar = document.createElement('div');
     bar.id = 'verse-jump-bar';
     // 배경 없음, 경계선만 아주 얇게
-    bar.style.cssText = 'border-bottom:1px solid #e0e0e0;padding:8px 0;';
+    bar.style.cssText = 'padding:8px 0;';
 
     // 내부: Bootstrap container + 가운데 정렬
     bar.innerHTML =
