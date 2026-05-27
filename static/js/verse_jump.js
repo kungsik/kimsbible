@@ -49,12 +49,7 @@
   });
 
   // ─── 2. 구절 바로가기 네비게이션 ──────────────────────────────────────────
-  // bhsheb / sblgnt / 메인(/) 페이지에서 동작
-
-  var pathname  = window.location.pathname;
-  var textType  = pathname.split('/')[1];
-  var isMainPage = (pathname === '/' || pathname === '');
-  if (!isMainPage && textType !== 'bhsheb' && textType !== 'sblgnt') return;
+  // 바는 layout.html에 서버 렌더링되므로 JS는 이벤트 연결만 담당
 
   // 한글 약어/전체명 → [영문 책이름, OT여부]
   // 긴 것을 먼저 두어야 짧은 것이 먼저 매칭되는 오류를 방지한다.
@@ -358,57 +353,21 @@
     window.location.href = url;
   }
 
-  function injectNavBar() {
-    if (document.getElementById('verse-jump-bar')) return; // 중복 방지
-
-    var bar = document.createElement('div');
-    bar.id = 'verse-jump-bar';
-    // 배경 없음, 경계선만 아주 얇게
-    bar.style.cssText = 'padding:8px 0;';
-
-    // 내부: Bootstrap container + 가운데 정렬
-    bar.innerHTML =
-      '<div class="container" style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;">' +
-        '<span style="font-size:13px;color:#555;white-space:nowrap;font-weight:600;">' +
-          '&#128214; 구절 바로가기' +
-        '</span>' +
-        '<input id="verse-jump-input" type="text"' +
-          ' placeholder="창 1:1  /  마 3:16  /  Genesis 1:1"' +
-          ' style="width:260px;font-size:13px;' +
-                 'border:1px solid #ccc;border-radius:4px;padding:4px 10px;outline:none;">' +
-        '<button id="verse-jump-btn"' +
-          ' style="font-size:13px;padding:4px 14px;border:1px solid #555;border-radius:4px;' +
-                 'background:#555;color:#fff;cursor:pointer;white-space:nowrap;">이동</button>' +
-      '</div>';
-
-    // 삽입 위치: 메인 페이지는 히어로 섹션(.site-blocks-cover) 바로 뒤,
-    //            성경 본문 페이지는 .container.border 바로 앞
-    if (isMainPage) {
-      var hero = document.querySelector('.site-blocks-cover');
-      if (hero && hero.parentNode) {
-        hero.parentNode.insertBefore(bar, hero.nextSibling);
-      } else {
-        var contents = document.querySelector('.contents');
-        if (contents) contents.insertBefore(bar, contents.firstChild);
-      }
-    } else {
-      var bibleContainer = document.querySelector('.container.border');
-      if (bibleContainer && bibleContainer.parentNode) {
-        bibleContainer.parentNode.insertBefore(bar, bibleContainer);
-      }
-    }
-
-    document.getElementById('verse-jump-btn').addEventListener('click', navigateToVerse);
-    document.getElementById('verse-jump-input').addEventListener('keydown', function (e) {
+  // 이벤트 연결 (바 HTML은 layout.html에 이미 존재)
+  function bindNavBar() {
+    var btn   = document.getElementById('verse-jump-btn');
+    var input = document.getElementById('verse-jump-input');
+    if (!btn || !input) return;
+    btn.addEventListener('click', navigateToVerse);
+    input.addEventListener('keydown', function (e) {
       if (e.key === 'Enter') navigateToVerse();
     });
   }
 
-  // DOM 준비 여부에 따라 즉시 또는 DOMContentLoaded 후에 실행
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', injectNavBar);
+    document.addEventListener('DOMContentLoaded', bindNavBar);
   } else {
-    injectNavBar();
+    bindNavBar();
   }
 
 })();
