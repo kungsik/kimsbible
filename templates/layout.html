@@ -110,7 +110,9 @@
 
       </header>
 
-      <!-- 구절 바로가기 바 — JS 삽입 대신 서버 렌더링으로 레이아웃 시프트 방지 -->
+      <div class="contents">
+
+      <!-- 구절 바로가기 바 — contents 안에서 렌더링 (sticky 헤더에 가려지지 않음) -->
       <div id="verse-jump-bar" style="padding:8px 0;">
         <div class="container" style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;">
           <span style="font-size:13px;color:#555;white-space:nowrap;font-weight:600;">&#128214; 구절 바로가기</span>
@@ -122,7 +124,6 @@
         </div>
       </div>
 
-      <div class="contents">
       {% block body %}
       {% endblock %}
       </div>
@@ -179,7 +180,7 @@
 
     <!-- 자체 js 파일 -->
     <script src="/static/js/modal_word_api.js?ver=1.1161"></script>
-    <script src="/static/js/show_menu.js?v=113"></script>
+    <script src="/static/js/show_menu.js?v=114"></script>
     <script src="/static/js/verse_jump.js?ver=6"></script>
 
     <!-- 외부 js 파일 -->

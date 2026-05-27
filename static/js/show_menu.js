@@ -84,9 +84,14 @@ function build_menu(authenticated) {
     }, 200);
 }
 
-// 서버에 로그인 상태 확인 후 메뉴 생성
+// 1. 비로그인 상태로 즉시 메뉴 렌더링 → 딜레이·반짝임 없음
+build_menu(false);
+
+// 2. 로그인 확인 후 회원메뉴만 갱신 (로그인 상태일 때만)
 $.get('/auth/status/', function(data) {
-    build_menu(data.authenticated);
+    if (data.authenticated) {
+        build_menu(true);
+    }
 }).fail(function() {
-    build_menu(false);
+    // 이미 비로그인 메뉴가 표시되어 있으므로 추가 처리 불필요
 });
