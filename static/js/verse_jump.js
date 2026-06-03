@@ -340,7 +340,32 @@
     return null;
   }
 
-  function navigateToVerse() {
+  function showInvalidPassageAlert() {
+    alert('잘못된 성경 본문입니다.');
+  }
+
+  function hasVerseAnchor(html, verse) {
+    if (!verse) return true;
+
+    var doc = new DOMParser().parseFromString(html, 'text/html');
+    if (doc.getElementById(String(verse))) return true;
+
+    var verseNum = parseInt(verse, 10);
+    if (isNaN(verseNum) || verseNum < 1) return false;
+
+    var ol = doc.querySelector('#text ol, #verse_heb ol');
+    return !!(ol && ol.children && ol.children[verseNum - 1]);
+  }
+
+  function setJumpButtonLoading(isLoading) {
+    var btn = document.getElementById('verse-jump-btn');
+    if (!btn) return;
+    btn.disabled = isLoading;
+    btn.style.opacity = isLoading ? '0.7' : '';
+    btn.style.cursor = isLoading ? 'wait' : 'pointer';
+  }
+
+  async function navigateToVerse() {
     var val = document.getElementById('verse-jump-input').value;
     var ref = parseRef(val);
     if (!ref) {
@@ -348,9 +373,35 @@
       return;
     }
     var base = ref.ot ? '/bhsheb/' : '/sblgnt/';
-    var url  = base + ref.en + '/' + ref.chapter;
-    if (ref.verse) url += '#' + ref.verse;
-    window.location.href = url;
+    var pageUrl = base + ref.en + '/' + ref.chapter;
+    var targetUrl = pageUrl;
+    if (ref.verse) targetUrl += '#' + ref.verse;
+
+    setJumpButtonLoading(true);
+    try {
+      var response = await fetch(pageUrl, {
+        method: 'GET',
+        credentials: 'same-origin',
+        cache: 'no-store'
+      });
+
+      if (!response.ok) {
+        showInvalidPassageAlert();
+        return;
+      }
+
+      var html = await response.text();
+      if (!hasVerseAnchor(html, ref.verse)) {
+        showInvalidPassageAlert();
+        return;
+      }
+
+      window.location.href = targetUrl;
+    } catch (e) {
+      showInvalidPassageAlert();
+    } finally {
+      setJumpButtonLoading(false);
+    }
   }
 
   // 이벤트 연결 (바 HTML은 layout.html에 이미 존재)
